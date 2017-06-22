@@ -1,4 +1,19 @@
-# SbDashboard
+# Service Broker Dashboard
+
+![alt text](https://github.com/evoila/cf-service-broker-dashboard/docs/dashboard-ui.png "Dashboard UI")
+
+## General
+To manage your Service Broker instance it is mandatory to have a Dashboard component, which supplies you with capabilites like basic Monitoring, Configuration Management and Backup/Restore.
+
+This project is intended to be the fundamental implementation of Dashboard, which could be applied to any Service Broker. We provide a sample implementation of the Dashboard in the `Example Service Broker`, which can be found here: https://github.com/evoila/cf-service-broker-example
+
+## How does the Dashboard work?
+The Dashboard is an Angular JS 4.X Application which is provided with the Service Broker itself. 
+A Dashboard of a Service Instance can be accessed, when the Service Broker backend has implemented the following Auth-Flow:
+
+[Dashboard Single Sign-On](https://docs.cloudfoundry.org/services/dashboard-sso.html)
+
+# Technical Components
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.0-rc.1.
 
