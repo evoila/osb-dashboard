@@ -1,6 +1,6 @@
 # Service Broker Dashboard
 
-![alt text](https://github.com/evoila/cf-service-broker-dashboard/docs/dashboard-ui.png "Dashboard UI")
+![alt text](https://github.com/evoila/cf-service-broker-dashboard/blob/master/docs/dashboard-ui.png "Dashboard UI")
 
 ## General
 To manage your Service Broker instance it is mandatory to have a Dashboard component, which supplies you with capabilites like basic Monitoring, Configuration Management and Backup/Restore.
