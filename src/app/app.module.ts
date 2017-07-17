@@ -8,14 +8,24 @@ import {
   NgbTooltipModule, NgbModalModule, NgbPopoverModule
 } from '@ng-bootstrap/ng-bootstrap';
 
+import { buildTarget } from 'environments/target';
+
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from './core/core.module';
+
+import { BuildTargetService } from 'app/shared';
+import { SharedModule } from './shared/shared.module';
+
+export function buildBuildTargetService(): BuildTargetService {
+  return new BuildTargetService(buildTarget);
+}
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
+    FormsModule,
     HttpModule,
 
     NgbDropdownModule.forRoot(),
@@ -25,10 +35,15 @@ import { CoreModule } from './core/core.module';
     NgbPopoverModule.forRoot(),
     NgbTypeaheadModule.forRoot(),
 
+    CoreModule,
+    SharedModule,
+
+    ...buildTarget.coreModules,
+
     AppRoutingModule,
-    CoreModule
   ],
   providers: [
+    { provide: BuildTargetService, useFactory: buildBuildTargetService }
   ],
   bootstrap: [AppComponent]
 })

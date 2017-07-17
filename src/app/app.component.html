@@ -8,14 +8,22 @@
 
   <div class="collapse navbar-collapse" id="navbarsExampleDefault">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Configuration </a>
+      <li class="nav-item active" *ngIf="moduleSupport.mongodb">
+        <a class="nav-link" routerLink="/mongodb" routerLinkActive="active">Sample Module </a>
+      </li>
+      <li class="nav-item active" *ngIf="moduleSupport.autoscaler">
+        <a class="nav-link" routerLink="/autoscaler" routerLinkActive="active">Auto Scaler </a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" href="#">Monitoring </a>
+        <a class="nav-link" routerLink="/backup" routerLinkActive="active">Backup </a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" href="#">Backup </a>
+        <a class="nav-link" routerLink="/service-keys" routerLinkActive="active">Service Keys </a>
+      </li>
+    </ul>
+    <ul class="nav navbar-nav ml-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Logout </a>
       </li>
     </ul>
   </div>
