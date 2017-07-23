@@ -8,6 +8,8 @@ export interface Configuration {
   // Maximum required instances > minInstances
   maxInstances: number;
 
+  minMaxRange: number[];
+
   // Threshhold time, during the scaler is not allowed to scale
   cooldownTime: number;
 
@@ -18,12 +20,16 @@ export interface Configuration {
 
   cpuLowerLimit: number;
 
+  cpuLowerUpperLimit: number[];
+
   // Do know yet
   minQuotient: number;
 
   ramUpperLimit: number;
 
   ramLowerLimit: number;
+
+  ramLowerUpperLimit: number[];
 
   scalingEnabled: boolean;
 

@@ -4,10 +4,12 @@ import { AutoScalerComponent } from './auto-scaler.component';
 import { AutoScalerRoutingModule } from './auto-scaler-routing.module';
 
 import { NouisliderComponent } from 'ng2-nouislider';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
     AutoScalerRoutingModule
   ],
   declarations: [AutoScalerComponent, NouisliderComponent]
