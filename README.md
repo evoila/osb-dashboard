@@ -13,6 +13,16 @@ A Dashboard of a Service Instance can be accessed, when the Service Broker backe
 
 [Dashboard Single Sign-On](https://docs.cloudfoundry.org/services/dashboard-sso.html)
 
+# Quickstart
+
+## Requirements
+1. Install Node.js [Node.js](https://nodejs.org/en/download/package-manager/)
+2. Install yarn [Yarn](https://yarnpkg.com/lang/en/docs/install/#alternatives-tab)
+
+## Use and start project
+1. Run the project: `yarn run start:service-broker` e.g. `yarn run start:auto-scaler`
+2. Build the project `yarn run build:service-broker` e.g. `yarn run build:auto-scaler`
+
 # Technical Components
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.0-rc.1.

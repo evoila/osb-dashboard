@@ -5,6 +5,35 @@
   },
   "apps": [
     {
+      "name": "example",
+      "root": "src",
+      "outDir": "dist/example",
+      "assets": [
+        "assets/core",
+        "favicon.ico"
+      ],
+      "index": "index.html",
+      "main": "main.ts",
+      "polyfills": "polyfills.ts",
+      "test": "test.ts",
+      "tsconfig": "tsconfig.app.json",
+      "testTsconfig": "tsconfig.spec.json",
+      "prefix": "sb",
+      "styles": [
+        "styles.scss"
+      ],
+      "stylePreprocessorOptions": {
+        "includePaths": [
+          "../node_modules"
+        ]
+      },
+      "scripts": [],
+      "environmentSource": "environments/target.ts",
+      "environments": {
+        "example": "environments/target.example.ts"
+      }
+    },
+    {
       "name": "mongodb",
       "root": "src",
       "outDir": "dist/mongodb",

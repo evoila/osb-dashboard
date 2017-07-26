@@ -17,7 +17,8 @@ export {
 @Injectable()
 export class BuildTargetService {
   public readonly moduleSupport: ModuleSupport;
+  public readonly dynamicModuleSupport: any;
   constructor(bt: BuildTarget) {
-    this.moduleSupport = supportedExtensions(bt);
+    this.dynamicModuleSupport = supportedExtensions(bt);
   }
 }
