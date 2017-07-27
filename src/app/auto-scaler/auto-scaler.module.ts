@@ -3,15 +3,16 @@ import { CommonModule } from '@angular/common';
 import { AutoScalerComponent } from './auto-scaler.component';
 import { AutoScalerRoutingModule } from './auto-scaler-routing.module';
 
-import { NouisliderComponent } from 'ng2-nouislider';
+import { NouisliderModule } from 'ng2-nouislider';
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
+    NouisliderModule,
     AutoScalerRoutingModule
   ],
-  declarations: [AutoScalerComponent, NouisliderComponent]
+  declarations: [AutoScalerComponent]
 })
 export class AutoScalerModule { }

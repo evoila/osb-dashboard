@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Configuration } from './domain/configuration';
 
 @Component({
   selector: 'sb-auto-scaler',
@@ -10,7 +9,18 @@ export class AutoScalerComponent implements OnInit {
   configuration  = {
     minMaxRange: [1, 10],
     cpuLowerUpperLimit: [1, 100],
-    ramLowerUpperLimit: [1, 100]
+    ramLowerUpperLimit: [1, 100],
+    scalingEnabled: true,
+    scalingIntervalMultiplier: 1,
+    cooldownTime: 30,
+    learningEnabled: true,
+    learningTimeMultiplier: 5,
+    cpuThresholdPolicy: 20,
+    quotientBasedScalingEnabled: true,
+    minQuotient: 1,
+    ramThresholdPolicy: 30,
+    billingIntervalConsidered: false,
+    requestThresholdPolicy: 40
   };
   range = 10;
   minMaxConfig: any = {
