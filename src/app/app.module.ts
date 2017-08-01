@@ -35,7 +35,7 @@ export function buildBuildTargetService(): BuildTargetService {
     NgbPopoverModule.forRoot(),
     NgbTypeaheadModule.forRoot(),
 
-    CoreModule,
+    CoreModule.forRoot(),
     SharedModule,
 
     ...buildTarget.coreModules,

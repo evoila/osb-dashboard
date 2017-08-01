@@ -27,7 +27,7 @@ export interface Environment {
 const seedEnv = {
   production: false,
   baseUrls: {
-    serviceBrokerUrl: "https://this.service-broker.io", // do not commit changes to this value, it is needed in CI
+    serviceBrokerUrl: "https://this.service-broker.io" // do not commit changes to this value, it is needed in CI
   },
   auth: {
     tokenRenewalPreFresh: {

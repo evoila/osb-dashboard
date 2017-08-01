@@ -16,6 +16,9 @@ export interface Configuration {
   // Timeout until learned behavouir shall be applied
   learningTimeMultiplier: number;
 
+  // new
+  cpuScalingEnabled: boolean;
+
   cpuUpperLimit: number;
 
   cpuLowerLimit: number;
@@ -25,17 +28,34 @@ export interface Configuration {
   // Do know yet
   minQuotient: number;
 
+  ramScalingEnabled: boolean;
+
   ramUpperLimit: number;
 
   ramLowerLimit: number;
 
   ramLowerUpperLimit: number[];
 
+  // new
+  latencyScalingEnabled: boolean;
+  // new
+  latencyUpperLimit: number;
+  // new
+  latencyLowerLimit: number;
+  // new
+  latencyLowerUpperLimit: number[];
+
   scalingEnabled: boolean;
+
+  // new
+  predictionScalingEnabled: boolean;
 
   quotientBasedScalingEnabled: boolean;
 
   learningEnabled: boolean;
+
+  // new
+  learningStartTime: Date;
 
   billingIntervalConsidered: boolean;
 
@@ -46,5 +66,10 @@ export interface Configuration {
   requestThresholdPolicy: string;
 
   // ("max", "min", "mean")
-  ramThresholdPolicy: string
+  ramThresholdPolicy: string;
+  // new ("max", "min", "mean")
+  latencyThresholdPolicy: string;
+
+  // new
+  creationTime: number;
 }

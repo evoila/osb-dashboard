@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BackupService } from './backup.service';
 
 @Component({
   selector: 'sb-backup',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BackupComponent implements OnInit {
 
-  constructor() { }
+  constructor(backupService: BackupService) { }
 
   ngOnInit() {
   }
