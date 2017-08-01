@@ -35,7 +35,11 @@
     "ci:lbaas": "yarn run tslint && yarn run test && yarn run build:lbaas && yarn run e2e:lbaas",
     "ci:auto-scaler": "yarn run tslint && yarn run test && yarn run build:auto-scaler && yarn run e2e:auto-scaler",
     "ci:example": "yarn run tslint && yarn run test && yarn run build:example && yarn run e2e:example",
-    "privateci": "fly -t ci execute -c ./../ci/build.yml -i repo=./../ -x"
+    "privateci": "fly -t ci execute -c ./../ci/build.yml -i repo=./../ -x",
+    "ci:mysql" : "yarn run tslint && yarn run test && yarn run build:mysql && yarn run e2e:mysql",
+    "start:mysql": "ts-node ./scripts/start.ts -t mysql",
+    "build:mysql": "ts-node ./scripts/build.ts -t mysql",
+    "e2e:mysql": "ts-node ./scripts/dist-e2e.ts -t mysql"
   },
   "private": true,
   "dependencies": {
