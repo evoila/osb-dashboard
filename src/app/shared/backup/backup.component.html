@@ -14,6 +14,7 @@
             <th>Type</th>
             <th>Frequency</th>
             <th>Retention</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -23,6 +24,7 @@
             <td>{{ plan.source.type }}</td>
             <td>{{ plan.frequency }}</td>
             <td>{{ plan.retentionStyle }}</td>
+            <td><a href="#">Details</a></td>
           </tr>     
         </tbody>
       </table>      
@@ -41,6 +43,7 @@
             <th>Start Date</th>
             <th>Instance</th>
             <th>Status</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -49,6 +52,7 @@
             <td>{{ job.startDate | date:"dd.MM.yyyy" }}</td>
             <td>{{ job.instanceId }}</td>
             <td>{{ job.status }}</td>
+            <td><a href="#">Details</a></td>
           </tr>     
         </tbody>
       </table>      
