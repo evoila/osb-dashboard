@@ -9,7 +9,7 @@ import { Job } from '../../domain/job';
 })
 export class BackupJobDetailsComponent implements OnInit {
 
-  job: Job[];
+  job: Job;
   ID ='8c0e3edc-ac90-4151-be8a-d6b1975058f5';
   constructor(protected readonly backupService: BackupService,
               protected readonly route :ActivatedRoute) { }

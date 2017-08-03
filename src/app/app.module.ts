@@ -16,14 +16,13 @@ import { CoreModule } from './core/core.module';
 
 import { BuildTargetService } from 'app/shared';
 import { SharedModule } from './shared/shared.module';
-import { JobFormComponent } from './backup/backup-job/job-form/job-form.component';
 
 export function buildBuildTargetService(): BuildTargetService {
   return new BuildTargetService(buildTarget);
 }
 
 @NgModule({
-  declarations: [AppComponent, JobFormComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     FormsModule,
