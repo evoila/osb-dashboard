@@ -27,7 +27,8 @@ export interface Environment {
 const seedEnv = {
   production: false,
   baseUrls: {
-    serviceBrokerUrl: "https://this.service-broker.io" // do not commit changes to this value, it is needed in CI
+    serviceBrokerUrl: "http://localhost:8080"
+    // serviceBrokerUrl: "https://mysql-dash.cf.eu-de-netde.msh.host"
   },
   auth: {
     tokenRenewalPreFresh: {

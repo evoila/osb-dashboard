@@ -4,7 +4,8 @@
       <h2>Currently Active Backup Plans </h2>
       <p>Below you can find the currently active Backup Plans you have 
         configured for your Instance.
-      </p>  
+      </p>
+      <p><a class="btn btn-secondary" routerLink="/backup/create-plan" role="button">Create Backup Plan »</a></p>
       <table class="table">
         <thead class="thead-default">
           <tr>
@@ -16,30 +17,23 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>TEST_INSTANCE</td>
-            <td>MySQL</td>
-            <td>* * 14 * * *</td>
-            <td>DAYS</td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>TEST_INSTANCE</td>
-            <td>MySQL</td>
-            <td>* * 14 * * *</td>
-            <td>DAYS</td>
-          </tr>        
+          <tr *ngFor="let plan of plans; let i = index">
+            <th scope="row">{{i + 1}}</th>
+            <td>{{ plan.source.context }}</td>
+            <td>{{ plan.source.type }}</td>
+            <td>{{ plan.frequency }}</td>
+            <td>{{ plan.retentionStyle }}</td>
+          </tr>     
         </tbody>
-      </table>
-      <p><a class="btn btn-secondary" routerLink="/backup/create-plan" role="button">Create Backup Plan »</a></p>
+      </table>      
     </div>
     <div class="col-lg-6">
       <h2>Recent Backup Jobs</h2>
       <p>Below you can find the recently executed Backup Jobs. This list
         contains all active "Backup Plans" and manually triggered Backup
         Jobs.
-      </p>  
+      </p>
+      <p><a class="btn btn-secondary" routerLink="/backup/create-job" role="button">Create Backup Job »</a></p>
       <table class="table">
         <thead class="thead-default">
           <tr>
@@ -50,21 +44,14 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>1501135163662</td>
-            <td>TEST_INSTANCE</td>
-            <td>SUCCESS</td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>1501135163662</td>
-            <td>TEST_INSTANCE</td>
-            <td>SUCCESS</td>
-          </tr>        
+          <tr *ngFor="let job of jobs; let i = index">
+            <th scope="row">{{i + 1}}</th>
+            <td>{{ job.startDate | date:"dd.MM.yyyy" }}</td>
+            <td>{{ job.instanceId }}</td>
+            <td>{{ job.status }}</td>
+          </tr>     
         </tbody>
-      </table>
-      <p><a class="btn btn-secondary" routerLink="/backup/create-job" role="button">Create Backup Job »</a></p>
+      </table>      
     </div>
   </div>
 </div>

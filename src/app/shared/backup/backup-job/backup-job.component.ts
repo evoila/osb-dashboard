@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { BackupService } from '../backup.service';
-import { Job } from '../domain/job';
 
 @Component({
   selector: 'sb-backup-job',
@@ -8,11 +7,7 @@ import { Job } from '../domain/job';
   styleUrls: ['./backup-job.component.scss']
 })
 export class BackupJobComponent implements OnInit {
-  request: any = {
-    destination: {
-    }
-  }
-  job: Job;
+  request: any = { destination: {} }
 
   constructor(protected readonly backupService: BackupService) { }
 
@@ -20,7 +15,7 @@ export class BackupJobComponent implements OnInit {
   }
 
   onSubmit() {
-    this.backupService.save('backup', this.request)
+    this.backupService.save('/8c0e3edc-ac90-4151-be8a-d6b1975058f5/backup', this.request)
       .subscribe((job: any) => {
       });
   }

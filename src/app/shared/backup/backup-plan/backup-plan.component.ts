@@ -7,10 +7,7 @@ import { BackupService } from '../backup.service';
   styleUrls: ['./backup-plan.component.scss']
 })
 export class BackupPlanComponent implements OnInit {
-  plan: any = {
-    destination: {
-    }
-  }
+  plan: any = { destination: {} }
 
   constructor(protected readonly backupService: BackupService) { }
 

@@ -4,7 +4,7 @@
     <div class="form-group">
       <label for="authUrl">Authentication URL</label>
       <input type="text" class="form-control" name="authUrl" #authUrl="ngModel" [(ngModel)]="request.destination.authUrl">
-      <small id="authUrl" class="form-text text-muted">OpenStack API Keystone URL</small>
+      <small id="authUrl" class="form-text text-muted">OpenStack API Keystone URL (e.g. https://os.eu-de-darz.msh.host:5000/v3)</small>
       <div [hidden]="authUrl.valid || authUrl.pristine" class="alert alert-danger">
           Authentication URL is required
         </div>
@@ -12,7 +12,7 @@
     <div class="form-group">
       <label for="username">Username</label>
       <input type="text" class="form-control" name="username" #username="ngModel" [(ngModel)]="request.destination.username">
-      <small id="username" class="form-text text-muted">Username for the API Endpoint</small>
+      <small id="username" class="form-text text-muted">Username for the API Endpoint (e.g. mail@domain.com)</small>
       <div [hidden]="username.valid || username.pristine" class="alert alert-danger">
           Username is required
         </div>
@@ -28,7 +28,7 @@
     <div class="form-group">
       <label for="domain">Domain</label>
       <input type="domain" class="form-control" name="domain" #domain="ngModel" [(ngModel)]="request.destination.domain">
-      <small id="domain" class="form-text text-muted">Domain for the API Endpoint</small>
+      <small id="domain" class="form-text text-muted">Domain for the API Endpoint (the OpenStack Domain)</small>
       <div [hidden]="domain.valid || domain.pristine" class="alert alert-danger">
           Domain is required
         </div>
@@ -36,9 +36,9 @@
     <div class="form-group">
       <label for="projectName">Project</label>
       <input type="projectName" class="form-control" name="projectName" #projectName="ngModel" [(ngModel)]="request.destination.projectName">
-      <small id="projectName" class="form-text text-muted">Project for the API Endpoint</small>
+      <small id="projectName" class="form-text text-muted">Project for the API Endpoint (the OpenStack Project)</small>
       <div [hidden]="projectName.valid || projectName.pristine" class="alert alert-danger">
-          Project is required
+          Project is required 
         </div>
     </div>
     <div class="form-group">
