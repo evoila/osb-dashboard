@@ -8,6 +8,7 @@ if (!injectedEnv) {
 export interface Environment {
   serviceInstanceId: string;
   token: string;
+  production: boolean;
   baseUrls: {
     serviceBrokerUrl: string;
   };
