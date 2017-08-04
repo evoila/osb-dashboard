@@ -8,6 +8,8 @@ if (!injectedEnv) {
 export interface Environment {
   production: boolean;
   baseUrls: { serviceBrokerUrl: string };
+  token: string;
+  serviceInstanceId: string;
   auth: {
     tokenRenewalPreFresh: {
       primary: number, // min

@@ -10,7 +10,6 @@ import { Job } from '../../domain/job';
 export class BackupJobDetailsComponent implements OnInit {
 
   job: Job;
-  ID ='8c0e3edc-ac90-4151-be8a-d6b1975058f5';
   constructor(protected readonly backupService: BackupService,
               protected readonly route :ActivatedRoute) { }
 
@@ -18,7 +17,7 @@ export class BackupJobDetailsComponent implements OnInit {
  ngOnInit(): void {
      this.route.params.subscribe(params => {
        if(params['jobId']){
-          this.backupService.loadBackupJob(this.ID, params['jobId']+ "")
+          this.backupService.loadBackupJob(params['jobId'] + "")
             .subscribe(
               (job: any) => {this.job = job},
             );
@@ -29,7 +28,7 @@ export class BackupJobDetailsComponent implements OnInit {
   public delete(){
     console.log("DELETE");
       this.backupService.
-      delete(this.ID, "jobs", this.job).subscribe((jobs: any) => {
+      delete("jobs", this.job).subscribe((jobs: any) => {
       })
   }
 }

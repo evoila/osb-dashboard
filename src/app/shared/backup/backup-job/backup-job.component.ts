@@ -16,7 +16,7 @@ export class BackupJobComponent implements OnInit {
 
   onSubmit() {
 
-    this.backupService.save('/8c0e3edc-ac90-4151-be8a-d6b1975058f5', 'backup',this.request)
+    this.backupService.save('backup', this.request)
       .subscribe((job: any) => {
       });
   }

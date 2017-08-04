@@ -28,7 +28,7 @@ const components = [BackupComponent,
     SharedRoutingModule,
     CoreModule
   ],
-  declarations: [...components, BackupJobDetailsComponent, RestoreJobComponent, ],
+  declarations: [...components, BackupJobDetailsComponent, RestoreJobComponent ],
   exports: [components],
   providers: [BackupService]
 })

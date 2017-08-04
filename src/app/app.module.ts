@@ -17,6 +17,7 @@ import { CoreModule } from './core/core.module';
 import { BuildTargetService } from 'app/shared';
 import { SharedModule } from './shared/shared.module';
 
+
 export function buildBuildTargetService(): BuildTargetService {
   return new BuildTargetService(buildTarget);
 }
