@@ -109,7 +109,7 @@
           </execution>
           <execution>
             <phase>process-resources</phase>
-            <id>yarn install</id>
+            <id>yarn upgrade</id>
             <goals>
               <goal>yarn</goal>
             </goals>
