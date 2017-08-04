@@ -13,6 +13,7 @@ import 'rxjs/add/operator/mergeMap';
 import { environment } from 'environments/runtime-environment';
 
 const baseUrl = environment.baseUrls.serviceBrokerUrl;
+const authToken = environment.token;
 
 @Injectable()
 export class CoreHttpService extends Http {
@@ -26,7 +27,7 @@ export class CoreHttpService extends Http {
     headers.append('Content-Type', 'application/hal+json;charset=UTF-8');
 
     if (accessToken) {
-      headers.append('X-Auth-Token', accessToken);
+      headers.append('Authorization', accessToken);
     }
 
     return new RequestOptions({
@@ -36,17 +37,17 @@ export class CoreHttpService extends Http {
 
   constructor(
     backend: ConnectionBackend) {
-    super(backend, CoreHttpService.makeOptions('ZldlauGihj7xxB65cU03jY0IpwawooO5Ir3SOM4oPys='));
-    this.accessToken = 'ZldlauGihj7xxB65cU03jY0IpwawooO5Ir3SOM4oPys=';
+    super(backend, CoreHttpService.makeOptions(authToken));
+    this.accessToken = authToken;
   }
 
   public request(req: Request, options?: RequestOptionsArgs): Observable<Response> {
     this.applyBaseUrl(req, options);
 
     if (this.accessToken) {
-      req.headers.set('X-Auth-Token', this.accessToken);
+      req.headers.set('Authorization', this.accessToken);
     } else {
-      req.headers.delete('X-Auth-Token');
+      req.headers.delete('Authorization');
     }
 
     return super.request(req, options);
