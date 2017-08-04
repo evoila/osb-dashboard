@@ -107,6 +107,7 @@
               <arguments>install</arguments>
             </configuration>
           </execution>
+          <!--
           <execution>
             <phase>process-resources</phase>
             <id>yarn upgrade</id>
@@ -117,6 +118,7 @@
               <arguments>upgrade</arguments>
             </configuration>
           </execution>
+          -->
           <execution>
             <phase>compile</phase>
             <id>yarn run build</id>
