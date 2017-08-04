@@ -6,60 +6,64 @@ import { CoreHttpService } from '../../core/core-http.service';
 import { BackupPlan } from './domain/backup-plan';
 import { Job } from './domain/job';
 
+import { environment } from 'environments/runtime-environment';
+
+const serviceInstanceId = environment.serviceInstanceId;
 @Injectable()
 export class BackupService {
-  BACKUP_BASEURL = '/v2/backup';
+  BACKUP_BASEURL = '/v2/manage/backup';
+
   constructor(protected readonly httpService: CoreHttpService) {}
 
-  public loadBackupPlans(instanceId: string): Observable<{} | BackupPlan> {
+  public loadBackupPlans(): Observable<{} | BackupPlan> {
     return this.httpService
-      .get(this.BACKUP_BASEURL + '/' + instanceId + '/plans?sort=startDate,desc' )
+      .get(this.BACKUP_BASEURL + '/' + serviceInstanceId + '/plans?sort=startDate,desc' )
       .map(res => {
         return res.json() as BackupPlan;
       })
       .catch(e => this.httpService.formatError(e));
   }
 
-  public loadBackupPlan(instanceId: string, planId: string): Observable<{} | BackupPlan> {
+  public loadBackupPlan(planId: string): Observable<{} | BackupPlan> {
     return this.httpService
-      .get(this.BACKUP_BASEURL + '/' + instanceId + '/plans/' + planId)
+      .get(this.BACKUP_BASEURL + '/' + serviceInstanceId + '/plans/' + planId)
       .map(res => {
         return res.json() as BackupPlan;
       })
       .catch(e => this.httpService.formatError(e));
   }
 
-  public loadRecentBackupJobs(instanceId: string): Observable<{} | Job> {
+  public loadRecentBackupJobs(): Observable<{} | Job> {
     return this.httpService
-      .get(this.BACKUP_BASEURL + '/' + instanceId + '/jobs?sort=startDate,desc')
+      .get(this.BACKUP_BASEURL + '/' + serviceInstanceId + '/jobs?sort=startDate,desc')
       .map(res => {
         return res.json() as Job;
       })
       .catch(e => this.httpService.formatError(e));
   }
 
-  public save(instanceId: string, rel, entity: any): Observable<{} | any> {
+  public save(rel, entity: any): Observable<{} | any> {
     return this.httpService
-      .post(this.BACKUP_BASEURL + '/'  + instanceId + '/'  + rel, entity)
+      .post(this.BACKUP_BASEURL + '/'  + serviceInstanceId + '/'  + rel, entity)
       .map(res => res.json() as any)
       .catch(e => this.httpService.formatError(e));
   }
 
-  public update(instanceId: string, rel: string, entity: any): Observable<{} | any> {
-    return this.httpService.patch(this.BACKUP_BASEURL + '/' + instanceId + '/' + rel + '/' + entity.id, entity)
+  public update(rel: string, entity: any): Observable<{} | any> {
+    return this.httpService.patch(this.BACKUP_BASEURL + '/' + serviceInstanceId + '/' + rel + '/' + entity.id, entity)
       .map(res => res.json() as any)
       .catch(e => this.httpService.formatError(e));
   }
 
-  public delete(instanceId: string, rel: string, entity: any): Observable<{} | any> {
-    return this.httpService.delete(this.BACKUP_BASEURL + '/' + instanceId + '/' + rel + '/' + entity.id)
+  public delete(rel: string, entity: any): Observable<{} | any> {
+    return this.httpService.delete(this.BACKUP_BASEURL + '/' + serviceInstanceId + '/' + rel + '/' + entity.id)
       .map(res => res.json() as any)
       .catch(e => this.httpService.formatError(e));
   }
 
-  public loadBackupJob(instanceId: string, jobId: string) {
+  public loadBackupJob(jobId: string) {
     return this.httpService
-      .get(this.BACKUP_BASEURL + '/' + instanceId + '/jobs/' + jobId )
+      .get(this.BACKUP_BASEURL + '/' + serviceInstanceId + '/jobs/' + jobId )
       .map(res => {
         return res.json();
       })

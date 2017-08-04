@@ -21,7 +21,7 @@ export class BackupPlanComponent implements OnInit {
       console.log(params['planId']);
        if(params['planId']){
          this.update = true;
-          this.backupService.loadBackupPlan(this.ID, params['planId']+ "")
+          this.backupService.loadBackupPlan(params['planId'] + "")
             .subscribe(
               (plan: any) => { this.plan = plan},
             );
@@ -31,7 +31,7 @@ export class BackupPlanComponent implements OnInit {
   }
 
   delete() {
-    this.backupService.delete(this.ID, "plans", this.plan)
+    this.backupService.delete("plans", this.plan)
       .subscribe((plan: any) => {
 
       });
@@ -40,11 +40,11 @@ export class BackupPlanComponent implements OnInit {
 
   onSubmit() {
     if(this.update){
-      this.backupService.update(this.ID, 'plans', this.plan)
+      this.backupService.update('plans', this.plan)
       .subscribe((plan: any) => {
         });
     } else {
-      this.backupService.save(this.ID, 'plans', this.plan)
+      this.backupService.save('plans', this.plan)
         .subscribe((plan: any) => {
         });
     }

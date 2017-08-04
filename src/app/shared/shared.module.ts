@@ -10,8 +10,6 @@ import { CoreModule } from '../core/core.module';
 import { BackupPlanComponent } from './backup/backup-plan/backup-plan.component';
 import { BackupJobComponent } from './backup/backup-job/backup-job.component';
 import { SharedRoutingModule } from './shared-routing.module';
-import { JobFormComponent } from './backup/backup-job/job-form/job-form.component';
-import { PlanFormComponent } from './backup/backup-plan/plan-form/plan-form.component';
 import { BackupJobDetailsComponent } from './backup/backup-job/backup-job-details/backup-job-details.component';
 import { RestoreJobComponent } from './backup/restore-job/restore-job.component';
 
@@ -30,7 +28,7 @@ const components = [BackupComponent,
     SharedRoutingModule,
     CoreModule
   ],
-  declarations: [...components, JobFormComponent, PlanFormComponent, BackupJobDetailsComponent, RestoreJobComponent, ],
+  declarations: [...components, BackupJobDetailsComponent, RestoreJobComponent ],
   exports: [components],
   providers: [BackupService]
 })

@@ -16,13 +16,13 @@ export class BackupComponent implements OnInit {
 
   ngOnInit() {
     this.backupService
-      .loadBackupPlans('8c0e3edc-ac90-4151-be8a-d6b1975058f5')
+      .loadBackupPlans()
       .subscribe((plans: any) => {
         this.plans = plans.content;
       })
 
     this.backupService
-      .loadRecentBackupJobs('8c0e3edc-ac90-4151-be8a-d6b1975058f5')
+      .loadRecentBackupJobs()
       .subscribe((jobs: any) => {
         this.jobs = jobs.content;
       })
