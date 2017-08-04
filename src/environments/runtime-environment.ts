@@ -6,15 +6,10 @@ if (!injectedEnv) {
 }
 
 export interface Environment {
-  production: boolean;
-  baseUrls: { serviceBrokerUrl: string };
-  auth: {
-    tokenRenewalPreFresh: {
-      primary: number, // min
-      session: number // min
-    },
-    // this setting allows us to simulate auth token epiration by invalidating tokens after a timeout
-    simulatedTokenInvalidationTimeout?: false // ms
+  serviceInstanceId: string;
+  token: string;
+  baseUrls: {
+    serviceBrokerUrl: string;
   };
   ui: {
     title: string;
@@ -25,18 +20,11 @@ export interface Environment {
 // we use quoutes here because that makes it easier to copy config to nginx.conf or cf manifest files
 // tslint:disable:quotemark
 const seedEnv = {
+  serviceInstanceId: '',
+  token: '',
   production: false,
   baseUrls: {
-    //serviceBrokerUrl: "http://localhost:8080"
-     serviceBrokerUrl: "https://mysql-dash.cf.eu-de-netde.msh.host"
-  },
-  auth: {
-    tokenRenewalPreFresh: {
-      primary: 2, // min
-      session: 2 // min
-    },
-    // this setting allows us to simulate auth token epiration by invalidating tokens after a timeout
-    simulatedTokenInvalidationTimeout: false // ms
+    serviceBrokerUrl: 'http://localhost:8080',
   },
   ui: {
     title: "Service Broker Panel",
