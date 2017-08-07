@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BackupService } from '../../backup.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Job } from '../../domain/job';
 
 @Component({
@@ -12,12 +12,13 @@ export class BackupJobDetailsComponent implements OnInit {
   job: Job | any = {};
 
   constructor(protected readonly backupService: BackupService,
-              protected readonly route: ActivatedRoute) { }
+              protected readonly route: ActivatedRoute,
+              protected readonly router: Router) { }
 
  ngOnInit(): void {
      this.route.params.subscribe(params => {
        if (params['jobId']) {
-          this.backupService.loadBackupJob(params['jobId'] + '')
+          this.backupService.loadBackupJob(params['jobId'])
             .subscribe(
               (job: any) => {this.job = job},
             );
@@ -27,8 +28,8 @@ export class BackupJobDetailsComponent implements OnInit {
 
   public delete() {
     console.log('DELETE');
-    this.backupService.
-      delete('jobs', this.job).subscribe((jobs: any) => {
+    this.backupService.delete('jobs', this.job).subscribe((jobs: any) => {
+        this.router.navigate(['/backup']);
     });
   }
 }

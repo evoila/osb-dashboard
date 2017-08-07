@@ -57,7 +57,7 @@
         <tbody>
           <tr *ngFor="let job of jobs; let i = index">
             <th scope="row">{{i + 1}}</th>
-            <td>{{ job.startDate | date:"hh:mm dd.MM.yyyy" }}</td>
+            <td>{{ job.startDate | date:"dd.MM.yyyy - hh:mm" }}</td>
             <td>{{ job.instanceId }}</td>
             <td>{{ job.status }}</td>
             <td><a href="#" routerLink="/backup/job/{{job.id}}">Details</a></td>
