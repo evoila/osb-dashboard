@@ -15,4 +15,6 @@ export interface Job {
     // Optional, only exists, if Backup Job succeeded
     destination: FileEndpoint;
 
+    logs: string[];
+
 }
