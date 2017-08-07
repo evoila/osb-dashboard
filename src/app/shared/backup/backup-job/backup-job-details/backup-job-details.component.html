@@ -19,6 +19,8 @@
             <th>Job Type</th>
             <td>{{job.jobType}}</td>
           </tr>
+        </tbody>
+        <tbody *ngIf="job.destination">
           <tr>
             <th colspan="2"><h4>Backup File</h4></th>
           </tr>
