@@ -9,6 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./backup-plan.component.scss']
 })
 export class BackupPlanComponent implements OnInit {
+  readonly ENTITY: string = 'plans';
   plan: any = { destination: {} }
   update = false;
 
@@ -21,7 +22,7 @@ export class BackupPlanComponent implements OnInit {
       console.log(params['planId']);
        if (params['planId']) {
          this.update = true;
-          this.backupService.loadBackupPlan(params['planId'])
+          this.backupService.loadEntity(this.ENTITY, params['planId'])
             .subscribe(
               (plan: any) => { this.plan = plan},
             );
@@ -31,7 +32,7 @@ export class BackupPlanComponent implements OnInit {
   }
 
   delete(): void {
-    this.backupService.delete('plans', this.plan)
+    this.backupService.delete(this.ENTITY, this.plan)
       .subscribe((plan: any) => {
         this.redirect();
       });
@@ -39,12 +40,12 @@ export class BackupPlanComponent implements OnInit {
 
   onSubmit(): void {
     if (this.update) {
-      this.backupService.update('plans', this.plan)
+      this.backupService.update(this.ENTITY, this.plan)
         .subscribe((plan: any) => {
           this.redirect();
       });
     } else {
-      this.backupService.save('plans', this.plan)
+      this.backupService.save(this.ENTITY, this.plan)
         .subscribe((plan: any) => {
           this.redirect();
       });

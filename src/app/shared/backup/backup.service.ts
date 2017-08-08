@@ -11,33 +11,25 @@ import { environment } from 'environments/runtime-environment';
 const serviceInstanceId = environment.serviceInstanceId;
 @Injectable()
 export class BackupService {
+  SORT_CONFIG = 'sort=startDate,desc';
   BACKUP_BASEURL = '/v2/manage/backup';
 
   constructor(protected readonly httpService: CoreHttpService) {}
 
-  public loadBackupPlans(): Observable<{} | BackupPlan> {
+  public loadEntities(entity): Observable<{} | any> {
     return this.httpService
-      .get(this.BACKUP_BASEURL + '/' + serviceInstanceId + '/plans?sort=startDate,desc' )
+      .get(this.BACKUP_BASEURL + '/' + serviceInstanceId + '/' + entity + '?' + this.SORT_CONFIG)
       .map(res => {
-        return res.json() as BackupPlan;
+        return res.json() as any;
       })
       .catch(e => this.httpService.formatError(e));
   }
 
-  public loadBackupPlan(planId: string): Observable<{} | BackupPlan> {
+  public loadEntity(entity, id): Observable<{} | any> {
     return this.httpService
-      .get(this.BACKUP_BASEURL + '/' + serviceInstanceId + '/plans/' + planId)
+      .get(this.BACKUP_BASEURL + '/' + serviceInstanceId + '/' + entity + '/' + id)
       .map(res => {
-        return res.json() as BackupPlan;
-      })
-      .catch(e => this.httpService.formatError(e));
-  }
-
-  public loadRecentBackupJobs(): Observable<{} | Job> {
-    return this.httpService
-      .get(this.BACKUP_BASEURL + '/' + serviceInstanceId + '/jobs?sort=startDate,desc')
-      .map(res => {
-        return res.json() as Job;
+        return res.json() as any;
       })
       .catch(e => this.httpService.formatError(e));
   }
@@ -61,12 +53,4 @@ export class BackupService {
       .catch(e => this.httpService.formatError(e));
   }
 
-  public loadBackupJob(jobId: string) {
-    return this.httpService
-      .get(this.BACKUP_BASEURL + '/' + serviceInstanceId + '/jobs/' + jobId )
-      .map(res => {
-        return res.json();
-      })
-      .catch(e => this.httpService.formatError(e));
-  }
 }

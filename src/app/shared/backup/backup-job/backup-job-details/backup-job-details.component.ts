@@ -18,7 +18,7 @@ export class BackupJobDetailsComponent implements OnInit {
  ngOnInit(): void {
      this.route.params.subscribe(params => {
        if (params['jobId']) {
-          this.backupService.loadBackupJob(params['jobId'])
+          this.backupService.loadEntity('jobs', params['jobId'])
             .subscribe(
               (job: any) => {this.job = job},
             );
