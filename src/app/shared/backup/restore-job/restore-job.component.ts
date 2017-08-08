@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {BackupService} from "../backup.service";
+import {BackupService} from '../backup.service';
 
 @Component({
   selector: 'sb-restore-job',
