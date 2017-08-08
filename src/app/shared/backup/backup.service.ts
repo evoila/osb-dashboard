@@ -34,6 +34,15 @@ export class BackupService {
       .catch(e => this.httpService.formatError(e));
   }
 
+  public validate(rel: string, entity: any): Observable<{} | any> {
+    return this.httpService
+      .post(this.BACKUP_BASEURL + '/' + serviceInstanceId + '/' + rel + '/validate' , entity)
+      .map(res => {
+        return res.json() as any;
+      })
+
+  }
+
   public save(rel, entity: any): Observable<{} | any> {
     return this.httpService
       .post(this.BACKUP_BASEURL + '/'  + serviceInstanceId + '/'  + rel, entity)
