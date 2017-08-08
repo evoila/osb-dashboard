@@ -33,7 +33,7 @@ export const ROUTES = [
     component: FileEndpointComponent
   },
   {
-    path: 'backup/file-endpoint/:jobId',
+    path: 'backup/file-endpoint/:fileEndpointId',
     component: FileEndpointComponent
   },
   {

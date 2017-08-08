@@ -10,7 +10,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class BackupPlanComponent implements OnInit {
   readonly ENTITY: string = 'plans';
-  plan: any = { destination: {} }
+  plan: any = {}
+  destinations: any = [];
   update = false;
 
   constructor(protected readonly backupService: BackupService,
@@ -18,6 +19,11 @@ export class BackupPlanComponent implements OnInit {
               protected readonly router: Router) { }
 
   ngOnInit() {
+    this.backupService.loadEntities("destinations")
+      .subscribe(
+        (dest: any) => { this.destinations = dest.content},
+      );
+
     this.route.params.subscribe(params => {
       console.log(params['planId']);
        if (params['planId']) {

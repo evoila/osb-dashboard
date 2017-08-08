@@ -15,6 +15,8 @@ export interface FileEndpoint {
 
     containerName: string;
 
+    id: string;
+
     // Do not provide when creating a request
     filename: string;
 

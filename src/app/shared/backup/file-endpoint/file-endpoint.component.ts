@@ -11,6 +11,8 @@ export class FileEndpointComponent implements OnInit {
   readonly ENTITY: string = 'destinations';
   destination: any = {};
   update = false;
+  validated = false;
+  submitLabel = 'Validate';
 
   constructor(protected readonly backupService: BackupService,
               protected readonly route: ActivatedRoute,
@@ -38,16 +40,24 @@ export class FileEndpointComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.update) {
-      this.backupService.update(this.ENTITY, this.destination)
+    if (!this.validated) {
+      this.backupService.validate(this.ENTITY, this.destination)
         .subscribe((destination: any) => {
-          this.redirect();
-      });
+          this.validated = true;
+          this.submitLabel = 'Submit';
+        });
     } else {
-      this.backupService.save(this.ENTITY, this.destination)
-        .subscribe((destination: any) => {
-          this.redirect();
-      });
+      if (this.update) {
+        this.backupService.update(this.ENTITY, this.destination)
+          .subscribe((destination: any) => {
+            this.redirect();
+          });
+      } else {
+        this.backupService.save(this.ENTITY, this.destination)
+          .subscribe((destination: any) => {
+            this.redirect();
+          });
+      }
     }
   }
 

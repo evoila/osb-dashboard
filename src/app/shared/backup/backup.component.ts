@@ -36,4 +36,9 @@ export class BackupComponent implements OnInit {
       })
   }
 
+  startBackup(id:string){
+    this.backupService.save('backup', {destinationId: id})
+      .subscribe((job: any) => {
+      });
+  }
 }
