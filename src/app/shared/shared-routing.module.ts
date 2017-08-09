@@ -6,10 +6,17 @@ import { BackupJobComponent } from './backup/backup-job/backup-job.component';
 import { RestoreJobComponent } from './backup/restore-job/restore-job.component';
 import { BackupJobDetailsComponent } from './backup/backup-job/backup-job-details/backup-job-details.component';
 import { FileEndpointComponent } from './backup/file-endpoint/file-endpoint.component';
+import {GeneralComponent} from './general/general.component';
+import {ServiceKeysComponent} from './service-keys/service-keys.component';
+import {ServiceKeysDetailComponent} from './service-keys/service-key-details/service-keys-detail.component';
 
 export const ROUTES = [
   {
     path: '',
+    component: GeneralComponent,
+  },
+  {
+    path: 'backup',
     component: BackupComponent,
   },
   {
@@ -39,6 +46,14 @@ export const ROUTES = [
   {
     path: 'backup/create-restore',
     component: RestoreJobComponent
+  },
+  {
+    path: 'service-keys',
+    component: ServiceKeysComponent
+  },
+  {
+    path: 'service-keys/:serviceKeyId',
+    component: ServiceKeysDetailComponent
   }
 ];
 
