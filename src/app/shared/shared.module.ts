@@ -15,6 +15,8 @@ import { RestoreJobComponent } from './backup/restore-job/restore-job.component'
 import { FileEndpointComponent } from './backup/file-endpoint/file-endpoint.component';
 import {GeneralComponent} from "./general/general.component";
 import {GeneralService} from "./general/general.service";
+import {ServiceKeysService} from "./service-keys/service-keys.service";
+import {ServiceKeysDetailComponent} from "./service-keys/service-key-details/service-keys-detail.component";
 
 const components = [BackupComponent,
   ServiceKeysComponent,
@@ -24,7 +26,8 @@ const components = [BackupComponent,
   BackupJobDetailsComponent,
   RestoreJobComponent,
   FileEndpointComponent,
-  GeneralComponent
+  GeneralComponent,
+  ServiceKeysDetailComponent
 ]
 
 @NgModule({
@@ -37,6 +40,6 @@ const components = [BackupComponent,
   ],
   declarations: [...components],
   exports: [components],
-  providers: [BackupService, GeneralService]
+  providers: [BackupService, GeneralService, ServiceKeysService]
 })
 export class SharedModule { }
