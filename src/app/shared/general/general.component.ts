@@ -8,9 +8,9 @@ import { GeneralService } from './general.service';
   styleUrls: ['./general.component.scss']
 })
 export class GeneralComponent implements OnInit {
-  generalInfo: any;
-  constructor(protected readonly generalService: GeneralService) { }
+  generalInfo: any = {};
 
+  constructor(protected readonly generalService: GeneralService) { }
 
   ngOnInit() {
     this.generalService.loadGeneral()
