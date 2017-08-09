@@ -13,6 +13,8 @@ import { SharedRoutingModule } from './shared-routing.module';
 import { BackupJobDetailsComponent } from './backup/backup-job/backup-job-details/backup-job-details.component';
 import { RestoreJobComponent } from './backup/restore-job/restore-job.component';
 import { FileEndpointComponent } from './backup/file-endpoint/file-endpoint.component';
+import {GeneralComponent} from "./general/general.component";
+import {GeneralService} from "./general/general.service";
 
 const components = [BackupComponent,
   ServiceKeysComponent,
@@ -21,7 +23,8 @@ const components = [BackupComponent,
   BackupJobComponent,
   BackupJobDetailsComponent,
   RestoreJobComponent,
-  FileEndpointComponent
+  FileEndpointComponent,
+  GeneralComponent
 ]
 
 @NgModule({
@@ -30,10 +33,10 @@ const components = [BackupComponent,
     FormsModule,
     RouterModule,
     SharedRoutingModule,
-    CoreModule
+    CoreModule,
   ],
   declarations: [...components],
   exports: [components],
-  providers: [BackupService]
+  providers: [BackupService, GeneralService]
 })
 export class SharedModule { }

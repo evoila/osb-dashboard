@@ -6,10 +6,15 @@ import { BackupJobComponent } from './backup/backup-job/backup-job.component';
 import { RestoreJobComponent } from './backup/restore-job/restore-job.component';
 import { BackupJobDetailsComponent } from './backup/backup-job/backup-job-details/backup-job-details.component';
 import { FileEndpointComponent } from './backup/file-endpoint/file-endpoint.component';
+import {GeneralComponent} from './general/general.component';
 
 export const ROUTES = [
   {
     path: '',
+    component: GeneralComponent,
+  },
+  {
+    path: 'backup',
     component: BackupComponent,
   },
   {
