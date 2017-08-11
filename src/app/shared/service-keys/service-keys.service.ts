@@ -41,7 +41,7 @@ export class ServiceKeysService {
 
   public create(): Observable<{} | any> {
     return this.httpService
-      .get(this.BACKUP_BASEURL + '/' + serviceInstanceId + '/create')
+      .post(this.BACKUP_BASEURL + '/' + serviceInstanceId,{})
       .map(res => {
         return res.json() as any;
       })
