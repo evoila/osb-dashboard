@@ -17,7 +17,7 @@ const authToken = environment.token;
 
 @Injectable()
 export class CoreHttpService extends Http {
-
+  private customHeaders = new Headers();
   private accessToken: string | undefined;
 
   public static makeOptions(accessToken?: string): RequestOptions {
@@ -41,6 +41,10 @@ export class CoreHttpService extends Http {
     this.accessToken = authToken;
   }
 
+  public setCustomHeader(key: string, value: string) {
+    this.customHeaders.append(key, value);
+  }
+
   public request(req: Request, options?: RequestOptionsArgs): Observable<Response> {
     this.applyBaseUrl(req, options);
 
@@ -49,6 +53,13 @@ export class CoreHttpService extends Http {
     } else {
       req.headers.delete('Authorization');
     }
+
+    this.customHeaders.forEach((values: string[], name: string) => {
+      const value = this.customHeaders.get(name);
+      if (value !== null) {
+        req.headers.append(name, value);
+      }
+    });
 
     return super.request(req, options);
   }
