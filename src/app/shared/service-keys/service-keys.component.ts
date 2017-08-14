@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ServiceKeysService} from "./service-keys.service";
+import { ServiceKeysService } from './service-keys.service';
 
 @Component({
   selector: 'sb-service-keys',
@@ -7,21 +7,29 @@ import {ServiceKeysService} from "./service-keys.service";
   styleUrls: ['./service-keys.component.scss']
 })
 export class ServiceKeysComponent implements OnInit {
+  readonly ENTITY = 'servicekeys';
   serviceKeys: [any];
+  isLoading = false;
 
   constructor(protected readonly service: ServiceKeysService) { }
 
   ngOnInit() {
-    this.service.loadAll()
-      .subscribe((keys_page: any) => {
-        this.serviceKeys = keys_page.content;
-      });
+    this.loadKeys();
+  }
+
+  loadKeys(): void {
+    this.service.loadAll(this.ENTITY)
+    .subscribe((keys_page: any) => {
+      this.serviceKeys = keys_page.content;
+    });
   }
 
   create(): void {
-    this.service.create()
+    this.isLoading = true;
+    this.service.saveOne({}, this.ENTITY)
       .subscribe((key: any) => {
-        this.serviceKeys.push(key);
+        this.isLoading = false;
+        this.loadKeys();
       });
   }
 }

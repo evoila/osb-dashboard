@@ -13,7 +13,7 @@ export class GeneralComponent implements OnInit {
   constructor(protected readonly generalService: GeneralService) { }
 
   ngOnInit() {
-    this.generalService.loadGeneral()
+    this.generalService.loadAll()
       .subscribe((info: any) => {
       console.log(info);
         this.generalInfo = info;
