@@ -8,7 +8,7 @@ import {ServiceKeysService} from "../service-keys.service";
   styleUrls: ['./service-keys-detail.component.scss']
 })
 export class ServiceKeysDetailComponent implements OnInit {
-  readonly ENTITY: string = 'destinations';
+  readonly ENTITY: string = 'servicekeys';
   serviceKey: any;
   credentials_keys: any;
 
@@ -19,26 +19,23 @@ export class ServiceKeysDetailComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(params => {
        if (params['serviceKeyId']) {
-         this.service.get(params['serviceKeyId']).subscribe((key: any) => {
-           console.log(key);
+         this.service.loadOne(this.ENTITY, params['serviceKeyId']).subscribe((key: any) => {
            this.serviceKey = key;
            this.credentials_keys = Object.keys(key.credentials);
          });
        }
     });
-
   }
 
   delete(): void {
-    this.service.delete(this.serviceKey.id)
+    this.service.deleteOne(this.ENTITY, this.serviceKey.id)
       .subscribe((key: any) => {
         this.redirect();
       });
   }
 
-
   private redirect(): void {
-    this.router.navigate(['/']);
+    this.router.navigate(['/service-keys']);
   }
 
 }

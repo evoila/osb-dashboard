@@ -3,7 +3,7 @@
     <div class="col-lg-12">
       <h2> Service Keys </h2>
       <p>Below you can find the currently existing service keys you have configured for your Instance.</p>
-      <p><a class="btn btn-secondary" (click)="create()" role="button">Create Service Key »</a></p>
+      <p><a class="btn btn-secondary" (click)="create()" role="button" [mstInlineLoader]="isLoading">Create Service Key »</a></p>
       <table class="table">
         <thead>
         <tr>

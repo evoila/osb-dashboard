@@ -5,22 +5,19 @@ import 'rxjs/add/operator/catch';
 import { CoreHttpService } from '../../core/core-http.service';
 
 import { environment } from 'environments/runtime-environment';
+import { EntityService } from 'app/core';
 
 const serviceInstanceId = environment.serviceInstanceId;
 @Injectable()
-export class GeneralService {
-  BACKUP_BASEURL = '/v2/manage/';
+export class GeneralService extends EntityService {
+  readonly BACKUP_BASEURL = '/v2/manage/';
 
-  constructor(protected readonly httpService: CoreHttpService) {}
-
-  public loadGeneral(): Observable<{} | any> {
-    return this.httpService
-      .get(this.BACKUP_BASEURL + '/' + serviceInstanceId + '/')
-      .map(res => {
-        return res.json() as any;
-      })
-      .catch(e => this.httpService.formatError(e));
+  constructor(protected readonly httpService: CoreHttpService) {
+    super(httpService);
   }
 
+  public loadAll(): Observable<{} | any> {
+    return this.all(this.BACKUP_BASEURL + '/' + serviceInstanceId + '/');
+  }
 
 }

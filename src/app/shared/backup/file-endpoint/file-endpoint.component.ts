@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BackupService } from '../backup.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import {NotificationService, Notification} from '../../../core/notification.service';
 
 @Component({
   selector: 'sb-file-endpoint',
@@ -16,14 +17,15 @@ export class FileEndpointComponent implements OnInit {
 
   constructor(protected readonly backupService: BackupService,
               protected readonly route: ActivatedRoute,
-              protected readonly router: Router) { }
+              protected readonly router: Router,
+              protected readonly nService: NotificationService) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
       console.log(params['fileEndpointId']);
        if (params['fileEndpointId']) {
          this.update = true;
-          this.backupService.loadEntity(this.ENTITY, params['fileEndpointId'])
+          this.backupService.loadOne(this.ENTITY, params['fileEndpointId'])
             .subscribe(
               (destination: any) => { this.destination = destination},
             );
@@ -33,7 +35,7 @@ export class FileEndpointComponent implements OnInit {
   }
 
   delete(): void {
-    this.backupService.delete(this.ENTITY, this.destination)
+    this.backupService.deleteOne(this.ENTITY, this.destination)
       .subscribe((destination: any) => {
         this.redirect();
       });
@@ -42,22 +44,21 @@ export class FileEndpointComponent implements OnInit {
   onSubmit(): void {
     if (!this.validated) {
       this.backupService.validate(this.ENTITY, this.destination)
-        .subscribe((destination: any) => {
-          this.validated = true;
-          this.submitLabel = 'Submit';
+        .subscribe({
+          next: (d) => {
+            this.validated = true;
+            this.submitLabel = 'Submit';
+          },
+          error: (e) => {
+            this.nService.add(new Notification('Warning', 'Could not verify your account credentials.'));
+          }
         });
     } else {
-      if (this.update) {
-        this.backupService.update(this.ENTITY, this.destination)
-          .subscribe((destination: any) => {
-            this.redirect();
-          });
-      } else {
-        this.backupService.save(this.ENTITY, this.destination)
-          .subscribe((destination: any) => {
-            this.redirect();
-          });
-      }
+      const id = this.update ? this.destination.id : null;
+      this.backupService.saveOne(this.destination, this.ENTITY, id)
+        .subscribe((plan: any) => {
+          this.redirect();
+      });
     }
   }
 
