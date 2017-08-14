@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {BackupService} from '../backup.service';
+import { BackupService } from '../backup.service';
 
 @Component({
   selector: 'sb-restore-job',
@@ -7,17 +7,14 @@ import {BackupService} from '../backup.service';
   styleUrls: ['./restore-job.component.scss']
 })
 export class RestoreJobComponent implements OnInit {
-
   request: any = { source: {} }
 
   constructor(protected readonly backupService: BackupService) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   onSubmit() {
-
-    this.backupService.save('restore', this.request)
+    this.backupService.saveOne('restore', this.request)
       .subscribe((job: any) => {
       });
   }

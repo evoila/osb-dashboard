@@ -23,7 +23,7 @@ export class FileEndpointComponent implements OnInit {
       console.log(params['fileEndpointId']);
        if (params['fileEndpointId']) {
          this.update = true;
-          this.backupService.loadEntity(this.ENTITY, params['fileEndpointId'])
+          this.backupService.loadOne(this.ENTITY, params['fileEndpointId'])
             .subscribe(
               (destination: any) => { this.destination = destination},
             );
@@ -33,7 +33,7 @@ export class FileEndpointComponent implements OnInit {
   }
 
   delete(): void {
-    this.backupService.delete(this.ENTITY, this.destination)
+    this.backupService.deleteOne(this.ENTITY, this.destination)
       .subscribe((destination: any) => {
         this.redirect();
       });
@@ -47,17 +47,11 @@ export class FileEndpointComponent implements OnInit {
           this.submitLabel = 'Submit';
         });
     } else {
-      if (this.update) {
-        this.backupService.update(this.ENTITY, this.destination)
-          .subscribe((destination: any) => {
-            this.redirect();
-          });
-      } else {
-        this.backupService.save(this.ENTITY, this.destination)
-          .subscribe((destination: any) => {
-            this.redirect();
-          });
-      }
+      const id = this.update ? this.destination.id : null;
+      this.backupService.saveOne(this.destination, this.ENTITY, id)
+        .subscribe((plan: any) => {
+          this.redirect();
+      });
     }
   }
 

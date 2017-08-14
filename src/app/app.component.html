@@ -25,6 +25,9 @@
     </ul>
   </div>
 </nav>
-<div class="main-outlet">
-  <router-outlet></router-outlet>
+<div class="main">
+  <div class="main-outlet">
+    <router-outlet></router-outlet>
+  </div>
+  <sb-notification-banner *ngIf="notification" [notification]="notification" (close)="closeNotification()"></sb-notification-banner>
 </div>

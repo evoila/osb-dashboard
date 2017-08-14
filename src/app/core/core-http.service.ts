@@ -55,10 +55,7 @@ export class CoreHttpService extends Http {
     }
 
     this.customHeaders.forEach((values: string[], name: string) => {
-      const value = this.customHeaders.get(name);
-      if (value !== null) {
-        req.headers.append(name, value);
-      }
+        req.headers.set(name, values);
     });
 
     return super.request(req, options);

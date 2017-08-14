@@ -19,7 +19,7 @@ export class BackupPlanComponent implements OnInit {
               protected readonly router: Router) { }
 
   ngOnInit() {
-    this.backupService.loadEntities("destinations")
+    this.backupService.loadAll('destinations')
       .subscribe(
         (dest: any) => { this.destinations = dest.content},
       );
@@ -28,7 +28,7 @@ export class BackupPlanComponent implements OnInit {
       console.log(params['planId']);
        if (params['planId']) {
          this.update = true;
-          this.backupService.loadEntity(this.ENTITY, params['planId'])
+          this.backupService.loadOne(this.ENTITY, params['planId'])
             .subscribe(
               (plan: any) => { this.plan = plan},
             );
@@ -38,24 +38,18 @@ export class BackupPlanComponent implements OnInit {
   }
 
   delete(): void {
-    this.backupService.delete(this.ENTITY, this.plan)
+    this.backupService.deleteOne(this.ENTITY, this.plan)
       .subscribe((plan: any) => {
         this.redirect();
       });
   }
 
   onSubmit(): void {
-    if (this.update) {
-      this.backupService.update(this.ENTITY, this.plan)
-        .subscribe((plan: any) => {
-          this.redirect();
-      });
-    } else {
-      this.backupService.save(this.ENTITY, this.plan)
-        .subscribe((plan: any) => {
-          this.redirect();
-      });
-    }
+    const id = this.update ? this.plan.id : null;
+    this.backupService.saveOne(this.plan, this.ENTITY, id)
+      .subscribe((plan: any) => {
+        this.redirect();
+    });
   }
 
   private redirect(): void {

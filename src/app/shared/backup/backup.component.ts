@@ -18,26 +18,26 @@ export class BackupComponent implements OnInit {
 
   ngOnInit() {
     this.backupService
-      .loadEntities('plans')
+      .loadAll('plans')
       .subscribe((plans: any) => {
         this.plans = plans.content;
       });
 
     this.backupService
-      .loadEntities('jobs')
+      .loadAll('jobs')
       .subscribe((jobs: any) => {
         this.jobs = jobs.content;
       });
 
     this.backupService
-      .loadEntities('destinations')
+      .loadAll('destinations')
       .subscribe((destinations: any) => {
         this.destinations = destinations.content;
       })
   }
 
-  startBackup(id:string){
-    this.backupService.save('backup', {destinationId: id})
+  startBackup(id: string) {
+    this.backupService.saveOne({destinationId: id}, 'backup')
       .subscribe((job: any) => {
       });
   }
