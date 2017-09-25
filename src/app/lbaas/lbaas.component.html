@@ -1,0 +1,47 @@
+<div class="container" style="padding: 40px 0 40px 0">
+  <p><a class="link" routerLink="/autoscaler"><< Go Back</a></p>
+  <form #form="ngForm" action="#" (ngSubmit)="onSubmit()">
+    <h5>Certificates</h5>
+    <p>
+      To provide a valid certifcate put the following contents into the two inputs
+    </p>
+    <h6>Certifcate Chain</h6>      
+    <ul>
+      <li>
+        The Certificate for your domain
+      </li>
+      <li>
+        The intermediates in ascending order to the Root CA
+      </li>
+      <li>
+        A Root CA, if any (usually none)   
+      </li>
+    </ul>
+    <h6>Private Key</h6>
+    <ul>
+      <li>
+        Private Key
+      </li>
+    </ul>
+    <div class="form-group">
+      <label for="certificate">Certificate</label>
+      <textarea class="form-control" name="certificate" #certificate="ngModel" [(ngModel)]="configuration.certificate">
+      </textarea>
+      <small id="certificateHelp" class="form-text text-muted">Please provide your certificate and your CA.</small>
+      <div [hidden]="certificate.valid || certificate.pristine" class="alert alert-danger">
+          Certificate is required
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="certificate">Private Key</label>
+        <textarea class="form-control" name="private_key" #private_key="ngModel" [(ngModel)]="configuration.private_key">
+        </textarea>
+        <small id="private_keyHelp" class="form-text text-muted">Please provide your private key.</small>
+        <div [hidden]="private_key.valid || private_key.pristine" class="alert alert-danger">
+            Private Key is required
+          </div>
+      </div>
+    <button type="submit" class="btn btn-primary" [mstInlineLoader]="isLoading">Validate & Save Certificates</button>
+  </form>
+</div>
+    
