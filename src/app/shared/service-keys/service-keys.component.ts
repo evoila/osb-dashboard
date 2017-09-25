@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ServiceKeysService } from './service-keys.service';
-import {NotificationService, Notification} from '../../core/notification.service';
+import { NotificationService, Notification } from '../../core/notification.service';
 
 @Component({
   selector: 'sb-service-keys',
