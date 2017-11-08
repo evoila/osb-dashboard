@@ -1,6 +1,6 @@
 <div class="container" style="padding: 40px 0 40px 0">
   <p><a class="link" routerLink="/autoscaler"><< Go Back</a></p>
-  <form #form="ngForm" action="#" (ngSubmit)="onSubmit()">
+  <form #form="ngForm" (ngSubmit)="onSubmit()">
     <h5>Certificates</h5>
     <p>
       To provide a valid certifcate put the following contents into the two inputs
@@ -41,7 +41,8 @@
             Private Key is required
           </div>
       </div>
-    <button type="submit" class="btn btn-primary" [mstInlineLoader]="isLoading">Validate & Save Certificates</button>
+    <button type="submit" class="btn btn-success" [disabled]="!form.form.valid">Validate & Save Certificates</button>
+    <small id="certificateWarning" class="form-text"><font color="red">Certificate already exists. Saving a new certificate would override the old one</font></small>
   </form>
 </div>
     

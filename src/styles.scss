@@ -24,32 +24,6 @@ a.disabled {
   padding: 1rem;
 }
 
-/** Browser banner **/
-.notification-banner {
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  left: 0;
-
-  text-align: center;
-  font-size: 16px;
-  padding: 10px 0;
-  background: #FFEEA9;
-  margin-top: 100px;
-  border-bottom: 1px solid #CCC;
-
-  .close {
-    margin-right: 1rem;
-  }
-}
-
-.notification-banner#browser-unsupported-banner {
-  // this is not perfectly centered, but we make it appear "sufficiently centered"
-  // above the loader by adding some larger padding to fully hide it
-  bottom: 45vh;
-  padding: 40px 0;
-}
-
 .page-padding {
   @include media-breakpoint-up(md) {
     padding: 2rem;
