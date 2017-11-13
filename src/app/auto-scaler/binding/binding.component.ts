@@ -3,7 +3,7 @@ import { Configuration } from '../domain/configuration';
 import { SliderConfiguration } from '../domain/slider-configuration';
 import { AutoScalerService } from '../auto-scaler.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NotificationService, Notification } from '../../core/notification.service';
+import { NotificationService, Notification, NotificationType } from '../../core/notification.service';
 
 @Component({
   selector: 'sb-binding',
@@ -75,7 +75,7 @@ export class BindingComponent implements OnInit {
     this.isLoading = true;
     this.asService.saveOne({}, this.ENTITY, this.BINDING_ID + '/resetLST')
       .subscribe((configuration: any) => {
-        this.nService.add(new Notification('Warning', 'Successfully reset Learning Time'));
+        this.nService.add(new Notification(NotificationType.Warning, 'Successfully reset Learning Time'));
         this.isLoading = false;
         this.loadEntity();
     });
