@@ -10,11 +10,17 @@ export class LBaasComponent implements OnInit {
   configuration = {}
 
   public certified: boolean;
+  public publicIp: any;
 
   constructor(readonly asService: LBaasService,
               protected readonly nService: NotificationService) { }
 
   ngOnInit() {
+    this.asService.getPublicIp('fip')
+    .subscribe((publicIp: any) => {
+      this.publicIp = publicIp['publicIp'];
+    });
+    
     const warning = document.getElementById('certificateWarning');
 
     if(warning != null) {

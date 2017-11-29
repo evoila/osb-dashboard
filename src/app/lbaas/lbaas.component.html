@@ -1,6 +1,7 @@
 <div class="container" style="padding: 40px 0 40px 0">
   <p><a class="link" routerLink="/autoscaler"><< Go Back</a></p>
   <form #form="ngForm" (ngSubmit)="onSubmit()">
+    <h5>Public IP: {{publicIp}}</h5>
     <h5>Certificates</h5>
     <p>
       To provide a valid certifcate put the following contents into the two inputs
@@ -25,7 +26,7 @@
     </ul>
     <div class="form-group">
       <label for="certificate">Certificate</label>
-      <textarea class="form-control" name="certificate" #certificate="ngModel" [(ngModel)]="configuration.certificate">
+      <textarea class="form-control" name="certificate" #certificate="ngModel" [(ngModel)]="configuration['certificate']">
       </textarea>
       <small id="certificateHelp" class="form-text text-muted">Please provide your certificate and your CA.</small>
       <div [hidden]="certificate.valid || certificate.pristine" class="alert alert-danger">
@@ -34,7 +35,7 @@
     </div>
     <div class="form-group">
         <label for="certificate">Private Key</label>
-        <textarea class="form-control" name="private_key" #private_key="ngModel" [(ngModel)]="configuration.private_key">
+        <textarea class="form-control" name="private_key" #private_key="ngModel" [(ngModel)]="configuration['private_key']">
         </textarea>
         <small id="private_keyHelp" class="form-text text-muted">Please provide your private key.</small>
         <div [hidden]="private_key.valid || private_key.pristine" class="alert alert-danger">

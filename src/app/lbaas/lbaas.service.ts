@@ -27,4 +27,7 @@ export class LBaasService extends EntityService  {
     return this.get(this.CERTIFICATE_BASEURL + '/' + serviceInstanceId + '/' + entityRel);
   }
 
+  public getPublicIp(entityRel : string): Observable<{} | any> {
+    return this.get(this.CERTIFICATE_BASEURL + '/' + serviceInstanceId + '/' + entityRel);
+  }
 }
