@@ -1,6 +1,7 @@
 <div class="container" style="padding: 40px 0 40px 0">
   <p><a class="link" routerLink="/autoscaler"><< Go Back</a></p>
   <form #form="ngForm" (ngSubmit)="onSubmit()">
+    <h5>Public IP: {{publicIp}}</h5>
     <h5>Certificates</h5>
     <p>
       To provide a valid certifcate put the following contents into the two inputs
