@@ -33,11 +33,7 @@ export class AutoScalerService extends EntityService {
   }
 
   public saveOne(entity: any, entityRel: string, id?: string): Observable<{} | any> {
-    if (id) {
-      return this.patch(this.BACKUP_BASEURL + '/' + entityRel + '/' + id, entity);
-    } else {
-      return this.post(this.BACKUP_BASEURL + '/' + entityRel, entity);
-    }
+    return this.patch(this.BACKUP_BASEURL + '/' + entityRel + '/' + id, entity);
   }
 
 }
