@@ -3,11 +3,11 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
-// import { environment } from 'environments/runtime-environment';
+import { environment } from 'environments/runtime-environment';
 import { CoreHttpService } from '../core/core-http.service';
 import { EntityService } from '../core/entity.service';
 
-// const serviceInstanceId = environment.serviceInstanceId;
+const serviceInstanceId = environment.serviceInstanceId;
 @Injectable()
 export class AutoScalerService extends EntityService {
   readonly BACKUP_BASEURL = '';
@@ -21,7 +21,7 @@ export class AutoScalerService extends EntityService {
   }
 
   public loadAll(entityRel: string): Observable<{} | any> {
-    return this.all(this.BACKUP_BASEURL + '/' + entityRel);
+    return this.all(this.BACKUP_BASEURL + '/' + entityRel + '/serviceInstance/' + serviceInstanceId);
   }
 
   public deleteOne(entityRel: string): Observable<{} | any> {
