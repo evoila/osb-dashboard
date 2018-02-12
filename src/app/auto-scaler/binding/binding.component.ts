@@ -27,7 +27,7 @@ export class BindingComponent implements OnInit {
   };
   readonly minMaxConfig = SliderConfiguration.MIN_MAX_CONFIG;
   readonly lowerUpperConfig = SliderConfiguration.LOWER_UPPER_CONFIG;
-  readonly ENTITY = 'bindings';
+  readonly ENTITY = 'configuration';
   BINDING_ID;
 
   constructor(protected readonly asService: AutoScalerService,
