@@ -3,7 +3,8 @@ import { Subject } from 'rxjs/Subject';
 
 export enum NotificationType {
   Warning = <any>"warning",
-  Info = <any>"info"
+  Info = <any>"info",
+  Error = <any>"error"
 }
 
 export interface NotificationActionLink {

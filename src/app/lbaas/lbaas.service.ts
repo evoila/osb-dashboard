@@ -9,6 +9,7 @@ const serviceInstanceId = environment.serviceInstanceId;
 @Injectable()
 export class LBaasService extends EntityService  {
   readonly CERTIFICATE_BASEURL = '/v2/manage/service_instances';
+  private publicIp: any;
 
   constructor(protected readonly entityService: EntityService,
     protected readonly httpService: CoreHttpService) {
@@ -29,5 +30,9 @@ export class LBaasService extends EntityService  {
 
   public getPublicIp(entityRel : string): Observable<{} | any> {
     return this.get(this.CERTIFICATE_BASEURL + '/' + serviceInstanceId + '/' + entityRel);
+  }
+
+  public validate(entity: any, entityRel: string): Observable<{} | any> {
+    return this.post(this.CERTIFICATE_BASEURL + '/' + serviceInstanceId + '/' + entityRel, entity);
   }
 }

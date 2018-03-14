@@ -5,12 +5,14 @@ import { LBaasService } from './lbaas.service';
 import { FormsModule } from '@angular/forms';
 import { CoreModule } from '../core/core.module';
 import { LBaasRoutingModule } from './lbaas-routing.module';
+import { NgbTabsetModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     CoreModule,
+    NgbTabsetModule,
     LBaasRoutingModule
   ],
   declarations: [LBaasComponent],

@@ -24,6 +24,10 @@
     background: #42A948;
   }
 
+  .error {
+    background: #CC2222;
+  }
+
   .notification-banner#browser-unsupported-banner {
     // this is not perfectly centered, but we make it appear "sufficiently centered"
     // above the loader by adding some larger padding to fully hide it

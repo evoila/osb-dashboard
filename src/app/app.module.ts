@@ -5,7 +5,7 @@ import { HttpModule } from '@angular/http';
 
 import {
   NgbDropdownModule, NgbCollapseModule, NgbTypeaheadModule,
-  NgbTooltipModule, NgbModalModule, NgbPopoverModule
+  NgbTooltipModule, NgbModalModule, NgbPopoverModule, NgbTabsetModule
 } from '@ng-bootstrap/ng-bootstrap';
 
 import { buildTarget } from 'environments/target';
@@ -34,6 +34,7 @@ export function buildBuildTargetService(): BuildTargetService {
     NgbModalModule.forRoot(),
     NgbPopoverModule.forRoot(),
     NgbTypeaheadModule.forRoot(),
+    NgbTabsetModule.forRoot(),
 
     CoreModule.forRoot(),
     SharedModule,

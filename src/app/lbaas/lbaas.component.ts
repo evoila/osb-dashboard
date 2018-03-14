@@ -11,6 +11,7 @@ export class LBaasComponent implements OnInit {
 
   public certified: boolean;
   public publicIp: any;
+  public responseString: string;
 
   constructor(readonly asService: LBaasService,
               protected readonly nService: NotificationService) { }
@@ -36,7 +37,17 @@ export class LBaasComponent implements OnInit {
     }
   }
 
-  public onSubmit() : void {    
+  public onLetsEncryptSubmit() : void {
+    this.asService.validate(this.configuration, 'dns').subscribe(response => {
+      if(response.message === "OK") {
+        this.nService.add(new Notification(NotificationType.Info, response.message));
+      } else {
+        this.nService.add(new Notification(NotificationType.Error, 'False domains: ' + response.message));
+      }
+    });
+  }
+
+  public onCertificateSubmit() : void {    
     if(this.certified) {
       this.asService.saveOne(this.configuration, 'certs', true).subscribe();
       this.nService.add(new Notification(NotificationType.Info, 'Successfully updated certificate'));
