@@ -12,7 +12,8 @@ export class LBaasComponent implements OnInit {
   public certified: boolean;
   public publicIp: any;
   public responseString: string;
-  public validDomains: boolean
+  public validDomains: boolean;
+  public isLoading = false;
 
   constructor(readonly asService: LBaasService,
               protected readonly nService: NotificationService) { }
@@ -52,7 +53,16 @@ export class LBaasComponent implements OnInit {
 
   public submitDomains() : void {
     if(this.validDomains) {
-      this.asService.validateOrSubmit(this.configuration, 'submit').subscribe();
+      this.isLoading = true;
+      this.asService.validateOrSubmit(this.configuration, 'submit').subscribe({
+        next: (d) => {
+          this.isLoading = false;
+          this.nService.add(new Notification(NotificationType.Info, 'Successfully updated Service'));
+        },
+        error: (e) => {
+          this.nService.add(new Notification(NotificationType.Error, 'Error updating Service'));
+        }
+      });
     }
   }
 
