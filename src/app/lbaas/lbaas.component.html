@@ -56,7 +56,7 @@
     </ngb-tab>
     <ngb-tab title="Use Let's Encrypt">
         <ng-template ngbTabContent>
-          <form #form="ngForm" (ngSubmit)="onLetsEncryptSubmit()">
+          <form #form="ngForm" (ngSubmit)="submitDomains()">
             <h5>Public IP: {{publicIp}}</h5>
             <h5>Blah irgendein Text hier</h5>
             <div class="form-group">
@@ -69,10 +69,10 @@
             </div>
             <div class="form-group">
               <label>Email</label>
-              <input type="email" class="form-control" name="email" #email="ngModel" [(ngModel)]="configuration['email']" required>
+              <input type="email" class="form-control" name="email" #email="ngModel" [email]="true" [(ngModel)]="configuration['email']" required>
               <small>Please enter your Email address here</small>
               <div [hidden]="email.valid || email.pristine" class="alert alert-danger">
-                Email is required
+                Valid email address is required
               </div>
             </div>
             <div>
@@ -82,7 +82,8 @@
                 It is required to accept the terms and conditions
               </div>
             </div>
-            <button type="submit" class="btn btn-success" [disabled]="!form.form.valid">Validate & Save Domains</button>
+            <button type="button" class="btn btn-success" [disabled]="!form.form.valid" (click)="validateDomains()">Validate Domains</button>
+            <button type="submit" class="btn btn-success" [disabled]="!validDomains">Save Domains</button>
           </form>
         </ng-template>
       </ngb-tab>

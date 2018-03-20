@@ -31,7 +31,8 @@ export class LBaasService extends EntityService  {
     return this.get(this.CERTIFICATE_BASEURL + '/' + serviceInstanceId + '/' + entityRel);
   }
 
-  public validate(entity: any, entityRel: string): Observable<{} | any> {
+  public validateOrSubmit(entity: any, entityRel: string): Observable<{} | any> {
     return this.post(this.CERTIFICATE_BASEURL + '/' + serviceInstanceId + '/' + entityRel, entity);
   }
 }
+
