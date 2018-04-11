@@ -1,0 +1,34 @@
+.menu-component, .filters-component {
+  padding: 0;
+}
+
+.logo-row {
+  background-color: #fafafa;
+  border-bottom: 1px solid #e1e1e1;
+}
+
+.logo {
+  display: block;
+  background: transparent url('/assets/immomio_logo.png') no-repeat scroll left center;
+  height: 2.5vw;
+  width: 100%;
+  margin: 0.5rem 0;
+  background-size: 10%;
+}
+
+
+.userProfile-row {
+  margin-top: 1rem;
+}
+
+.marginTop {
+  margin-top: 20px;
+}
+
+.btn-sm {
+  font-size: 0.6rem;
+}
+
+.btn {
+  border: 0;
+}

@@ -9,13 +9,12 @@ const serviceInstanceId = environment.serviceInstanceId;
 @Injectable()
 export class LBaasService extends EntityService  {
   readonly CERTIFICATE_BASEURL = '/v2/manage/service_instances';
-  
   constructor(protected readonly entityService: EntityService,
     protected readonly httpService: CoreHttpService) {
     super(httpService);
   }
 
-  public saveOne(entity: any, entityRel: string, certified: boolean): Observable<{} | any> {    
+  public saveOne(entity: any, entityRel: string, certified: boolean): Observable<{} | any> {
     if (certified) {
       return this.patch(this.CERTIFICATE_BASEURL + '/' + serviceInstanceId + '/' + entityRel, entity);
     } else {
