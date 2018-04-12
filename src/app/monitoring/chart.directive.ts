@@ -12,8 +12,8 @@ declare var Chart: any;
 
 @Directive({
   // tslint:disable-next-line
-  selector: 'canvas[sb-chart]',
-  exportAs: 'sb-chart',
+  selector: 'canvas[sb-chart-dir]',
+  exportAs: 'sb-chart-dir',
   providers: [ DateFormatPipe ]
 })
 export class ChartDirective implements OnInit, OnChanges, OnDestroy {

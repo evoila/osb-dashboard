@@ -12,8 +12,6 @@ export class LogsComponent implements OnInit {
 
   ngOnInit() {
     this.chartRequest.appId = '92acfbac-44e8-445e-8a8a-e04db954ff8c';
-    this.chartRequest.doctype = 'logMessages';
-    this.chartRequest.index = '2018-03-22';
   }
 
 }

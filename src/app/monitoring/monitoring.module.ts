@@ -22,6 +22,9 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { DateFormatPipe } from './pipe/date-format.pipe';
 import { ChartComponent } from './chart/chart/chart.component';
 import { EschartsService } from 'app/monitoring/escharts.service';
+import { ChartingService } from './charting.service';
+import { ChartDirective } from 'app/monitoring/chart.directive';
+import { SinglechartComponent } from './chart/singlechart/singlechart.component';
 
 
 @NgModule({
@@ -39,13 +42,14 @@ import { EschartsService } from 'app/monitoring/escharts.service';
         NgbTabsetModule.forRoot(),
         NgbPaginationModule.forRoot(),
         NgbButtonsModule.forRoot(),
-        HttpClientModule,
+        HttpClientModule
     ],
     declarations: [MonitoringComponent, LogsComponent,
         MetricsComponent, DashboardComponent,
-        DateFormatPipe, ChartComponent],
+        DateFormatPipe, ChartComponent, ChartDirective, SinglechartComponent],
     providers: [
-        EschartsService
+        EschartsService,
+        ChartingService
       ],
 })
 export class MonitoringModule { }

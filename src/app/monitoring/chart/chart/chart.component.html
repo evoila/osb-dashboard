@@ -1,44 +1,30 @@
-<!--<div class="row justify-content-end">
-    <div class="col col-md-auto" *ngIf="chart && !isInAggregatedView">
-      <filters [usecase]="'singleChartView'" [flats]="userFlats" (doFilterOutput)="filtersChange($event)"></filters>
-    </div>
-  </div>
-  <div class="row" *ngIf="!isInAggregatedView && userIsAdmin">
-    <div class="col-md-12" style="text-align: right;">
-      <div ngbDropdown class="d-inline-block">
-        <button type="button" class="btn btn-link" ngbDropdownToggle>Edit</button>
-        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu2">
-          <button *ngIf="chart" class="dropdown-item" [routerLink]="['/dashboard/chart', btoa(chart)]">Edit</button>
-          <button class="dropdown-item" (click)="delete(chart)">Delete</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="row justify-content-center">
-    <div class="col-md-12" *ngIf="chart && chart.data && chart.data.length > 0">
-      <div style="height: 300px; width: 100%">
-        <canvas sb-chart class="chart" height="10" [data]="chart.data" [labelsArray]="chart.labels" [seriesArray]="chart.series"
-          [type]="chart.type" [options]="chart.options"></canvas>
-      </div>
-    </div>
-    <div class="col-md-12" style="height: 300px; width: 100%" *ngIf="!chart">
-      <div style="width: 10%; margin: 95px auto;">
-        <span>Bitte warten...</span>
-      </div>
-    </div>
-    <div class="col-md-12" style="height: 300px; width: 100%; padding-top: 50px;" *ngIf="chart && (!chart.data || !chart.data.length)">
-        <div style="width: 50%; margin: 95px auto;">
-            <span>Keine Daten verfügbar</span>
-        </div>
-    </div>
-    <div class="col-md-12" style="height: 300px; width: 100%; padding-top: 50px;" *ngIf="userIsAdmin && chart && chart.error">
-        <div class="alert alert-danger">
-            <p>Aggregation error</p>
-            <button class="btn btn-sm btn-outline-danger" (click)="showErrorMessage = !showErrorMessage">Show error message</button>
-          <div [hidden]="!showErrorMessage">
-            <p>{{chart.error.message}}</p>
-          </div>         
-        </div>
-    </div>
-  </div>-->
-  <p> test</p>
+
+        
+          <div class="row justify-content-center">
+            <div class="col-md-12" *ngIf="chart && chart.data && chart.data.length > 0">
+              <div style="height: 300px; width: 100%">
+               <!--<canvas sb-chart-dir class="chart" height="10" [data]="chart.data" [labelsArray]="chart.labels" [seriesArray]="chart.series"
+                  [type]="chart.type" [options]="chart.options">{{ chart }}</canvas>-->
+                  <sb-singlechart [chart]="chart"></sb-singlechart>
+              </div>
+            </div>
+            <div class="col-md-12" style="height: 300px; width: 100%" *ngIf="!chart">
+              <div style="width: 10%; margin: 95px auto;">
+                <span>Bitte warten...</span>
+              </div>
+            </div>
+            <div class="col-md-12" style="height: 300px; width: 100%; padding-top: 50px;" *ngIf="chart && (!chart.data || !chart.data.length)">
+                <div style="width: 50%; margin: 95px auto;">
+                    <span>Keine Daten verfügbar</span>
+                </div>
+            </div>
+            <div class="col-md-12" style="height: 300px; width: 100%; padding-top: 50px;" *ngIf="userIsAdmin && chart && chart.error">
+                <div class="alert alert-danger">
+                    <p>Aggregation error</p>
+                    <button class="btn btn-sm btn-outline-danger" (click)="showErrorMessage = !showErrorMessage">Show error message</button>
+                  <div [hidden]="!showErrorMessage">
+                    <p>{{chart.error.message}}</p>
+                  </div>         
+                </div>
+            </div>
+          </div>
