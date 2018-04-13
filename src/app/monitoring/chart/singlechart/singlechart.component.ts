@@ -27,15 +27,15 @@ export class SinglechartComponent implements OnInit, AfterViewInit {
     }
   }
   private buildChartJsObject(chart: ChartModel): any {
-    const labels = chart.labels.slice(0, 100);
-    const data = chart.data.slice(0, 100);
+    const labels = chart.labels;
+    const data = chart.data;
     return {
       type: chart.type,
       data: {
         labels: labels,
         datasets: [{
            label:"test",
-           backgroundColor: 'rgba(255,99,132,1)',
+           backgroundColor: '',
            borderColor: 'rgba(255,99,132,1)',
            data: data
         }],

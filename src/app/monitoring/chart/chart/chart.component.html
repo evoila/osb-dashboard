@@ -1,11 +1,8 @@
-
-        
-          <div class="row justify-content-center">
+<div class="row justify-content-center">
             <div class="col-md-12" *ngIf="chart && chart.data && chart.data.length > 0">
               <div style="height: 300px; width: 100%">
-               <!--<canvas sb-chart-dir class="chart" height="10" [data]="chart.data" [labelsArray]="chart.labels" [seriesArray]="chart.series"
-                  [type]="chart.type" [options]="chart.options">{{ chart }}</canvas>-->
-                  <sb-singlechart [chart]="chart"></sb-singlechart>
+                <canvas sb-chart-dir class="chart" height="100" [data]="chart.data" [labelsArray]="chart.labels" [seriesArray]="chart.series"
+                  [type]="chart.type" [options]="chart.options"></canvas>
               </div>
             </div>
             <div class="col-md-12" style="height: 300px; width: 100%" *ngIf="!chart">

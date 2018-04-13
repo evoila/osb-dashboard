@@ -14,16 +14,28 @@ export class ChartingService {
   Chart
   private noSeriesCharts = ['pie', 'doughnut'];
   private acceptedDateFormats: Array<any> = ['DD.MM.YYYY'];
+  private isNested;
 
   constructor() { }
 
   public unwrapForPlotBucket(chart: Chart, query: any, result: any, index ?: number, key ?: string) {
     this.resetChart(chart);
     query = query['aggs'];
+    this.isNested = this.isNestedResult(result);
     this.plotBuckets(chart, query, result, 0);
     this.setCustomNamesForSeries(chart);
     this.sortData(chart);
     chart.labels = this.formatLabels(chart.labels);
+  }
+  private isNestedResult(bucket: any) : any {
+    /*unnested Aggregations have no Key-Attribute.
+    * To Display them Properly we have to add one to add
+    * a series later on */
+    if (bucket['0'] && bucket['0']['buckets'][0][0]) { //check if Bucket has nested index
+      return true;
+    } else {
+     return false;
+    }
   }
 
   private formatValues(data: any[]): any[] {
@@ -106,13 +118,14 @@ export class ChartingService {
 
     const currentQuery = query[bucketIndex];
     const queryType = Object.keys(currentQuery)[0];
-    const hasPriceValues = this.lookForPrices(query);
+    //const hasPriceValues = this.lookForPrices(query);
 
     let subIndex = 0;
     const nestedIndex = bucketIndex + 1;
 
     if (bucketIndex === 0 && bucket[0] && !bucket[0].buckets && bucket[0].value !== undefined) {
-        const value = hasPriceValues ? `${parseFloat(bucket[0].value).toFixed(2)}` : bucket[0].value;
+        //const value = hasPriceValues ? `${parseFloat(bucket[0].value).toFixed(2)}` : bucket[0].value;
+        const value = bucket[0].value;
         this.plotSingleValue(chart, bucket[0].value, `${queryType} ${query[0][queryType].field}`, 1);
         return true;
     }
@@ -121,7 +134,9 @@ export class ChartingService {
       console.log('Error filling chart - No buckets in given data - cancelling.')
       return false;
     }
-
+    if (!this.isNested) {
+      this.fill(chart['series'], true, 'query');
+    }
     bucket[bucketIndex].buckets.forEach((bucket: any, index: number) => {
       if (bucket[nestedIndex] != null && bucket[nestedIndex].buckets != null &&
           bucket[nestedIndex].buckets.length > 0) {
@@ -154,7 +169,8 @@ export class ChartingService {
 
         this.fill(chart['labels'], true, label);
         const doc_count = bucket.doc_count;
-        const value = hasPriceValues ? `${parseFloat(bucket[nestedIndex].value).toFixed(2)}` : bucket[nestedIndex].value;
+        //const value = hasPriceValues ? `${parseFloat(bucket[nestedIndex].value).toFixed(2)}` : bucket[nestedIndex].value;
+        const value = bucket[nestedIndex].value;
         const valueToUse = chart.fieldToCount === 'doc_count' ? doc_count : value;
 
         this.insertIntoSubIndex(chart['data'], subIndex, valueToUse);
