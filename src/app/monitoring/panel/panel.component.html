@@ -1,0 +1,34 @@
+<div *ngIf="panels">
+  <div *ngIf="panels?.length">
+      <nav class="navbar navbar-inverse bg-inverse">
+          <div ngbDropdown class="d-inline-block">
+              <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>{{menu.view}} {{columns}} x {{panel.chartView.length}}</button>
+                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                  <div *ngFor="let column of menu.viewSettings">
+                    <button class="dropdown-item" (click)="changeColumns(column)">Show {{column}} per Row</button>
+                  </div>
+                </div>
+            </div>
+        
+      </nav>
+    <div *ngIf="panel">
+    <div class="container">
+      <div *ngFor="let chartRequests of panel.chartView">
+        <div class="row">
+        <div *ngFor="let chartRequest of chartRequests">
+          <div class="col">
+            <sb-chart [requObj]="chartRequest"></sb-chart>
+          </div>
+        </div>  
+      </div>      
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <div *ngIf="!panels?.length">
+
+  </div>
+</div>
+
+<div *ngIf="!panels">Bitte warten</div>

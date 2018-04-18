@@ -1,9 +1,10 @@
 import { ChartRequest } from './chart-request';
 
 export class EsChartRequest implements ChartRequest {
-    index: String; //ElastcSearch Index to Search in 
-    doctype: String;
-    appId: String;
+    index: string; //ElastcSearch Index to Search in 
+    doctype: string;
+    appId: string;
     filter: Array<any>;
-    interval: String;
+    interval: string;
+    chartId: string;
 }

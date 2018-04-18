@@ -2,7 +2,7 @@ export class PrometheusChartRequest {
     chartId: String;
     metrics: Array<PrometheusMetrics>;
 }
-class PrometheusMetrics {
+export class PrometheusMetrics {
     name: String;
     metricAndScope: Array<MetricAndScope>;
 }

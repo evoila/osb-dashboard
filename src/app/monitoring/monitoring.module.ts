@@ -8,7 +8,8 @@ import { HttpClientModule } from '@angular/common/http';
 
 
 import { FormsModule } from '@angular/forms';
-import { NgbDropdownModule,
+import {
+    NgbDropdownModule,
     NgbCollapseModule,
     NgbTooltipModule,
     NgbModalModule,
@@ -16,7 +17,7 @@ import { NgbDropdownModule,
     NgbTabsetModule,
     NgbPaginationModule,
     NgbButtonsModule,
-  } from '@ng-bootstrap/ng-bootstrap';
+} from '@ng-bootstrap/ng-bootstrap';
 import { MetricsComponent } from './metrics/metrics.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { DateFormatPipe } from './pipe/date-format.pipe';
@@ -24,7 +25,10 @@ import { ChartComponent } from './chart/chart/chart.component';
 import { EschartsService } from 'app/monitoring/escharts.service';
 import { ChartingService } from './charting.service';
 import { ChartDirective } from 'app/monitoring/chart.directive';
-import { SinglechartComponent } from './chart/singlechart/singlechart.component';
+
+import { PanelComponent } from './panel/panel.component';
+import { PanelService } from './panel.service';
+import { EndpointService } from './endpoint.service';
 
 
 @NgModule({
@@ -46,10 +50,12 @@ import { SinglechartComponent } from './chart/singlechart/singlechart.component'
     ],
     declarations: [MonitoringComponent, LogsComponent,
         MetricsComponent, DashboardComponent,
-        DateFormatPipe, ChartComponent, ChartDirective, SinglechartComponent],
+        DateFormatPipe, ChartComponent, ChartDirective, PanelComponent],
     providers: [
         EschartsService,
-        ChartingService
-      ],
+        ChartingService,
+        PanelService,
+        EndpointService,
+    ],
 })
 export class MonitoringModule { }

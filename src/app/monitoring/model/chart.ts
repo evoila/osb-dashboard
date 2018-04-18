@@ -16,7 +16,7 @@ export class Chart {
   public queries: Array<any>;
   public aggregations: Array<any>;
   public prometheusResponse: Array<any>;
-  public aggregationResult: Array<any>;
+  public aggregationResults: any;
   public _links = null;
   public error: any;
   public esIndex?: string;

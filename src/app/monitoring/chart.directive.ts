@@ -1,3 +1,4 @@
+
 import {
   Directive,
   OnInit, OnDestroy, OnChanges,
@@ -9,6 +10,7 @@ import {
 import { DateFormatPipe } from './pipe/date-format.pipe';
 
 declare var Chart: any;
+import { Chart as ChartJS, Chart as ChartJs, ChartData } from 'chart.js';
 
 @Directive({
   // tslint:disable-next-line
@@ -167,9 +169,9 @@ export class ChartDirective implements OnInit, OnChanges, OnDestroy {
     }
 
     this.initFlag = true;
-    return new Chart(ctx, {
+    return new ChartJs (ctx, {
       type: this.type,
-      data: data,
+      data: data as ChartData,
       options: options
     });
   }
@@ -223,7 +225,6 @@ export class ChartDirective implements OnInit, OnChanges, OnDestroy {
       || this.type === 'radar') && isComplete) {
 
       // this.addScales(this.options);
-
       for (let i = 0; i < this.data.length; i++) {
 
         const colourDesc: Array<number> = [this.getRandomInt(0, 255), this.getRandomInt(0, 255), this.getRandomInt(0, 255)];
