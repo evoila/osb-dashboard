@@ -7,6 +7,7 @@ import { NouisliderModule } from 'ng2-nouislider';
 import { HttpClientModule } from '@angular/common/http';
 
 
+
 import { FormsModule } from '@angular/forms';
 import {
     NgbDropdownModule,
@@ -17,6 +18,7 @@ import {
     NgbTabsetModule,
     NgbPaginationModule,
     NgbButtonsModule,
+    NgbAccordionModule
 } from '@ng-bootstrap/ng-bootstrap';
 import { MetricsComponent } from './metrics/metrics.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -29,6 +31,12 @@ import { ChartDirective } from 'app/monitoring/chart.directive';
 import { PanelComponent } from './panel/panel.component';
 import { PanelService } from './panel.service';
 import { EndpointService } from './endpoint.service';
+import { PanelEditorComponent } from './panel-editor/panel-editor.component';
+import { QueryEditorComponent } from './query-editor/query-editor.component';
+import { CatalogueService } from './catalogue.service';
+import { SpecifyQueryComponent } from './specify-query/specify-query.component';
+
+
 
 
 @NgModule({
@@ -46,16 +54,18 @@ import { EndpointService } from './endpoint.service';
         NgbTabsetModule.forRoot(),
         NgbPaginationModule.forRoot(),
         NgbButtonsModule.forRoot(),
+        NgbAccordionModule.forRoot(),
         HttpClientModule
     ],
     declarations: [MonitoringComponent, LogsComponent,
         MetricsComponent, DashboardComponent,
-        DateFormatPipe, ChartComponent, ChartDirective, PanelComponent],
+        DateFormatPipe, ChartComponent, ChartDirective, PanelComponent, PanelEditorComponent, QueryEditorComponent, SpecifyQueryComponent],
     providers: [
         EschartsService,
         ChartingService,
         PanelService,
         EndpointService,
+        CatalogueService
     ],
 })
 export class MonitoringModule { }

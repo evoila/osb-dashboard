@@ -40,8 +40,8 @@ export class EschartsService {
   public getCatalogue(oragnisationId: string): Observable<Array<Chart>> {
     let params = new HttpParams();
     params = params.append('organisationId', oragnisationId);
-
-    const uri: string = this.endpointService.getUri() + this.endpoint;
+    const endpoint = '/api/charts/catalogue';
+    const uri: string = this.endpointService.getUri() + endpoint;
     return this.http.get<Array<Chart>>(uri, {params: params})
   }
 

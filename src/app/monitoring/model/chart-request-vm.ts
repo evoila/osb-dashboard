@@ -9,5 +9,6 @@ export class ChartRequestVm {
     chartId: string;
     isEs: boolean;
     metrics: Array<PrometheusMetrics>;
+    name: string;
 }
 

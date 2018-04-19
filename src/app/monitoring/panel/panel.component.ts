@@ -26,20 +26,19 @@ export class PanelComponent implements OnInit {
       subscribe(data => {
         console.log(data);
         this.panels = data;
-        if (this.panels) {
+        if (this.panels && this.panels.length) {
           this.panel = this.panels[0];
-        }
-        if (this.panel.esChartQueries) {
-          this.panel.chartQueries = this.panel.esChartQueries;
-        } else {
-          this.panel.chartQueries = this.panel.chartQueries;
-        }
+          if (this.panel.esChartQueries) {
+            this.panel.chartQueries = this.panel.esChartQueries;
+          } else {
+            this.panel.chartQueries = this.panel.chartQueries;
+          }
         this.buildView();
+      }
       })
   }
   public changeColumns(columns: number) {
    this.columns = columns;
-   
    this.panel.chartView = [];
    this.buildView();
   }

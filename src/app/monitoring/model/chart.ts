@@ -1,3 +1,5 @@
+import { PrometheusChartRequest } from "app/monitoring/model/prom-chart-request";
+
 
 export class Chart {
   public path: string;
@@ -20,6 +22,9 @@ export class Chart {
   public _links = null;
   public error: any;
   public esIndex?: string;
+  public prometheusQueries: Array<any>;
+  public name: string;
+  public description: string;
 
   constructor() {
     this.error = null;

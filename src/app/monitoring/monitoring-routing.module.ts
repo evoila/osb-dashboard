@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { MonitoringComponent } from './monitoring.component';
 import { LogsComponent } from './logs/logs.component';
 import { MetricsComponent } from './metrics/metrics.component';
+import { QueryEditorComponent } from 'app/monitoring/query-editor/query-editor.component';
 
 
 export const ROUTES = [
@@ -17,6 +18,10 @@ export const ROUTES = [
   {
     path: 'metrics',
     component: MetricsComponent
+  },
+  {
+    path: 'queryeditor',
+    component: QueryEditorComponent
   },
 ];
 
