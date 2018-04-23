@@ -6,6 +6,10 @@ import { EsChartRequest } from 'app/monitoring/model/es-chart-request';
 import { ChartingService } from '../../charting.service';
 import { AfterViewInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { ChartRequestVm } from 'app/monitoring/model/chart-request-vm';
+import { EschartsService } from 'app/monitoring/escharts.service';
+import { PromChartingService } from '../../prom-charting.service';
+import { PrometheusChartRequest } from '../../model/prom-chart-request';
+import { PromchartsService } from '../../promcharts.service';
 
 
 
@@ -32,10 +36,10 @@ export class ChartComponent implements OnInit, OnDestroy {
 
   constructor(
     private esChartsService: EschartsService,
-    private chartingService: ChartingService
-  ) {
-
-    }
+    private chartingService: ChartingService,
+    private promChartsService: PromchartsService,
+    private promChartingService: PromChartingService
+  ) {}
 
   ngOnInit() {
     this.showErrorMessage = false;
@@ -46,8 +50,8 @@ export class ChartComponent implements OnInit, OnDestroy {
   }
 
   private getChart() {
+    this.requObj.chartId = this.chartId;
     if (this.requObj.isEs) {
-      this.requObj.chartId = this.chartId;
       this.esChartsService.getChart(this.requObj as EsChartRequest).
       subscribe(data => {
         const aggregationResult = data.aggregationResults[0];
@@ -57,15 +61,20 @@ export class ChartComponent implements OnInit, OnDestroy {
         Object.keys(this.tempChart).forEach(k => {
           this.tempChart[k] = data[k];
         })
-        this.updateChart({
+        this.updateEsChart({
           aggregations: aggregations,
           results: aggregationResult
         });
       });
+    } else {
+      this.promChartsService.getCharts(this.requObj as PrometheusChartRequest).
+      subscribe(data => {
+        console.log(data);
+      });
     }
   }
 
-  private updateChart(query: any): void {
+  private updateEsChart(query: any): void {
       if (query.results && query.results.aggregations) {
           this.chart = this.chartingService.unwrapForPlotBucket(this.tempChart,
           query.aggregations[0],
