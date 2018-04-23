@@ -17,7 +17,7 @@
         <div class="row">
         <div *ngFor="let chartRequest of chartRequests">
           <div class="col">
-            <sb-chart [requObj]="chartRequest"></sb-chart>
+            <sb-chart [requObj]="chartRequest.chartId"></sb-chart>
           </div>
         </div>  
       </div>      

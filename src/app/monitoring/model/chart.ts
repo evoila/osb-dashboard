@@ -2,6 +2,7 @@ import { PrometheusChartRequest } from "app/monitoring/model/prom-chart-request"
 
 
 export class Chart {
+  public id: string;
   public path: string;
   public type: string;
   public searchObjectName: string;

@@ -19,6 +19,7 @@ export class ChartComponent implements OnInit, OnDestroy {
   @Output() refresh = new EventEmitter();
   @Output() chartDelete = new EventEmitter();
   @Input() requObj: ChartRequestVm;
+  @Input() chartId: string;
 
 
   public isInAggregatedView = true;
@@ -46,6 +47,7 @@ export class ChartComponent implements OnInit, OnDestroy {
 
   private getChart() {
     if (this.requObj.isEs) {
+      this.requObj.chartId = this.chartId;
       this.esChartsService.getChart(this.requObj as EsChartRequest).
       subscribe(data => {
         const aggregationResult = data.aggregationResults[0];

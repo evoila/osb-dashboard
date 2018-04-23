@@ -3,12 +3,12 @@ import { ChartRequest } from './chart-request';
 import { PrometheusChartRequest } from './prom-chart-request';
 import { ChartRequestVm } from 'app/monitoring/model/chart-request-vm';
 export class Panel {
-    panelId: String;
+    panelId?: String;
     serviceInstanceId: String;
-    chartQueries: Array<ChartRequest>;
-    chartView: Array<Array<ChartRequestVm>>;
+    chartQueries?: Array<ChartRequest>;
+    chartView?: Array<Array<ChartRequestVm>>;
     esChartQueries: Array<EsChartRequest>;
     promChartQueries: Array<PrometheusChartRequest>;
     name: string;
-    description: String;
+    description?: String;
 }

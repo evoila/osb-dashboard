@@ -18,7 +18,8 @@ import {
     NgbTabsetModule,
     NgbPaginationModule,
     NgbButtonsModule,
-    NgbAccordionModule
+    NgbAccordionModule,
+    NgbAlertModule
 } from '@ng-bootstrap/ng-bootstrap';
 import { MetricsComponent } from './metrics/metrics.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -34,8 +35,7 @@ import { EndpointService } from './endpoint.service';
 import { PanelEditorComponent } from './panel-editor/panel-editor.component';
 import { QueryEditorComponent } from './query-editor/query-editor.component';
 import { CatalogueService } from './catalogue.service';
-import { SpecifyQueryComponent } from './specify-query/specify-query.component';
-
+import { EsQueryEditorComponent } from './es-query-editor/es-query-editor.component';
 
 
 
@@ -55,11 +55,12 @@ import { SpecifyQueryComponent } from './specify-query/specify-query.component';
         NgbPaginationModule.forRoot(),
         NgbButtonsModule.forRoot(),
         NgbAccordionModule.forRoot(),
+        NgbAlertModule.forRoot(),
         HttpClientModule
     ],
     declarations: [MonitoringComponent, LogsComponent,
         MetricsComponent, DashboardComponent,
-        DateFormatPipe, ChartComponent, ChartDirective, PanelComponent, PanelEditorComponent, QueryEditorComponent, SpecifyQueryComponent],
+        DateFormatPipe, ChartComponent, ChartDirective, PanelComponent, PanelEditorComponent, QueryEditorComponent, EsQueryEditorComponent],
     providers: [
         EschartsService,
         ChartingService,

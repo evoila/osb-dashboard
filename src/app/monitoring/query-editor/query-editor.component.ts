@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { CatalogueService, ChartCatalogue } from '../catalogue.service';
+
 
 @Component({
   selector: 'sb-query-editor',
@@ -7,8 +8,11 @@ import { CatalogueService, ChartCatalogue } from '../catalogue.service';
   styleUrls: ['./query-editor.component.scss']
 })
 export class QueryEditorComponent implements OnInit {
-
+  @Output('success')
+  public success = new EventEmitter();
   public catalogues: ChartCatalogue;
+  public choosenChart?: Chart;
+  public appId: string;
   constructor(private catalogue: CatalogueService) { }
 
   ngOnInit() {
@@ -16,6 +20,15 @@ export class QueryEditorComponent implements OnInit {
       this.catalogues = data;
       console.log(data);
     });
+  }
+  public setChart(chartId: Chart) {
+    this.choosenChart = chartId;
+  }
+  saveChart(chartRequest: any) {
+    this.success.emit(chartRequest);
+  }
+  flushChart() {
+    this.choosenChart = undefined;
   }
 
 }

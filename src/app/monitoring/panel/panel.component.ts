@@ -14,7 +14,7 @@ import { ChartRequestVm } from 'app/monitoring/model/chart-request-vm';
 export class PanelComponent implements OnInit {
   public panels: Array<Panel>;
   public panel: Panel;
-  public menu: {[k: string]: any} = {};
+  public menu: { [k: string]: any } = {};
   public columns = 3;
   constructor(private panelService: PanelService) {
     this.menu['view'] = 'Views:';
@@ -27,20 +27,28 @@ export class PanelComponent implements OnInit {
         console.log(data);
         this.panels = data;
         if (this.panels && this.panels.length) {
-          this.panel = this.panels[0];
-          if (this.panel.esChartQueries) {
-            this.panel.chartQueries = this.panel.esChartQueries;
-          } else {
-            this.panel.chartQueries = this.panel.chartQueries;
-          }
-        this.buildView();
-      }
-      })
+          this.setPanel(this.panels[0]);
+        }
+      });
+  }
+
+  public setPanel(panel: Panel) {
+    this.panel = panel;
+    if (!this.panel.chartQueries) {
+      this.panel.chartQueries = [];
+    }
+    if (this.panel.esChartQueries) {
+      this.panel.chartQueries = [...this.panel.chartQueries, ...this.panel.esChartQueries];
+    }
+    if (this.panel.promChartQueries) {
+      this.panel.chartQueries = [...this.panel.chartQueries, ...this.panel.promChartQueries];
+    }
+    this.buildView();
   }
   public changeColumns(columns: number) {
-   this.columns = columns;
-   this.panel.chartView = [];
-   this.buildView();
+    this.columns = columns;
+    this.panel.chartView = [];
+    this.buildView();
   }
   private buildView() {
     //Method that builds up view with given Number of Rows
@@ -51,10 +59,8 @@ export class PanelComponent implements OnInit {
     }
     for (let chartQuerie of this.panel.chartQueries) {
       const isEs = chartQuerie['appId'] != null;
-      const chartRqVm: ChartRequestVm = new ChartRequestVm;
-      Object.keys(chartQuerie).forEach(k => {
-        chartRqVm[k] = chartQuerie[k];
-      });
+      let chartRqVm: ChartRequestVm = new ChartRequestVm();
+      chartRqVm = Object.assign(chartQuerie);
       chartRqVm.isEs = isEs;
       if (this.panel.chartView[u]) {
         this.panel.chartView[u] = [...this.panel.chartView[u], chartRqVm]
@@ -66,6 +72,7 @@ export class PanelComponent implements OnInit {
         u++
       }
     }
+
   }
 
 }

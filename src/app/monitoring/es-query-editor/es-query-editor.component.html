@@ -1,0 +1,19 @@
+<h4>Choose the AppId you want to have</h4>
+<form>
+  <div class="form-group">
+    <label for="appId">appId</label>
+    <input [(ngModel)]="appId" type="text" class="form-control" id="appId" name="appId" required>
+    <a class="btn btn-primary" (click)="buildChartRequest()" role="button">Save Chart</a>
+    <a class="btn btn-primary" (click)="cancelCreation()" role="button">Cancel</a>
+  </div>
+</form>
+<ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
+  <ngb-panel title="Your Chart:">
+    <ng-template ngbPanelContent>
+      <h5>Description</h5>
+      {{choosenChart.description}}
+      <h5>Aggregtaion:</h5>
+      <pre>{{choosenChart.aggregations | json  }}</pre>
+    </ng-template>
+  </ngb-panel>
+</ngb-accordion>

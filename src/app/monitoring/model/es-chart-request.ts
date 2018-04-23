@@ -5,6 +5,5 @@ export class EsChartRequest implements ChartRequest {
     doctype: string;
     appId: string;
     filter: Array<any>;
-    interval: string;
     chartId: string;
 }

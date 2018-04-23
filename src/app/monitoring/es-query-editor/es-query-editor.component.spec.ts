@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SpecifyQueryComponent } from './specify-query.component';
+import { EsQueryEditorComponent } from './es-query-editor.component';
 
-describe('SpecifyQueryComponent', () => {
-  let component: SpecifyQueryComponent;
-  let fixture: ComponentFixture<SpecifyQueryComponent>;
+describe('EsQueryEditorComponent', () => {
+  let component: EsQueryEditorComponent;
+  let fixture: ComponentFixture<EsQueryEditorComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SpecifyQueryComponent ]
+      declarations: [ EsQueryEditorComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SpecifyQueryComponent);
+    fixture = TestBed.createComponent(EsQueryEditorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,4 +1,4 @@
-<div *ngIf="catalogues">
+<div *ngIf="catalogues && !choosenChart">
 <p>To build your own Chart, choose a Base Queriefrom the list below.
    To see more information and to choose the querie as yours click on it's name</p>
   <div *ngIf="catalogues.logCharts">
@@ -12,7 +12,7 @@
           <pre>{{logChart.aggregations | json }}</pre>
 
           <p class="centered">
-              <a class="btn btn-primary btn-lg" href="#" role="button">Choose as Base</a>
+              <a class="btn btn-primary btn-lg" (click)="setChart()" role="button">Choose as Base</a>
           </p>
         </ng-template>
       </ngb-panel>
@@ -24,7 +24,7 @@
           <pre>{{logChart.aggregations | json }}</pre>
 
           <p class="centered">
-              <a class="btn btn-primary btn-lg" href="#" role="button">Choose as Base</a>
+              <a class="btn btn-primary btn-lg" (click)="setChart(logChart)" role="button">Choose as Base</a>
           </p>
         </ng-template>
       </ngb-panel>
@@ -41,7 +41,7 @@
           <pre>{{metricChart.prometheusQueries | json }}</pre>
 
           <p class="centered">
-              <a class="btn btn-primary btn-lg" href="#" role="button">Choose as Base</a>
+              <a class="btn btn-primary btn-lg" (click)="setChart(metricChart)" role="button">Choose as Base</a>
           </p>
         </ng-template>
       </ngb-panel>
@@ -53,10 +53,13 @@
           <pre>{{metricChart.prometheusQueries | json }}</pre>
 
           <p class="centered">
-              <a class="btn btn-primary btn-lg" href="#" role="button">Choose as Base</a>
+              <a class="btn btn-primary btn-lg" (click)="setChart(metricChart)" role="button">Choose as Base</a>
           </p>
         </ng-template>
       </ngb-panel>
     </ngb-accordion>
   </div>
 </div>
+<div *ngIf="choosenChart">
+  <sb-es-query-editor [choosenChart]="choosenChart" (success)="saveChart($event)" (cancel)="flushChart()"></sb-es-query-editor>
+</div>  
