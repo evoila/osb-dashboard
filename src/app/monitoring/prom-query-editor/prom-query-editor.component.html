@@ -1,0 +1,32 @@
+<h4>Choose the App you want your logs offs</h4>
+<div class="row" *ngFor="let query of metricsAndScopes; let queryIndex = index;">
+  <div class="col-sm-6">
+    <form>
+      <label for="metricName">Provide Custom Name for Metric in Chart</label>
+      <input [(ngModel)]="query.name" type="text" class="form-control" id="metricName" name="metricName" required>
+      <div class="form-group" *ngFor="let merticAndScope of query.metricAndScope; let merticIndex = index;">
+        <label for="appId">appId</label>
+        <input [(ngModel)]="merticAndScope.appId" type="text" class="form-control" id="appId" name="appId" (focus)="replace(queryIndex, merticIndex, merticAndScope)"
+          required>
+
+        <label for="metric">metric</label>
+        <input [(ngModel)]="merticAndScope.metric" type="text" class="form-control" id="metric" name="metric" (focus)="replace(queryIndex, merticIndex, merticAndScope)"
+          required>
+      </div>
+      <a class="btn btn-outline-primary" (click)="buildChartRequest()" role="button">Save Chart</a>
+      <a class="btn btn-outline-primary" (click)="cancelCreation()" role="button">Cancel</a>
+    </form>
+  </div>
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-header">
+        This is the query for the {{queryIndex}}nd Metric Displayed in the Chart
+      </div>
+      <div class="card-block">
+        <blockquote class="card-blockquote">
+          <pre> {{queryStrings[queryIndex]}}</pre>
+        </blockquote>
+      </div>
+    </div>
+  </div>
+</div>

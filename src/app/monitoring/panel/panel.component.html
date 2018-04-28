@@ -11,13 +11,13 @@
             </div>
         
       </nav>
-    <div *ngIf="panel">
+    <div *ngIf="panel && panel.chartView">
     <div class="container">
       <div *ngFor="let chartRequests of panel.chartView">
         <div class="row">
         <div *ngFor="let chartRequest of chartRequests">
-          <div class="col">
-            <sb-chart [requObj]="chartRequest.chartId"></sb-chart>
+          <div class="col" *ngIf="chartRequest.chartId">
+            <sb-chart [requObj]="chartRequest" [chartId]="chartRequest.chartId"></sb-chart>
           </div>
         </div>  
       </div>      

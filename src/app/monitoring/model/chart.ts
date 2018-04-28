@@ -23,7 +23,7 @@ export class Chart {
   public _links = null;
   public error: any;
   public esIndex?: string;
-  public prometheusQueries: Array<any>;
+  public prometheusQueries: Array<string>;
   public name: string;
   public description: string;
 

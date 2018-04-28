@@ -1,5 +1,6 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { CatalogueService, ChartCatalogue } from '../catalogue.service';
+import { ChartRequest } from '../model/chart-request';
 
 
 @Component({
@@ -8,8 +9,10 @@ import { CatalogueService, ChartCatalogue } from '../catalogue.service';
   styleUrls: ['./query-editor.component.scss']
 })
 export class QueryEditorComponent implements OnInit {
-  @Output('success')
-  public success = new EventEmitter();
+  @Output('esSuccess')
+  public esSuccess = new EventEmitter();
+  @Output('promSuccess')
+  public promSuccess = new EventEmitter();
   public catalogues: ChartCatalogue;
   public choosenChart?: Chart;
   public appId: string;
@@ -21,12 +24,16 @@ export class QueryEditorComponent implements OnInit {
       console.log(data);
     });
   }
-  public setChart(chartId: Chart) {
-    this.choosenChart = chartId;
+  public setChart(chart: Chart) {
+    this.choosenChart = chart;
   }
-  saveChart(chartRequest: any) {
-    this.success.emit(chartRequest);
+  saveEsChart(chartRequest: any) {
+    this.esSuccess.emit(chartRequest);
   }
+  savePromChart(chartRequest: any) {
+    this.promSuccess.emit(chartRequest);
+  }
+
   flushChart() {
     this.choosenChart = undefined;
   }

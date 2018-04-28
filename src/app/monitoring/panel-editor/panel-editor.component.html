@@ -24,24 +24,21 @@
   <div id="collapseExample" [ngbCollapse]="isCollapsed">
     <div class="card" *ngIf="!isCollapsed">
       <div class="card-body">
-        <sb-query-editor (success)="addEsRequest($event)"></sb-query-editor>
+        <sb-query-editor (promSuccess)="addPromRequest($event)" (esSuccess)="addEsRequest($event)"></sb-query-editor>
       </div>
     </div>
   </div>
 </div>
-
-<ngb-accordion [closeOthers]="true" activeIds="static-1" *ngFor="let esChartQuerie of esChartQueries">
-  <ngb-panel id="static-1" title="esChartQuerie.name">
+<div *ngIf="chartVms">
+  <h3>Chartpreview:</h3>
+  <p>Click on the Chartname to get a preview of the Chart</p>
+</div>
+<ngb-accordion [closeOthers]="true" draggable activeIds="static-1" *ngFor="let chartQuerie of chartVms" [dragData]="chartQuerie" droppable (onDrop)="onDrop($event, chartQuerie)">
+  <ngb-panel id="static-1" title="chartQuerie.name">
     <ng-template ngbPanelContent>
-      
+        <sb-chart [requObj]="chartQuerie" [chartId]="chartQuerie.chartId"></sb-chart>
+        <button type="button" (click)="deleteChartRequest(chartQuerie)" class="btn btn-danger">Delete</button>
     </ng-template>
   </ngb-panel>
 </ngb-accordion>
-<ngb-accordion [closeOthers]="true" activeIds="static-1" *ngFor="let promChartQuerie of promChartQueries">
-    <ngb-panel id="static-1" title="promChartQuerie.name">
-      <ng-template ngbPanelContent>
-        
-      </ng-template>
-    </ngb-panel>
-  </ngb-accordion>
 <button type="button" class="btn btn-primary" (click)="create()">create</button>

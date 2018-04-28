@@ -31,7 +31,6 @@ export class EschartsService {
   public getChart(chartRequest: EsChartRequest): Observable<Chart> {
     if (chartRequest.chartId) {
       const uri: string = this.endpointService.getUri() + this.endpoint + '/' + chartRequest.chartId;
-      delete chartRequest.chartId
       return this.http.post<Chart>(uri, chartRequest);
     } else {
       throw new Error('chartId is missing in Object');

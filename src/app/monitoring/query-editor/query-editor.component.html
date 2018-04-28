@@ -12,7 +12,7 @@
           <pre>{{logChart.aggregations | json }}</pre>
 
           <p class="centered">
-              <a class="btn btn-primary btn-lg" (click)="setChart()" role="button">Choose as Base</a>
+              <a class="btn btn btn-primary" (click)="setChart()" role="button">Choose as Base</a>
           </p>
         </ng-template>
       </ngb-panel>
@@ -24,7 +24,7 @@
           <pre>{{logChart.aggregations | json }}</pre>
 
           <p class="centered">
-              <a class="btn btn-primary btn-lg" (click)="setChart(logChart)" role="button">Choose as Base</a>
+              <a class="btn btn btn-primary" (click)="setChart(logChart)" role="button">Choose as Base</a>
           </p>
         </ng-template>
       </ngb-panel>
@@ -41,7 +41,7 @@
           <pre>{{metricChart.prometheusQueries | json }}</pre>
 
           <p class="centered">
-              <a class="btn btn-primary btn-lg" (click)="setChart(metricChart)" role="button">Choose as Base</a>
+              <a class="btn btn btn-primary" (click)="setChart(metricChart)" role="button">Choose as Base</a>
           </p>
         </ng-template>
       </ngb-panel>
@@ -53,13 +53,16 @@
           <pre>{{metricChart.prometheusQueries | json }}</pre>
 
           <p class="centered">
-              <a class="btn btn-primary btn-lg" (click)="setChart(metricChart)" role="button">Choose as Base</a>
+              <a class="btn btn btn-primary" (click)="setChart(metricChart)" role="button">Choose as Base</a>
           </p>
         </ng-template>
       </ngb-panel>
     </ngb-accordion>
   </div>
 </div>
-<div *ngIf="choosenChart">
-  <sb-es-query-editor [choosenChart]="choosenChart" (success)="saveChart($event)" (cancel)="flushChart()"></sb-es-query-editor>
+<div *ngIf="choosenChart && choosenChart.aggregations">
+  <sb-es-query-editor [choosenChart]="choosenChart" (success)="saveEsChart($event)" (cancel)="flushChart()"></sb-es-query-editor>
+</div>
+<div *ngIf="choosenChart && !choosenChart.aggregations">
+    <sb-prom-query-editor [choosenChart]="choosenChart" (success)="savePromChart($event)" (cancel)="flushChart()"></sb-prom-query-editor>
 </div>  

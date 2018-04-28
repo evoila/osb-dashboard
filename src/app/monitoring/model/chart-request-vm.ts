@@ -10,5 +10,11 @@ export class ChartRequestVm {
     isEs: boolean;
     metrics: Array<PrometheusMetrics>;
     name: string;
+    order: number;
+    size: number;
+    end: Number;
+    start: Number;
+    step: String;
 }
+
 

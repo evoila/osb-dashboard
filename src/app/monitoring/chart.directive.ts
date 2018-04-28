@@ -143,8 +143,8 @@ export class ChartDirective implements OnInit, OnChanges, OnDestroy {
   rgba(colour: Array<number>, alpha: number): string {
     return 'rgba(' + colour.concat(alpha).join(',') + ')';
   }
-
   private getChartBuilder(ctx: any, data: Array<any>, options: any): any {
+
     if (!options.onClick) {
       options.onClick = (event: any, active: Array<any>) => {
         this.chartClick.emit({ event, active });
@@ -169,6 +169,9 @@ export class ChartDirective implements OnInit, OnChanges, OnDestroy {
     }
 
     this.initFlag = true;
+    console.log(ctx);
+    console.log(data);
+    console.log(options);
     return new ChartJs (ctx, {
       type: this.type,
       data: data as ChartData,

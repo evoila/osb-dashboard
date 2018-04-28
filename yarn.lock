@@ -3951,6 +3951,10 @@ next-tick@1:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
 
+ng-drag-drop@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/ng-drag-drop/-/ng-drag-drop-4.0.1.tgz#b434a2248def937e58ea6ad24198af189b2592cf"
+
 ng2-nouislider@^1.7.7:
   version "1.7.7"
   resolved "https://registry.yarnpkg.com/ng2-nouislider/-/ng2-nouislider-1.7.7.tgz#b841f4b313c8c9c8a763c80f3a59d5aa4c3a70c8"

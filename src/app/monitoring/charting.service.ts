@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as moment from 'moment/moment';
 import { Chart } from './model/chart';
+import { DateFormatPipe } from './pipe/date-format.pipe';
 
 
 @Injectable()
@@ -26,6 +27,8 @@ export class ChartingService {
     this.setCustomNamesForSeries(chart);
     if (this.isNested) {
       this.sortData(chart);
+    } else {
+      this.wrapData(chart);
     }
     chart.labels = this.formatLabels(chart.labels);
     return chart;
@@ -40,7 +43,9 @@ export class ChartingService {
       return false;
     }
   }
-
+  private wrapData(chart: Chart) {
+    chart.data = [[...chart.data]];
+  }
   private formatValues(data: any[]): any[] {
     return data.map(dataValue => {
       if (Array.isArray(dataValue)) {

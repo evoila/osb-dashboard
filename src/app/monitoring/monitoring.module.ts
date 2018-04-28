@@ -5,6 +5,7 @@ import { MonitoringRoutingModule } from './monitoring-routing.module';
 import { LogsComponent } from './logs/logs.component'
 import { NouisliderModule } from 'ng2-nouislider';
 import { HttpClientModule } from '@angular/common/http';
+import { NgDragDropModule } from 'ng-drag-drop';
 
 
 
@@ -36,6 +37,9 @@ import { PanelEditorComponent } from './panel-editor/panel-editor.component';
 import { QueryEditorComponent } from './query-editor/query-editor.component';
 import { CatalogueService } from './catalogue.service';
 import { EsQueryEditorComponent } from './es-query-editor/es-query-editor.component';
+import { PromChartingService } from './prom-charting.service';
+import { PromchartsService } from './promcharts.service';
+import { PromQueryEditorComponent } from './prom-query-editor/prom-query-editor.component';
 
 
 
@@ -56,17 +60,20 @@ import { EsQueryEditorComponent } from './es-query-editor/es-query-editor.compon
         NgbButtonsModule.forRoot(),
         NgbAccordionModule.forRoot(),
         NgbAlertModule.forRoot(),
-        HttpClientModule
+        HttpClientModule,
+        NgDragDropModule.forRoot()
     ],
     declarations: [MonitoringComponent, LogsComponent,
         MetricsComponent, DashboardComponent,
-        DateFormatPipe, ChartComponent, ChartDirective, PanelComponent, PanelEditorComponent, QueryEditorComponent, EsQueryEditorComponent],
+        DateFormatPipe, ChartComponent, ChartDirective, PanelComponent, PanelEditorComponent, QueryEditorComponent, EsQueryEditorComponent, PromQueryEditorComponent],
     providers: [
         EschartsService,
         ChartingService,
         PanelService,
         EndpointService,
-        CatalogueService
+        CatalogueService,
+        PromChartingService,
+        PromchartsService
     ],
 })
 export class MonitoringModule { }
