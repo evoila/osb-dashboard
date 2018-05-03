@@ -2,15 +2,17 @@ import { Injectable } from '@angular/core';
 import { ChartResponse } from './model/chart-response';
 import { Chart } from './model/chart';
 import { JsonPipe } from '@angular/common/';
+import { DateFormatPipe } from 'app/monitoring/pipe/date-format.pipe';
 
 
 
 @Injectable()
 export class PromChartingService {
-
+  first: boolean; //saves if this is the first bucket of the dataset to save labels 
   constructor() { }
 
   public constructChart(promChartResponses: Array<any>, promChartQuery: Array<any>, chart: Chart): Chart {
+    this.first = true;
     const promChartResponse: any = promChartResponses.filter(x => x.status === 'success').map(x => x.data).
       map(x => x.result).forEach((result, index) => {
         result.forEach(element => {
@@ -36,10 +38,12 @@ export class PromChartingService {
   private extractData(values: Array<Array<any>>, chart: Chart): Chart {
     let tempData = [];
     values.forEach(element => {
-      if (!chart.labels) {
-        chart.labels = [element[0]];
-      } else {
-        chart.labels = [...chart.labels, Number(element[0])];
+      if (this.first) {
+        if (!chart.labels) {
+          chart.labels = [new DateFormatPipe().transform(element[0])];
+        } else {
+          chart.labels = [...chart.labels, new DateFormatPipe().transform(element[0])];
+        }
       }
       tempData = [...tempData, element[1]];
     });
@@ -48,6 +52,7 @@ export class PromChartingService {
     } else {
       chart.data = [[...tempData]];
     }
+    this.first = false;
     return chart;
   }
 }

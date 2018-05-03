@@ -1,2 +1,5 @@
-export interface ChartRequest {}
+export interface ChartRequest {
+    order: number;
+    size?: number;
+}
 

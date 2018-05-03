@@ -1,5 +1,11 @@
 <h4>Choose the App you want your logs offs</h4>
 <form>
+    <h5>Define with of the Chart in Percent. Default is 30%</h5> 
+    <select class="form-control" [(ngModel)]="size" name="size">
+      <option *ngFor="let option of sizeOptions" [value]="option">{{(option/12) *100 }}%</option>
+    </select>
+  </form>
+<form>
   <div class="form-group">
     <label for="appId">appId</label>
     <input [(ngModel)]="appId" type="text" class="form-control" id="appId" name="appId" required>

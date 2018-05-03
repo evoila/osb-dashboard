@@ -17,8 +17,12 @@ export class PromQueryEditorComponent implements OnInit {
   cancel = new EventEmitter();
   private metricsAndScopes: Array<PrometheusMetrics> = [];
   private queryStrings: Array<String> = [];
+  private sizeOptions: Array<number>;
+  private size: number;
 
-  constructor() { }
+  constructor() {
+    this.sizeOptions = Array.from(new Array(12), (val, index) => index + 1 );
+  }
 
   ngOnInit() {
     this.choosenChart.prometheusQueries.
@@ -47,6 +51,9 @@ export class PromQueryEditorComponent implements OnInit {
       let promChartRequest = new PrometheusChartRequest();
       promChartRequest.chartId = this.choosenChart.id;
       promChartRequest.metrics = this.metricsAndScopes;
+      if (this.size) {
+        promChartRequest.size = this.size;
+      }
       this.success.emit(promChartRequest);
     }
   }

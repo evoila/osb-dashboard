@@ -4,7 +4,7 @@ export class ChartRequestVm {
     index: string;
     doctype: string;
     appId: string;
-    filter: Array<any>;
+    range: any;
     interval: string;
     chartId: string;
     isEs: boolean;

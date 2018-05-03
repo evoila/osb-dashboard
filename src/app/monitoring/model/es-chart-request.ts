@@ -4,8 +4,8 @@ export class EsChartRequest implements ChartRequest {
     index: string; //ElastcSearch Index to Search in 
     doctype: string;
     appId: string;
-    filter: Array<any>;
+    range: any;
     chartId: string;
     order: number;
-    size: number;
+    size?: number;
 }

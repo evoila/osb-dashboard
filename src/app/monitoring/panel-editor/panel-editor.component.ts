@@ -29,7 +29,9 @@ export class PanelEditorComponent implements OnInit {
   constructor(
     private panelService: PanelService,
     private modalService: NgbModal,
-  ) { }
+  ) {
+
+  }
 
   ngOnInit() {
     this._success.subscribe((message) => this.successMessage = message);
@@ -96,7 +98,7 @@ export class PanelEditorComponent implements OnInit {
   private onDrop(dragData: any, target: ChartRequestVm) {
     console.log(dragData, target);
     const targetIndex = this.chartVms.indexOf(target);
-    this.chartVms = this.chartVms.filter( k => k !== dragData.dragData)
+    this.chartVms = this.chartVms.filter(k => k !== dragData.dragData)
     this.chartVms.splice(targetIndex, 0, dragData.dragData as ChartRequestVm);
   }
   public create() {

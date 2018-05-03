@@ -15,12 +15,12 @@
                     <span>Keine Daten verfügbar</span>
                 </div>
             </div>
-            <div class="col-md-12" style="height: 300px; width: 100%; padding-top: 50px;" *ngIf="userIsAdmin && chart && chart.error">
+            <div class="col-md-12" style="height: 300px; width: 100%; padding-top: 50px;"*ngIf="errorMessage">
                 <div class="alert alert-danger">
                     <p>Aggregation error</p>
                     <button class="btn btn-sm btn-outline-danger" (click)="showErrorMessage = !showErrorMessage">Show error message</button>
-                  <div [hidden]="!showErrorMessage">
-                    <p>{{chart.error.message}}</p>
+                  <div [hidden]="errorMessage">
+                    <p>{{errorMessage}}</p>
                   </div>         
                 </div>
             </div>

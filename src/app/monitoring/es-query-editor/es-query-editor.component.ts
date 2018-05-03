@@ -17,9 +17,13 @@ export class EsQueryEditorComponent implements OnInit {
   success = new EventEmitter();
   @Output('cancel')
   cancel = new EventEmitter();
+  private sizeOptions: Array<Number>;
+  private size: number;
 
   appId: string;
-  constructor() { }
+  constructor() {
+    this.sizeOptions = Array.from(new Array(12), (val, index) => index + 1);
+  }
 
   ngOnInit() {
   }
@@ -29,6 +33,9 @@ export class EsQueryEditorComponent implements OnInit {
         appId: this.appId,
         chartId: this.choosenChart.id
       } as EsChartRequest;
+      if (this.size) {
+        chartRequest.size = this.size;
+      }
       this.success.emit(chartRequest);
     }
   }

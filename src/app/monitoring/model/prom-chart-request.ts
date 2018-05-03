@@ -4,6 +4,8 @@ export class PrometheusChartRequest {
     end: Number;
     start: Number;
     step: String;
+    size?: number;
+    order: number;
 }
 export class PrometheusMetrics {
     name: String;

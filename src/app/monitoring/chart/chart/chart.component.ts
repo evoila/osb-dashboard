@@ -26,7 +26,7 @@ export class ChartComponent implements OnInit, OnDestroy {
 
 
   public isInAggregatedView = true;
-  public showErrorMessage: boolean;
+  public errorMessage: string | null;
   public chart: ChartModel;
   public userIsAdmin: boolean;
   public userFlats: any;
@@ -41,7 +41,6 @@ export class ChartComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.showErrorMessage = false;
     this.getChart();
   }
 
@@ -64,6 +63,8 @@ export class ChartComponent implements OnInit, OnDestroy {
           aggregations: aggregations,
           results: aggregationResult
         });
+      }, error => {
+        this.errorMessage = error;
       });
     } else {
       this.promChartsService.getCharts(this.requObj as PrometheusChartRequest, this.chartId).

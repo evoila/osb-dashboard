@@ -6,6 +6,7 @@ import { LogsComponent } from './logs/logs.component'
 import { NouisliderModule } from 'ng2-nouislider';
 import { HttpClientModule } from '@angular/common/http';
 import { NgDragDropModule } from 'ng-drag-drop';
+import { DlDateTimePickerDateModule } from 'angular-bootstrap-datetimepicker';
 
 
 
@@ -40,6 +41,7 @@ import { EsQueryEditorComponent } from './es-query-editor/es-query-editor.compon
 import { PromChartingService } from './prom-charting.service';
 import { PromchartsService } from './promcharts.service';
 import { PromQueryEditorComponent } from './prom-query-editor/prom-query-editor.component';
+import { EsTimerangeService } from 'app/monitoring/es-timerange.service';
 
 
 
@@ -61,7 +63,8 @@ import { PromQueryEditorComponent } from './prom-query-editor/prom-query-editor.
         NgbAccordionModule.forRoot(),
         NgbAlertModule.forRoot(),
         HttpClientModule,
-        NgDragDropModule.forRoot()
+        NgDragDropModule.forRoot(),
+        DlDateTimePickerDateModule
     ],
     declarations: [MonitoringComponent, LogsComponent,
         MetricsComponent, DashboardComponent,
@@ -73,7 +76,8 @@ import { PromQueryEditorComponent } from './prom-query-editor/prom-query-editor.
         EndpointService,
         CatalogueService,
         PromChartingService,
-        PromchartsService
+        PromchartsService,
+        EsTimerangeService
     ],
 })
 export class MonitoringModule { }
