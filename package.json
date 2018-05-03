@@ -56,6 +56,7 @@
     "@angular/router": "5.2.9",
     "@ng-bootstrap/ng-bootstrap": "^1.1.1",
     "angular-bootstrap-datetimepicker": "^2.2.1",
+    "angular-font-awesome": "^3.1.2",
     "bootstrap": "4.0.0-alpha.6",
     "chart.js": "^2.7.1",
     "core-js": "^2.4.1",

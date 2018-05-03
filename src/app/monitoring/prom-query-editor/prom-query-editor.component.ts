@@ -1,7 +1,9 @@
 import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 import { Chart } from '../model/chart';
 import { MetricAndScope, PrometheusChartRequest, PrometheusMetrics } from '../model/prom-chart-request';
-import { query } from '@angular/core/src/render3/instructions';
+import { CatalogueService } from '../catalogue.service';
+
+
 
 @Component({
   selector: 'sb-prom-query-editor',
@@ -11,6 +13,8 @@ import { query } from '@angular/core/src/render3/instructions';
 export class PromQueryEditorComponent implements OnInit {
   @Input()
   public choosenChart: Chart;
+  @Input()
+  public chartRequest: PrometheusChartRequest
   @Output('success')
   success = new EventEmitter();
   @Output('cancel')
@@ -20,11 +24,22 @@ export class PromQueryEditorComponent implements OnInit {
   private sizeOptions: Array<number>;
   private size: number;
 
-  constructor() {
-    this.sizeOptions = Array.from(new Array(12), (val, index) => index + 1 );
+  constructor(
+    private catalogue: CatalogueService
+  ) {
+    this.sizeOptions = Array.from(new Array(12), (val, index) => index + 1);
   }
 
   ngOnInit() {
+    if (this.chartRequest) {
+      if (this.chartRequest.size) {
+        this.size = this.chartRequest.size;
+      }
+      this.catalogue.getChartFromCatalogue(this.choosenChart.id).subscribe(k => {
+        this.choosenChart = k as Chart;
+      });
+      this.metricsAndScopes = this.chartRequest.metrics;
+    }
     this.choosenChart.prometheusQueries.
       forEach(element => {
         let numberOfMetricPairs = 0;
@@ -64,7 +79,7 @@ export class PromQueryEditorComponent implements OnInit {
     return this.metricsAndScopes.every(element => {
       return element.metricAndScope.every(k => {
         if (k.appId && k.metric) {
-           return true;
+          return true;
         }
         return false;
       })

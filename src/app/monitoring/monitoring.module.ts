@@ -10,6 +10,7 @@ import { DlDateTimePickerDateModule } from 'angular-bootstrap-datetimepicker';
 
 
 
+
 import { FormsModule } from '@angular/forms';
 import {
     NgbDropdownModule,
@@ -42,6 +43,7 @@ import { PromChartingService } from './prom-charting.service';
 import { PromchartsService } from './promcharts.service';
 import { PromQueryEditorComponent } from './prom-query-editor/prom-query-editor.component';
 import { EsTimerangeService } from 'app/monitoring/es-timerange.service';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 
 
@@ -64,7 +66,8 @@ import { EsTimerangeService } from 'app/monitoring/es-timerange.service';
         NgbAlertModule.forRoot(),
         HttpClientModule,
         NgDragDropModule.forRoot(),
-        DlDateTimePickerDateModule
+        DlDateTimePickerDateModule,
+        AngularFontAwesomeModule
     ],
     declarations: [MonitoringComponent, LogsComponent,
         MetricsComponent, DashboardComponent,

@@ -31,6 +31,7 @@ export class ChartingService {
       this.wrapData(chart);
     }
     chart.labels = this.formatLabels(chart.labels);
+    chart.labels = this.convertLabels(chart.labels);
     return chart;
   }
   private isNestedResult(bucket: any): any {
@@ -45,6 +46,16 @@ export class ChartingService {
   }
   private wrapData(chart: Chart) {
     chart.data = [[...chart.data]];
+  }
+  private convertLabels(labels: Array<any>): Array<any> {
+    labels.forEach(label => {
+      if (label instanceof Array) {
+        label = this.convertLabels(label);
+      } else {
+        label = new DateFormatPipe().transform(label);
+      }
+    })
+    return labels;
   }
   private formatValues(data: any[]): any[] {
     return data.map(dataValue => {

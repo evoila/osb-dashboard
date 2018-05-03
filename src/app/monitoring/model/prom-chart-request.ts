@@ -1,8 +1,8 @@
 export class PrometheusChartRequest {
     chartId: String;
     metrics: Array<PrometheusMetrics>;
-    end: Number;
-    start: Number;
+    end: number;
+    start: number;
     step: String;
     size?: number;
     order: number;

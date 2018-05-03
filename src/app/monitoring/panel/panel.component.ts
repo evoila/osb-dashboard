@@ -9,6 +9,7 @@ import * as moment from 'moment/moment';
 import { EsTimerangeService } from 'app/monitoring/es-timerange.service';
 
 import { EsChartRequest } from 'app/monitoring/model/es-chart-request';
+import { ChartRequest } from 'app/monitoring/model/chart-request';
 
 @Component({
   selector: 'sb-panel',
@@ -104,6 +105,32 @@ export class PanelComponent implements OnInit {
     }
     this.panel.chartQueries = this.panel.chartQueries.sort((k, j) => k.order - j.order);
     this.buildView();
+  }
+  private onDrop(dragData: any, target: ChartRequest) {
+    if (this.panel.chartQueries) {
+      const targetIndex = this.panel.chartQueries.indexOf(target);
+      this.panel.chartQueries = this.panel.chartQueries.filter(k => k !== dragData.dragData);
+      this.panel.chartQueries.splice(targetIndex, 0, dragData.dragData as ChartRequestVm);
+      this.buildView();
+    }
+  }
+  private editChart(chart: Chart, chartRequest: ChartRequest) {
+    console.log(chart);
+    chartRequest['onEdit'] = true;
+    chartRequest['choosenChart'] = chart;
+  }
+  private saveChartQuery(newRequest: ChartRequest, oldRequest: ChartRequest) {
+    delete oldRequest['onEdit'];
+    delete oldRequest['choosenChart'];
+    if (this.panel.chartQueries) {
+      const targetIndex = this.panel.chartQueries.indexOf(oldRequest);
+      this.panel.chartQueries = this.panel.chartQueries.filter(k => k !== oldRequest);
+      this.panel.chartQueries.splice(targetIndex, 0, newRequest as ChartRequestVm);
+    }
+  }
+  private cancelEdit(chartRequest: ChartRequest) {
+    delete chartRequest['onEdit'];
+    delete chartRequest['choosenChart'];
   }
   private buildView() {
     //Method that builds up view with given Number of Rows

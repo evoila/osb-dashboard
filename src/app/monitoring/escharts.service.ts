@@ -36,12 +36,19 @@ export class EschartsService {
       throw new Error('chartId is missing in Object');
     }
   }
-  public getCatalogue(oragnisationId: string): Observable<Array<Chart>> {
+  public getCatalogue(organisationId: string): Observable<Array<Chart>> {
     let params = new HttpParams();
-    params = params.append('organisationId', oragnisationId);
+    params = params.append('organisationId', organisationId);
     const endpoint = '/api/charts/catalogue';
     const uri: string = this.endpointService.getUri() + endpoint;
     return this.http.get<Array<Chart>>(uri, {params: params})
+  }
+  public getChartFromCatalogue(chartId: string, organisationId: string): Observable<Chart> {
+    let params = new HttpParams();
+    params = params.append('organisationId', organisationId);
+    const endpoint = '/api/charts/catalogue/';
+    const uri: string = this.endpointService.getUri() + endpoint + '/' + chartId;
+    return this.http.get<Chart>(uri, {params: params})
   }
 
 }
