@@ -17,6 +17,8 @@ import { CoreModule } from './core/core.module';
 import { BuildTargetService } from 'app/shared';
 import { SharedModule } from './shared/shared.module';
 
+import { APP_BASE_HREF } from '@angular/common';
+
 export function buildBuildTargetService(): BuildTargetService {
   return new BuildTargetService(buildTarget);
 }
@@ -44,7 +46,8 @@ export function buildBuildTargetService(): BuildTargetService {
     AppRoutingModule,
   ],
   providers: [
-    { provide: BuildTargetService, useFactory: buildBuildTargetService }
+    { provide: BuildTargetService, useFactory: buildBuildTargetService },
+    { provide: APP_BASE_HREF, useValue: window['BASE_HREF'] || "/" }
   ],
   bootstrap: [AppComponent]
 })
