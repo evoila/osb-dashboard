@@ -15,7 +15,7 @@ export const ROUTES: Route[] = [
     pathMatch: 'full'
   },
   {
-    path: 'home',
+    path: 'home/:serviceInstance',
     component: HomeComponent
   },
   {

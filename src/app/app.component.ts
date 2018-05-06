@@ -7,6 +7,7 @@ import { NotificationService, Notification } from './core/notification.service';
 import {
   BuildTargetService, ModuleSupport
 } from 'app/shared';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'sb-root',
@@ -22,6 +23,8 @@ export class AppComponent {
   public notification: Notification | null = null;
 
   constructor(
+    private readonly router: Router,
+    private readonly route: ActivatedRoute,
     private readonly notifications: NotificationService,
     buildTarget: BuildTargetService
   ) {
@@ -29,10 +32,14 @@ export class AppComponent {
     this.sharedModuleSupport = buildTarget.sharedModuleSupport;
     this.moduleSupport = buildTarget.moduleSupport;
 
+    console.log("This is our starting point");
     this.notifications.notifications.subscribe(x => {
       console.log(x)
       this.notification = x
     });
+
+    //this.router.navigateByUrl("/" + environment.serviceInstanceId, { skipLocationChange: true });
+    this.router.navigate(["/home/" + environment.serviceInstanceId ], {replaceUrl:true});
   }
 
   public closeNotification() {
