@@ -40,7 +40,7 @@ export class AppComponent {
     });
 
     //this.router.navigateByUrl("/" + environment.serviceInstanceId, { skipLocationChange: true });
-    this.router.navigate(["/home/" + environment.serviceInstanceId ], {replaceUrl:true});
+    //this.router.navigate(["/home/" + environment.serviceInstanceId ], {replaceUrl:true});
   }
 
   public closeNotification() {
