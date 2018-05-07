@@ -1,6 +1,5 @@
 <!doctype html>
 <html>
-
 <head>
   <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"></meta>
   <title>Dashboard Panel</title>
@@ -8,7 +7,7 @@
 </head>
 <script th:inline="javascript">
 /*<![CDATA[*/
-  window['BASE_HREF'] = '/' + window.location.pathname.split('/')[1]; 
+  window['BASE_HREF'] = [[${baseHref}]];
   window["INJECTED_ENVIRONMENT"] = {
     serviceInstanceId: [[${serviceInstanceId}]], /*"8d0644f0-abca-4f01-9244-243abe720a84" */
     token: [[${token}]],

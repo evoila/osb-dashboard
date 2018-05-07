@@ -47,7 +47,7 @@ export function buildBuildTargetService(): BuildTargetService {
   ],
   providers: [
     { provide: BuildTargetService, useFactory: buildBuildTargetService },
-    { provide: APP_BASE_HREF, useValue: window['BASE_HREF'] || "/" }
+    { provide: APP_BASE_HREF, useValue: window['BASE_HREF_URL'] || "/" }
   ],
   bootstrap: [AppComponent]
 })

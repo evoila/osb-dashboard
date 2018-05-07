@@ -124,6 +124,7 @@
       "name": "lbaas",
       "root": "src",
       "outDir": "dist/lbaas",
+      "deployUrl": "/app/",
       "assets": [
         "assets/core",
         "favicon.ico"

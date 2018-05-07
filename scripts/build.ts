@@ -15,13 +15,13 @@ function resetPath(path: string) {
       return console.log(err);
     }
 
-    data = data.replace(/href="/g, 'href="/');
-    data = data.replace(/src="/g, 'src="/');
+    //data = data.replace(/href="/g, 'href="/');
+    //data = data.replace(/src="/g, 'src="/');
 
     fs.writeFile (fullPath, data, function(err) {
         if (err) throw err;
         console.log('Changed path imports successfully...');
-    });    
+    });
   });
 }
 
@@ -76,7 +76,7 @@ function compile(buildTarget: string, analyze: boolean, cb) {
 }
 
 function main(target: string, analyze: boolean) {
-  compile(target, analyze, process.exit);  
+  compile(target, analyze, process.exit);
 }
 
 program

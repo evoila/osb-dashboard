@@ -8,6 +8,7 @@
 /node_modules
 /node
 /target
+/bin
 
 # IDEs and editors
 /.idea
