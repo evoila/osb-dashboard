@@ -1,11 +1,29 @@
 /* tslint:disable:no-console */
 import * as spawn from 'cross-spawn';
 import * as program from 'commander';
+import * as fs from 'fs';
 
 import { ChildProcessManager } from './child-process-manager';
 
 const children = new ChildProcessManager();
 const isRunningInCi = !!process.env['TARGET'];
+
+function resetPath(path: string) {
+  const fullPath = path + "/index.html";
+  fs.readFile(fullPath, 'utf8', function (err,data) {
+    if (err) {
+      return console.log(err);
+    }
+
+    data = data.replace(/href="/g, 'href="/');
+    data = data.replace(/src="/g, 'src="/');
+
+    fs.writeFile (fullPath, data, function(err) {
+        if (err) throw err;
+        console.log('Changed path imports successfully...');
+    });    
+  });
+}
 
 function compile(buildTarget: string, analyze: boolean, cb) {
   const target = process.env['TARGET'] || 'production';
@@ -53,11 +71,12 @@ function compile(buildTarget: string, analyze: boolean, cb) {
       return;
     }
 
+    resetPath(outFolder);
   });
 }
 
 function main(target: string, analyze: boolean) {
-  compile(target, analyze, process.exit);
+  compile(target, analyze, process.exit);  
 }
 
 program

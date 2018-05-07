@@ -16,6 +16,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class AppComponent {
   public logoSrc = environment.ui.logoSrc;
+  public isNavbarCollapsed: boolean;
   public readonly moduleSupport: ModuleSupport;
   public readonly dynamicModuleSupport: any;
   public readonly sharedModuleSupport: any;

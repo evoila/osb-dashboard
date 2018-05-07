@@ -4,18 +4,17 @@
 <head>
   <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"></meta>
   <title>Dashboard Panel</title>
-  <base href="/" />
   <link rel="icon" type="image/x-icon" href="favicon.ico" />
 </head>
 <script th:inline="javascript">
 /*<![CDATA[*/
   window['BASE_HREF'] = '/' + window.location.pathname.split('/')[1]; 
   window["INJECTED_ENVIRONMENT"] = {
-    serviceInstanceId: "8d0644f0-abca-4f01-9244-243abe720a84" /*[[${serviceInstanceId}]]*/,
-    token:  "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6ImtleS0xIiwidHlwIjoiSldUIn0.eyJqdGkiOiIzZTJkMzI0OGQ5ZmI0NmY4ODZkODMwM2VlNjJmODcxNCIsInN1YiI6ImIzYzUxOWFjLTQ4YWEtNDJiNS04NTljLTc5YTg4ZDQ3YjYzMyIsInNjb3BlIjpbImNsb3VkX2NvbnRyb2xsZXJfc2VydmljZV9wZXJtaXNzaW9ucy5yZWFkIiwib3BlbmlkIl0sImNsaWVudF9pZCI6ImF1dG9zY2FsZXItZGV2IiwiY2lkIjoiYXV0b3NjYWxlci1kZXYiLCJhenAiOiJhdXRvc2NhbGVyLWRldiIsImdyYW50X3R5cGUiOiJhdXRob3JpemF0aW9uX2NvZGUiLCJ1c2VyX2lkIjoiYjNjNTE5YWMtNDhhYS00MmI1LTg1OWMtNzlhODhkNDdiNjMzIiwib3JpZ2luIjoidWFhIiwidXNlcl9uYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluIiwiYXV0aF90aW1lIjoxNTE5ODEyNTEwLCJyZXZfc2lnIjoiMjliNmE1MjYiLCJpYXQiOjE1MTk4MTI1ODAsImV4cCI6MTUxOTg1NTc4MCwiaXNzIjoiaHR0cHM6Ly91YWEuY2YuZGV2LmV1LWRlLWNlbnRyYWwubXNoLmhvc3Qvb2F1dGgvdG9rZW4iLCJ6aWQiOiJ1YWEiLCJhdWQiOlsib3BlbmlkIiwiYXV0b3NjYWxlci1kZXYiLCJjbG91ZF9jb250cm9sbGVyX3NlcnZpY2VfcGVybWlzc2lvbnMiXX0.pw1NlPeSvLeojqSCZPdgyqomQ-6CK00ylArGfDWBoqpoZje0roYgmLfgdbqgJrwaA6-_lesi_Y8fOqnNUMR5wcmG4DkV_8ruFl_q0Lgb2NwxxBjrDUegAMrCJE7FcgbBos_nIpsolPC42M-e1eEn4Y7DodQvtvGyRrlcITGRnYz0n_auXmc5nuCnSTav2Zkrn4JC9PimWUA3Js80nRL71tl_3WbmeCzqoJjrnbbqzk183Agyym3HaJQBR15GNY52XYjypO-Otb0vr0O6YqkCPFsznc45SAuse5cdh5eLI5Iuv-1zYB5BHCiuPNYpjpYhvSrbMpeerOV5cquGUrcciQ" /*[[${token}]]*/,
+    serviceInstanceId: [[${serviceInstanceId}]], /*"8d0644f0-abca-4f01-9244-243abe720a84" */
+    token: [[${token}]],
 	  production: false,
     baseUrls: {
-      serviceBrokerUrl: "http://autoscaler-dev.cf.dev.eu-de-central.msh.host", /*[[${endpointUrl}]]*/
+      serviceBrokerUrl: [[${endpointUrl}]]
     },
     ui: {
       title: "Service Broker Panel",
