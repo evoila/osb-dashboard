@@ -13,7 +13,7 @@ export class PromchartsService {
     private http: HttpClient,
     private endpointService: EndpointService
   ) { }
-  public getCharts(prometheusQuerie: PrometheusChartRequest, chartId: String): Observable<Chart> {
+  public getCharts(prometheusQuerie: PrometheusChartRequest, chartId: String): Observable<Chart > {
     if (chartId) {
       const uri: string = this.endpointService.getUri() + this.endpoint + chartId
       return this.http.post<Chart>(uri, prometheusQuerie);

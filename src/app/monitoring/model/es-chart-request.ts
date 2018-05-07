@@ -8,4 +8,5 @@ export class EsChartRequest implements ChartRequest {
     chartId: string;
     order: number;
     size?: number;
+    name: string; 
 }

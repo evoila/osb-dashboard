@@ -5,6 +5,7 @@ import { ChartRequest } from '../model/chart-request';
 
 
 
+
 @Component({
   selector: 'sb-es-query-editor',
   templateUrl: './es-query-editor.component.html',
@@ -13,12 +14,15 @@ import { ChartRequest } from '../model/chart-request';
 export class EsQueryEditorComponent implements OnInit {
   @Input()
   choosenChart: Chart;
+  @Input()
+  private chartRequest: ChartRequest;
   @Output('success')
   success = new EventEmitter();
   @Output('cancel')
   cancel = new EventEmitter();
-  private sizeOptions: Array<Number>;
+  private sizeOptions: Array<number>;
   private size: number;
+  private name: string;
 
   appId: string;
   constructor() {
@@ -26,14 +30,24 @@ export class EsQueryEditorComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (this.chartRequest) {
+      if (this.chartRequest.size) {
+        this.size = this.chartRequest.size;
+      }
+      this.appId = this.chartRequest['appId'];
+    }
   }
   public buildChartRequest() {
     if (this.appId) {
       const chartRequest = {
         appId: this.appId,
-        chartId: this.choosenChart.id
+        chartId: this.choosenChart.id,
+        name: this.name
       } as EsChartRequest;
       if (this.size) {
+        if (typeof this.size === 'string') {
+          this.size = parseInt(this.size as string);
+        }
         chartRequest.size = this.size;
       }
       this.success.emit(chartRequest);

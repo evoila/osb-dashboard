@@ -24,9 +24,8 @@ export class CatalogueService {
         observer.next({ data });
       }));
   }
-  }
-
 }
+
 export interface ChartCatalogue {
   logCharts?: Array<Chart>
   metricCharts?: Array<Chart>

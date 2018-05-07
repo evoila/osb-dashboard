@@ -6,6 +6,7 @@ export class PrometheusChartRequest {
     step: String;
     size?: number;
     order: number;
+    name: string;
 }
 export class PrometheusMetrics {
     name: String;

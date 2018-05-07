@@ -4,6 +4,8 @@ import { MonitoringComponent } from './monitoring.component';
 import { LogsComponent } from './logs/logs.component';
 import { MetricsComponent } from './metrics/metrics.component';
 import { QueryEditorComponent } from 'app/monitoring/query-editor/query-editor.component';
+import { PanelComponent } from './panel/panel.component';
+import { PanelEditorComponent } from './panel-editor/panel-editor.component';
 
 
 export const ROUTES = [
@@ -18,6 +20,14 @@ export const ROUTES = [
   {
     path: 'metrics',
     component: MetricsComponent
+  },
+  {
+    path: 'paneleditor/:id',
+    component: PanelEditorComponent
+  },
+  {
+    path: 'paneleditor',
+    component: PanelEditorComponent
   },
   {
     path: 'queryeditor',

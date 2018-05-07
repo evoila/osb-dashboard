@@ -23,7 +23,8 @@
             </select>
           </div>
         </div>
-        <button type="button" class="btn btn-info">edit</button>
+        <button type="button" *ngIf="changed" (click)="saveChanges()" class="btn btn-info btn-sm">save changes</button>
+        <button type="button" (click)="edit()" class="btn btn-info btn-sm">edit</button>
       </div>
     </div>
 
@@ -37,6 +38,8 @@
             <div *ngIf="chartRequest.onEdit">
               <sb-prom-query-editor *ngIf="!chartRequest.isEs" [chartRequest]="chartRequest" [choosenChart]="chartRequest.choosenChart"
                 (success)="saveChartQuery($event, chartRequest)" (cancel)="cancelEdit(chartRequest)"></sb-prom-query-editor>
+              <sb-es-query-editor *ngIf="chartRequest.isEs" [chartRequest]="chartRequest" [choosenChart]="chartRequest.choosenChart"
+              (success)="saveChartQuery($event, chartRequest)" (cancel)="cancelEdit(chartRequest)"> </sb-es-query-editor>
             </div>
             <sb-chart *ngIf="chartRequest.chartId && !chartRequest['onEdit']" [requObj]="chartRequest" (editChart)="editChart($event ,chartRequest)"
               [chartId]="chartRequest.chartId" [options]="true"></sb-chart>

@@ -68,11 +68,8 @@ export class ChartComponent implements OnInit, OnDestroy {
           const aggregationResult = data.aggregationResults[0];
           const aggregations = data.aggregations;
           this.isInAggregatedView = data.showInAggregatedView;
+          this.tempChart = data as ChartModel;
           if (aggregationResult.hits.total != 0) {
-            this.tempChart = new ChartModel();
-            Object.keys(this.tempChart).forEach(k => {
-              this.tempChart[k] = data[k];
-            })
             this.updateEsChart({
               aggregations: aggregations,
               results: aggregationResult

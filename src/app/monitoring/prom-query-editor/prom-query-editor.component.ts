@@ -23,6 +23,7 @@ export class PromQueryEditorComponent implements OnInit {
   private queryStrings: Array<String> = [];
   private sizeOptions: Array<number>;
   private size: number;
+  private name: string; 
 
   constructor(
     private catalogue: CatalogueService
@@ -36,22 +37,30 @@ export class PromQueryEditorComponent implements OnInit {
         this.size = this.chartRequest.size;
       }
       this.catalogue.getChartFromCatalogue(this.choosenChart.id).subscribe(k => {
-        this.choosenChart = k as Chart;
+        this.choosenChart = k['data'] as Chart;
+        this.choosenChart.prometheusQueries.
+          forEach(element => {
+            let numberOfMetricPairs = 0;
+            let query = new String(element['query']);
+            this.queryStrings = [...this.queryStrings, query];
+          });
       });
       this.metricsAndScopes = this.chartRequest.metrics;
+    } else {
+      this.choosenChart.prometheusQueries.
+        forEach(element => {
+          let numberOfMetricPairs = 0;
+          let query = new String(element['query']);
+          this.queryStrings = [...this.queryStrings, query];
+          this.metricsAndScopes = [...this.metricsAndScopes, new PrometheusMetrics()];
+          (query.match(/metrics/g) || []).
+            forEach(k => {
+              this.metricsAndScopes[this.metricsAndScopes.length - 1].metricAndScope[numberOfMetricPairs] = new MetricAndScope();
+              numberOfMetricPairs++;
+            })
+        });
     }
-    this.choosenChart.prometheusQueries.
-      forEach(element => {
-        let numberOfMetricPairs = 0;
-        let query = new String(element['query']);
-        this.queryStrings = [...this.queryStrings, query];
-        this.metricsAndScopes = [...this.metricsAndScopes, new PrometheusMetrics()];
-        (query.match(/metrics/g) || []).
-          forEach(k => {
-            this.metricsAndScopes[this.metricsAndScopes.length - 1].metricAndScope[numberOfMetricPairs] = new MetricAndScope();
-            numberOfMetricPairs++;
-          })
-      });
+
   }
 
   private replace(queryIndex: number, metricIndex: number, metric: MetricAndScope) {
@@ -62,11 +71,15 @@ export class PromQueryEditorComponent implements OnInit {
     this.queryStrings[queryIndex] = query.replace(regEx, scopeAndMetric);
   }
   private buildChartRequest() {
-    if (this.allSet()) {
+    if (this.allSet() && this.name) {
       let promChartRequest = new PrometheusChartRequest();
       promChartRequest.chartId = this.choosenChart.id;
       promChartRequest.metrics = this.metricsAndScopes;
+      promChartRequest.name = this.name;
       if (this.size) {
+        if (typeof this.size === 'string') {
+          this.size = parseInt(this.size as string);
+        }
         promChartRequest.size = this.size;
       }
       this.success.emit(promChartRequest);

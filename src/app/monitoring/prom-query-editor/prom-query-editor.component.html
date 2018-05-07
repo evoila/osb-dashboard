@@ -4,6 +4,8 @@
   <select class="form-control" [(ngModel)]="size" name="size">
     <option *ngFor="let option of sizeOptions" [value]="option">{{(option/12) *100 }}%</option>
   </select>
+  <label for="name">Name the Chart</label>
+    <input [(ngModel)]="name" type="text" class="form-control" id="name" name="name" required>
 </form>
 <div class="row" *ngFor="let query of metricsAndScopes; let queryIndex = index;">
   <div class="col-sm-6">
