@@ -24,7 +24,7 @@
         <configuration>
           <filesets>
             <fileset>
-              <directory>${resource.dir}/static</directory>
+              <directory>${resource.dir}/static/app</directory>
             </fileset>
             <fileset>
               <directory>${resource.dir}/templates</directory>
@@ -44,7 +44,7 @@
               <goal>copy-resources</goal>
             </goals>
             <configuration>
-              <outputDirectory>${resource.dir}/static/</outputDirectory>
+              <outputDirectory>${resource.dir}/static/app/</outputDirectory>
               <resources>
                 <resource>
                   <directory>${basedir}/dist/${dashboard.module}</directory>
