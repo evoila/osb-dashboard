@@ -1,13 +1,13 @@
 <!doctype html>
 <html>
 <head>
+  <base th:href="${baseHref}">
   <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"></meta>
   <title>Dashboard Panel</title>
   <link rel="icon" type="image/x-icon" href="favicon.ico" />
 </head>
 <script th:inline="javascript">
 /*<![CDATA[*/
-  window['BASE_HREF_URL'] = [[${baseHref}]];
   window["INJECTED_ENVIRONMENT"] = {
     serviceInstanceId: [[${serviceInstanceId}]], /*"8d0644f0-abca-4f01-9244-243abe720a84" */
     token: [[${token}]],
