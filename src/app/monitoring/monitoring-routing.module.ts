@@ -11,27 +11,33 @@ import { PanelEditorComponent } from './panel-editor/panel-editor.component';
 export const ROUTES = [
   {
     path: '',
-    component: MonitoringComponent
-  },
-  {
-    path: 'logs',
-    component: LogsComponent
-  },
-  {
-    path: 'metrics',
-    component: MetricsComponent
-  },
-  {
-    path: 'paneleditor/:id',
-    component: PanelEditorComponent
-  },
-  {
-    path: 'paneleditor',
-    component: PanelEditorComponent
-  },
-  {
-    path: 'queryeditor',
-    component: QueryEditorComponent
+    component: MonitoringComponent,
+    children: [
+      {
+        path: 'charts',
+        component: LogsComponent
+      },
+      {
+        path: 'metrics',
+        component: MetricsComponent
+      },
+      {
+        path: 'paneleditor/:id',
+        component: PanelEditorComponent
+      },
+      {
+        path: 'panel',
+        component: PanelComponent
+      },
+      {
+        path: 'paneleditor',
+        component: PanelEditorComponent
+      },
+      {
+        path: 'queryeditor',
+        component: QueryEditorComponent
+      },
+    ]
   },
 ];
 

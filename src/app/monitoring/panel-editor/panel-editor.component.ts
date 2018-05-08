@@ -11,6 +11,7 @@ import { EsChartRequest } from 'app/monitoring/model/es-chart-request';
 import { PrometheusChartRequest } from 'app/monitoring/model/prom-chart-request';
 import { ActivatedRoute, Router } from '@angular/router/';
 import { Location } from '@angular/common';
+import { error } from 'selenium-webdriver';
 
 
 
@@ -67,9 +68,9 @@ export class PanelEditorComponent implements OnInit {
       }
       this.unwrapQueries();
     },
-  error => {
-    this._success.next("Error: Couldn't load Panel!");
-  });
+      error => {
+        this._success.next("Error: Couldn't load Panel!");
+      });
   }
   private unwrapQueries() {
     this.panel.promChartQueries.forEach(
@@ -148,7 +149,7 @@ export class PanelEditorComponent implements OnInit {
       }
       this.panel.esChartQueries = this.esChartQueries;
       this.panel.promChartQueries = this.promChartQueries;
-      this.panel.serviceInstanceId =  environment.serviceInstanceId;
+      this.panel.serviceInstanceId = environment.serviceInstanceId;
       this.panel.name = this.name;
       if (this.description) {
         this.panel.description = this.description;
@@ -156,9 +157,14 @@ export class PanelEditorComponent implements OnInit {
       this.panelService.addPanel(this.panel).subscribe(
         k => {
           this._success.next('panel created successfully redirecting now!');
-          this.router.navigate(['/monitoring']);
+          this.router.navigate(['/monitoring/charts']);
+        },
+        error => {
+          this._success.next("Error: Couldn't save Panel!" + error);
         }
       );
+    } else {
+      this._success.next("Required Input is missing");
     }
   }
 

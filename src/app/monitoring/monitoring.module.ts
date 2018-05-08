@@ -32,6 +32,7 @@ import { EschartsService } from 'app/monitoring/escharts.service';
 import { ChartingService } from './charting.service';
 import { ChartDirective } from 'app/monitoring/chart.directive';
 
+
 import { PanelComponent } from './panel/panel.component';
 import { PanelService } from './panel.service';
 import { EndpointService } from './endpoint.service';
@@ -44,6 +45,13 @@ import { PromchartsService } from './promcharts.service';
 import { PromQueryEditorComponent } from './prom-query-editor/prom-query-editor.component';
 import { EsTimerangeService } from 'app/monitoring/es-timerange.service';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { SidebarLayoutComponent } from './sidebar/sidebar-layout/sidebar-layout.component';
+import { SidebarNavComponent } from './sidebar/sidebar-nav/sidebar-nav.component';
+import { ToolbarButtonComponent } from './sidebar/toolbar-button/toolbar-button.component';
+import { ToolbarComponent } from 'app/monitoring/sidebar';
+import { ToolbarLinkComponent } from './sidebar/toolbar-link/toolbar-link.component';
+import { WindowService } from './window.service';
+
 
 
 
@@ -71,7 +79,8 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
     ],
     declarations: [MonitoringComponent, LogsComponent,
         MetricsComponent, DashboardComponent,
-        DateFormatPipe, ChartComponent, ChartDirective, PanelComponent, PanelEditorComponent, QueryEditorComponent, EsQueryEditorComponent, PromQueryEditorComponent],
+        DateFormatPipe, ChartComponent, ChartDirective, PanelComponent, PanelEditorComponent, QueryEditorComponent, EsQueryEditorComponent,
+         PromQueryEditorComponent, SidebarLayoutComponent, SidebarNavComponent, ToolbarButtonComponent, ToolbarComponent, ToolbarLinkComponent],
     providers: [
         EschartsService,
         ChartingService,
@@ -80,7 +89,8 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
         CatalogueService,
         PromChartingService,
         PromchartsService,
-        EsTimerangeService
+        EsTimerangeService,
+        WindowService
     ],
 })
 export class MonitoringModule { }

@@ -1,0 +1,10 @@
+@import '../common';
+
+.toolbar {
+  left: $sidebar-width;
+  right: 0;
+}
+
+.toolbar-buttons {
+  display: flex;
+}

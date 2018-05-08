@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EsChartRequest } from '../model/es-chart-request';
+import { SidebarEntry } from 'app/monitoring/sidebar/sidebar-entry';
 
 @Component({
   selector: 'sb-logs',
@@ -7,11 +8,30 @@ import { EsChartRequest } from '../model/es-chart-request';
   styleUrls: ['./logs.component.scss']
 })
 export class LogsComponent implements OnInit {
-  public chartRequest = new EsChartRequest()
+  public menu: SidebarEntry[] = [
+    {
+      name: 'Charts',
+      isCollapsible: false,
+      links: [{
+        name: 'Panel',
+        href: 'panel',
+        iconClass: 'fa fa-cube'
+      }]
+    },
+    {
+      name: 'Add Panel',
+      isCollapsible: false,
+      links: [{
+        name: 'AddPanel',
+        href: 'paneleditor',
+        iconClass: 'fa fa-cube'
+      }]
+    }
+  ];
+
   constructor() { }
 
   ngOnInit() {
-    this.chartRequest.appId = '92acfbac-44e8-445e-8a8a-e04db954ff8c';
   }
 
 }
