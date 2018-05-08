@@ -15,6 +15,7 @@ export class ChartRequestVm {
     end: number;
     start: number;
     step: string;
+
 }
 
 

@@ -3,6 +3,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { EntityService } from 'app/core';
 import { Chart } from './model/chart';
 import { SidebarEntry } from 'app/monitoring/sidebar/sidebar-entry';
+import { PanelService } from './panel.service';
+import { environment } from '../../environments/runtime-environment';
 
 
 @Component({
@@ -34,10 +36,24 @@ export class MonitoringComponent implements OnInit {
   ];
 
   constructor(
-    private entityService: EntityService
+    private entityService: EntityService,
+    private panelService: PanelService
   ) { }
 
   ngOnInit() {
+    this.panelService.getAllPanels(environment.serviceInstanceId).
+      subscribe(data => {
+        data.forEach(k => {
+          const link = {
+            name: k.name,
+            href: 'panel/' + k.panelId
+          }
+          if (!this.menu[0].links) {
+            this.menu[0].links = [];
+          }
+          this.menu[0].links = [...this.menu[0].links, link];
+        })
+      });
   }
 
 }

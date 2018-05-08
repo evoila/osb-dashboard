@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { PanelService } from 'app/monitoring/panel.service';
 import { environment } from 'environments/runtime-environment';
 import { Panel } from 'app/monitoring/model/panel';
@@ -23,7 +23,6 @@ import { error } from 'selenium-webdriver';
   styleUrls: ['./panel.component.scss']
 })
 export class PanelComponent implements OnInit {
-  public panels: Array<Panel>;
   public panel: Panel;
   public menu: { [k: string]: any } = {};
   public fromDate: any;
@@ -42,30 +41,30 @@ export class PanelComponent implements OnInit {
   private successMessage?: String;
   constructor(private panelService: PanelService,
     private timeRangeService: EsTimerangeService,
-    private router: Router) {
+    private router: Router,
+    private route: ActivatedRoute) {
     this.menu['view'] = 'Views:';
     this.menu['viewSettings'] = ['1', '2', '3'];
   }
 
   ngOnInit() {
-    this.panelService.getAllPanels(environment.serviceInstanceId).
-      subscribe(data => {
-        console.log(data);
-        this.panels = data;
-        if (this.panels && this.panels.length) {
-          this.setPanel(this.panels[0]);
+    const id = this.route.snapshot.paramMap.get('id') || null;
+    if (id) {
+      this.panelService.getSpecificPanel(id).
+        subscribe(data => {
+          this.setPanel(data);
           this.setDateRange();
-        }
-      });
-    if (!this.fromDate && !this.toDate) {
-      this.toDate = moment();
-      this.fromDate = moment(this.toDate).subtract(5, 'days');
+        });
+      if (!this.fromDate && !this.toDate) {
+        this.toDate = moment();
+        this.fromDate = moment(this.toDate).subtract(5, 'days');
 
-      this.toDateString = this.getDateAsString(this.toDate);
-      this.fromDateString = this.getDateAsString(this.fromDate);
+        this.toDateString = this.getDateAsString(this.toDate);
+        this.fromDateString = this.getDateAsString(this.fromDate);
+      }
+      this._success.subscribe((message) => this.successMessage = message);
+      debounceTime.call(this._success, 2000).subscribe(() => this.successMessage = undefined);
     }
-    this._success.subscribe((message) => this.successMessage = message);
-    debounceTime.call(this._success, 2000).subscribe(() => this.successMessage = undefined);
   }
   private setFromDate() {
     if (this.isCollapsedFrom) {

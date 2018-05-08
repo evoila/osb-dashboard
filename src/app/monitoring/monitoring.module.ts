@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MonitoringComponent } from 'app/monitoring/monitoring.component';
 import { MonitoringRoutingModule } from './monitoring-routing.module';
-import { LogsComponent } from './logs/logs.component'
 import { NouisliderModule } from 'ng2-nouislider';
 import { HttpClientModule } from '@angular/common/http';
 import { NgDragDropModule } from 'ng-drag-drop';
@@ -77,7 +76,7 @@ import { WindowService } from './window.service';
         DlDateTimePickerDateModule,
         AngularFontAwesomeModule
     ],
-    declarations: [MonitoringComponent, LogsComponent,
+    declarations: [MonitoringComponent, 
         MetricsComponent, DashboardComponent,
         DateFormatPipe, ChartComponent, ChartDirective, PanelComponent, PanelEditorComponent, QueryEditorComponent, EsQueryEditorComponent,
          PromQueryEditorComponent, SidebarLayoutComponent, SidebarNavComponent, ToolbarButtonComponent, ToolbarComponent, ToolbarLinkComponent],
