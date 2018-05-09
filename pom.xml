@@ -29,9 +29,16 @@
               <goal>install-node-and-npm</goal>
             </goals>
           </execution>
+          <execution>
+            <id>npm install</id>
+            <goals>
+              <goal>npm</goal>
+            </goals>
+          </execution>
         </executions>
         <configuration>
           <nodeVersion>v8.11.1</nodeVersion>
+          <npmVersion>5.6.0</npmVersion>
         </configuration>
       </plugin>
       <plugin>
