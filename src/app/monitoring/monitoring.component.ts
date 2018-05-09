@@ -5,6 +5,7 @@ import { Chart } from './model/chart';
 import { SidebarEntry } from 'app/monitoring/sidebar/sidebar-entry';
 import { PanelService } from './panel.service';
 import { environment } from '../../environments/runtime-environment';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -18,11 +19,7 @@ export class MonitoringComponent implements OnInit {
     {
       name: 'Charts',
       isCollapsible: false,
-      links: [{
-        name: 'Panel',
-        href: 'panel',
-        iconClass: 'fa fa-cube'
-      }]
+      links: []
     },
     {
       name: 'Add Panel',
@@ -37,7 +34,8 @@ export class MonitoringComponent implements OnInit {
 
   constructor(
     private entityService: EntityService,
-    private panelService: PanelService
+    private panelService: PanelService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -46,13 +44,17 @@ export class MonitoringComponent implements OnInit {
         data.forEach(k => {
           const link = {
             name: k.name,
-            href: 'panel/' + k.panelId
+            href: 'panel/' + k.panelId,
+            iconClass: 'fa fa-cube'
           }
           if (!this.menu[0].links) {
             this.menu[0].links = [];
           }
           this.menu[0].links = [...this.menu[0].links, link];
         })
+        //directing to the first panel 
+        const firstLink = this.menu[0].links[0]['href'];
+        this.router.navigate(['monitoring/' + firstLink]);
       });
   }
 
