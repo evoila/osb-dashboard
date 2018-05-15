@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MonitoringComponent } from './monitoring.component';
 
-import { MetricsComponent } from './metrics/metrics.component';
+
 import { QueryEditorComponent } from 'app/monitoring/query-editor/query-editor.component';
 import { PanelComponent } from './panel/panel.component';
 import { PanelEditorComponent } from './panel-editor/panel-editor.component';
@@ -13,10 +13,6 @@ export const ROUTES = [
     path: '',
     component: MonitoringComponent,
     children: [
-      {
-        path: 'metrics',
-        component: MetricsComponent
-      },
       {
         path: 'paneleditor/:id',
         component: PanelEditorComponent

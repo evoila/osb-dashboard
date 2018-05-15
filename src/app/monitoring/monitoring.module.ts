@@ -23,7 +23,6 @@ import {
     NgbAccordionModule,
     NgbAlertModule
 } from '@ng-bootstrap/ng-bootstrap';
-import { MetricsComponent } from './metrics/metrics.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { DateFormatPipe } from './pipe/date-format.pipe';
 import { ChartComponent } from './chart/chart/chart.component';
@@ -77,7 +76,7 @@ import { WindowService } from './window.service';
         AngularFontAwesomeModule
     ],
     declarations: [MonitoringComponent, 
-        MetricsComponent, DashboardComponent,
+        DashboardComponent,
         DateFormatPipe, ChartComponent, ChartDirective, PanelComponent, PanelEditorComponent, QueryEditorComponent, EsQueryEditorComponent,
          PromQueryEditorComponent, SidebarLayoutComponent, SidebarNavComponent, ToolbarButtonComponent, ToolbarComponent, ToolbarLinkComponent],
     providers: [

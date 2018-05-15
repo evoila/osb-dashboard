@@ -12,6 +12,7 @@ import { PrometheusChartRequest } from 'app/monitoring/model/prom-chart-request'
 import { ActivatedRoute, Router } from '@angular/router/';
 import { Location } from '@angular/common';
 import { error } from 'selenium-webdriver';
+import { Chart } from '../model/chart';
 
 
 
@@ -30,8 +31,8 @@ export class PanelEditorComponent implements OnInit {
   name: string;
   description: string;
   public isCollapsed = true;
-  private _success = new Subject<string>();
-  private successMessage?: String;
+  public _success = new Subject<string>();
+  public successMessage?: String;
   constructor(
     private panelService: PanelService,
     private modalService: NgbModal,

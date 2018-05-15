@@ -19,14 +19,14 @@ export class PromQueryEditorComponent implements OnInit {
   success = new EventEmitter();
   @Output('cancel')
   cancel = new EventEmitter();
-  private metricsAndScopes: Array<PrometheusMetrics> = [];
-  private queryStrings: Array<String> = [];
-  private sizeOptions: Array<number>;
-  private size: number;
-  private name: string; 
+  public metricsAndScopes: Array<PrometheusMetrics> = [];
+  public queryStrings: Array<String> = [];
+  public sizeOptions: Array<number>;
+  public size: number;
+  public name: string;
 
   constructor(
-    private catalogue: CatalogueService
+    public catalogue: CatalogueService
   ) {
     this.sizeOptions = Array.from(new Array(12), (val, index) => index + 1);
   }

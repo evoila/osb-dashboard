@@ -1,6 +1,7 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { CatalogueService, ChartCatalogue } from '../catalogue.service';
 import { ChartRequest } from '../model/chart-request';
+import { Chart } from '../model/chart';
 
 
 @Component({

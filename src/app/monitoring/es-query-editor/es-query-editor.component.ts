@@ -15,14 +15,14 @@ export class EsQueryEditorComponent implements OnInit {
   @Input()
   choosenChart: Chart;
   @Input()
-  private chartRequest: ChartRequest;
+  public chartRequest: ChartRequest;
   @Output('success')
   success = new EventEmitter();
   @Output('cancel')
   cancel = new EventEmitter();
-  private sizeOptions: Array<number>;
-  private size: number;
-  private name: string;
+  public sizeOptions: Array<number>;
+  public size: number;
+  public name: string;
 
   appId: string;
   constructor() {
