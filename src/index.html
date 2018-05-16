@@ -12,11 +12,11 @@
 <script th:inline="javascript">
 /*<![CDATA[*/
   window["INJECTED_ENVIRONMENT"] = {
-    serviceInstanceId: "bla",
-    token:  "",
-	  production: false,
+    serviceInstanceId: [[${serviceInstanceId}]],
+    token: [[${token}]],
+    production: false,
     baseUrls: {
-    serviceBrokerUrl: "",
+      serviceBrokerUrl: [[${endpointUrl}]]
     },
     ui: {
       title: "Service Broker Panel",
