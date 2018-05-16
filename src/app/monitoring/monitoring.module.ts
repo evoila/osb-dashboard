@@ -49,6 +49,9 @@ import { ToolbarButtonComponent } from './sidebar/toolbar-button/toolbar-button.
 import { ToolbarComponent } from 'app/monitoring/sidebar';
 import { ToolbarLinkComponent } from './sidebar/toolbar-link/toolbar-link.component';
 import { WindowService } from './window.service';
+import { AppidComponent } from './appid/appid.component';
+import { LogPanelComponent } from './log-panel/log-panel.component';
+
 
 
 
@@ -75,8 +78,8 @@ import { WindowService } from './window.service';
         DlDateTimePickerDateModule,
         AngularFontAwesomeModule
     ],
-    declarations: [MonitoringComponent, 
-        DashboardComponent,
+    declarations: [MonitoringComponent,
+        DashboardComponent, AppidComponent, LogPanelComponent,
         DateFormatPipe, ChartComponent, ChartDirective, PanelComponent, PanelEditorComponent, QueryEditorComponent, EsQueryEditorComponent,
          PromQueryEditorComponent, SidebarLayoutComponent, SidebarNavComponent, ToolbarButtonComponent, ToolbarComponent, ToolbarLinkComponent],
     providers: [

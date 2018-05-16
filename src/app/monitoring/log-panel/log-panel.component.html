@@ -1,0 +1,16 @@
+<form>
+  <div class="container">
+    <div class="row">
+      <div class="col-3">
+        <label for="search">search</label>
+        <input [(ngModel)]="query" type="text" class="form-control" id="search" name="search">
+      </div>
+      <div class="col-3">
+        <sb-appid (appId)="setAppId($event)"></sb-appid>
+      </div>
+      <div class="col-3">
+        <button type="button" (click)="getLogs()" class="btn btn-danger">Show Logs!</button>
+      </div>
+    </div>
+  </div>
+</form>

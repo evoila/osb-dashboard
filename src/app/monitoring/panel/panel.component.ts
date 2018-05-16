@@ -56,6 +56,8 @@ export class PanelComponent implements OnInit {
           this.setDateRange();
         });
       if (!this.fromDate && !this.toDate) {
+        this.step = '6';
+        this.stepUnit = 'h';
         this.toDate = moment();
         this.fromDate = moment(this.toDate).subtract(5, 'days');
 
