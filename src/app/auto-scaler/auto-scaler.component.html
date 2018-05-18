@@ -20,7 +20,7 @@
               <tr *ngFor="let binding of bindings; let i = index">
                 <th scope="row">{{i + 1}}</th>
                 <td>
-                  {{ binding.id }} <br/>
+                  {{ binding.resourceName }} <br/>
                   <small>{{ binding.serviceId }}</small>
                 </td>
                 <td>{{ binding.creationTime | date:"dd.MM.yyyy - hh:mm" }}</td>                
