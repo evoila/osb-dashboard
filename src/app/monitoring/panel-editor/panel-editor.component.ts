@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ChartRequest } from 'app/monitoring/model/chart-request';
-import { ChartRequestVm } from 'app/monitoring/model/chart-request-Vm';
+import { ChartRequestVm } from 'app/monitoring/model/chart-request-vm';
 import { PanelService } from '../panel.service';
 import { Panel } from '../model/panel';
 import { environment } from 'environments/runtime-environment';
