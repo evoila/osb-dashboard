@@ -96,18 +96,16 @@
               <yarnVersion>v1.5.1</yarnVersion>
             </configuration>
           </execution>
-          <!--
           <execution>
             <phase>process-resources</phase>
-            <id>npm install</id>
+            <id>yarn upgrade</id>
             <goals>
-              <goal>npm</goal>
+              <goal>yarn</goal>
             </goals>
             <configuration>
-              <arguments>install</arguments>
+              <arguments>upgrade</arguments>
             </configuration>
           </execution>
-          -->
           <execution>
             <phase>process-resources</phase>
             <id>yarn install</id>
