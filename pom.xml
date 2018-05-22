@@ -98,22 +98,22 @@
           </execution>
           <execution>
             <phase>process-resources</phase>
-            <id>yarn upgrade</id>
-            <goals>
-              <goal>yarn</goal>
-            </goals>
-            <configuration>
-              <arguments>upgrade</arguments>
-            </configuration>
-          </execution>
-          <execution>
-            <phase>process-resources</phase>
             <id>yarn install</id>
             <goals>
               <goal>yarn</goal>
             </goals>
             <configuration>
               <arguments>install</arguments>
+            </configuration>
+          </execution>
+          <execution>
+            <phase>process-resources</phase>
+            <id>yarn upgrade</id>
+            <goals>
+              <goal>yarn</goal>
+            </goals>
+            <configuration>
+              <arguments>upgrade</arguments>
             </configuration>
           </execution>
           <execution>
