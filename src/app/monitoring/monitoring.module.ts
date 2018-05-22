@@ -51,6 +51,8 @@ import { ToolbarLinkComponent } from './sidebar/toolbar-link/toolbar-link.compon
 import { WindowService } from './window.service';
 import { AppidComponent } from './appid/appid.component';
 import { LogPanelComponent } from './log-panel/log-panel.component';
+import { LogListComponent } from './log-list/log-list.component';
+import { SearchService } from './search.service';
 
 
 
@@ -81,7 +83,7 @@ import { LogPanelComponent } from './log-panel/log-panel.component';
     declarations: [MonitoringComponent,
         DashboardComponent, AppidComponent, LogPanelComponent,
         DateFormatPipe, ChartComponent, ChartDirective, PanelComponent, PanelEditorComponent, QueryEditorComponent, EsQueryEditorComponent,
-         PromQueryEditorComponent, SidebarLayoutComponent, SidebarNavComponent, ToolbarButtonComponent, ToolbarComponent, ToolbarLinkComponent],
+         PromQueryEditorComponent, SidebarLayoutComponent, SidebarNavComponent, ToolbarButtonComponent, ToolbarComponent, ToolbarLinkComponent, LogListComponent],
     providers: [
         EschartsService,
         ChartingService,
@@ -91,7 +93,8 @@ import { LogPanelComponent } from './log-panel/log-panel.component';
         PromChartingService,
         PromchartsService,
         EsTimerangeService,
-        WindowService
+        WindowService,
+        SearchService
     ],
 })
 export class MonitoringModule { }

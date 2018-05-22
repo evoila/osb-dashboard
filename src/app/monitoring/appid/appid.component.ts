@@ -9,6 +9,8 @@ export class AppidComponent implements OnInit {
   appId: String;
   @Output('appId')
   appIdEmitter = new EventEmitter();
+  @Output('search')
+  searchEmit = new EventEmitter();
 
   public emit() {
     if (this.appId) {
@@ -16,6 +18,9 @@ export class AppidComponent implements OnInit {
     }
   }
   constructor() { }
+  public search() {
+    this.searchEmit.emit();
+  }
 
   ngOnInit() {
   }

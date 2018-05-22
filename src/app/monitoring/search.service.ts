@@ -10,13 +10,13 @@ import { Response } from '@angular/http/src/static_response';
 @Injectable()
 export class SearchService {
 
-  constructor(endpoint: EndpointService,
+  constructor(private endpoint: EndpointService,
     private http: HttpClient
   ) { }
   public getSearchResults(request: SearchRequest): Observable<SearchResponse> {
-    const endpoint = '${this.endpoint}/search'
+    const endpoint = this.endpoint.getUri() + '/search'
     return this.http.post(endpoint, request).map(
-      (data: Response) => data.json()
+      (data: Response) => data
     )
     .catch((error: any) => Observable.throw(error.json));
 

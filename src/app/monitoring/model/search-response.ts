@@ -7,6 +7,6 @@ export interface SearchResponse {
   }
   export interface Hits {
     total: number;
-    max_score: 1.0;
+    max_score: number;
     hits: Array<LogDataModel>;
   }

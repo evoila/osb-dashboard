@@ -22,6 +22,14 @@ export class MonitoringComponent implements OnInit {
       links: []
     },
     {
+      name: 'logs',
+      isCollapsible: false,
+      links: [{
+        name: 'logs',
+        href: 'logs'
+      }]
+    },
+    {
       name: 'Add Panel',
       isCollapsible: false,
       links: [{
