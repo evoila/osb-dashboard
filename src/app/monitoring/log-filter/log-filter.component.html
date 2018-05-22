@@ -1,0 +1,29 @@
+<div class="input-group">
+  <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+  <div class="input-group-append">
+    <span class="input-group-text" (click)="addFilter(addModal)">Add Filter</span>
+    <span *ngFor="let filter of filters" class="input-group-text">{{filter[0]}}:{{filter[1]}}</span>
+  </div>
+</div>
+
+
+<ng-template #addModal let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Add your Filter</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <label for="topic">Select Topic</label>
+    <select class="form-control" [ngModel]="topic" id="topic">
+      <option *ngFor="topic of topics">{{topic}}</option>
+    </select>
+    <label for="value">Select Topic</label>
+    <input [ngModel]="value" type="text" id="value" name="value" required>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="save()">Save</button>
+    <button type="button" class="btn btn-danger" (click)="c('Close click')">Cancel</button>
+  </div>
+</ng-template>

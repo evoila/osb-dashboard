@@ -4,6 +4,9 @@
       <span>{{hits.hits.length}}/{{hits.total}}</span>
     </li>
   </ul>
-<code *ngFor="let logMessage of logs.slice().reverse()">
+
+  
+<!---<code *ngFor="let logMessage of logs.slice().reverse()">
   {{logMessage}}
-</code>
+</code>-->
+<ngx-monaco-editor [options]="editorOptions" style="height: 900px"[(ngModel)]="code"></ngx-monaco-editor>

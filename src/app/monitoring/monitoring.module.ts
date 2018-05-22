@@ -6,6 +6,7 @@ import { NouisliderModule } from 'ng2-nouislider';
 import { HttpClientModule } from '@angular/common/http';
 import { NgDragDropModule } from 'ng-drag-drop';
 import { DlDateTimePickerDateModule } from 'angular-bootstrap-datetimepicker';
+import { MonacoEditorModule } from 'ngx-monaco-editor';
 
 
 
@@ -53,6 +54,8 @@ import { AppidComponent } from './appid/appid.component';
 import { LogPanelComponent } from './log-panel/log-panel.component';
 import { LogListComponent } from './log-list/log-list.component';
 import { SearchService } from './search.service';
+import { LogSearchComponent } from './log-search/log-search.component';
+import { LogFilterComponent } from './log-filter/log-filter.component';
 
 
 
@@ -78,12 +81,13 @@ import { SearchService } from './search.service';
         HttpClientModule,
         NgDragDropModule.forRoot(),
         DlDateTimePickerDateModule,
-        AngularFontAwesomeModule
+        AngularFontAwesomeModule,
+        MonacoEditorModule.forRoot()
     ],
     declarations: [MonitoringComponent,
         DashboardComponent, AppidComponent, LogPanelComponent,
         DateFormatPipe, ChartComponent, ChartDirective, PanelComponent, PanelEditorComponent, QueryEditorComponent, EsQueryEditorComponent,
-         PromQueryEditorComponent, SidebarLayoutComponent, SidebarNavComponent, ToolbarButtonComponent, ToolbarComponent, ToolbarLinkComponent, LogListComponent],
+         PromQueryEditorComponent, SidebarLayoutComponent, SidebarNavComponent, ToolbarButtonComponent, ToolbarComponent, ToolbarLinkComponent, LogListComponent, LogSearchComponent, LogFilterComponent],
     providers: [
         EschartsService,
         ChartingService,

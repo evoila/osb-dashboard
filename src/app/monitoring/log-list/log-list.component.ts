@@ -14,16 +14,18 @@ export class LogListComponent implements OnInit {
   hits: Hits;
   @Output('more')
   public loadEmitter = new EventEmitter();
+  editorOptions = {theme: 'vs-dark', language: 'javascript'};
+  code = '';
   logs: Array<String> = [];
   constructor() { }
 
   ngOnInit() {
     if (this.searchResponse) {
       this.searchResponse.subscribe(data => {
-        this.logs = [];
+        this.code = '';
         this.hits = data;
-        data.hits.forEach(hit => {
-          this.logs = [...this.logs, hit._source.logMessage];
+        data.hits.reverse().forEach(hit => {
+          this.code += hit._source.logMessage + '\n';
         });
       })
     } else {
