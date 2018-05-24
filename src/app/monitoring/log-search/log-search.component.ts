@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, } from '@angular/core';
+import { SearchResponse } from '../model/search-response';
 
 @Component({
   selector: 'sb-log-search',
@@ -7,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LogSearchComponent implements OnInit {
 
-  constructor() { }
+  @Input()
+  results: Array<SearchResponse>;
+  isCollapsed: Array<boolean> = [];
 
+  constructor() { }
+  collapse(index: number) {
+    this.isCollapsed[index] = !this.isCollapsed[index];
+  }
   ngOnInit() {
+
   }
 
 }

@@ -1,8 +1,10 @@
 <div class="input-group">
+  <div class="input-group-prepend">
+      <span *ngFor="let filter of filters" (click)="delete(filter)" class="btn btn-danger">{{filter[0]}}:{{filter[1]}}</span>
+  </div>
   <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
   <div class="input-group-append">
-    <span class="input-group-text" (click)="addFilter(addModal)">Add Filter</span>
-    <span *ngFor="let filter of filters" class="input-group-text">{{filter[0]}}:{{filter[1]}}</span>
+    <span class="btn btn-outline-secondary" (click)="addFilter(addModal)">Add Filter</span>
   </div>
 </div>
 
@@ -16,14 +18,14 @@
   </div>
   <div class="modal-body">
     <label for="topic">Select Topic</label>
-    <select class="form-control" [ngModel]="topic" id="topic">
-      <option *ngFor="topic of topics">{{topic}}</option>
+    <select class="form-control" [(ngModel)]="topic" id="topic">
+      <option *ngFor="let aTopic of topics">{{aTopic}}</option>
     </select>
     <label for="value">Select Topic</label>
-    <input [ngModel]="value" type="text" id="value" name="value" required>
+    <input [(ngModel)]="value" type="text" id="value" name="value" required>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-light" (click)="save()">Save</button>
-    <button type="button" class="btn btn-danger" (click)="c('Close click')">Cancel</button>
+    <button type="button" class="btn " (click)="save()">Save</button>
+    <button type="button" class="btn btn-danger" (click)="cancel()">Cancel</button>
   </div>
 </ng-template>

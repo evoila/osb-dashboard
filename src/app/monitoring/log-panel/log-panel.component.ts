@@ -17,7 +17,7 @@ export class LogPanelComponent implements OnInit {
   public query: string;
   public toDate: any;
   public fromDate: any;
-  public filter: [Map<string, any>] | null;
+  public filter: Array<any> | null;
   public hits: Hits | null;
   public logEmitter: any;
   public searchEmitter: any;
@@ -46,6 +46,16 @@ export class LogPanelComponent implements OnInit {
     this.getLogs();
   }
   search() {
+    this.from = 0;
+    this.isSequel = false;
+    this.getLogs();
+  }
+  updateFilters (filters: Array<Map<string, any>>) {
+    this.filter = filters.map( k => {
+      let obj = Object.create(null);
+      obj[k[0]] = k[1];
+      return {'match': obj}
+    });
     this.from = 0;
     this.isSequel = false;
     this.getLogs();

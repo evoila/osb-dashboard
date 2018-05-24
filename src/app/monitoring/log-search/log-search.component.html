@@ -4,3 +4,18 @@
     <span>{{hits.hits.length}}/{{hits.total}}</span>
   </li>
 </ul>
+<table class="table">
+  <tbody>
+    <tr *ngFor="let result of result; let i = index">
+      <td (click)="collapse(i)">
+        {{result.logMessage}}
+        <div [ngbCollapse]="isCollapsed">
+          <div *ngFor="let entries of Object.entries(result)">
+            <span>{{entries[0]}}</span>
+            <span>{{entries[1]}}</span>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>

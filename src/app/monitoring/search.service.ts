@@ -18,7 +18,13 @@ export class SearchService {
     return this.http.post(endpoint, request).map(
       (data: Response) => data
     )
-    .catch((error: any) => Observable.throw(error.json));
+      .catch((error: any) => Observable.throw(error.json));
 
+  }
+  public getMappings(): Observable<Array<string>> {
+    const endpoint = this.endpoint.getUri() + '/mappings'
+    return this.http.get(endpoint).map(
+      (data) => Object.keys(data['mappings']['logMessages']['properties'])
+    );
   }
 }

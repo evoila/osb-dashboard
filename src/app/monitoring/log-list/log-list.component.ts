@@ -14,7 +14,7 @@ export class LogListComponent implements OnInit {
   hits: Hits;
   @Output('more')
   public loadEmitter = new EventEmitter();
-  editorOptions = {theme: 'vs-dark', language: 'javascript'};
+  editorOptions = {readOnly: true, language: 'javascript'};
   code = '';
   logs: Array<String> = [];
   constructor() { }

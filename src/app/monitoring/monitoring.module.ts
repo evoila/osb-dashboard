@@ -22,8 +22,7 @@ import {
     NgbPaginationModule,
     NgbButtonsModule,
     NgbAccordionModule,
-    NgbAlertModule
-} from '@ng-bootstrap/ng-bootstrap';
+    NgbAlertModule} from '@ng-bootstrap/ng-bootstrap';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { DateFormatPipe } from './pipe/date-format.pipe';
 import { ChartComponent } from './chart/chart/chart.component';
@@ -82,7 +81,7 @@ import { LogFilterComponent } from './log-filter/log-filter.component';
         NgDragDropModule.forRoot(),
         DlDateTimePickerDateModule,
         AngularFontAwesomeModule,
-        MonacoEditorModule.forRoot()
+        MonacoEditorModule.forRoot(),
     ],
     declarations: [MonitoringComponent,
         DashboardComponent, AppidComponent, LogPanelComponent,
