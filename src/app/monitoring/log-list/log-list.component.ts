@@ -11,9 +11,11 @@ import { Observable } from 'rxjs/Observable';
 export class LogListComponent implements OnInit {
   @Input('searchResponse')
   searchResponse: Observable<Hits>;
+  @Input('isStreaming')
+  isStreaming: boolean;
   hits: Hits;
   @Output('more')
-  public loadEmitter = new EventEmitter();
+  public more = new EventEmitter<[number, boolean]>();
   editorOptions = {readOnly: true, language: 'javascript'};
   code = '';
   logs: Array<String> = [];
@@ -33,6 +35,6 @@ export class LogListComponent implements OnInit {
     }
   }
   public loadMore() {
-    this.loadEmitter.emit();
+    this.more.emit([100, true]);
   }
 }

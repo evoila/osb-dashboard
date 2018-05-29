@@ -1,5 +1,6 @@
-import { Component, OnInit, Input, Output, } from '@angular/core';
-import { SearchResponse } from '../model/search-response';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Hits } from '../model/search-response';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'sb-log-search',
@@ -8,8 +9,16 @@ import { SearchResponse } from '../model/search-response';
 })
 export class LogSearchComponent implements OnInit {
 
-  @Input()
-  results: Array<SearchResponse>;
+  @Input('hits')
+  hits: Observable<Hits>;
+  @Input('pagination')
+  pagination: number;
+
+  // the Number says how many search Results should be displayed
+  // the boolean Value says if previous results should be stored
+  @Output('more')
+  more = new EventEmitter<[number, boolean]>();
+  results: Hits;
   isCollapsed: Array<boolean> = [];
 
   constructor() { }
@@ -17,7 +26,13 @@ export class LogSearchComponent implements OnInit {
     this.isCollapsed[index] = !this.isCollapsed[index];
   }
   ngOnInit() {
-
+    this.hits.subscribe(data => this.results = data)
   }
-
+  loadMore(goForward: boolean) {
+    goForward ? this.more.emit([20, false]) : this.more.emit([-20, false]);
+    this.isCollapsed = [];
+  }
+  getObjectEntries(object: any): Array<[string, string]> {
+    return Object.entries(object);
+  }
 }

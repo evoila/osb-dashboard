@@ -157,7 +157,8 @@ export class PanelComponent implements OnInit {
     this.panelService.addPanel(this.panel).subscribe(data => {
       this._success.next('panel updated succesfully');
       this.setPanel(data);
-    }, (error) => {
+      this.changed = false;
+    }, (err) => {
       this._success.next('panel updated succesfully');
     }
     );
