@@ -68,7 +68,8 @@
       "outDir": "dist/monitoring",
       "assets": [
         "assets/core",
-        "favicon.ico"
+        "favicon.ico",
+        { "glob": "**/*", "input": "../node_modules/ngx-monaco-editor/assets/monaco", "output": "./assets/monaco/" }
       ],
       "index": "index.html",
       "main": "main.ts",

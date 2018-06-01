@@ -1,0 +1,45 @@
+.searchForms{
+    background-color: #3b3a36;
+    padding: 1em;
+}
+.searchForms h4, h6 {
+    color: white;
+    text-align: center;
+}
+h6 {
+    padding-bottom: 1em;
+}
+label{
+    color: white;
+    text-align: center;
+    padding-right: 1em;
+    width: 8em;
+}
+
+.form-check-label{
+    color: white;
+    width: 10em;
+}
+span{
+    color: white;
+
+}
+.search {
+    width: 80%;
+    text-align: center; 
+    margin: auto;
+    margin-bottom: 1em;
+}
+.input-group, .filter-lane {
+    width: 80%;
+    text-align: center; 
+    margin: auto;
+    margin-bottom: 1em;
+}
+button{
+    background-color:#3fb0ac;
+    color: white;
+}
+button:hover{
+    background-color: #b3c2bf;
+}

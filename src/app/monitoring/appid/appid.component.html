@@ -1,0 +1,7 @@
+<div class="input-group">
+    <label for="appId">App-ID</label>
+    <input [(ngModel)]="appId" type="text" class="" id="appId" (input)="emit()" name="appId" required>
+    <div class="input-group-append">
+        <button type="button" (click)="search()" class="btn btn-outline-secondary" for="appId">Show Logs!</button>
+    </div>
+</div>

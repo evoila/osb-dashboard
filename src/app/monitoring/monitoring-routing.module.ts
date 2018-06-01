@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Component } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MonitoringComponent } from './monitoring.component';
 
@@ -6,6 +6,7 @@ import { MonitoringComponent } from './monitoring.component';
 import { QueryEditorComponent } from 'app/monitoring/query-editor/query-editor.component';
 import { PanelComponent } from './panel/panel.component';
 import { PanelEditorComponent } from './panel-editor/panel-editor.component';
+import { LogPanelComponent } from './log-panel/log-panel.component';
 
 
 export const ROUTES = [
@@ -16,6 +17,10 @@ export const ROUTES = [
       {
         path: 'paneleditor/:id',
         component: PanelEditorComponent
+      },
+      {
+        path: 'logs',
+        component: LogPanelComponent
       },
       {
         path: 'panel/:id',

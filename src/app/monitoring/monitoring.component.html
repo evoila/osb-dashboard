@@ -1,4 +1,11 @@
-<sb-sidebar-layout>
-    <sb-sidebar-nav [menu]="menu" [title]="'Services'"></sb-sidebar-nav>
-    <router-outlet></router-outlet>
-</sb-sidebar-layout>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-2">
+                <sb-sidebar-nav [menu]="menu" [title]=""></sb-sidebar-nav>
+            </div>
+            <div class="col-10">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+        </div>

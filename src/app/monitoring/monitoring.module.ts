@@ -6,6 +6,7 @@ import { NouisliderModule } from 'ng2-nouislider';
 import { HttpClientModule } from '@angular/common/http';
 import { NgDragDropModule } from 'ng-drag-drop';
 import { DlDateTimePickerDateModule } from 'angular-bootstrap-datetimepicker';
+import { MonacoEditorModule } from 'ngx-monaco-editor';
 
 
 
@@ -21,8 +22,7 @@ import {
     NgbPaginationModule,
     NgbButtonsModule,
     NgbAccordionModule,
-    NgbAlertModule
-} from '@ng-bootstrap/ng-bootstrap';
+    NgbAlertModule} from '@ng-bootstrap/ng-bootstrap';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { DateFormatPipe } from './pipe/date-format.pipe';
 import { ChartComponent } from './chart/chart/chart.component';
@@ -49,6 +49,14 @@ import { ToolbarButtonComponent } from './sidebar/toolbar-button/toolbar-button.
 import { ToolbarComponent } from 'app/monitoring/sidebar';
 import { ToolbarLinkComponent } from './sidebar/toolbar-link/toolbar-link.component';
 import { WindowService } from './window.service';
+import { AppidComponent } from './appid/appid.component';
+import { LogPanelComponent } from './log-panel/log-panel.component';
+import { LogListComponent } from './log-list/log-list.component';
+import { SearchService } from './search.service';
+import { LogSearchComponent } from './log-search/log-search.component';
+import { LogFilterComponent } from './log-filter/log-filter.component';
+import { TimefilterComponent } from './timefilter/timefilter.component';
+
 
 
 
@@ -73,12 +81,13 @@ import { WindowService } from './window.service';
         HttpClientModule,
         NgDragDropModule.forRoot(),
         DlDateTimePickerDateModule,
-        AngularFontAwesomeModule
+        AngularFontAwesomeModule,
+        MonacoEditorModule.forRoot(),
     ],
-    declarations: [MonitoringComponent, 
-        DashboardComponent,
+    declarations: [MonitoringComponent,
+        DashboardComponent, AppidComponent, LogPanelComponent,
         DateFormatPipe, ChartComponent, ChartDirective, PanelComponent, PanelEditorComponent, QueryEditorComponent, EsQueryEditorComponent,
-         PromQueryEditorComponent, SidebarLayoutComponent, SidebarNavComponent, ToolbarButtonComponent, ToolbarComponent, ToolbarLinkComponent],
+         PromQueryEditorComponent, SidebarLayoutComponent, SidebarNavComponent, ToolbarButtonComponent, ToolbarComponent, ToolbarLinkComponent, LogListComponent, LogSearchComponent, LogFilterComponent, TimefilterComponent],
     providers: [
         EschartsService,
         ChartingService,
@@ -88,7 +97,8 @@ import { WindowService } from './window.service';
         PromChartingService,
         PromchartsService,
         EsTimerangeService,
-        WindowService
+        WindowService,
+        SearchService
     ],
 })
 export class MonitoringModule { }

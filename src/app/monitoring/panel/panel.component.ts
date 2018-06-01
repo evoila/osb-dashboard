@@ -4,7 +4,7 @@ import { PanelService } from 'app/monitoring/panel.service';
 import { environment } from 'environments/runtime-environment';
 import { Panel } from 'app/monitoring/model/panel';
 import { ChartType } from 'chart.js';
-import { Event } from '@angular/router/src/events';
+import { Event, NavigationEnd } from '@angular/router';
 import { ChartRequestVm } from 'app/monitoring/model/chart-request-vm';
 import * as moment from 'moment/moment';
 import { EsTimerangeService } from 'app/monitoring/es-timerange.service';
@@ -14,6 +14,9 @@ import { ChartRequest } from 'app/monitoring/model/chart-request';
 import { debounceTime } from 'rxjs/operator/debounceTime';
 import { Subject } from 'rxjs/Subject';
 import { error } from 'selenium-webdriver';
+import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/mergeMap';
 
 
 
@@ -25,76 +28,76 @@ import { error } from 'selenium-webdriver';
 export class PanelComponent implements OnInit {
   public panel: Panel;
   public menu: { [k: string]: any } = {};
-  public fromDate: any;
   public fromDateView: any;
-  private fromDateString: string = "Choose Date";
-  public toDate: any;
   public toDateView: any;
-  private toDateString: string = "Choose Date";
-  private isCollapsedFrom = false;
-  private isCollapsedTo = false;
-  private stepUnits = ['s', 'm', 'h'];
-  private step: string;
-  private stepUnit: string;
+  private steps: [string, string]
   private changed = false;
   private _success = new Subject<string>();
   private successMessage?: String;
   constructor(private panelService: PanelService,
     private timeRangeService: EsTimerangeService,
     private router: Router,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private activatedRoute: ActivatedRoute) {
     this.menu['view'] = 'Views:';
     this.menu['viewSettings'] = ['1', '2', '3'];
   }
-
   ngOnInit() {
-    const id = this.route.snapshot.paramMap.get('id') || null;
+    this.getData(this.route.snapshot.paramMap.get('id') || null);
+    this.router.events
+    .filter((event) => event instanceof NavigationEnd)
+    .map(() => this.activatedRoute)
+    .map((rt) => {
+      while (rt.firstChild) {
+        rt = rt.firstChild;
+      }
+      return rt.snapshot.paramMap.get('id') || null;
+    })
+    .subscribe((event) => {
+      console.log(event);
+      this.getData(event);
+    });
+  }
+  getData(id: any) {
     if (id) {
       this.panelService.getSpecificPanel(id).
         subscribe(data => {
           this.setPanel(data);
           this.setDateRange();
         });
-      if (!this.fromDate && !this.toDate) {
-        this.toDate = moment();
-        this.fromDate = moment(this.toDate).subtract(5, 'days');
-
-        this.toDateString = this.getDateAsString(this.toDate);
-        this.fromDateString = this.getDateAsString(this.fromDate);
+      if (!this.fromDateView && !this.toDateView) {
+        this.steps = ['6', 'h'];
+        this.toDateView = moment().unix();
+        this.fromDateView = moment().subtract(5, 'days').unix();
       }
       this._success.subscribe((message) => this.successMessage = message);
       debounceTime.call(this._success, 2000).subscribe(() => this.successMessage = undefined);
     }
   }
-  private setFromDate() {
-    if (this.isCollapsedFrom) {
-      this.fromDate = moment(this.fromDateView);
-      this.isCollapsedFrom = !this.isCollapsedFrom;
-      this.fromDateString = this.getDateAsString(this.fromDate);
-      this.setDateRange();
-    }
+
+  setFromDate(date: any) {
+    this.fromDateView = date;
+    this.setDateRange();
   }
-  private setToDate() {
-    if (this.isCollapsedTo) {
-      this.toDate = moment(this.toDateView);
-      this.isCollapsedTo = !this.isCollapsedTo;
-      this.toDateString = this.getDateAsString(this.toDate);
-      this.setDateRange();
-    }
+  setToDate(date: any) {
+    this.toDateView = date;
+    this.setDateRange();
+  }
+  setStep(step: [string, string]) {
+    this.steps = step;
+    this.setDateRange();
   }
   private setDateRange() {
-    if (this.toDate && this.fromDate && this.panel && this.panel.chartQueries) {
+    if (this.toDateView && this.fromDateView && this.panel && this.panel.chartQueries) {
       this.panel.chartQueries.forEach(element => {
-        const start = moment(this.fromDate).unix();
-        const end = moment(this.toDate).unix();
         if (element['appId'] == null) {
-          element['start'] = start;
-          element['end'] = end;
-          if (this.step && this.stepUnit) {
-            element['step'] = this.step + this.stepUnit;
+          element['start'] = this.fromDateView;
+          element['end'] = this.toDateView;
+          if (this.steps) {
+            element['step'] = this.steps[0] + this.steps[1];
           }
         } else {
-          element = this.timeRangeService.setTimeRange(element as EsChartRequest, start, end);
+          element = this.timeRangeService.setTimeRange(element as EsChartRequest, this.fromDateView, this.toDateView);
         }
 
       });
@@ -155,7 +158,8 @@ export class PanelComponent implements OnInit {
     this.panelService.addPanel(this.panel).subscribe(data => {
       this._success.next('panel updated succesfully');
       this.setPanel(data);
-    }, (error) => {
+      this.changed = false;
+    }, (err) => {
       this._success.next('panel updated succesfully');
     }
     );

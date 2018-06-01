@@ -1,0 +1,37 @@
+<div class="searchForms">
+  <h4>Filter your logs!</h4>
+  <h6>Specify App, Instance and hit the search Button</h6>
+  <div class="filter-lane">
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" (change)="mode(false)" type="radio" name="mode" id="inlineRadio1" value="option1">
+      <label class="form-check-label" for="classic">Classic Search</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" (change)="mode(true)" type="radio" name="mode" id="stream" value="option2">
+      <label class="form-check-label" for="stream">Stream Logs!</label>
+    </div>
+    <span (click)="showFilter = !showFilter">Filter <fa [name]="showFilter? 'sort-down' : 'sort-up'" ></fa></span>
+    <sb-log-filter [ngbCollapse]="showFilter" class="form_element" (update)="updateFilters($event)"></sb-log-filter>
+    <sb-timefilter [ngbCollapse]="showFilter" class="form_element" [toDate]="toDate" [fromDate]="fromDate" (fromDateChange)="setFromDate($event)" (toDateChange)="setToDate($event)"></sb-timefilter>
+  </div>
+  <div class="input-group">
+    <label for="search">Search Query</label>
+    <input [(ngModel)]="query" typed="text" class="form-control" id="search" name="search">
+  </div>
+  <div class="input-group">
+    <label for="appId">App-ID</label>
+    <input [(ngModel)]="appId" type="text" class="form-control" id="appId" name="appId" required>
+    <div class="input-group-append">
+      <button type="button" (click)="search()" class="btn btn-outline-secondary" for="appId">Show Logs!</button>
+    </div>
+  </div>
+
+
+
+</div>
+<div class="row">
+  <div class="col-12">
+    <sb-log-list *ngIf="appId && !query && observableHits" [isStreaming]="isStreaming" [searchResponse]="observableHits" (more)="more($event)"></sb-log-list>
+    <sb-log-search *ngIf="appId && query && observableSearchResults" [pagination]="from" [hits]="observableSearchResults" (more)="more($event)"></sb-log-search>
+  </div>
+</div>
