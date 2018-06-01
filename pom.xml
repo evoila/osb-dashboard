@@ -96,6 +96,18 @@
               <yarnVersion>v1.5.1</yarnVersion>
             </configuration>
           </execution>
+          <!--
+          <execution>
+            <phase>process-resources</phase>
+            <id>npm install</id>
+            <goals>
+              <goal>npm</goal>
+            </goals>
+            <configuration>
+              <arguments>install</arguments>
+            </configuration>
+          </execution>
+          -->
           <execution>
             <phase>process-resources</phase>
             <id>yarn install</id>
@@ -116,7 +128,9 @@
               <arguments>upgrade</arguments>
             </configuration>
           </execution>
-          <execution>
+
+		  <execution>
+
             <phase>compile</phase>
             <id>yarn run build</id>
             <goals>

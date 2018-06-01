@@ -28,7 +28,7 @@ export class ServiceKeysDetailComponent implements OnInit {
   }
 
   delete(): void {
-    this.service.deleteOne(this.ENTITY, this.serviceKey.id)
+    this.service.deleteOne(this.ENTITY, this.serviceKey)
       .subscribe((key: any) => {
         this.redirect();
       });

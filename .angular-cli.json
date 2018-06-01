@@ -8,6 +8,7 @@
       "name": "example",
       "root": "src",
       "outDir": "dist/example",
+      "deployUrl": "/app/",
       "assets": [
         "assets/core",
         "favicon.ico"
@@ -37,6 +38,7 @@
       "name": "mysql",
       "root": "src",
       "outDir": "dist/mysql",
+      "deployUrl": "/app/",
       "assets": [
         "assets/core",
         "favicon.ico"
@@ -98,6 +100,7 @@
       "name": "mongodb",
       "root": "src",
       "outDir": "dist/mongodb",
+      "deployUrl": "/app/",
       "assets": [
         "assets/core",
         "favicon.ico"
@@ -127,6 +130,7 @@
       "name": "postgresql",
       "root": "src",
       "outDir": "dist/postgresql",
+      "deployUrl": "/app/",
       "assets": [
         "assets/core",
         "favicon.ico"
@@ -156,6 +160,7 @@
       "name": "lbaas",
       "root": "src",
       "outDir": "dist/lbaas",
+      "deployUrl": "/app/",
       "assets": [
         "assets/core",
         "favicon.ico"
@@ -185,6 +190,7 @@
       "name": "auto-scaler",
       "root": "src",
       "outDir": "dist/auto-scaler",
+      "deployUrl": "/app/",
       "assets": [
         "assets/core",
         "favicon.ico"
