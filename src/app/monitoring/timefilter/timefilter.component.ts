@@ -29,8 +29,8 @@ export class TimefilterComponent implements OnInit {
   public toDateString;
   public step: string;
   public stepUnit: string;
-  private toDateView: any;
-  private fromDateView: any;
+  public toDateView: any;
+  public fromDateView: any;
 
   stepUnits = ['s', 'm', 'h'];
 
