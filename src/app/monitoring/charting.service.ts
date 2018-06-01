@@ -16,6 +16,7 @@ export class ChartingService {
   private noSeriesCharts = ['pie', 'doughnut'];
   private acceptedDateFormats: Array<any> = ['DD.MM.YYYY'];
   private isNested;
+  private dateFormatPipe = new DateFormatPipe();
 
   constructor() { }
 
@@ -52,7 +53,8 @@ export class ChartingService {
       if (label instanceof Array) {
         label = this.convertLabels(label);
       } else {
-        label = new DateFormatPipe().transform(label);
+
+        label = this.dateFormatPipe.transformMillis((parseInt(label, 10)));
       }
     })
     return labels;
