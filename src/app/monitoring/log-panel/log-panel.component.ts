@@ -34,12 +34,13 @@ export class LogPanelComponent implements OnInit {
   public observableSearchResults: Observable<Hits> = Observable.create(e => this.searchEmitter = e);
   private from = 0;
   private isSequel = false;
-  // Streamin Mode which polls Log-Messages
+  public fromDateView: any;
+  public toDateView: any;
+  // Streaming Mode which polls Log-Messages
   public isStreaming = false;
   public showFilter = true;
   private pollData: Observable<number> | null;
   private subscription: Subscription | null;
-
   private numOfLogs = 300;
   private triggerEmitter: any;
   private timestamp: Observable<number | null> | null = null;
@@ -78,7 +79,7 @@ export class LogPanelComponent implements OnInit {
     } else {
       this.pollData = null;
       this.isSequel = false;
-      this.subscription!!.unsubscribe();
+      this.subscription && this.subscription!!.unsubscribe();
       this.from = 0;
       this.hits = null
       this.isSequel = false;
@@ -94,6 +95,12 @@ export class LogPanelComponent implements OnInit {
     this.from = 0;
     this.isSequel = false;
     this.getLogs();
+  }
+  setFromDate(fromDate: number) {
+    this.fromDate = fromDate * 1000;
+  }
+  setToDate(toDate: number) {
+    this.toDate = toDate * 1000;
   }
   private buildSearchRequest(size: number): SearchRequest {
     const searchRequest = {

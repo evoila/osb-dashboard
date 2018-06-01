@@ -12,6 +12,7 @@
     </div>
     <span (click)="showFilter = !showFilter">Filter <fa [name]="showFilter? 'sort-down' : 'sort-up'" ></fa></span>
     <sb-log-filter [ngbCollapse]="showFilter" class="form_element" (update)="updateFilters($event)"></sb-log-filter>
+    <sb-timefilter [ngbCollapse]="showFilter" class="form_element" [toDate]="toDate" [fromDate]="fromDate" (fromDateChange)="setFromDate($event)" (toDateChange)="setToDate($event)"></sb-timefilter>
   </div>
   <div class="input-group">
     <label for="search">Search Query</label>

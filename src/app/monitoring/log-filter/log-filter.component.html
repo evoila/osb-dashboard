@@ -2,7 +2,7 @@
   <div class="input-group-prepend">
       <span *ngFor="let filter of filters" (click)="delete(filter)" class="btn btn-danger">{{filter[0]}}:{{filter[1]}}</span>
   </div>
-  <label for="form-">Classic Search</label>
+  <label for="form-">Add Filter</label>
   <input type="text" name="filter" class="form-control" aria-label="Amount (to the nearest dollar)">
   <div class="input-group-append">
     <span class="btn btn-outline-secondary" (click)="addFilter(addModal)">Add Filter</span>

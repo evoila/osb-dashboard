@@ -1,9 +1,9 @@
-<ul class="list-group" *ngIf="hits">
+<ul class="list-group" *ngIf="hits && !isStreaming">
     <li (click)="loadMore()" class="list-group-item">
-      Load more...  
+      Show older Logs more...  
       <span>{{hits.hits.length}}/{{hits.total}}</span>
     </li>
-  </ul>
+</ul>
 
-  
+
 <ngx-monaco-editor [options]="editorOptions" style="height: 900px"[(ngModel)]="code"></ngx-monaco-editor>

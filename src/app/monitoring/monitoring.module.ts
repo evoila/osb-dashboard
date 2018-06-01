@@ -55,6 +55,7 @@ import { LogListComponent } from './log-list/log-list.component';
 import { SearchService } from './search.service';
 import { LogSearchComponent } from './log-search/log-search.component';
 import { LogFilterComponent } from './log-filter/log-filter.component';
+import { TimefilterComponent } from './timefilter/timefilter.component';
 
 
 
@@ -86,7 +87,7 @@ import { LogFilterComponent } from './log-filter/log-filter.component';
     declarations: [MonitoringComponent,
         DashboardComponent, AppidComponent, LogPanelComponent,
         DateFormatPipe, ChartComponent, ChartDirective, PanelComponent, PanelEditorComponent, QueryEditorComponent, EsQueryEditorComponent,
-         PromQueryEditorComponent, SidebarLayoutComponent, SidebarNavComponent, ToolbarButtonComponent, ToolbarComponent, ToolbarLinkComponent, LogListComponent, LogSearchComponent, LogFilterComponent],
+         PromQueryEditorComponent, SidebarLayoutComponent, SidebarNavComponent, ToolbarButtonComponent, ToolbarComponent, ToolbarLinkComponent, LogListComponent, LogSearchComponent, LogFilterComponent, TimefilterComponent],
     providers: [
         EschartsService,
         ChartingService,
