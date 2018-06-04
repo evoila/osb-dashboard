@@ -9,11 +9,19 @@
 <script th:inline="javascript">
 /*<![CDATA[*/
   window["INJECTED_ENVIRONMENT"] = {
+<<<<<<< HEAD
     serviceInstanceId: [[${serviceInstanceId}]], //'DD69H8D3-7876-4056-A0EE-DE8D3498259T'
     token: [[${token}]], //'Bearer 12345678910'
 	  production: false,
     baseUrls: {
       serviceBrokerUrl: [[${endpointUrl}]], //'http://localhost:8080', 
+=======
+    serviceInstanceId: 'DD69H8D3-7876-4056-A0EE-DE8D3498259T', // [[${serviceInstanceId}]] /*"8d0644f0-abca-4f01-9244-243abe720a84" */
+    token: 'Bearer 12345678910', //[[${token}]]
+	  production: false,
+    baseUrls: {
+      serviceBrokerUrl: 'http://localhost:8080', //[[${endpointUrl}]]
+>>>>>>> c87c42762ba11155a6696b89d90c6728335e2af0
     },
     ui: {
       title: "Service Broker Panel",

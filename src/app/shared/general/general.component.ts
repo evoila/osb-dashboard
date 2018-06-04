@@ -8,7 +8,7 @@ import { GeneralService } from './general.service';
 })
 export class GeneralComponent implements OnInit {
   generalInfo: any = {};
-
+  
   constructor(protected readonly generalService: GeneralService) { }
 
   ngOnInit() {

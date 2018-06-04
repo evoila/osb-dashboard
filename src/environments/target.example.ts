@@ -1,6 +1,5 @@
 import { BuildTarget } from './build-target';
 
-
 /**
  * We keep auth module separate from Meshcloud module so we can have diverging
  * set of meshstack submodules (e.g. billing/profile/register) between VW and meshcloud targets
