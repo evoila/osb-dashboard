@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationService, Notification} from '../../../core/notification.service';
 import { NotificationType } from 'app/core';
 
-
 @Component({
   selector: 'sb-backup-plan',
   templateUrl: './backup-plan.component.html',
@@ -13,7 +12,8 @@ import { NotificationType } from 'app/core';
 export class BackupPlanComponent implements OnInit {
   readonly ENTITY: string = 'plans';
   plan: any = {}
-  destinations: any = [];
+  destinationList: any = [];
+  itemList: any = [];
   update = false;
 
   constructor(protected readonly backupService: BackupService,
@@ -24,11 +24,16 @@ export class BackupPlanComponent implements OnInit {
   ngOnInit() {
     this.backupService.loadAll('destinations')
       .subscribe(
-        (dest: any) => { this.destinations = dest.content},
+        (result: any) => { this.destinationList = result.content }
       );
 
+    this.backupService.loadAll('items')
+      .subscribe(
+        (result: any) => { this.itemList = result.content }
+      );
+  
+
     this.route.params.subscribe(params => {
-      console.log(params['planId']);
        if (params['planId']) {
          this.update = true;
           this.backupService.loadOne(this.ENTITY, params['planId'])
@@ -37,7 +42,6 @@ export class BackupPlanComponent implements OnInit {
             );
        }
     });
-
   }
 
   delete(): void {

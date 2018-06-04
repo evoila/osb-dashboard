@@ -14,6 +14,18 @@
         Frequency definition is required
       </div>
     </div>
+    <div class="form-group">
+      <label for="items">Items</label>
+      <select class="form-control" id="items" name="items" #items="ngModel" [(ngModel)]="plan.items" multiple size="6">
+        <option *ngFor="let i of itemList" [ngValue]="i.id">
+          {{i.name}}
+        </option>
+      </select>
+      <small id="items" class="form-text text-muted">Select the items, which should be backed up.</small>
+      <div [hidden]="items.valid || items.pristine" class="alert alert-danger">
+        At least on items is required
+      </div>
+    </div>
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
@@ -43,13 +55,13 @@
     </div>
     <div class="form-group">
       <label for="fileDestination">File Destination</label>
-      <select class="form-control" id="fileDestination" name="fileDestination" [(ngModel)]="plan.destinationId">
-        <option *ngFor="let d of destinations" [ngValue]="d.id">
+      <select class="form-control" id="fileDestination" name="fileDestination" #fileDestination="ngModel" [(ngModel)]="plan.destinationId">
+        <option *ngFor="let d of destinationList" [ngValue]="d.id">
           {{d.name}}
         </option>
       </select>
       <small id="fileDestination" class="form-text text-muted">Select the file destination where the backups are stored.</small>
-      <div [hidden]="retentionPeriod.valid || retentionPeriod.pristine" class="alert alert-danger">
+      <div [hidden]="fileDestination.valid || fileDestination.pristine" class="alert alert-danger">
         A file destination period is required
       </div>
     </div>

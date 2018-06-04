@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { SchemaFormModule, WidgetRegistry, DefaultWidgetRegistry } from "angular2-schema-form";
+
 import { BackupComponent } from './backup/backup.component';
 import { ServiceKeysComponent } from './service-keys/service-keys.component';
 import { NoContentComponent } from './no-content/no-content.component';
@@ -37,6 +39,7 @@ const components = [BackupComponent,
     RouterModule,
     SharedRoutingModule,
     CoreModule,
+    SchemaFormModule
   ],
   declarations: [...components],
   exports: [components],

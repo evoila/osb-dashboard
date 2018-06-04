@@ -49,7 +49,7 @@ export class BackupComponent implements OnInit {
   }
 
   startBackup(id: string) {
-    this.backupService.saveOne({destinationId: id}, 'backup')
+    this.backupService.saveOne({planId: id}, 'backup')
       .subscribe({
         next: (d) => {
           this.nService.add(new Notification(NotificationType.Warning, 'Started Backup'));
