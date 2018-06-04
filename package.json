@@ -52,6 +52,7 @@
     "@angular/platform-browser-dynamic": "5.2.9",
     "@angular/router": "5.2.9",
     "@ng-bootstrap/ng-bootstrap": "^1.0.2",
+    "angular2-schema-form": "^1.2.1",
     "bootstrap": "4.1.1",
     "chart.js": "^2.7.1",
     "core-js": "^2.4.1",
