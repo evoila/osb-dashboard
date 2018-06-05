@@ -48,8 +48,8 @@ export class BackupComponent implements OnInit {
       });
   }
 
-  startBackup(id: string) {
-    this.backupService.saveOne({planId: id}, 'backup')
+  startBackup(plan: string, id: string) {
+    this.backupService.saveOne({plan: plan}, 'backup', id)
       .subscribe({
         next: (d) => {
           this.nService.add(new Notification(NotificationType.Warning, 'Started Backup'));

@@ -27,7 +27,7 @@
                 <td>{{ plan.frequency }}</td>
                 <td>{{ plan.retentionStyle }}</td>
                 <td><a href="#" routerLink="/backup/plan/{{plan.id}}">Details</a></td>
-                <td><a href="#" (click)="startBackup(plan.id)">Backup Now</a></td>
+                <td><a href="#" (click)="startBackup(plan, plan.id)">Backup Now</a></td>
               </tr>
             </tbody>
           </table>
