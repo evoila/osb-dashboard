@@ -8,6 +8,7 @@ import { CoreHttpService,
 import { NotificationBannerComponent } from './notification-banner/notification-banner.component';
 import { RouterModule } from '@angular/router';
 import { NotificationService, EntityService } from './';
+import { ShowErrorsComponent } from './show-errors/show-errors.component';
 
 export function coreHttpFactory(backend: XHRBackend) {
   return new CoreHttpService(backend);
@@ -16,7 +17,8 @@ export function coreHttpFactory(backend: XHRBackend) {
 const components = [
   HomeComponent,
   NotificationBannerComponent,
-  InlineLoaderDirective
+  InlineLoaderDirective,
+  ShowErrorsComponent
 ]
 
 @NgModule({
@@ -24,7 +26,7 @@ const components = [
     CommonModule,
     RouterModule
   ],
-  declarations: [components, NotificationBannerComponent],
+  declarations: [components, NotificationBannerComponent, ShowErrorsComponent],
   exports: [components]
 })
 export class CoreModule {

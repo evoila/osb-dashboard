@@ -15,12 +15,8 @@ export class LBaasService extends EntityService  {
     super(httpService);
   }
 
-  public saveOne(entity: any, entityRel: string, certified: boolean): Observable<{} | any> {    
-    if (certified) {
-      return this.patch(this.CERTIFICATE_BASEURL + '/' + serviceInstanceId + '/' + entityRel, entity);
-    } else {
-      return this.post(this.CERTIFICATE_BASEURL + '/' + serviceInstanceId + '/' + entityRel, entity);
-    }
+  public saveOne(entity: any, entityRel: string): Observable<{} | any> {
+    return this.patch(this.CERTIFICATE_BASEURL + '/' + serviceInstanceId + '/' + entityRel, entity);
   }
 
   public isCertified(entityRel : string): Observable<{} | any> {

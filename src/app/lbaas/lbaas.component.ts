@@ -9,7 +9,6 @@ import { NotificationService, Notification, NotificationType } from '../core/not
 export class LBaasComponent implements OnInit {
   configuration = {}
 
-  public certified: boolean;
   public publicIp: any;
   public responseString: string;
   public validDomains: boolean;
@@ -23,20 +22,6 @@ export class LBaasComponent implements OnInit {
     .subscribe((publicIp: any) => {
       this.publicIp = publicIp['publicIp'];
     });
-    
-    const warning = document.getElementById('certificateWarning');
-
-    if(warning != null) {
-      warning.style.display = "none";
-
-      this.asService.isCertified('certs').subscribe(status => {
-        this.certified = status;
-
-        if(this.certified) {
-          warning.style.display = "block";
-        }
-      });
-    }
   }
 
   public validateDomains() : void {
@@ -67,12 +52,7 @@ export class LBaasComponent implements OnInit {
   }
 
   public onCertificateSubmit() : void {    
-    if(this.certified) {
-      this.asService.saveOne(this.configuration, 'certs', true).subscribe();
-      this.nService.add(new Notification(NotificationType.Info, 'Successfully updated certificate'));
-    } else {
-      this.asService.saveOne(this.configuration, 'certs', false).subscribe();
-      this.nService.add(new Notification(NotificationType.Info, 'Successfully stored certificate'));
-    } 
+    this.asService.saveOne(this.configuration, 'certs').subscribe();
+    this.nService.add(new Notification(NotificationType.Info, 'Successfully updated certificate'));
   }
 }

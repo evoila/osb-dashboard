@@ -3,7 +3,7 @@ import { BackupService } from './backup.service';
 import { Job } from './domain/job';
 import { BackupPlan } from './domain/backup-plan';
 import { FileEndpoint } from './domain/file-endpoint';
-import {NotificationService, Notification, NotificationType} from '../../core/notification.service';
+import { NotificationService, Notification, NotificationType } from '../../core/notification.service';
 
 @Component({
   selector: 'sb-backup',

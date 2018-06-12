@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BackupService } from '../backup.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import {NotificationService, Notification, NotificationType} from '../../../core/notification.service';
+import { NotificationService, Notification, NotificationType } from '../../../core/notification.service';
 
 @Component({
   selector: 'sb-file-endpoint',

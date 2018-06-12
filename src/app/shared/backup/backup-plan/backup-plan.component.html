@@ -1,40 +1,34 @@
 <div class="container" style="padding: 20px 0 20px 0">
   <p><a class="link" routerLink="/backup"><< Go Back</a></p>
-  <form #form="ngForm" action="#" (ngSubmit)="onSubmit()">
+  <form #form="ngForm" action="#" (ngSubmit)="onSubmit()" ngNativeValidate>
     <div class="form-group">
       <label for="frequency">Frequency</label>
-      <input type="text" class="form-control" name="frequency" #frequency="ngModel" [(ngModel)]="plan.frequency">
+      <input type="text" class="form-control" id="frequency" name="frequency" #frequency="ngModel" [(ngModel)]="plan.frequency" required>
+      <show-errors [control]="frequency"></show-errors>
       <small id="frequency" class="form-text text-muted">A cron string describes how often the backup is executed.
       </small>
       <small id="frequency" class="form-text text-muted">For example
         <pre style="display: inline">* * */5 * * *</pre>
         for every 5 hours
       </small>
-      <div [hidden]="frequency.valid || frequency.pristine" class="alert alert-danger">
-        Frequency definition is required
-      </div>
     </div>
     <div class="form-group">
       <label for="items">Items</label>
-      <select class="form-control" id="items" name="items" #items="ngModel" [(ngModel)]="plan.items" multiple size="6">
+      <select class="form-control" id="items" name="items" #items="ngModel" [(ngModel)]="plan.items" multiple size="6" required>
         <option *ngFor="let i of itemList" [ngValue]="i.id">
           {{i.name}}
         </option>
       </select>
-      <small id="items" class="form-text text-muted">Select the items, which should be backed up.</small>
-      <div [hidden]="items.valid || items.pristine" class="alert alert-danger">
-        At least on items is required
-      </div>
+      <show-errors [control]="items"></show-errors>
+      <small id="items" class="form-text text-muted">Select the items, which should be backed up.</small>     
     </div>
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
           <label for="retentionPeriod">Retention Period</label>
           <input type="number" class="form-control" name="retentionPeriod" #retentionPeriod="ngModel"
-                 [(ngModel)]="plan.retentionPeriod">
-          <div [hidden]="retentionPeriod.valid || retentionPeriod.pristine" class="alert alert-danger">
-            Retention period is required
-          </div>
+                 [(ngModel)]="plan.retentionPeriod" required>
+          <show-errors [control]="retentionPeriod"></show-errors>
           <small id="retentionPeriod" class="form-text text-muted">Select how many of the created backups should be retained.</small>
         </div>
       </div>
@@ -42,12 +36,13 @@
         <div class="form-group">
           <label for="retentionStyle">Retention Style</label>
           <select class="form-control" id="retentionStyle" name="retentionStyle" #retentionStyle="ngModel"
-                  [(ngModel)]="plan.retentionStyle">
+                  [(ngModel)]="plan.retentionStyle" required>
             <option value="ALL">ALL</option>
             <option value="DAYS">DAYS</option>
             <option value="HOURS">HOURS</option>
             <option value="FILES">FILES</option>
           </select>
+          <show-errors [control]="retentionStyle"></show-errors>
         </div>
       </div>
       <div class="col-md-12">
@@ -55,17 +50,15 @@
     </div>
     <div class="form-group">
       <label for="fileDestination">File Destination</label>
-      <select class="form-control" id="fileDestination" name="fileDestination" #fileDestination="ngModel" [(ngModel)]="plan.destinationId">
+      <select class="form-control" id="fileDestination" name="fileDestination" #fileDestination="ngModel" [(ngModel)]="plan.destinationId" required>
         <option *ngFor="let d of destinationList" [ngValue]="d.id">
           {{d.name}}
         </option>
       </select>
+      <show-errors [control]="fileDestination"></show-errors>
       <small id="fileDestination" class="form-text text-muted">Select the file destination where the backups are stored.</small>
-      <div [hidden]="fileDestination.valid || fileDestination.pristine" class="alert alert-danger">
-        A file destination period is required
-      </div>
     </div>
     <button type="button" *ngIf="update" class="btn btn-danger" (click)="delete()">Delete</button>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary" [disabled]="!form.form.valid">Submit</button>
   </form>
 </div>
