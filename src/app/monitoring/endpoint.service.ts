@@ -4,9 +4,9 @@ import { environment } from 'environments/runtime-environment';
 
 @Injectable()
 export class EndpointService {
-  private baseUrl = 'http://localhost';
+  private baseUrl = 'http://osb-log-metric-dashboard-backend-test.cf.dev.eu-de-central.msh.host';
   private authToken = environment.token;
-  private port = ':8090';
+  private port = ':80';
   public httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',

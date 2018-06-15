@@ -90,7 +90,8 @@ import { BindingService } from 'app/monitoring/binding.service';
     declarations: [MonitoringComponent,
         DashboardComponent, AppidComponent, LogPanelComponent,
         DateFormatPipe, ChartComponent, ChartDirective, PanelComponent, PanelEditorComponent, QueryEditorComponent, EsQueryEditorComponent,
-         PromQueryEditorComponent, SidebarLayoutComponent, SidebarNavComponent, ToolbarButtonComponent, ToolbarComponent, ToolbarLinkComponent, LogListComponent, LogSearchComponent, LogFilterComponent, TimefilterComponent],
+        PromQueryEditorComponent, SidebarLayoutComponent,
+        SidebarNavComponent, ToolbarButtonComponent, ToolbarComponent, ToolbarLinkComponent, LogListComponent, LogSearchComponent, LogFilterComponent, TimefilterComponent],
     providers: [
         EschartsService,
         ChartingService,
