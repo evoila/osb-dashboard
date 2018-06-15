@@ -1,4 +1,4 @@
-<div id="log-search">
+<div id="log-search" *ngIf="results">
   <h5 *ngIf="results">Found {{results.total}} Results. Maximum Score is {{results.max_score}}</h5>
 <div id="pagination">
   <div class="pagination-left" *ngIf="pagination > 0">
@@ -21,7 +21,7 @@
   <div class="resultView" *ngIf="results">
     <table class="table">
       <tbody>
-        <tr (click)="collapse(i)" *ngFor="let result of results.hits; let i = index">
+        <tr (click)="collapse(i)" *ngFor="let result of results.hits; let i = index" [@flyInOut]="direction">
 
           <td>
             <code>{{result._source.logMessage}}</code>

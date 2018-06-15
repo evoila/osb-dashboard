@@ -1,6 +1,6 @@
+<sb-appid></sb-appid>
 <router-outlet></router-outlet>
 <div *ngIf="panel">
-
 
   <sb-timefilter [toDate]="toDateView" [fromDate]="fromDateView" [stepVal]="steps" (fromDateChange)="setFromDate($event)" (toDateChange)="setToDate($event)" (stepChange)="setStep($event)"></sb-timefilter>
 

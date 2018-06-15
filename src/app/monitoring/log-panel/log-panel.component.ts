@@ -14,6 +14,8 @@ import { expand } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import 'rxjs/add/observable/empty';
 import { timestamp } from 'rxjs/operators/timestamp';
+import { Notification, NotificationService } from '../../core/notification.service';
+import { NotificationType } from 'app/core';
 
 
 @Component({
@@ -47,7 +49,8 @@ export class LogPanelComponent implements OnInit {
 
 
   constructor(
-    private searchService: SearchService
+    private searchService: SearchService,
+    private notification: NotificationService
   ) { }
   ngOnInit() {
     /*this.toDate = moment().valueOf();
@@ -161,9 +164,12 @@ export class LogPanelComponent implements OnInit {
   // Older Logs are prepended -- Newer Logs are appended
   private performRequest(request: SearchRequest, isSearch: boolean, append: boolean = false): Observable<number | null> {
     return this.searchService.getSearchResults(request).map(data => {
+      console.log(data);
       if (!data.timed_out) {
         if (data.hits.total === 0) {
-          // TODO: No Data Message
+          if (!(this.hits && this.hits.hits && this.isStreaming)) {
+            this.notification.add(new Notification(NotificationType.Warning, 'no Data'));
+          }
           return null;
         } else {
           // Reverse Array to have oldest entrie first
@@ -190,7 +196,7 @@ export class LogPanelComponent implements OnInit {
           return ts;
         }
       } else {
-        // TODO: Error Message
+        this.notification.add(new Notification(NotificationType.Warning, 'Request timed out'));
         return null;
 
       }

@@ -1,7 +1,6 @@
-<div class="input-group">
-    <label for="appId">App-ID</label>
-    <input [(ngModel)]="appId" type="text" class="" id="appId" (input)="emit()" name="appId" required>
-    <div class="input-group-append">
-        <button type="button" (click)="search()" class="btn btn-outline-secondary" for="appId">Show Logs!</button>
-    </div>
-</div>
+
+<label *ngIf="appNames" for="appId">
+    Wählen Sie den Namen Ihrer Applikation</label>
+<select *ngIf="appNames" class="custom-select mr-sm-2" [(ngModel)]="choosen " id="appId" name="appId" (change)="setChoosen()">
+    <option selected *ngFor="let appName of appNames">{{appName}}</option>
+</select>

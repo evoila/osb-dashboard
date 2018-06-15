@@ -56,6 +56,8 @@ import { SearchService } from './search.service';
 import { LogSearchComponent } from './log-search/log-search.component';
 import { LogFilterComponent } from './log-filter/log-filter.component';
 import { TimefilterComponent } from './timefilter/timefilter.component';
+import { BindingService } from 'app/monitoring/binding.service';
+
 
 
 
@@ -83,6 +85,7 @@ import { TimefilterComponent } from './timefilter/timefilter.component';
         DlDateTimePickerDateModule,
         AngularFontAwesomeModule,
         MonacoEditorModule.forRoot(),
+
     ],
     declarations: [MonitoringComponent,
         DashboardComponent, AppidComponent, LogPanelComponent,
@@ -98,7 +101,8 @@ import { TimefilterComponent } from './timefilter/timefilter.component';
         PromchartsService,
         EsTimerangeService,
         WindowService,
-        SearchService
+        SearchService,
+        BindingService
     ],
 })
 export class MonitoringModule { }

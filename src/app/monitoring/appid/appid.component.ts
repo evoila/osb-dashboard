@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { BindingService } from '../binding.service';
 
 @Component({
   selector: 'sb-appid',
@@ -6,23 +7,20 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./appid.component.scss']
 })
 export class AppidComponent implements OnInit {
-  appId: String;
-  @Output('appId')
-  appIdEmitter = new EventEmitter();
-  @Output('search')
-  searchEmit = new EventEmitter();
 
-  public emit() {
-    if (this.appId) {
-      this.appIdEmitter.emit(this.appId);
+  @Output('appName')
+  appName = new EventEmitter<string>();
+  appNames: Array<string>;
+  choosen: string;
+  constructor(public bindingService: BindingService) { }
+  ngOnInit() {
+    this.bindingService.getBindings().subscribe(
+      (data) => this.appNames = data.map(k => k.applicationName)
+    )
+  }
+  private setChoosen() {
+    if (this.choosen) {
+      this.appName.next(this.choosen);
     }
   }
-  constructor() { }
-  public search() {
-    this.searchEmit.emit();
-  }
-
-  ngOnInit() {
-  }
-
 }
