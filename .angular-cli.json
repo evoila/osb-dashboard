@@ -68,7 +68,7 @@
       "name": "monitoring",
       "root": "src",
       "outDir": "dist/monitoring",
-      "deployUrl": "/",
+      "deployUrl": "/app/",
       "assets": [
         "assets/core",
         "favicon.ico",
