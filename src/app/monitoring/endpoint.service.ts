@@ -4,7 +4,7 @@ import { environment } from 'environments/runtime-environment';
 
 @Injectable()
 export class EndpointService {
-  private baseUrl = 'http://osb-log-metric-dashboard-backend-test.cf.dev.eu-de-central.msh.host';
+  private baseUrl = 'https://osb-log-metric-dashboard-backend-test.cf.dev.eu-de-central.msh.host';
   private authToken = environment.token;
   private port = ':80';
   public httpOptions = {
