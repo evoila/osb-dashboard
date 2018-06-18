@@ -6,7 +6,7 @@ import { environment } from 'environments/runtime-environment';
 export class EndpointService {
   private baseUrl = 'https://osb-log-metric-dashboard-backend-test.cf.dev.eu-de-central.msh.host';
   private authToken = environment.token;
-  private port = ':80';
+  private port = ':443';
   public httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
