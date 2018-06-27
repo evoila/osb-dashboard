@@ -55,7 +55,6 @@
         <ng-template ngbTabContent>
           <form #form="ngForm" (ngSubmit)="submitDomains()">
             <h5>Public IP: {{publicIp}}</h5>
-            <h5>Blah irgendein Text hier</h5>
             <div class="form-group">
               <label for="domains">Domains</label>
               <textarea class="form-control" name="domains" #domains="ngModel" [(ngModel)]="configuration['domains']" required></textarea>
