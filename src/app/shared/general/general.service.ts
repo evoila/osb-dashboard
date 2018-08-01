@@ -10,7 +10,7 @@ import { EntityService } from 'app/core';
 const serviceInstanceId = environment.serviceInstanceId;
 @Injectable()
 export class GeneralService extends EntityService {
-  readonly BACKUP_BASEURL = '/v2/manage/';
+  readonly BACKUP_BASEURL = '/custom/v2/manage/';
 
   constructor(protected readonly httpService: CoreHttpService) {
     super(httpService);

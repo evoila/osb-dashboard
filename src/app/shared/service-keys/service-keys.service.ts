@@ -10,7 +10,7 @@ const serviceInstanceId = environment.serviceInstanceId;
 @Injectable()
 export class ServiceKeysService extends EntityService {
   SORT_CONFIG = 'sort=startDate,desc';
-  BACKUP_BASEURL = '/v2/manage';
+  BACKUP_BASEURL = '/custom/v2/manage';
 
   constructor(protected readonly httpService: CoreHttpService) {
     super(httpService);
