@@ -16,7 +16,7 @@ import { Chart as ChartJS, Chart as ChartJs, ChartData } from 'chart.js';
   // tslint:disable-next-line
   selector: 'canvas[sb-chart-dir]',
   exportAs: 'sb-chart-dir',
-  providers: [ DateFormatPipe ]
+  providers: [DateFormatPipe]
 })
 export class ChartDirective implements OnInit, OnChanges, OnDestroy {
   private ctx: any;
@@ -32,9 +32,14 @@ export class ChartDirective implements OnInit, OnChanges, OnDestroy {
     if (!labelsArr || labelsArr.length === 0) {
       this.labels = [];
     } else {
-      this.labels = labelsArr.map(label => {
-        return this.dateFormat.transform(label);
-      });
+      //Check wether Timestamps are already formated
+      if (typeof labelsArr[0] === 'string' && isNaN(labelsArr[0])) {
+        this.labels = labelsArr;
+      } else {
+        this.labels = labelsArr.map(label => {
+          return this.dateFormat.transform(label);
+        });
+      }
     }
   }
 
@@ -104,7 +109,7 @@ export class ChartDirective implements OnInit, OnChanges, OnDestroy {
     this.ctx = this.element.nativeElement.getContext('2d');
     this.cvs = this.element.nativeElement;
     this.parent = this.element.nativeElement;
-      this.refresh();
+    this.refresh();
 
   }
 
@@ -116,11 +121,11 @@ export class ChartDirective implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges(changes: SimpleChanges): any {
-      if (this.chart)  {
-        this.chart.destroy();
-        this.chart = null;
-      }
-      this.initFlag = false;
+    if (this.chart) {
+      this.chart.destroy();
+      this.chart = null;
+    }
+    this.initFlag = false;
 
     if (!this.initFlag) {
       this.refresh();
@@ -172,7 +177,7 @@ export class ChartDirective implements OnInit, OnChanges, OnDestroy {
     console.log(ctx);
     console.log(data);
     console.log(options);
-    return new ChartJs (ctx, {
+    return new ChartJs(ctx, {
       type: this.type,
       data: data as ChartData,
       options: options
@@ -183,17 +188,17 @@ export class ChartDirective implements OnInit, OnChanges, OnDestroy {
     if (optionsObj.scales[axisName].length === 0) { return optionsObj; }
 
 
-     optionsObj.scales[axisName].forEach((axis, index) => {
-        if (!axis.scaleLabel) {
-          axis.scaleLabel = { display: false, labelString: ''};
-        }
-        if (axisName === 'yAxes') {
-          axis.ticks = { beginAtZero: true}
-        }
+    optionsObj.scales[axisName].forEach((axis, index) => {
+      if (!axis.scaleLabel) {
+        axis.scaleLabel = { display: false, labelString: '' };
+      }
+      if (axisName === 'yAxes') {
+        axis.ticks = { beginAtZero: true }
+      }
 
-      });
+    });
 
-      return optionsObj;
+    return optionsObj;
   }
 
   private addScales(options: any): void {

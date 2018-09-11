@@ -29,7 +29,21 @@ export class SearchService {
   public getMappings(): Observable<Array<string>> {
     const endpoint = this.endpoint.getUri() + '/mappings'
     return this.http.get(endpoint).map(
-      (data) => Object.keys(data['mappings']['logMessages']['properties'])
+      (data) => {
+        let returnVal: Array<String> = [];
+        Object.keys(data['mappings']['logMessages']['properties']).forEach(
+          (item) => {
+            const property = data['mappings']['logMessages']['properties'][item];
+            //Some Fields have a Subfield. For more information see Ticket MONF-56
+            if (!property['fields']) {
+              returnVal = [...returnVal, item];
+            } else {
+              returnVal = [...returnVal, item + '.' + Object.keys(property['fields'])[0]]
+            }
+          }
+        )
+        return returnVal;
+      }
     ).catch((error: any) => {
       this.notification.add(new Notification(NotificationType.Error, error.json));
       return Observable.throw(error.json);

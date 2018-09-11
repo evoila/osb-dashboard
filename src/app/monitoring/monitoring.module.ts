@@ -85,7 +85,6 @@ import { BindingService } from 'app/monitoring/binding.service';
         DlDateTimePickerDateModule,
         AngularFontAwesomeModule,
         MonacoEditorModule.forRoot(),
-
     ],
     declarations: [MonitoringComponent,
         DashboardComponent, AppidComponent, LogPanelComponent,

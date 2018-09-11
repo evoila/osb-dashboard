@@ -2,15 +2,17 @@ import { Injectable } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
 import { environment } from 'environments/runtime-environment';
 
+
 @Injectable()
 export class EndpointService {
-  private baseUrl = 'https://osb-log-metric-dashboard-backend-test.cf.dev.eu-de-central.msh.host';
+  //private baseUrl = 'https://osb-log-metric-dashboard-backend-test.cf.dev.eu-de-central.msh.host';
+  private baseUrl = 'http://localhost';
   private authToken = environment.token;
-  private port = ':443';
-  public httpOptions = {
+  private port = ':8090';
+ public httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': 'my-auth-token',
+      //'Authorization': 'my-auth-token',
     })
   }
   public getUri(): string {

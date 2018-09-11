@@ -21,7 +21,8 @@ export interface Environment {
 // we use quoutes here because that makes it easier to copy config to nginx.conf or cf manifest files
 // tslint:disable:quotemark
 const seedEnv = {
-serviceInstanceId: '/*[[${serviceInstanceId}]]*/',
+//serviceInstanceId: '/*[[${serviceInstanceId}]]*/',
+serviceInstanceId: 'bla',
 token: '/*[[${token}]]*/',
 
 baseUrls: {

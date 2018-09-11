@@ -25,6 +25,8 @@ export class EsQueryEditorComponent implements OnInit {
   public name: string;
 
   appId: string;
+  space: string;
+  appName: string;
   constructor() {
     this.sizeOptions = Array.from(new Array(12), (val, index) => index + 1);
   }
@@ -40,10 +42,12 @@ export class EsQueryEditorComponent implements OnInit {
   public buildChartRequest() {
     if (this.appId) {
       const chartRequest = {
-        appId: this.appId,
+        space: this.space,
         chartId: this.choosenChart.id,
         name: this.name
       } as EsChartRequest;
+      chartRequest.appId = this.appId ?  this.appId : undefined;
+      chartRequest.appName = this.appName ? this.appName : undefined;
       if (this.size) {
         if (typeof this.size === 'string') {
           this.size = parseInt(this.size as string);

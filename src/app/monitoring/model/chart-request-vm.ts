@@ -4,6 +4,8 @@ export class ChartRequestVm {
     index: string;
     doctype: string;
     appId: string;
+    space: string;
+    appName: string;
     range: any;
     interval: string;
     chartId: string;

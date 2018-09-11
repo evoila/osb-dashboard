@@ -16,7 +16,7 @@ export class DateFormatPipe implements PipeTransform {
     const momentTs = moment.unix(value);
     if (momentTs.isValid()) {
       const ts = momentTs.format('DD.MM.YYYY hh:mm:ss');
-      console.log('Unix Timestamp' + value + 'to real Timestamp' + ts);
+
       return ts;
     }
 
@@ -30,7 +30,7 @@ export class DateFormatPipe implements PipeTransform {
     const momentTs = moment(value);
     if (momentTs.isValid()) {
       const ts = momentTs.format('DD.MM.YYYY hh:mm:ss');
-      console.log('Unix Timestamp' + value + 'to real Timestamp' + ts);
+
       return ts;
     } else {
       return value;

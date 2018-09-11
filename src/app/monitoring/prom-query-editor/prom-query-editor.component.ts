@@ -2,6 +2,7 @@ import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 import { Chart } from '../model/chart';
 import { MetricAndScope, PrometheusChartRequest, PrometheusMetrics } from '../model/prom-chart-request';
 import { CatalogueService } from '../catalogue.service';
+import { environment } from 'environments/runtime-environment';
 
 
 
@@ -67,7 +68,9 @@ export class PromQueryEditorComponent implements OnInit {
     let query = new String(this.choosenChart.prometheusQueries[queryIndex]['query']);
     const strRegEx = 'metrics' + metricIndex;
     const regEx = new RegExp(strRegEx, 'g');
-    const scopeAndMetric = metric.metric + '{app_id=\"' + metric.appId + '\"}';
+    let scopeAndMetric = metric.metric + '{app_id=\"' + metric.appId + '\"';
+    scopeAndMetric += ',scope=\"' + metric.space + '\"';
+    scopeAndMetric += '}';
     this.queryStrings[queryIndex] = query.replace(regEx, scopeAndMetric);
   }
   private buildChartRequest() {

@@ -13,6 +13,8 @@ export class LogListComponent implements OnInit {
   searchResponse: Observable<Hits>;
   @Input('isStreaming')
   isStreaming: boolean;
+  @Input('inRequest')
+  inRequest: boolean;
   hits: Hits;
   @Output('more')
   public more = new EventEmitter<[number, boolean]>();
@@ -26,7 +28,7 @@ export class LogListComponent implements OnInit {
       this.searchResponse.subscribe(data => {
         this.code = '';
         this.hits = data;
-        data.hits.reverse().forEach(hit => {
+        data.hits.forEach(hit => {
           this.code += hit._source.logMessage + '\n';
         });
       })

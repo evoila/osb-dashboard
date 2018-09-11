@@ -12,21 +12,24 @@ export class BindingService {
   private endpoint = `v2/service_instances/${this.instanceId}/service_bindings`;
   constructor(private http: HttpClient,
     private notification: NotificationService,
-    private enpointService: EndpointService) { }
+    private endpointService: EndpointService) { }
 
-  getBindings(): Observable<Array<ServiceBinding>> {
-    let uri = environment.baseUrls.serviceBrokerUrl;
-    uri += this.endpoint;
-    const httpOptions = {
-      headers: this.enpointService.getSbHeader()
-    };
+  getBindings(): Observable<Array<ServiceBinding> | null> {
+    if (environment.baseUrls.serviceBrokerUrl !== '/*[[${endpointUrl}]]*/')  {
+      let uri = environment.baseUrls.serviceBrokerUrl;
+      uri += this.endpoint;
+      const httpOptions = {
+        headers: this.endpointService.getSbHeader()
+      };
 
-    return this.http.get(uri, httpOptions).
-    map( data => data['service_bindings'] as Array<ServiceBinding>).
-    catch(error => {
-      console.log(error);
-      this.notification.add(new Notification(NotificationType.Error, error.statusText));
-      return Observable.throw(error.json);
-    });
+      return this.http.get(uri, httpOptions).
+        map(data => data['service_bindings'] as Array<ServiceBinding>).
+        catch(error => {
+          console.log(error);
+          this.notification.add(new Notification(NotificationType.Error, error.statusText));
+          return Observable.throw(error.json);
+        });
+    }
+    return new Observable((observer) => observer.next(null));
   }
 }

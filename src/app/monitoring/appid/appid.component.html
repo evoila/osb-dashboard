@@ -4,3 +4,7 @@
 <select *ngIf="appNames" class="custom-select mr-sm-2" [(ngModel)]="choosen " id="appId" name="appId" (change)="setChoosen()">
     <option selected *ngFor="let appName of appNames">{{appName}}</option>
 </select>
+
+<label *ngIf="!appNames" for="appId">
+    Wählen Sie den Namen Ihrer Applikation</label>
+<input  *ngIf="!appNames" type="text" [(ngModel)]="fallBackTextfiled" name="filter" class="form-control" (change)="fallBackTextFieldUpdate()" aria-label="appId">

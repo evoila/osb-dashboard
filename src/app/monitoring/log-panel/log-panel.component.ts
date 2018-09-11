@@ -3,7 +3,6 @@ import * as moment from 'moment/moment';
 import { SearchService } from '../search.service';
 import { SearchRequest } from 'app/monitoring/model/search-request';
 import { Hits } from 'app/monitoring/model/search-response';
-import { Observable } from 'rxjs/Observable';
 import { interval } from 'rxjs/observable/interval';
 import { query } from '@angular/core/src/animation/dsl';
 import { Subscription } from 'rxjs/Subscription';
@@ -16,6 +15,7 @@ import 'rxjs/add/observable/empty';
 import { timestamp } from 'rxjs/operators/timestamp';
 import { Notification, NotificationService } from '../../core/notification.service';
 import { NotificationType } from 'app/core';
+import { Observable } from 'rxjs/Observable';
 
 
 @Component({
@@ -25,15 +25,18 @@ import { NotificationType } from 'app/core';
 })
 export class LogPanelComponent implements OnInit {
   public appId: string;
+  public space: string;
+  public appName: string;
   public query: string;
   public toDate: any;
   public fromDate: any;
+  public fixDate: any; // Timestamp needed to fix resultset for subsequent requests
   public filter: Array<any> | null;
   public hits: Hits | null;
-  public logEmitter: any;
-  public searchEmitter: any;
-  public observableHits: Observable<Hits> = Observable.create(e => this.logEmitter = e);
-  public observableSearchResults: Observable<Hits> = Observable.create(e => this.searchEmitter = e);
+  logEmitter: any;
+  searchEmitter: any;
+  public observableHits: Observable<Hits> = new Observable(e => this.logEmitter = e);
+  public observableSearchResults: Observable<Hits> = Observable.create((emitter) => this.searchEmitter = emitter);
   private from = 0;
   private isSequel = false;
   public fromDateView: any;
@@ -41,17 +44,20 @@ export class LogPanelComponent implements OnInit {
   // Streaming Mode which polls Log-Messages
   public isStreaming = false;
   public showFilter = true;
-  private pollData: Observable<number> | null;
   private subscription: Subscription | null;
   private numOfLogs = 300;
   private triggerEmitter: any;
   private timestamp: Observable<number | null> | null = null;
+  public inRequest = false; //Status variable to lock button if there is an ongoing request
+
 
 
   constructor(
     private searchService: SearchService,
     private notification: NotificationService
-  ) { }
+  ) {
+
+  }
   ngOnInit() {
     /*this.toDate = moment().valueOf();
     this.fromDate = moment().subtract(10, 'days').valueOf();*/
@@ -62,33 +68,56 @@ export class LogPanelComponent implements OnInit {
     console.log(this.appId);
   }
   mode(isStreaming: boolean) {
+    //Flush results and stop Stream on Context-Switch
+    if (this.isStreaming && this.triggerEmitter) {
+      this.stopStreaming();
+    }
+    this.hits = null;
     this.isStreaming = isStreaming;
   }
   more(eventPair: [number, boolean]) {
     if (!this.isStreaming) {
+      //Check wether Timestamp is specified for sequential Request
+      // Background: The Index of the visualized Data in the resultset changes whenever there
+      // is new Data. Going Backwards results in loading the same set of Loads. Timestamp should be fixed till reload
+      if (!this.toDate && !this.fixDate) {
+        this.fixDate = this.hits ? this.hits.hits[0]['_source'].timestamp : undefined;
+      }
       this.isSequel = eventPair[1];
       this.from += eventPair[0];
       this.getLogs();
     }
   }
   search() {
+    this.fixDate = null; //new request clear sequential
     if (this.isStreaming) {
-      this.timestamp = Observable.create(e => this.triggerEmitter = e);
-      this.subscription = this.timestamp!!.subscribe((ts: null | number) => { this.pollLogs(ts) });
-      this.pollLogs(null);
-      this.isSequel = true;
-      this.from = 0;
+      //clear all data from previous requests
+      this.stopStreaming();
       this.hits = null;
+      this.startStreaming();
     } else {
-      this.pollData = null;
-      this.isSequel = false;
-      this.subscription && this.subscription!!.unsubscribe();
-      this.from = 0;
+      this.stopStreaming();
       this.hits = null
-      this.isSequel = false;
       this.getLogs();
     }
   }
+
+  startStreaming() {
+    this.timestamp = Observable.create(e => this.triggerEmitter = e);
+    this.subscription = this.timestamp!!.subscribe((ts: null | number) => { this.pollLogs(ts) });
+    this.isSequel = true;
+    this.from = 0;
+    this.hits = null;
+    this.pollLogs(null);
+  }
+
+  stopStreaming() {
+    this.timestamp = null;
+    this.subscription && this.subscription!!.unsubscribe();
+    this.from = 0;
+    this.isSequel = false;
+  }
+
   updateFilters(filters: Array<Map<string, any>>) {
     this.filter = filters.map(k => {
       const obj = Object.create(null);
@@ -99,6 +128,7 @@ export class LogPanelComponent implements OnInit {
     this.isSequel = false;
     this.getLogs();
   }
+
   setFromDate(fromDate: number) {
     this.fromDate = fromDate * 1000;
   }
@@ -107,45 +137,53 @@ export class LogPanelComponent implements OnInit {
   }
   private buildSearchRequest(size: number): SearchRequest {
     const searchRequest = {
-      appId: this.appId,
+      appName: this.appName,
+      space: this.space,
       filter: this.filter,
       docSize: {
         from: this.from,
         size: size
       }
     } as SearchRequest;
-    if (this.fromDate && this.toDate) {
-      searchRequest.range = {
-        from: this.fromDate,
-        to: this.toDate
-      } as TimeRange
-    }
+
+    searchRequest.range = new TimeRange();
+    searchRequest.range.from = this.fromDate ? this.fromDate : undefined;
+    searchRequest.range.to = this.toDate ? this.toDate : undefined;
+    searchRequest.range.to = !this.toDate && this.fixDate ? this.fixDate : undefined;
+
     return searchRequest;
   }
 
   pollLogs(ts: number | null) {
-    if (this.appId && !this.query) {
+    if (this.appName && this.space && !this.query) {
       const request: SearchRequest = this.buildSearchRequest(200);
       if (ts) {
         request.range = {
           from: ts
         } as TimeRange;
       }
-      this.performRequest(request, false, true).subscribe(k => {
+      this.performRequest(request, false, false).subscribe(k => {
         if (k) {
           this.triggerEmitter.next(k);
         } else {
-          this.triggerEmitter.next(ts);
+          setTimeout(() => {
+            this.triggerEmitter.next(ts);
+          }, 100);
         }
       });
     }
   }
 
   getLogs() {
-    if (this.appId) {
+    if (this.appName && this.space) {
       if (!this.query) {
         const request: SearchRequest = this.buildSearchRequest(100);
-        this.performRequest(request, false).subscribe();
+        if (this.isSequel && !this.isStreaming) {
+          this.performRequest(request, false, true).subscribe((data) => this.inRequest = false);
+        } else {
+          this.performRequest(request, false).subscribe((data) => this.inRequest = false);
+        }
+
       } else {
         const request = this.buildSearchRequest(20);
         request.query = this.query;
@@ -163,22 +201,33 @@ export class LogPanelComponent implements OnInit {
   // Append Property specifies wether fresh logmessages are appended or prepended
   // Older Logs are prepended -- Newer Logs are appended
   private performRequest(request: SearchRequest, isSearch: boolean, append: boolean = false): Observable<number | null> {
+    if (!(this.hits && this.hits.hits && this.isStreaming)) {
+      this.notification.addSelfClosing(new Notification(NotificationType.Info, 'Request has been dispatched. Please stand by.'));
+      this.inRequest = true;
+    }
     return this.searchService.getSearchResults(request).map(data => {
-      console.log(data);
       if (!data.timed_out) {
         if (data.hits.total === 0) {
           if (!(this.hits && this.hits.hits && this.isStreaming)) {
-            this.notification.add(new Notification(NotificationType.Warning, 'no Data'));
+            this.notification.addSelfClosing(new Notification(NotificationType.Warning, 'no Data'));
+            if (this.isStreaming) {
+              this.stopStreaming();
+            }
           }
           return null;
         } else {
           // Reverse Array to have oldest entrie first
           const ts = data.hits.hits[0]['_source'].timestamp
-          data.hits.hits = data.hits.hits.slice().reverse();
+          const currTs = moment().valueOf();
+          console.log(ts + ' : ' + currTs + ' delta : ' + (currTs - ts));
           if (this.hits && this.isSequel && !append) {
+            data.hits.hits = data.hits.hits.slice().reverse();
             this.hits.hits = [...data.hits.hits, ...this.hits.hits];
           } else if (this.hits && this.isSequel && append) {
             this.hits.hits = [...this.hits.hits, ...data.hits.hits];
+          } else if (this.hits && !this.isSequel && !append) {
+            data.hits.hits = data.hits.hits.slice().reverse();
+            this.hits = data.hits;
           } else {
             this.hits = data.hits;
           }
@@ -196,7 +245,7 @@ export class LogPanelComponent implements OnInit {
           return ts;
         }
       } else {
-        this.notification.add(new Notification(NotificationType.Warning, 'Request timed out'));
+        this.notification.addSelfClosing(new Notification(NotificationType.Warning, 'Request timed out'));
         return null;
 
       }

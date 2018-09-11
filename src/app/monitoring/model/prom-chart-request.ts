@@ -1,18 +1,21 @@
 export class PrometheusChartRequest {
-    chartId: String;
+    chartId: string;
     metrics: Array<PrometheusMetrics>;
     end: number;
     start: number;
-    step: String;
+    step: string;
     size?: number;
     order: number;
     name: string;
 }
 export class PrometheusMetrics {
-    name: String;
+    name: string;
     metricAndScope: Array<MetricAndScope> = [];
 }
 export class MetricAndScope {
-    appId: String;
-    metric: String;
+    appId?: string;
+    appName?: string;
+    appInstance?: number;
+    space: string;
+    metric: string;
 }
