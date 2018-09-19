@@ -23,8 +23,8 @@ export class BindingService {
         map(data => data as Array<ServiceBinding>).
         catch(error => {
           console.log(error);
-          this.notification.add(new Notification(NotificationType.Error, error.statusText));
-          return Observable.throw(error.json);
+          this.notification.addSelfClosing(new Notification(NotificationType.Error, error.message));
+          return Observable.throw(error);
         });
     }
     return new Observable((observer) => observer.next(null));

@@ -1,6 +1,8 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { BindingService } from '../binding.service';
 import { ServiceBinding } from '../model/service-binding';
+import { NotificationType } from 'app/core';
+import { NotificationService, Notification } from '../../core/notification.service';
 
 /*
 * Fallback Textfield offers the possibility to Type-In AppID
@@ -19,10 +21,17 @@ export class AppidComponent implements OnInit {
   fallBackAppName: string;
   fallBackSpace: string;
   choosen: number;
-  constructor(public bindingService: BindingService) { }
+  constructor(public bindingService: BindingService,
+    private notification: NotificationService
+  ) { }
   ngOnInit() {
     this.bindingService.getBindings().subscribe(
-      (data) => this.serviceBindings = data
+      (data: Array<ServiceBinding>) => {
+        if (data.length === 0) {
+          this.notification.addSelfClosing(new Notification(NotificationType.Warning, 'No Apps binded. Use the CF-CLI to do so'));
+        }
+        this.serviceBindings = data
+      }
     )
   }
   private setChoosen() {

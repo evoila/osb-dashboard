@@ -9,6 +9,7 @@ import { ChartRequest } from './model/chart-request';
 import { PrometheusChartRequest } from './model/prom-chart-request';
 import { NotificationType, NotificationService, Notification } from 'app/core';
 import { JsonPipe } from '@angular/common/';
+import { ErrorserviceService } from 'app/monitoring/errorservice.service';
 
 
 @Injectable()
@@ -21,7 +22,8 @@ export class EschartsService {
   constructor(
     private http: HttpClient,
     private endpointService: EndpointService,
-    private notification: NotificationService
+    private notification: NotificationService,
+    private errorService: ErrorserviceService
   ) {
 
   }
@@ -30,7 +32,7 @@ export class EschartsService {
     return this.http.post<Array<Chart>>(uri, chartRequest, this.httpOptions).
     map(data =>  data).
     catch((error: any) => {
-      this.notification.add(new Notification(NotificationType.Error, error.json));
+      this.notification.addSelfClosing(new Notification(NotificationType.Error, error.error.message));
       return Observable.throw(error.json);
     })
   }
@@ -38,10 +40,7 @@ export class EschartsService {
     if (chartRequest.chartId) {
       const uri: string = this.endpointService.getUri() + this.endpoint + '/' + chartRequest.chartId;
       return this.http.post<Chart>(uri, chartRequest, this.httpOptions).map(data =>  data).
-      catch((error: any) => {
-        this.notification.add(new Notification(NotificationType.Error, error.json));
-        return Observable.throw(error.json);
-      })
+      catch((err) => this.errorService.handleErrors(err))
     } else {
       throw new Error('chartId is missing in Object');
     }
@@ -54,10 +53,7 @@ export class EschartsService {
 
     const options = Object.assign({}, this.httpOptions, {params: params});
     return this.http.get<Array<Chart>>(uri, options).map(data =>  data).
-    catch((error: any) => {
-      this.notification.add(new Notification(NotificationType.Error, error.json));
-      return Observable.throw(error.json);
-    })
+    catch((err) => this.errorService.handleErrors(err))
   }
   public getChartFromCatalogue(chartId: string, organisationId: string): Observable<Chart> {
     let params = new HttpParams();
@@ -66,10 +62,7 @@ export class EschartsService {
     const uri: string = this.endpointService.getUri() + endpoint + '/' + chartId;
     const options = Object.assign({}, this.httpOptions, {params: params});
     return this.http.get<Chart>(uri, options).map(data =>  data).
-    catch((error: any) => {
-      this.notification.add(new Notification(NotificationType.Error, error.json));
-      return Observable.throw(error.json);
-    })
+    catch((err) => this.errorService.handleErrors(err))
   }
 
 }

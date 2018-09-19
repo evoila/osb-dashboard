@@ -5,6 +5,7 @@ import { PrometheusChartRequest } from 'app/monitoring/model/prom-chart-request'
 import { ChartRequest } from './model/chart-request';
 import { Observable } from 'rxjs/Observable';
 import { Chart } from './model/chart';
+import { ErrorserviceService } from 'app/monitoring/errorservice.service';
 
 @Injectable()
 export class PromchartsService {
@@ -12,12 +13,14 @@ export class PromchartsService {
   private httpOptions = this.endpointService.httpOptions;
   constructor(
     private http: HttpClient,
-    private endpointService: EndpointService
+    private endpointService: EndpointService,
+    private errorService: ErrorserviceService
   ) { }
   public getCharts(prometheusQuerie: PrometheusChartRequest, chartId: String): Observable<Chart > {
     if (chartId) {
       const uri: string = this.endpointService.getUri() + this.endpoint + chartId
-      return this.http.post<Chart>(uri, prometheusQuerie, this.httpOptions);
+      return this.http.post<Chart>(uri, prometheusQuerie, this.httpOptions).map((data) => data).
+      catch((err) => this.errorService.handleErrors(err));
     } else {
       throw new Error('chartId is missing in Object');
     }

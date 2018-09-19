@@ -5,6 +5,8 @@ import { Observable } from 'rxjs/Observable';
 import { Panel } from './model/panel';
 import { NotificationType, NotificationService, Notification } from 'app/core';
 import { JsonPipe } from '@angular/common/';
+import { error } from 'selenium-webdriver';
+import { ErrorserviceService } from 'app/monitoring/errorservice.service';
 
 @Injectable()
 export class PanelService {
@@ -14,7 +16,7 @@ export class PanelService {
 
   constructor(private http: HttpClient,
     private endpointService: EndpointService,
-    private notification: NotificationService,
+    private errorService: ErrorserviceService
   ) {
     this.httpOptions = endpointService.httpOptions;
   }
@@ -27,29 +29,19 @@ export class PanelService {
     const uri = this.endpointService.getUri() + this.endpoint;
 
     return this.http.get<Array<Panel>>(uri, options).map(data =>  data).
-    catch((error: any) => {
-      console.log(error);
-      this.notification.add(new Notification(NotificationType.Error, error.statusText));
-      return Observable.throw(error.json);
-    });
+    catch((err) => this.errorService.handleErrors(err));
   }
 
   public getSpecificPanel(panelId: string): Observable<Panel> {
     const uri = this.endpointService.getUri() + this.endpoint + '/' + panelId;
     return this.http.get<Panel>(uri, this.httpOptions).map(data =>  data).
-    catch((error: any) => {
-      this.notification.add(new Notification(NotificationType.Error, error.json));
-      return Observable.throw(error.json);
-    });
+    catch((err) => this.errorService.handleErrors(err));
   }
 
   public addPanel(panel: Panel): Observable<Panel> {
     const uri = this.endpointService.getUri() + this.endpoint;
     return this.http.put<Panel>(uri, panel, this.httpOptions).map(data =>  data).
-    catch((error: any) => {
-      this.notification.add(new Notification(NotificationType.Error, error.json));
-      return Observable.throw(error.json);
-    });
+    catch((err) => this.errorService.handleErrors(err));
   }
 
 }

@@ -6,6 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import { SearchResponse } from './model/search-response';
 import { Response } from '@angular/http/src/static_response';
 import { NotificationType, NotificationService, Notification } from 'app/core';
+import { error } from 'selenium-webdriver';
 
 
 
@@ -24,8 +25,9 @@ export class SearchService {
       (data: Response) => data
     )
       .catch((error: any) => {
-        this.notification.add(new Notification(NotificationType.Error, error.json));
-        return Observable.throw(error.json);
+        console.log(error);
+        this.notification.addSelfClosing(new Notification(NotificationType.Error, error.error.message));
+        return Observable.throw(error.error.message);
       })
   }
   public getMappings(): Observable<Array<string>> {
@@ -47,7 +49,8 @@ export class SearchService {
         return returnVal;
       }
     ).catch((error: any) => {
-      this.notification.add(new Notification(NotificationType.Error, error.json));
+      console.log(error);
+      this.notification.addSelfClosing(new Notification(NotificationType.Error, error.error.message));
       return Observable.throw(error.json);
     })
   }

@@ -56,6 +56,7 @@ import { LogSearchComponent } from './log-search/log-search.component';
 import { LogFilterComponent } from './log-filter/log-filter.component';
 import { TimefilterComponent } from './timefilter/timefilter.component';
 import { BindingService } from 'app/monitoring/binding.service';
+import { ErrorserviceService } from './errorservice.service';
 
 
 
@@ -101,7 +102,8 @@ import { BindingService } from 'app/monitoring/binding.service';
         EsTimerangeService,
         WindowService,
         SearchService,
-        BindingService
+        BindingService,
+        ErrorserviceService
     ],
 })
 export class MonitoringModule { }
