@@ -3,6 +3,7 @@ import { Chart } from '../model/chart';
 import { MetricAndScope, PrometheusChartRequest, PrometheusMetrics } from '../model/prom-chart-request';
 import { CatalogueService } from '../catalogue.service';
 import { environment } from 'environments/runtime-environment';
+import { ServiceBinding } from '../model/service-binding';
 
 
 
@@ -64,6 +65,16 @@ export class PromQueryEditorComponent implements OnInit {
 
   }
 
+  public setApp(event: ServiceBinding, queryIndex: number, metricIndex: number) {
+    const metricRef = this.metricsAndScopes[queryIndex].metricAndScope[metricIndex];
+
+    metricRef.orgId = event.organization_guid;
+    metricRef.appName = event.appName;
+    metricRef.space = event.space;
+
+    this.metricsAndScopes[queryIndex].metricAndScope[metricIndex] = metricRef;
+  }
+
   private replace(queryIndex: number, metricIndex: number, metric: MetricAndScope) {
     let query = new String(this.choosenChart.prometheusQueries[queryIndex]['query']);
     const strRegEx = 'metrics' + metricIndex;
@@ -94,7 +105,7 @@ export class PromQueryEditorComponent implements OnInit {
   private allSet(): boolean {
     return this.metricsAndScopes.every(element => {
       return element.metricAndScope.every(k => {
-        if (k.appId && k.metric) {
+        if (k.appName && k.orgId && k.space && k.metric) {
           return true;
         }
         return false;

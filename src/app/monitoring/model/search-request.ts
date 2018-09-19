@@ -2,6 +2,7 @@ export class SearchRequest {
     public range?: TimeRange;
     public appId?: string;
     public appName: string;
+    public orgId: string;
     public space: string;
     public docSize?: DocSize;
     public query?: string;

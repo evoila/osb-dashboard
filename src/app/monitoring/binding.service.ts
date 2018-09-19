@@ -6,10 +6,11 @@ import { NotificationService, Notification, NotificationType } from 'app/core';
 import { EndpointService } from './endpoint.service';
 import { ServiceBinding } from 'app/monitoring/model/service-binding';
 
+
 @Injectable()
 export class BindingService {
   private instanceId = environment.serviceInstanceId;
-  private endpoint = `v2/service_instances/${this.instanceId}/service_bindings`;
+  private endpoint = `custom/v2/manage/${this.instanceId}/service_bindings`;
   constructor(private http: HttpClient,
     private notification: NotificationService,
     private endpointService: EndpointService) { }
@@ -18,12 +19,8 @@ export class BindingService {
     if (environment.baseUrls.serviceBrokerUrl !== '/*[[${endpointUrl}]]*/')  {
       let uri = environment.baseUrls.serviceBrokerUrl;
       uri += this.endpoint;
-      const httpOptions = {
-        headers: this.endpointService.getSbHeader()
-      };
-
-      return this.http.get(uri, httpOptions).
-        map(data => data['service_bindings'] as Array<ServiceBinding>).
+      return this.http.get(uri, this.endpointService.httpOptions).
+        map(data => data as Array<ServiceBinding>).
         catch(error => {
           console.log(error);
           this.notification.add(new Notification(NotificationType.Error, error.statusText));

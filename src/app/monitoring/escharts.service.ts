@@ -16,12 +16,8 @@ export class EschartsService {
   private baseUrl = 'http://localhost';
   private port = ':8080';
   private endpoint = '/api/charts/es/perform';
-  private httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type':  'application/json',
-      'Authorization': 'my-auth-token'
-    })
-  }
+  private httpOptions = this.endpointService.httpOptions;
+
   constructor(
     private http: HttpClient,
     private endpointService: EndpointService,
@@ -41,7 +37,7 @@ export class EschartsService {
   public getChart(chartRequest: EsChartRequest): Observable<Chart> {
     if (chartRequest.chartId) {
       const uri: string = this.endpointService.getUri() + this.endpoint + '/' + chartRequest.chartId;
-      return this.http.post<Chart>(uri, chartRequest).map(data =>  data).
+      return this.http.post<Chart>(uri, chartRequest, this.httpOptions).map(data =>  data).
       catch((error: any) => {
         this.notification.add(new Notification(NotificationType.Error, error.json));
         return Observable.throw(error.json);
@@ -55,7 +51,9 @@ export class EschartsService {
     params = params.append('organisationId', organisationId);
     const endpoint = '/api/charts/catalogue';
     const uri: string = this.endpointService.getUri() + endpoint;
-    return this.http.get<Array<Chart>>(uri, {params: params}).map(data =>  data).
+
+    const options = Object.assign({}, this.httpOptions, {params: params});
+    return this.http.get<Array<Chart>>(uri, options).map(data =>  data).
     catch((error: any) => {
       this.notification.add(new Notification(NotificationType.Error, error.json));
       return Observable.throw(error.json);
@@ -66,7 +64,8 @@ export class EschartsService {
     params = params.append('organisationId', organisationId);
     const endpoint = '/api/charts/catalogue';
     const uri: string = this.endpointService.getUri() + endpoint + '/' + chartId;
-    return this.http.get<Chart>(uri, {params: params}).map(data =>  data).
+    const options = Object.assign({}, this.httpOptions, {params: params});
+    return this.http.get<Chart>(uri, options).map(data =>  data).
     catch((error: any) => {
       this.notification.add(new Notification(NotificationType.Error, error.json));
       return Observable.throw(error.json);

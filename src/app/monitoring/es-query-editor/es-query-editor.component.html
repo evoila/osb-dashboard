@@ -9,10 +9,7 @@
   </form>
 <form>
   <div class="form-group">
-    <label for="appName">Name of the App:</label>
-    <input [(ngModel)]="appName" type="text" class="form-control" id="appName" name="appName" required>
-    <label for="space">space</label>
-    <input [(ngModel)]="space" type="text" class="form-control" id="space" name="space" required>
+    <sb-appid (app)="setApp($event)"></sb-appid>
     <a class="btn btn-primary" (click)="buildChartRequest()" role="button">Save Chart</a>
     <a class="btn btn-primary" (click)="cancelCreation()" role="button">Cancel</a>
   </div>

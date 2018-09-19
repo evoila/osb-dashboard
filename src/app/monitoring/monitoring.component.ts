@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { EntityService } from 'app/core';
 import { Chart } from './model/chart';
 import { SidebarEntry } from 'app/monitoring/sidebar/sidebar-entry';

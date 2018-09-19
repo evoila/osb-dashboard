@@ -1,10 +1,13 @@
 
-<label *ngIf="appNames" for="appId">
+<label *ngIf="serviceBindings" for="appId">
     Wählen Sie den Namen Ihrer Applikation</label>
-<select *ngIf="appNames" class="custom-select mr-sm-2" [(ngModel)]="choosen " id="appId" name="appId" (change)="setChoosen()">
-    <option selected *ngFor="let appName of appNames">{{appName}}</option>
+<select *ngIf="serviceBindings" class="custom-select mr-sm-2" [(ngModel)]="choosen " id="appName" name="appName" (change)="setChoosen()">
+    <option selected *ngFor="let app of serviceBindings; let i = index" [value]="i">{{app.appName}}</option>
 </select>
 
-<label *ngIf="!appNames" for="appId">
-    Wählen Sie den Namen Ihrer Applikation</label>
-<input  *ngIf="!appNames" type="text" [(ngModel)]="fallBackTextfiled" name="filter" class="form-control" (change)="fallBackTextFieldUpdate()" aria-label="appId">
+<div *ngIf="!serviceBindings" class="input-group">
+    <label for="appName">App-Name</label>
+    <input [(ngModel)]="fallBackAppName" type="text" class="form-control" id="appName" name="appName" (change)="fallBackTextFieldUpdate()" required>
+    <label for="space">Space</label>
+    <input [(ngModel)]="fallBackSpace" type="text" class="form-control" id="space" name="space" (change)="fallBackTextFieldUpdate()" required>
+</div>

@@ -23,7 +23,6 @@ import {
     NgbButtonsModule,
     NgbAccordionModule,
     NgbAlertModule} from '@ng-bootstrap/ng-bootstrap';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { DateFormatPipe } from './pipe/date-format.pipe';
 import { ChartComponent } from './chart/chart/chart.component';
 import { EschartsService } from 'app/monitoring/escharts.service';
@@ -87,7 +86,7 @@ import { BindingService } from 'app/monitoring/binding.service';
         MonacoEditorModule.forRoot(),
     ],
     declarations: [MonitoringComponent,
-        DashboardComponent, AppidComponent, LogPanelComponent,
+        AppidComponent, LogPanelComponent,
         DateFormatPipe, ChartComponent, ChartDirective, PanelComponent, PanelEditorComponent, QueryEditorComponent, EsQueryEditorComponent,
         PromQueryEditorComponent, SidebarLayoutComponent,
         SidebarNavComponent, ToolbarButtonComponent, ToolbarComponent, ToolbarLinkComponent, LogListComponent, LogSearchComponent, LogFilterComponent, TimefilterComponent],

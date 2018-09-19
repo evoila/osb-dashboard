@@ -27,6 +27,7 @@
     <label for="space">Space</label>
     <input [(ngModel)]="space" type="text" class="form-control" id="space" name="space" required>
   </div>
+  <sb-appid (app)="setApp($event)"></sb-appid>
   <div class="row">
     <div class="col-12">
       <button type="button" (click)="search()" class="btn btn-outline-secondary float-right" [disabled]="inRequest">Show Logs!</button>

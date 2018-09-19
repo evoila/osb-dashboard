@@ -8,6 +8,7 @@ export class ChartRequestVm {
     appName: string;
     range: any;
     interval: string;
+    orgId: string;
     chartId: string;
     isEs: boolean;
     metrics: Array<PrometheusMetrics>;

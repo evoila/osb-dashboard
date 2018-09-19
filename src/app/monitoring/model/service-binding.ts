@@ -1,6 +1,6 @@
 export interface ServiceBinding {
-    applicationName: string;
-    applicationId: string;
-    space: string
-    organization: string;
+    appName: string;
+    appId: string;
+    space: string;
+    organization_guid: string;
 }

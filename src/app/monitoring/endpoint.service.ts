@@ -9,20 +9,17 @@ export class EndpointService {
   private baseUrl = 'http://localhost';
   private authToken = environment.token;
   private port = ':8090';
- public httpOptions = {
+  public httpOptions = {
     headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-      //'Authorization': 'my-auth-token',
+      'Authorization': this.authToken
     })
-  }
+  };
   public getUri(): string {
     return this.baseUrl + this.port
   }
-  getSbHeader(): HttpHeaders {
-    const headers = new HttpHeaders();
-    headers.append('Content-Type', 'application/json');
+  getSbHeader(): any {
+    const headers: any = new Headers();
     headers.append('Authorization', this.authToken);
-    headers.append('Content-Type', 'application/hal+json;charset=UTF-8');
     return headers;
   }
 }

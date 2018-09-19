@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import * as moment from 'moment/moment';
 import { SearchService } from '../search.service';
 import { SearchRequest } from 'app/monitoring/model/search-request';
@@ -16,6 +16,7 @@ import { timestamp } from 'rxjs/operators/timestamp';
 import { Notification, NotificationService } from '../../core/notification.service';
 import { NotificationType } from 'app/core';
 import { Observable } from 'rxjs/Observable';
+import { ServiceBinding } from '../model/service-binding';
 
 
 @Component({
@@ -23,7 +24,7 @@ import { Observable } from 'rxjs/Observable';
   templateUrl: './log-panel.component.html',
   styleUrls: ['./log-panel.component.scss']
 })
-export class LogPanelComponent implements OnInit {
+export class LogPanelComponent implements OnInit, OnDestroy {
   public appId: string;
   public space: string;
   public appName: string;
@@ -47,8 +48,9 @@ export class LogPanelComponent implements OnInit {
   private subscription: Subscription | null;
   private numOfLogs = 300;
   private triggerEmitter: any;
+  private orgId: string;
   private timestamp: Observable<number | null> | null = null;
-  public inRequest = false; //Status variable to lock button if there is an ongoing request
+  public inRequest = false; // Status variable to lock button if there is an ongoing request
 
 
 
@@ -59,16 +61,23 @@ export class LogPanelComponent implements OnInit {
 
   }
   ngOnInit() {
-    /*this.toDate = moment().valueOf();
-    this.fromDate = moment().subtract(10, 'days').valueOf();*/
+
   }
 
-  setAppId(appId: string) {
-    this.appId = appId;
-    console.log(this.appId);
+  ngOnDestroy() {
+    this.stopStreaming();
+    this.hits = null;
   }
+
+  setApp(app: ServiceBinding) {
+    console.log(app);
+    this.appName = app.appName;
+    this.space = app.space;
+    this.orgId = app.organization_guid;
+  }
+
   mode(isStreaming: boolean) {
-    //Flush results and stop Stream on Context-Switch
+    // Flush results and stop Stream on Context-Switch
     if (this.isStreaming && this.triggerEmitter) {
       this.stopStreaming();
     }
@@ -77,7 +86,7 @@ export class LogPanelComponent implements OnInit {
   }
   more(eventPair: [number, boolean]) {
     if (!this.isStreaming) {
-      //Check wether Timestamp is specified for sequential Request
+      // Check wether Timestamp is specified for sequential Request
       // Background: The Index of the visualized Data in the resultset changes whenever there
       // is new Data. Going Backwards results in loading the same set of Loads. Timestamp should be fixed till reload
       if (!this.toDate && !this.fixDate) {
@@ -89,9 +98,9 @@ export class LogPanelComponent implements OnInit {
     }
   }
   search() {
-    this.fixDate = null; //new request clear sequential
+    this.fixDate = null; // new request clear sequential
     if (this.isStreaming) {
-      //clear all data from previous requests
+      // clear all data from previous requests
       this.stopStreaming();
       this.hits = null;
       this.startStreaming();
@@ -140,6 +149,7 @@ export class LogPanelComponent implements OnInit {
       appName: this.appName,
       space: this.space,
       filter: this.filter,
+      orgId: this.orgId,
       docSize: {
         from: this.from,
         size: size

@@ -206,7 +206,7 @@ export class PanelComponent implements OnInit {
     let size: number = 0;
     this.panel.chartView = [];
     for (let chartQuerie of this.panel.chartQueries) {
-      const isEs = chartQuerie['appId'] != null;
+      const isEs = chartQuerie['metrics'] == null;
       let chartRqVm: ChartRequestVm = new ChartRequestVm();
       chartRqVm = Object.assign(chartQuerie);
       chartRqVm.isEs = isEs;

@@ -16,6 +16,7 @@ export class MetricAndScope {
     appId?: string;
     appName?: string;
     appInstance?: number;
+    orgId: String;
     space: string;
     metric: string;
 }

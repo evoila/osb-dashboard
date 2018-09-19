@@ -9,6 +9,7 @@ import { Chart } from './model/chart';
 @Injectable()
 export class PromchartsService {
   private endpoint = '/api/charts/prom/perform/';
+  private httpOptions = this.endpointService.httpOptions;
   constructor(
     private http: HttpClient,
     private endpointService: EndpointService
@@ -16,7 +17,7 @@ export class PromchartsService {
   public getCharts(prometheusQuerie: PrometheusChartRequest, chartId: String): Observable<Chart > {
     if (chartId) {
       const uri: string = this.endpointService.getUri() + this.endpoint + chartId
-      return this.http.post<Chart>(uri, prometheusQuerie);
+      return this.http.post<Chart>(uri, prometheusQuerie, this.httpOptions);
     } else {
       throw new Error('chartId is missing in Object');
     }

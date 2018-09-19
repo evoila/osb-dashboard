@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { EsChartRequest } from 'app/monitoring/model/es-chart-request';
 import { Chart } from '../model/chart';
 import { ChartRequest } from '../model/chart-request';
+import { ServiceBinding } from '../model/service-binding';
 
 
 
@@ -23,10 +24,8 @@ export class EsQueryEditorComponent implements OnInit {
   public sizeOptions: Array<number>;
   public size: number;
   public name: string;
+  public choosenApp: ServiceBinding;
 
-  appId: string;
-  space: string;
-  appName: string;
   constructor() {
     this.sizeOptions = Array.from(new Array(12), (val, index) => index + 1);
   }
@@ -36,18 +35,26 @@ export class EsQueryEditorComponent implements OnInit {
       if (this.chartRequest.size) {
         this.size = this.chartRequest.size;
       }
-      this.appId = this.chartRequest['appId'];
+      this.choosenApp = {
+        appName: this.chartRequest['appName'],
+        space: this.chartRequest['space'],
+        organization_guid: this.chartRequest['orgId']
+      } as ServiceBinding;
     }
   }
+
+  public setApp(app: ServiceBinding) {
+    this.choosenApp = app;
+  }
   public buildChartRequest() {
-    if (this.appId) {
+    if (this.choosenApp) {
       const chartRequest = {
-        space: this.space,
-        chartId: this.choosenChart.id,
-        name: this.name
+        appName: this.choosenApp.appName,
+        space: this.choosenApp.space,
+        orgId: this.choosenApp.organization_guid,
+        name: this.name,
+        chartId: this.choosenChart.id
       } as EsChartRequest;
-      chartRequest.appId = this.appId ?  this.appId : undefined;
-      chartRequest.appName = this.appName ? this.appName : undefined;
       if (this.size) {
         if (typeof this.size === 'string') {
           this.size = parseInt(this.size as string);

@@ -12,15 +12,10 @@
     <form>
       <label for="metricName">Provide Custom Name for Metric in Chart</label>
       <input [(ngModel)]="query.name" type="text" class="form-control" id="metricName" name="metricName" required>
-      <div class="form-group" *ngFor="let merticAndScope of query.metricAndScope; let merticIndex = index;">
-        <label for="appId">appId</label>
-        <input [(ngModel)]="merticAndScope.appId" type="text" class="form-control" id="appId" name="appId" (focus)="replace(queryIndex, merticIndex, merticAndScope)"
-          required>
-          <label for="space">space</label>
-          <input [(ngModel)]="merticAndScope.space" type="text" class="form-control" id="space" name="space" (focus)="replace(queryIndex, merticIndex, merticAndScope)"
-          required>
+      <div class="form-group" *ngFor="let merticAndScope of query.metricAndScope; let metricIndex = index;">
+        <sb-appid (app)="setApp($event, queryIndex, metricIndex)" ></sb-appid>
         <label for="metric">metric</label>
-        <input [(ngModel)]="merticAndScope.metric" type="text" class="form-control" id="metric" name="metric" (focus)="replace(queryIndex, merticIndex, merticAndScope)"
+        <input [(ngModel)]="merticAndScope.metric" type="text" class="form-control" id="metric" name="metric" (focus)="replace(queryIndex, metricIndex, merticAndScope)"
           required>
       </div>
       <a class="btn btn-outline-primary" (click)="buildChartRequest()" role="button">Save Chart</a>

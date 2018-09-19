@@ -6,6 +6,7 @@ export class EsChartRequest implements ChartRequest {
     appId?: string;
     appName?: string;
     range: any;
+    orgId: string;
     chartId: string;
     order: number;
     size?: number;
