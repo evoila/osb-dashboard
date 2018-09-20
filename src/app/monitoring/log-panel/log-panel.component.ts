@@ -49,7 +49,7 @@ export class LogPanelComponent implements OnInit, OnDestroy {
   private numOfLogs = 300;
   private triggerEmitter: any;
   private orgId: string;
-  private timestamp: Observable<number | null> | null = null;
+  public timestamp: Observable<number | null> | null = null;
   public inRequest = false; // Status variable to lock button if there is an ongoing request
 
 
