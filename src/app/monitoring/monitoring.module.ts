@@ -6,7 +6,7 @@ import { NouisliderModule } from 'ng2-nouislider';
 import { HttpClientModule } from '@angular/common/http';
 import { NgDragDropModule } from 'ng-drag-drop';
 import { DlDateTimePickerDateModule } from 'angular-bootstrap-datetimepicker';
-import { MonacoEditorModule } from 'ngx-monaco-editor';
+import { MonacoEditorModule, NgxMonacoEditorConfig } from 'ngx-monaco-editor';
 
 
 
@@ -61,7 +61,9 @@ import { ErrorserviceService } from './errorservice.service';
 
 
 
-
+const monacoEditorConfig: NgxMonacoEditorConfig = {
+    baseUrl: './app/assets'
+};
 
 @NgModule({
     imports: [
@@ -84,7 +86,7 @@ import { ErrorserviceService } from './errorservice.service';
         NgDragDropModule.forRoot(),
         DlDateTimePickerDateModule,
         AngularFontAwesomeModule,
-        MonacoEditorModule.forRoot(),
+        MonacoEditorModule.forRoot(monacoEditorConfig),
     ],
     declarations: [MonitoringComponent,
         AppidComponent, LogPanelComponent,
