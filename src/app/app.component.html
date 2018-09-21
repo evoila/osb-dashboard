@@ -11,6 +11,9 @@
       <li class="nav-item active" *ngIf="dynamicModuleSupport.lbaas">
         <a class="nav-link" routerLink="/lbaas" routerLinkActive="active">Configure Certificates </a>
       </li>
+      <li class="nav-item active" *ngIf="dynamicModuleSupport.monitoring">
+        <a class="nav-link" routerLink="/monitoring" routerLinkActive="active">Monitoring</a>
+      </li>
       <li class="nav-item active" *ngIf="sharedModuleSupport.backup">
         <a class="nav-link" routerLink="/backup" routerLinkActive="active">Backup </a>
       </li>

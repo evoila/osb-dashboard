@@ -1,0 +1,43 @@
+<h2>Create your Panel</h2>
+<ngb-alert *ngIf="successMessage" type="success">{{ successMessage }}</ngb-alert>
+<form>
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input type="text" [(ngModel)]="name" class="form-control" id="name" name="name" required>
+
+    <label for="description">Description</label>
+    <input type="text" class="form-control" [(ngModel)]="description" name="description" id="description">
+  </div>
+</form>
+<div class="jumbotron">
+  <h4 class="display-4">Add a Chart</h4>
+  <p class="lead">Add charts that will be displayed on your Panel. Charts already in your Panel can be found underneath</p>
+  <hr class="my-4">
+  <p>
+    <button type="button" class="btn btn-outline-primary" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed"
+      aria-controls="collapseExample">
+      <span *ngIf="!isCollapsed">Cancel </span>
+      <span *ngIf="isCollapsed">Add Chart </span>
+    </button>
+  </p>
+  <div id="collapseExample" [ngbCollapse]="isCollapsed">
+    <div class="card" *ngIf="!isCollapsed">
+      <div class="card-body">
+        <sb-query-editor (promSuccess)="addPromRequest($event)" (esSuccess)="addEsRequest($event)"></sb-query-editor>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="chartVms">
+  <h3>Chartpreview:</h3>
+  <p>Click on the Chartname to get a preview of the Chart</p>
+</div>
+<ngb-accordion [closeOthers]="true" draggable activeIds="static-1" *ngFor="let chartQuerie of chartVms" [dragData]="chartQuerie" droppable (onDrop)="onDrop($event, chartQuerie)">
+  <ngb-panel id="static-1" title="chartQuerie.name">
+    <ng-template ngbPanelContent>
+        <sb-chart [requObj]="chartQuerie" [chartId]="chartQuerie.chartId"></sb-chart>
+        <button type="button" (click)="deleteChartRequest(chartQuerie)" class="btn btn-danger">Delete</button>
+    </ng-template>
+  </ngb-panel>
+</ngb-accordion>
+<button type="button" class="btn btn-primary" (click)="create()">save</button>

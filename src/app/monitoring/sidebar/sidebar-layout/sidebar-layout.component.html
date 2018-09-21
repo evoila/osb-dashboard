@@ -1,0 +1,14 @@
+<div class="sidebar-layout">
+  <div class="sidebar">
+    <ng-content select="mst-sidebar-nav"></ng-content>
+  </div>
+  <div class="content-loader" *ngIf="isLoading">
+    <div class="loader"></div>
+  </div>
+  <div class="content">
+    <div class="sidebar-layout-top-row toolbar toolbar-placeholder"></div>
+    <div [hidden]="isLoading">
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>

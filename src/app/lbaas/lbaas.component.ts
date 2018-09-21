@@ -51,8 +51,13 @@ export class LBaasComponent implements OnInit {
     }
   }
 
-  public onCertificateSubmit() : void {    
-    this.asService.saveOne(this.configuration, 'certs').subscribe();
-    this.nService.add(new Notification(NotificationType.Info, 'Successfully updated certificate'));
+  public onCertificateSubmit() : void {
+    if(this.certified) {
+      this.asService.saveOne(this.configuration, 'certs', true).subscribe();
+      this.nService.add(new Notification(NotificationType.Info, 'Successfully updated certificate'));
+    } else {
+      this.asService.saveOne(this.configuration, 'certs', false).subscribe();
+      this.nService.add(new Notification(NotificationType.Info, 'Successfully stored certificate'));
+    } 
   }
 }

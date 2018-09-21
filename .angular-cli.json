@@ -65,6 +65,39 @@
       }
     },
     {
+      "name": "monitoring",
+      "root": "src",
+      "outDir": "dist/monitoring",
+      "deployUrl": "/app/",
+      "assets": [
+        "assets/core",
+        "favicon.ico",
+        { "glob": "**/*", "input": "../node_modules/ngx-monaco-editor/assets/monaco", "output": "./assets/monaco/" }
+      ],
+      "index": "index.html",
+      "main": "main.ts",
+      "polyfills": "polyfills.ts",
+      "test": "test.ts",
+      "tsconfig": "tsconfig.app.json",
+      "testTsconfig": "tsconfig.spec.json",
+      "prefix": "sb",
+      "styles": [
+        "styles.scss",
+        "../node_modules/bootstrap/dist/css/bootstrap.min.css"
+
+      ],
+      "stylePreprocessorOptions": {
+        "includePaths": [
+          "../node_modules"
+        ]
+      },
+      "scripts": [],
+      "environmentSource": "environments/target.ts",
+      "environments": {
+        "monitoring": "environments/target.monitoring.ts"
+      }
+    },
+    {
       "name": "mongodb",
       "root": "src",
       "outDir": "dist/mongodb",

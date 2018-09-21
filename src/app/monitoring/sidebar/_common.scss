@@ -1,0 +1,51 @@
+// Bootstrap overrides
+$h1-font-size: 2rem;
+$h2-font-size: 1.5rem;
+$h3-font-size: 1.4rem;
+$h4-font-size: 1.25rem;
+$h5-font-size: 1.15rem;
+$h6-font-size: 1rem; // we don't use h6 anywhere
+
+// Restore v4-alpha.6 colors
+$white:  #fff;
+$black:  #000;
+$red:    #d9534f;
+$orange: #f0ad4e;
+$yellow: #ffd500;
+$green:  #5cb85c;
+$blue:   #0275d8;
+$teal:   #5bc0de;
+$pink:   #ff5b77;
+$purple: #613d7c;
+$gray:  gray;
+
+
+$primary:             $blue;
+$success:             $green;
+$info:                $teal;
+$warning:             $orange;
+$danger:              $red;
+
+// reset secondary color to v4-alpha.6 style
+$secondary: #fff;
+
+// make form field focus chrome less intrusive
+$input-btn-focus-width: 1px;
+
+
+// Custom variables that we need available globally
+$navbar-height: 56px;
+$nav-disabled-color: $gray;
+$nav-item-size: 13px;
+
+$footer-height: $navbar-height * .75;
+
+$bars-z-index: 900; // ensures it's above content but below dropdowns (=1000)
+$table-font-size: 13px;
+
+$sidebar-width: 200px;
+$sidebar-border-style: $gray 1px solid;
+$sidebar-height-sm-down: 50px;
+$toolbar-height: 50px;
+
+$enable-shadows: false;

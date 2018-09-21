@@ -66,3 +66,4 @@ export function supportedExtensions(bt: BuildTarget): ModuleSupport {
   });
   return <any>result;
 }
+

@@ -128,7 +128,9 @@
               <arguments>upgrade</arguments>
             </configuration>
           </execution>
+
 		  <execution>
+
             <phase>compile</phase>
             <id>yarn run build</id>
             <goals>
