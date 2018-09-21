@@ -14,7 +14,7 @@ export class ErrorserviceService {
     console.log(error);
     // Indicates that Error is thrown by Controller
     let errorMessage;
-    if (error.status !== 401) {
+    if (error.status !== 401 && error.status !== 0) {
       errorMessage = error.error.message;
     } else {
       // Error is thrown by PartyFilter

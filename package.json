@@ -46,7 +46,7 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^6.0.3",
+    "@angular/animations": "5.2.9",
     "@angular/common": "5.2.9",
     "@angular/compiler": "5.2.9",
     "@angular/core": "5.2.9",
@@ -58,6 +58,7 @@
     "@ng-bootstrap/ng-bootstrap": "^1.1.1",
     "angular-bootstrap-datetimepicker": "^2.2.1",
     "angular-font-awesome": "^3.1.2",
+    "angular2-schema-form": "^1.2.1",
     "bootstrap": "4.1.1",
     "chart.js": "^2.7.1",
     "core-js": "^2.4.1",
