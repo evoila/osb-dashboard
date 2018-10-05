@@ -10,7 +10,7 @@ import { ServiceBinding } from 'app/monitoring/model/service-binding';
 @Injectable()
 export class BindingService {
   private instanceId = environment.serviceInstanceId;
-  private endpoint = `custom/v2/manage/${this.instanceId}/service_bindings`;
+  private endpoint = `/custom/v2/manage/${this.instanceId}/service_bindings`;
   constructor(private http: HttpClient,
     private notification: NotificationService,
     private endpointService: EndpointService) { }
