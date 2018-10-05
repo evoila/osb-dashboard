@@ -62,7 +62,7 @@ import { ErrorserviceService } from './errorservice.service';
 
 
 const monacoEditorConfig: NgxMonacoEditorConfig = {
-    baseUrl: './app/assets'
+    baseUrl: '/app/assets'
 };
 
 @NgModule({
