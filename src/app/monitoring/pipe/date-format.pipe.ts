@@ -26,6 +26,9 @@ export class DateFormatPipe implements PipeTransform {
 
     return parsed.format('DD.MM.YYYY');
   }
+  public transformDateFormat(value: any) {
+    return moment(value).format('DD.MM.YYYY hh:mm:ss');
+  }
   public transformMillis(value: any) {
     const momentTs = moment(value);
     if (momentTs.isValid()) {

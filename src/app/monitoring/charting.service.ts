@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as moment from 'moment/moment';
 import { Chart } from './model/chart';
-import { DateFormatPipe } from './pipe/date-format.pipe';
 
 
 @Injectable()
@@ -16,7 +15,7 @@ export class ChartingService {
   private noSeriesCharts = ['pie', 'doughnut'];
   private acceptedDateFormats: Array<any> = ['DD.MM.YYYY'];
   private isNested;
-  private dateFormatPipe = new DateFormatPipe();
+
 
   constructor() { }
 
@@ -54,7 +53,7 @@ export class ChartingService {
         label = this.convertLabels(label);
       } else {
 
-        label = this.dateFormatPipe.transformMillis((parseInt(label, 10)));
+        label = label;
       }
     })
     return labels;

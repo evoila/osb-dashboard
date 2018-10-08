@@ -90,7 +90,7 @@ export class PanelComponent implements OnInit {
   private setDateRange() {
     if (this.toDateView && this.fromDateView && this.panel && this.panel.chartQueries) {
       this.panel.chartQueries.forEach(element => {
-        if (element['appId'] == null) {
+        if (element['metrics'] != null) {
           element['start'] = this.fromDateView;
           element['end'] = this.toDateView;
           if (this.steps) {

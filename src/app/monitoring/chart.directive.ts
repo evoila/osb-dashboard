@@ -11,6 +11,7 @@ import { DateFormatPipe } from './pipe/date-format.pipe';
 
 declare var Chart: any;
 import { Chart as ChartJS, Chart as ChartJs, ChartData } from 'chart.js';
+import * as moment from 'moment/moment';
 
 @Directive({
   // tslint:disable-next-line
@@ -33,13 +34,17 @@ export class ChartDirective implements OnInit, OnChanges, OnDestroy {
       this.labels = [];
     } else {
       //Check wether Timestamps are already formated
-      if (typeof labelsArr[0] === 'string' && isNaN(labelsArr[0])) {
-        this.labels = labelsArr;
-      } else {
-        this.labels = labelsArr.map(label => {
+      this.labels = labelsArr.map((label) => {
+        if (typeof label === 'string' && Number.isNaN(Number(label))) {
+          if (moment(label, 'DD.MM.YYYY hh:mm:ss').isValid()) {
+            return label;
+          } else {
+            return this.dateFormat.transformDateFormat(label)
+          }
+        } else {
           return this.dateFormat.transform(label);
-        });
-      }
+        }
+      })
     }
   }
 
