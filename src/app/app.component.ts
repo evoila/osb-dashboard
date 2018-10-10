@@ -8,13 +8,17 @@ import {
   BuildTargetService, ModuleSupport
 } from 'app/shared';
 import { Router, ActivatedRoute } from '@angular/router';
+import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
+import { ExtensionUrlService } from 'app/core/extension-url.service';
+import { ExtensionUrl, Server } from './core/extension-url';
+
 
 @Component({
   selector: 'sb-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   public logoSrc = environment.ui.logoSrc;
   public isNavbarCollapsed: boolean;
   public readonly moduleSupport: ModuleSupport;
@@ -22,11 +26,18 @@ export class AppComponent {
   public readonly sharedModuleSupport: any;
 
   public notification: Notification | null = null;
-
+  ngOnInit() {
+    this.urlService.getExtension().subscribe(
+      (data: ExtensionUrl) => {
+       environment.extensionUrls = data;
+      }
+    )
+  }
   constructor(
     private readonly router: Router,
     private readonly route: ActivatedRoute,
     private readonly notifications: NotificationService,
+    private readonly urlService: ExtensionUrlService,
     buildTarget: BuildTargetService
   ) {
     this.dynamicModuleSupport = buildTarget.dynamicModuleSupport;

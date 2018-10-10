@@ -31,10 +31,7 @@ export class EschartsService {
     const uri: string = this.endpointService.getUri() + this.endpoint;
     return this.http.post<Array<Chart>>(uri, chartRequest, this.httpOptions).
     map(data =>  data).
-    catch((error: any) => {
-      this.notification.addSelfClosing(new Notification(NotificationType.Error, error.error.message));
-      return Observable.throw(error.json);
-    })
+    catch((err) => this.errorService.handleErrors(err))
   }
   public getChart(chartRequest: EsChartRequest): Observable<Chart> {
     if (chartRequest.chartId) {
