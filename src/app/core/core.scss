@@ -1,0 +1,15 @@
+@import '../common';
+
+.coming-soon {
+  a {
+    color: $nav-disabled-color !important;
+  }
+}
+
+.toolbar-btn {
+  @extend .btn;
+  @extend .btn-outline-primary;
+  @extend .btn-sm;
+  margin-left: .5rem;
+}
+  

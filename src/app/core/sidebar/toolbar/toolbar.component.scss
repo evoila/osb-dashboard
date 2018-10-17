@@ -1,0 +1,15 @@
+@import '../../core';
+
+.toolbar {
+  // toolbar never scrolls with the body and sit right at the top below the navbar
+  position: fixed;
+  top: $navbar-height;
+  left: $sidebar-width;
+  right: 0;
+  display: flex;
+  padding: 1rem;
+}
+
+.toolbar-buttons {
+  display: flex;
+}

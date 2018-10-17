@@ -4,6 +4,7 @@ import { Job } from './domain/job';
 import { BackupPlan } from './domain/backup-plan';
 import { FileEndpoint } from './domain/file-endpoint';
 import { NotificationService, Notification, NotificationType } from '../../core/notification.service';
+import { SidebarEntry } from 'app/core/sidebar';
 
 @Component({
   selector: 'sb-backup',
@@ -14,6 +15,33 @@ export class BackupComponent implements OnInit {
   jobs: Job[];
   plans: BackupPlan[];
   destinations: FileEndpoint[];
+  menu: SidebarEntry[] = [{
+      name: 'Dashboard',
+      isCollapsible: false,
+      links: [{
+        name: 'Overview',
+        href: '/backup',
+        iconClass: 'fas fa-tachometer-alt'
+      }]
+    },
+    {
+      name: 'Backup & Restore',
+      isCollapsible: false,
+      links: [{
+        name: 'Endpoints',
+        href: 'file-endpoints',
+        iconClass: 'fas fa-server'
+      },{
+        name: 'Plans',
+        href: 'plans',
+        iconClass: 'fas fa-file-alt'
+      },{
+        name: 'Recent Jobs',
+        href: 'jobs',
+        iconClass: 'fas fa-tasks'
+      }]
+    }
+  ];
 
   constructor(protected readonly backupService: BackupService,
               protected readonly nService: NotificationService) { }

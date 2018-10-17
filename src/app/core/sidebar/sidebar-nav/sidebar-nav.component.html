@@ -1,0 +1,27 @@
+<div class="sidebar-layout-top-row sidebar-nav-title navbar-light">
+  <button class="navbar-toggler d-md-none mr-2" (click)="toggleCollapsed()">
+    <i class="fas fa-bars"></i>
+  </button>
+  <ng-content></ng-content>
+</div>
+<nav class="sidebar-layout-bottom-row sidebar-nav-content navbar-light sidebar-nav-flex">
+  <div class="sidebar-nav-flex" [ngbCollapse]="isCollapsed">
+    <ul class="sections sidebar-nav-flex">
+      <li class="sidebar-nav-section" *ngFor="let section of menu" [ngClass]="{ 'mt-auto': section.isSeparator }">
+        <div class="section-header" (click)="toggleSectionCollapsed(section)">
+          <h3 class="mr-auto pr-2" [class.text-muted]="section.isDisabled">{{section.name}}</h3>
+          <span> <i *ngIf="section.isCollapsible" class="fa" [ngClass]="{'fa-chevron-up': !section.isCollapsed, 'fa-chevron-down': section.isCollapsed}"></i></span>
+        </div>
+        <ul class="nav-items-stack mb-2" [ngbCollapse]="section.isCollapsed">
+          <li *ngFor="let link of section.links" [ngClass]="link.class">
+            <a *ngIf="link.href" [id]="link.name" [class.disabled]="section.isDisabled" class="nav-link"
+              routerLinkActive="active" [routerLink]="link.href" [routerLinkActiveOptions]="{exact: true}" (click)="onNavigate(link)"><i
+                class="icon {{link.iconClass}}"></i> {{link.name}}</a>
+            <a *ngIf="link.onClicked" [class.disabled]="section.isDisabled" class="nav-link" (click)="onNavigate(link)"><i
+                class="icon {{link.iconClass}}"></i> {{link.name}}</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</nav>
