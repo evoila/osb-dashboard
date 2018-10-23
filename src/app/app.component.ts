@@ -9,7 +9,6 @@ import {
 } from 'app/shared';
 import { Router, ActivatedRoute } from '@angular/router';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
-import { ExtensionUrlService } from 'app/core/extension-url.service';
 import { ExtensionUrl, Server } from './core/extension-url';
 
 
@@ -27,24 +26,18 @@ export class AppComponent implements OnInit {
 
   public notification: Notification | null = null;
   ngOnInit() {
-    this.urlService.getExtension().subscribe(
-      (data: ExtensionUrl) => {
-       environment.extensionUrls = data;
-      }
-    )
   }
   constructor(
     private readonly router: Router,
     private readonly route: ActivatedRoute,
     private readonly notifications: NotificationService,
-    private readonly urlService: ExtensionUrlService,
     buildTarget: BuildTargetService
   ) {
     this.dynamicModuleSupport = buildTarget.dynamicModuleSupport;
     this.sharedModuleSupport = buildTarget.sharedModuleSupport;
     this.moduleSupport = buildTarget.moduleSupport;
 
-    console.log("This is our starting point");
+    console.log('This is our starting point');
     this.notifications.notifications.subscribe(x => {
       console.log(x)
       this.notification = x

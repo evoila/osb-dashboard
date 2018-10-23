@@ -9,7 +9,6 @@ import { NotificationBannerComponent } from './notification-banner/notification-
 import { RouterModule } from '@angular/router';
 import { NotificationService, EntityService } from './';
 import { ShowErrorsComponent } from './show-errors/show-errors.component';
-import { ExtensionUrlService } from './extension-url.service';
 import { HttpClientModule } from '@angular/common/http';
 
 export function coreHttpFactory(backend: XHRBackend) {
@@ -31,9 +30,7 @@ const components = [
   ],
   declarations: [components, NotificationBannerComponent, ShowErrorsComponent],
   exports: [components],
-  providers: [
-    ExtensionUrlService
-  ]
+  providers: []
 })
 export class CoreModule {
   public static forRoot(): ModuleWithProviders {

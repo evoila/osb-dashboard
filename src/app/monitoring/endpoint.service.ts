@@ -1,9 +1,10 @@
-import { Injectable } from '@angular/core';
+import { Injectable, DebugElement } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
 import { environment } from 'environments/runtime-environment';
 import { ExtensionUrl, Server } from '../core/extension-url';
-import { ExtensionUrlService } from '../core/extension-url.service';
 import { Observable } from 'rxjs/Observable';
+import { Environment } from '../../environments/runtime-environment';
+import { CatalogueService } from './catalogue.service';
 
 
 @Injectable()
@@ -18,9 +19,14 @@ export class EndpointService {
   };
 
 
-  constructor(private urlService: ExtensionUrlService) { }
+  constructor() { }
   public getUri(): string {
-    return this.baseUrl;
+    const matchingEnvs: Array<Server> = environment.customEndpoints.filter((k: Server) => k.description === 'DashboardBackendURL');
+    if (matchingEnvs.length > 0) {
+      return matchingEnvs[0].url;
+    } else {
+      return this.baseUrl;
+    }
   }
 }
 
