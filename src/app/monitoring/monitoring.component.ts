@@ -39,17 +39,20 @@ export class MonitoringComponent implements OnInit {
   ngOnInit() {
     this.panelService.getAllPanels(environment.serviceInstanceId).
       subscribe(data => {
-        data.forEach(k => {
-          const link = {
-            name: k.name,
-            href: 'panel/' + k.panelId,
-            iconClass: 'icon-bar-chart'
-          }
-          if (!this.menu[0].links) {
-            this.menu[0].links = [];
-          }
-          this.menu[0].links = [...this.menu[0].links, link];
-        })
+        if (data) {
+          data.forEach(k => {
+            const link = {
+              name: k.name,
+              href: 'panel/' + k.panelId,
+              iconClass: 'icon-bar-chart'
+            }
+            if (!this.menu[0].links) {
+              this.menu[0].links = [];
+            }
+            this.menu[0].links = [...this.menu[0].links, link];
+
+          })
+        }
         const link = {
           name: 'AddPanel',
           href: 'paneleditor',

@@ -9,7 +9,7 @@ import { CatalogueService } from './catalogue.service';
 
 @Injectable()
 export class EndpointService {
-  private baseUrl = 'https://osb-log-metric-dashboard-backend-test.cf.dev.eu-de-central.msh.host';
+  private baseUrl = 'https://osb-log-metric-dashboard-backend.cf.dev.eu-de-central.msh.host';
   // private baseUrl = 'http://localhost';
   private authToken = environment.token;
   public httpOptions = {
