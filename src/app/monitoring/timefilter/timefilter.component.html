@@ -1,0 +1,39 @@
+<div class="container timefilter">
+  <h4 *ngIf="stepVal">Specify the Date Range</h4>
+  <p *ngIf="!stepVal">Specify the Date Range<p>
+  <h6 *ngIf="stepVal">The Step value Specifies the resolution</h6>
+  <div *ngIf="stepVal" class="row input-group">
+    <label for="from">From:</label>
+    <input type="text" class="form-control" id="from" name="from" readonly="readonly" *ngIf="fromDateString" [ngModel]="fromDateString" (click)="isCollapsedFrom = !isCollapsedFrom">
+
+
+
+    <label for="to">To:</label>
+    <input type="text" id="to" name="to" class="form-control" readonly="readonly" *ngIf="toDateString" [ngModel]="toDateString" (click)="isCollapsedTo = !isCollapsedTo">
+
+
+  </div>
+  <div *ngIf="!stepVal" class="row input-group">
+      <label for="from">From:</label>
+      <input type="text" class="form-control" id="from" name="from" readonly="readonly" *ngIf="fromDateString" [ngModel]="fromDateString" (click)="isCollapsedFrom = !isCollapsedFrom">
+  </div>
+  <div *ngIf="!stepVal" class="row input-group">
+      <label for="to">To:</label>
+      <input type="text" id="to" name="to" class="form-control" readonly="readonly" *ngIf="toDateString" [ngModel]="toDateString" (click)="isCollapsedTo = !isCollapsedTo">
+  </div>
+  <div *ngIf="stepVal" class="row input-group">
+    <label for="step">Step:</label>
+    <input type="text" id="step" class="form-control" name="step" [(ngModel)]="step" (change)="setSteps()">
+    <select class="custom-select mr-sm-2" [(ngModel)]="stepUnit" id="inlineFormCustomSelect" (change)="setSteps()">
+      <option selected *ngFor="let unit of stepUnits">{{unit}}</option>
+    </select>
+  </div>
+  <div class="row">
+    <div class="col-6 calendar-view">
+      <dl-date-time-picker [(ngModel)]="fromDateView" (change)="setFromDate()" [ngbCollapse]="!isCollapsedFrom"></dl-date-time-picker>
+    </div>
+    <div class="col-6 calendar-view">
+      <dl-date-time-picker [ngbCollapse]="!isCollapsedTo" [(ngModel)]="toDateView" (change)="setToDate()"></dl-date-time-picker>
+    </div>
+  </div>
+</div>

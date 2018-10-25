@@ -31,4 +31,3 @@ export class LBaasService extends EntityService  {
     return this.post(this.CERTIFICATE_BASEURL + '/' + serviceInstanceId + '/' + entityRel, entity);
   }
 }
-

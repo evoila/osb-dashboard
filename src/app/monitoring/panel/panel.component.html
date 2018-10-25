@@ -1,0 +1,28 @@
+<router-outlet></router-outlet>
+<div *ngIf="panel">
+
+  <sb-timefilter [toDate]="toDateView" [fromDate]="fromDateView" [stepVal]="steps" (fromDateChange)="setFromDate($event)" (toDateChange)="setToDate($event)" (stepChange)="setStep($event)"></sb-timefilter>
+
+  <div *ngIf="panel && panel.chartView">
+    <div class="container">
+      <div class="row" *ngFor="let chartRequests of panel.chartView">
+        <div class="col-{{chartRequest.size}} charts" *ngFor="let chartRequest of chartRequests" draggable [dragData]="chartRequest" droppable
+          (onDrop)="onDrop($event, chartRequest)">
+          <div *ngIf="chartRequest.onEdit">
+            <sb-prom-query-editor *ngIf="!chartRequest.isEs" [chartRequest]="chartRequest" [choosenChart]="chartRequest.choosenChart"
+              (success)="saveChartQuery($event, chartRequest)" (cancel)="cancelEdit(chartRequest)"></sb-prom-query-editor>
+            <sb-es-query-editor *ngIf="chartRequest.isEs" [chartRequest]="chartRequest" [choosenChart]="chartRequest.choosenChart" (success)="saveChartQuery($event, chartRequest)"
+              (cancel)="cancelEdit(chartRequest)"> </sb-es-query-editor>
+          </div>
+          <sb-chart class="chart" *ngIf="chartRequest.chartId && !chartRequest['onEdit']" [requObj]="chartRequest" (editChart)="editChart($event ,chartRequest)"
+            [chartId]="chartRequest.chartId" [options]="true"></sb-chart>
+        </div>
+      </div>
+
+    </div>
+    <div class="input-group edit-buttons">
+    <button type="button" *ngIf="changed" (click)="saveChanges()" class="btn btn-info">Save Changes made on the Panel</button>
+    <button type="button" (click)="edit()" class="btn btn-info">Edit Panel Settings</button>
+  </div>
+  </div>
+  <div *ngIf="!panel">Bitte warten...</div>

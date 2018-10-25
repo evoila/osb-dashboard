@@ -1,0 +1,9 @@
+@import '../../../styles';
+
+.sidebar-header {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline;
+    vertical-align: middle;
+    overflow: hidden;
+}

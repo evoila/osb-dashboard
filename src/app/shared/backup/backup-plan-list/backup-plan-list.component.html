@@ -1,0 +1,31 @@
+<div class="section-content">
+  <h2>Active Backup Plans</h2>
+  <p>These are the currently active Backup Plans for your service instance. If the list is empty, please create
+    a new Backup Plan.
+  </p>
+  <p><a class="btn btn-secondary" routerLink="/backup/plans/new" role="button">Create Backup Plan »</a></p>
+  <table class="table">
+    <thead class="thead-default">
+      <tr>
+        <th>#</th>
+        <th>Context</th>
+        <th>Type</th>
+        <th>Frequency</th>
+        <th>Retention</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let plan of plans; let i = index">
+        <th scope="row">{{i + 1}}</th>
+        <td>{{ plan.source.context }}</td>
+        <td>{{ plan.source.type }}</td>
+        <td>{{ plan.frequency }}</td>
+        <td>{{ plan.retentionStyle }}</td>
+        <td><a href="#" routerLink="/backup/plans/{{plan.id}}">Details</a></td>
+        <td><a href="#" (click)="startBackup(plan, plan.id)">Backup Now</a></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

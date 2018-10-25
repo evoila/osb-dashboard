@@ -1,0 +1,36 @@
+<div class="card">
+  <div class="card-body">
+      <h5 *ngIf="chart && chart.options && chart.options.title && chart.options.title.text" class="card-title">{{chart.options.title.text}}</h5>
+      <div *ngIf="options">
+        <fa name="cog" (click)="edit()"></fa>
+        <fa name="refresh" (click)="update()"></fa>
+      </div>
+    <div class="row justify-content-center">
+      <div class="col-md-12" *ngIf="chart && chart.data && chart.data.length > 0">
+        <div style="height: 300px; width: 100%">
+          <canvas sb-chart-dir class="chart" height="100" [data]="chart.data" [labelsArray]="chart.labels" [seriesArray]="chart.series"
+            [type]="chart.type" [options]="chart.options"></canvas>
+        </div>
+      </div>
+      <div class="col-md-12" style="height: 300px; width: 100%" *ngIf="!chart">
+        <div style="width: 10%; margin: 95px auto;">
+          <span>Bitte warten...</span>
+        </div>
+      </div>
+      <div class="col-md-12" style="height: 300px; width: 100%; padding-top: 50px;" *ngIf="chart && (!chart.data || !chart.data.length)">
+        <div style="width: 50%; margin: 95px auto;">
+          <span>Keine Daten verfügbar</span>
+        </div>
+      </div>
+      <div class="col-md-12" style="height: 300px; width: 100%; padding-top: 50px;" *ngIf="errorMessage">
+        <div class="alert alert-danger">
+          <p>Aggregation error</p>
+          <button class="btn btn-sm btn-outline-danger" (click)="showErrorMessage = !showErrorMessage">Show error message</button>
+          <div [hidden]="!showErrorMessage">
+            <p>{{errorMessage}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,39 @@
+<div id="log-search" *ngIf="results">
+  <h5 *ngIf="results">Found {{results.total}} Results. Maximum Score is {{results.max_score}}</h5>
+<div id="pagination">
+  <div class="pagination-left" *ngIf="pagination > 0">
+    <ul class="list-group " *ngIf="hits">
+      <li (click)="loadMore(false)" class="list-group-item">
+        Show Previous...
+      </li>
+    </ul>
+  </div>
+  <div class="pagination-info">{{pagination}} - {{results.hits.length + pagination}} / {{results.total}}</div>
+  <div class="pagination-right" *ngIf="pagination+20 < results.total">
+    <ul class="list-group " *ngIf="hits">
+      <li (click)="loadMore(true)" class="list-group-item">
+          Show Next...
+      </li>
+    </ul>
+  </div>
+</div>
+
+  <div class="resultView" *ngIf="results">
+    <table class="table">
+      <tbody>
+        <tr (click)="collapse(i)" *ngFor="let result of results.hits; let i = index" [@flyInOut]="direction">
+
+          <td>
+            <code>{{result._source.logMessage}}</code>
+            <div [ngbCollapse]="!isCollapsed[i]">
+              <div class="clearfix" *ngFor="let entry of getObjectEntries(result._source)">
+                <span class="key">{{entry[0]}}:</span>
+                <span class="value">{{entry[1]}}</span>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

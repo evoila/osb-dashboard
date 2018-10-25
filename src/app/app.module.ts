@@ -18,6 +18,9 @@ import { CoreModule } from './core/core.module';
 
 import { BuildTargetService } from 'app/shared';
 import { SharedModule } from './shared/shared.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+
 
 export function buildBuildTargetService(): BuildTargetService {
   return new BuildTargetService(buildTarget);
@@ -27,6 +30,7 @@ export function buildBuildTargetService(): BuildTargetService {
   declarations: [AppComponent],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     FormsModule,
     HttpModule,
 

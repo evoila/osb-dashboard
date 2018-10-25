@@ -5,16 +5,18 @@
   <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
   <title>Dashboard Panel</title>
   <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
 </head>
 <script th:inline="javascript">
 /*<![CDATA[*/
   window["INJECTED_ENVIRONMENT"] = {
-    serviceInstanceId: [[${serviceInstanceId}]],
-    token: [[${token}]],
+    serviceInstanceId: 'DD69H8D3-7876-4056-A0EE-DE8D3498259T',
+    token: 'Bearer eyJhbGciOiJIUzUxMiIsImtpZCI6ImtleS0xIiwidHlwIjoiSldUIn0.eyJqdGkiOiIyZTM5MmQzZDMyNmM0Y2RiOThiYTdlM2ZiYzIwYTJmYyIsInN1YiI6ImIwMDc3NTFhLTI5OWUtNDNjZi1iNzMzLTY3NDQ2MGUzZmQzNyIsInNjb3BlIjpbIm9wZW5pZCIsInJvdXRpbmcucm91dGVyX2dyb3Vwcy53cml0ZSIsInNjaW0ucmVhZCIsImNsb3VkX2NvbnRyb2xsZXIuYWRtaW4iLCJ1YWEudXNlciIsInJvdXRpbmcucm91dGVyX2dyb3Vwcy5yZWFkIiwiY2xvdWRfY29udHJvbGxlci5yZWFkIiwicGFzc3dvcmQud3JpdGUiLCJjbG91ZF9jb250cm9sbGVyLndyaXRlIiwibmV0d29yay5hZG1pbiIsImRvcHBsZXIuZmlyZWhvc2UiLCJzY2ltLndyaXRlIl0sImNsaWVudF9pZCI6ImNmIiwiY2lkIjoiY2YiLCJhenAiOiJjZiIsImdyYW50X3R5cGUiOiJwYXNzd29yZCIsInVzZXJfaWQiOiJiMDA3NzUxYS0yOTllLTQzY2YtYjczMy02NzQ0NjBlM2ZkMzciLCJvcmlnaW4iOiJ1YWEiLCJ1c2VyX25hbWUiOiJhZG1pbiIsImVtYWlsIjoiYWRtaW4iLCJyZXZfc2lnIjoiN2Q0ZmNhYjQiLCJpYXQiOjE1Mzk2MTQ2MjUsImV4cCI6MTU3MTE1MDY4MywiaXNzIjoiaHR0cHM6Ly91YWEuY2YuZXUtZGUtZGFyei5tc2guaG9zdC9vYXV0aC90b2tlbiIsInppZCI6InVhYSIsImF1ZCI6WyJzY2ltIiwiY2xvdWRfY29udHJvbGxlciIsInBhc3N3b3JkIiwiY2YiLCJ1YWEiLCJvcGVuaWQiLCJkb3BwbGVyIiwicm91dGluZy5yb3V0ZXJfZ3JvdXBzIiwibmV0d29yayJdfQ.mCh5gG0qRBJRlDB5bkIMj1yTxnHfuG1sj4Xn3gHfSkUlwZX6I4ZSt-p-vWQ9Zf80WwoL6Ea4c13AZKwhPuiAZA',
 	  production: false,
     baseUrls: {
-      serviceBrokerUrl: [[${endpointUrl}]],
+      serviceBrokerUrl: 'http://localhost:8080', 
     },
+    customEndpoints: [[${customEndpoints}]],
     ui: {
       title: "Service Broker Panel",
       logoSrc: "./assets/core/sb-white.svg"

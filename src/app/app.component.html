@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
   <a class="navbar-brand" href="#">Management UI</a>
   <button class="navbar-toggler" type="button" (click)="isNavbarCollapsed = !isNavbarCollapsed" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -10,6 +10,9 @@
       </li>
       <li class="nav-item active" *ngIf="dynamicModuleSupport.lbaas">
         <a class="nav-link" routerLink="/lbaas" routerLinkActive="active">Configure Certificates </a>
+      </li>
+      <li class="nav-item active" *ngIf="dynamicModuleSupport.monitoring">
+        <a class="nav-link" routerLink="/monitoring" routerLinkActive="active">Monitoring</a>
       </li>
       <li class="nav-item active" *ngIf="sharedModuleSupport.backup">
         <a class="nav-link" routerLink="/backup" routerLinkActive="active">Backup </a>
