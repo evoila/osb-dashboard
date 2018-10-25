@@ -12,7 +12,7 @@ import { ShowErrorsComponent } from './show-errors/show-errors.component';
 import { HttpClientModule } from '@angular/common/http';
 
 import { SidebarLayoutComponent } from './sidebar/sidebar-layout/sidebar-layout.component';
-import { SidebarNavComponent } from './sidebar/sidebar-nav/sidebar-nav.component';
+import { SidebarNavComponent, SidebarLinkNotActiveFilterPipe } from './sidebar/sidebar-nav/sidebar-nav.component';
 import { ToolbarButtonComponent } from './sidebar/toolbar-button/toolbar-button.component';
 import { ToolbarComponent } from './sidebar/toolbar/toolbar.component';
 import { ToolbarLinkComponent } from './sidebar/toolbar-link/toolbar-link.component';
@@ -30,6 +30,7 @@ const components = [
   ShowErrorsComponent,
   SidebarLayoutComponent,
   SidebarNavComponent,
+  SidebarLinkNotActiveFilterPipe,
   ToolbarButtonComponent,
   ToolbarComponent,
   ToolbarLinkComponent
