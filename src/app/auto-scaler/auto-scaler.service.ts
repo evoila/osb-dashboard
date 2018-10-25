@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
+import { Observable } from 'rxjs';
+
+
 
 import { environment } from 'environments/runtime-environment';
 import { CoreHttpService } from '../core/core-http.service';

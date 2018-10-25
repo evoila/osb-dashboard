@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import * as moment from 'moment/moment';
-import { timestamp } from 'rxjs/operators/timestamp';
+import { timestamp } from 'rxjs/operators';
 
 @Pipe({
   name: 'dateFormat'

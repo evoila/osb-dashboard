@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { EndpointService } from './endpoint.service';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Panel } from './model/panel';
 import { NotificationType, NotificationService, Notification } from 'app/core';
 import { JsonPipe } from '@angular/common/';

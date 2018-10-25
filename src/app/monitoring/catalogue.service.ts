@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { EschartsService } from './escharts.service';
 import { Chart } from './model/chart';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 
 @Injectable()

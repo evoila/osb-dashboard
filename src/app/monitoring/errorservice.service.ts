@@ -1,6 +1,7 @@
+
+import {throwError as observableThrowError,  Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { NotificationType, NotificationService, Notification} from 'app/core';
-import { Observable } from 'rxjs/Observable';
 
 
 @Injectable()
@@ -21,7 +22,7 @@ export class ErrorserviceService {
       errorMessage = error.message;
     }
     this.notification.addSelfClosing(new Notification(NotificationType.Error, errorMessage));
-    return Observable.throw(error);
+    return observableThrowError(error);
   }
 
 }

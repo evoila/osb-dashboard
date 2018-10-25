@@ -1,6 +1,6 @@
 import { Injectable, Pipe } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { ChartResponse } from './model/chart-response';
 import { EsChartRequest } from './model/es-chart-request';
 import { Chart } from './model/chart';

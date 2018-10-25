@@ -3,19 +3,13 @@ import * as moment from 'moment/moment';
 import { SearchService } from '../search.service';
 import { SearchRequest } from 'app/monitoring/model/search-request';
 import { Hits } from 'app/monitoring/model/search-response';
-import { interval } from 'rxjs/observable/interval';
+import { interval ,  Subscription ,  of ,  Observable } from 'rxjs';
 import { query } from '@angular/core/src/animation/dsl';
-import { Subscription } from 'rxjs/Subscription';
-import { startWith } from 'rxjs/operators';
+import { startWith ,  expand ,  timestamp } from 'rxjs/operators';
 import { TimeRange } from '../model/search-request';
 import { LogDataModel } from '../model/log-data-model';
-import { expand } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
-import 'rxjs/add/observable/empty';
-import { timestamp } from 'rxjs/operators/timestamp';
 import { Notification, NotificationService } from '../../core/notification.service';
 import { NotificationType } from 'app/core';
-import { Observable } from 'rxjs/Observable';
 import { ServiceBinding } from '../model/service-binding';
 
 

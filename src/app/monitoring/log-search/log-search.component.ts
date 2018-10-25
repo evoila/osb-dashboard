@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Hits } from '../model/search-response';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 import {
   trigger,

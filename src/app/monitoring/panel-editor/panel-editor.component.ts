@@ -5,8 +5,8 @@ import { PanelService } from '../panel.service';
 import { Panel } from '../model/panel';
 import { environment } from 'environments/runtime-environment';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap/modal/modal';
-import { Subject } from 'rxjs/Subject';
-import { debounceTime } from 'rxjs/operator/debounceTime';
+import { Subject } from 'rxjs';
+
 import { EsChartRequest } from 'app/monitoring/model/es-chart-request';
 import { PrometheusChartRequest } from 'app/monitoring/model/prom-chart-request';
 import { ActivatedRoute, Router } from '@angular/router/';

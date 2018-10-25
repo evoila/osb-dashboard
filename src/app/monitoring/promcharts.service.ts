@@ -3,7 +3,7 @@ import { EndpointService } from 'app/monitoring/endpoint.service';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { PrometheusChartRequest } from 'app/monitoring/model/prom-chart-request';
 import { ChartRequest } from './model/chart-request';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Chart } from './model/chart';
 import { ErrorserviceService } from 'app/monitoring/errorservice.service';
 

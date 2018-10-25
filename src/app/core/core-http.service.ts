@@ -1,14 +1,14 @@
+
+import {throwError as observableThrowError,  Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import {
   Http, ConnectionBackend, RequestOptionsArgs,
   Headers, RequestOptions, Request, Response
 } from '@angular/http';
 
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/throw';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/mergeMap';
+
+
+
 
 import { environment } from 'environments/runtime-environment';
 
@@ -87,6 +87,6 @@ export class CoreHttpService extends Http {
       errMsg = error.message ? error.message : error.toString();
     }
 
-    return Observable.throw(errMsg);
+    return observableThrowError(errMsg);
   }
 }

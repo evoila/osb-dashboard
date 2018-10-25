@@ -1,7 +1,8 @@
+
+import {throwError as observableThrowError,  Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/runtime-environment';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
 import { NotificationService, Notification, NotificationType } from 'app/core';
 import { EndpointService } from './endpoint.service';
 import { ServiceBinding } from 'app/monitoring/model/service-binding';
@@ -24,7 +25,7 @@ export class BindingService {
         catch(error => {
           console.log(error);
           this.notification.addSelfClosing(new Notification(NotificationType.Error, error.message));
-          return Observable.throw(error);
+          return observableThrowError(error);
         });
     }
     return new Observable((observer) => observer.next(null));

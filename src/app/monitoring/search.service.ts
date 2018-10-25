@@ -1,8 +1,9 @@
+
+import {throwError as observableThrowError,  Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { EndpointService } from './endpoint.service';
 import { HttpClient } from '@angular/common/http';
 import { SearchRequest } from './model/search-request';
-import { Observable } from 'rxjs/Observable';
 import { SearchResponse } from './model/search-response';
 import { Response } from '@angular/http/src/static_response';
 import { NotificationType, NotificationService, Notification } from 'app/core';
@@ -27,7 +28,7 @@ export class SearchService {
       .catch((error: any) => {
         console.log(error);
         this.notification.addSelfClosing(new Notification(NotificationType.Error, error.error.message));
-        return Observable.throw(error.error.message);
+        return observableThrowError(error.error.message);
       })
   }
   public getMappings(): Observable<Array<string>> {
@@ -51,7 +52,7 @@ export class SearchService {
     ).catch((error: any) => {
       console.log(error);
       this.notification.addSelfClosing(new Notification(NotificationType.Error, error.error.message));
-      return Observable.throw(error.json);
+      return observableThrowError(error.json);
     })
   }
 }

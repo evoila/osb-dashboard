@@ -11,12 +11,12 @@ import { EsTimerangeService } from 'app/monitoring/es-timerange.service';
 
 import { EsChartRequest } from 'app/monitoring/model/es-chart-request';
 import { ChartRequest } from 'app/monitoring/model/chart-request';
-import { debounceTime } from 'rxjs/operator/debounceTime';
-import { Subject } from 'rxjs/Subject';
+
+import { Subject } from 'rxjs';
 import { error } from 'selenium-webdriver';
-import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/mergeMap';
+
+
+
 
 
 

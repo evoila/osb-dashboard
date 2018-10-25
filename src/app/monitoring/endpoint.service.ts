@@ -2,7 +2,7 @@ import { Injectable, DebugElement } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
 import { environment } from 'environments/runtime-environment';
 import { ExtensionUrl, Server } from '../core/extension-url';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Environment } from '../../environments/runtime-environment';
 import { CatalogueService } from './catalogue.service';
 
