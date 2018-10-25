@@ -1,5 +1,5 @@
 
-import {throwError as observableThrowError,  Observable } from 'rxjs/Observable';
+import {throwError as observableThrowError,  Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/runtime-environment';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
