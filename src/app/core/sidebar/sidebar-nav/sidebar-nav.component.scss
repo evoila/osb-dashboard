@@ -1,0 +1,116 @@
+@import '../../core';
+
+$nav-text-color: $gray-700;
+$nav-text-color-light: $gray-600;
+
+.sidebar-nav-flex {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  &.collapse {
+    display: none;
+
+    &.show {
+      display: flex;
+    }
+  }
+}
+
+.sidebar-layout-top-row {
+  height: $toolbar-height;
+  border-bottom: $sidebar-border-style;
+  padding: .5rem 1rem;
+  display: flex;
+  margin: 5px 0 5px 0;
+  align-items: center;
+  background-color: hsla(0,0%,100%, 1);
+  z-index: $bars-z-index +1;
+
+  h2 {
+    margin-bottom: 0;
+    // make certain characters like g or q properly extend below the baseline into the padding
+    // see also https://stackoverflow.com/questions/10182336/text-cropping-when-using-overflow-hidden
+    // required when combined with .text-ellipsis, which applies overflow:hidden
+    line-height: 1.5;
+    font-weight: 400; // required to make it look as before
+  }
+}
+
+.sidebar-nav-title {
+  .navbar-toggler {
+    width: 2em;
+    height: 1.5em;
+    align-self: center; // override default toggler style
+    color: $nav-text-color-light;
+    padding: 0;
+  }
+}
+
+.sidebar-nav-content {
+  overflow-y: auto; // allow scrolling the content, not the title
+  list-style: none;
+}
+
+.sections {
+  padding: 1rem 1rem 0;
+
+  > li {
+    display: block;
+  }
+}
+
+.section-header {
+  cursor: pointer;
+  display: flex;
+
+  .fa {
+    font-size: 14px;
+    color: $nav-text-color-light;
+  }
+
+  h3 {
+    font-size: 16px;
+    font-weight: 400;
+  }
+}
+
+.nav-link {
+  cursor: pointer;
+
+  .icon {
+    min-width: 24px;
+    display: inline-block;
+  }
+}
+
+.nav-items-stack {
+  padding: 0;
+
+  > li {
+    display: block;
+
+    > a {
+      color: $nav-text-color;
+      display: block;
+      padding: .5rem;
+      font-size: $nav-item-size;
+    }
+
+    > a.disabled {
+      color: $nav-disabled-color;
+      pointer-events: none;
+      cursor: default;
+    }
+
+     > a:hover,
+    > a:focus {
+      text-decoration: none;
+      background-color: #eee;
+    }
+  }
+
+  > li .active {
+    background-color: #eee;
+    color: #000;
+  }
+}

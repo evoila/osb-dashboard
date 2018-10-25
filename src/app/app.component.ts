@@ -19,7 +19,7 @@ import { ExtensionUrl, Server } from './core/extension-url';
 })
 export class AppComponent implements OnInit {
   public logoSrc = environment.ui.logoSrc;
-  public isNavbarCollapsed: boolean;
+  public isNavbarCollapsed: boolean = true;
   public readonly moduleSupport: ModuleSupport;
   public readonly dynamicModuleSupport: any;
   public readonly sharedModuleSupport: any;

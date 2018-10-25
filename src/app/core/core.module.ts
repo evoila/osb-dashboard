@@ -11,6 +11,14 @@ import { NotificationService, EntityService } from './';
 import { ShowErrorsComponent } from './show-errors/show-errors.component';
 import { HttpClientModule } from '@angular/common/http';
 
+import { SidebarLayoutComponent } from './sidebar/sidebar-layout/sidebar-layout.component';
+import { SidebarNavComponent } from './sidebar/sidebar-nav/sidebar-nav.component';
+import { ToolbarButtonComponent } from './sidebar/toolbar-button/toolbar-button.component';
+import { ToolbarComponent } from './sidebar/toolbar/toolbar.component';
+import { ToolbarLinkComponent } from './sidebar/toolbar-link/toolbar-link.component';
+import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
+import { WindowService } from './window.service';
+
 export function coreHttpFactory(backend: XHRBackend) {
   return new CoreHttpService(backend);
 }
@@ -19,17 +27,22 @@ const components = [
   HomeComponent,
   NotificationBannerComponent,
   InlineLoaderDirective,
-  ShowErrorsComponent
+  ShowErrorsComponent,
+  SidebarLayoutComponent,
+  SidebarNavComponent,
+  ToolbarButtonComponent,
+  ToolbarComponent,
+  ToolbarLinkComponent
 ]
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
-    HttpClientModule
+    NgbCollapseModule.forRoot()
   ],
-  declarations: [components, NotificationBannerComponent, ShowErrorsComponent],
-  exports: [components],
+  declarations: [components],
+  exports: [components, SidebarNavComponent],
   providers: []
 })
 export class CoreModule {
@@ -42,7 +55,8 @@ export class CoreModule {
           deps: [XHRBackend]
         },
         NotificationService,
-        EntityService
+        EntityService,
+        WindowService
      ]
     };
   }

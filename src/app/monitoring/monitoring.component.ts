@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { EntityService } from 'app/core';
 import { Chart } from './model/chart';
-import { SidebarEntry } from 'app/monitoring/sidebar/sidebar-entry';
+
 import { PanelService } from './panel.service';
 import { environment } from '../../environments/runtime-environment';
 import { Router } from '@angular/router';
+import { SidebarEntry } from 'app/core/sidebar/sidebar-entry';
+
 
 
 @Component({

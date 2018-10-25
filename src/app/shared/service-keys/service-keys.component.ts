@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ServiceKeysService } from './service-keys.service';
 import { NotificationService, Notification, NotificationType } from '../../core/notification.service';
+import { SidebarEntry } from 'app/core/sidebar';
 
 @Component({
   selector: 'sb-service-keys',
@@ -11,6 +12,17 @@ export class ServiceKeysComponent implements OnInit {
   readonly ENTITY = 'servicekeys';
   serviceKeys: [any];
   isLoading = false;
+  menu: SidebarEntry[] = [
+    {
+      name: 'Overview',
+      isCollapsible: false,
+      links: [{
+        name: 'All Keys',
+        href: '',
+        iconClass: 'fas fa-server'
+      }]
+    }
+  ];
 
   constructor(protected readonly service: ServiceKeysService,
               protected readonly nService: NotificationService) { }

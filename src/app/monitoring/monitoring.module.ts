@@ -42,11 +42,8 @@ import { PromchartsService } from './promcharts.service';
 import { PromQueryEditorComponent } from './prom-query-editor/prom-query-editor.component';
 import { EsTimerangeService } from 'app/monitoring/es-timerange.service';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
-import { SidebarLayoutComponent } from './sidebar/sidebar-layout/sidebar-layout.component';
-import { SidebarNavComponent } from './sidebar/sidebar-nav/sidebar-nav.component';
-import { ToolbarButtonComponent } from './sidebar/toolbar-button/toolbar-button.component';
-import { ToolbarComponent } from 'app/monitoring/sidebar';
-import { ToolbarLinkComponent } from './sidebar/toolbar-link/toolbar-link.component';
+
+
 import { WindowService } from './window.service';
 import { AppidComponent } from './appid/appid.component';
 import { LogPanelComponent } from './log-panel/log-panel.component';
@@ -57,6 +54,8 @@ import { LogFilterComponent } from './log-filter/log-filter.component';
 import { TimefilterComponent } from './timefilter/timefilter.component';
 import { BindingService } from 'app/monitoring/binding.service';
 import { ErrorserviceService } from './errorservice.service';
+import { SidebarNavComponent } from 'app/core/sidebar';
+import { CoreModule } from 'app/core/core.module';
 
 
 
@@ -87,12 +86,12 @@ const monacoEditorConfig: NgxMonacoEditorConfig = {
         DlDateTimePickerDateModule,
         AngularFontAwesomeModule,
         MonacoEditorModule.forRoot(monacoEditorConfig),
+        CoreModule
     ],
     declarations: [MonitoringComponent,
         AppidComponent, LogPanelComponent,
         DateFormatPipe, ChartComponent, ChartDirective, PanelComponent, PanelEditorComponent, QueryEditorComponent, EsQueryEditorComponent,
-        PromQueryEditorComponent, SidebarLayoutComponent,
-        SidebarNavComponent, ToolbarButtonComponent, ToolbarComponent, ToolbarLinkComponent, LogListComponent, LogSearchComponent, LogFilterComponent, TimefilterComponent],
+        PromQueryEditorComponent, LogListComponent, LogSearchComponent, LogFilterComponent, TimefilterComponent],
     providers: [
         EschartsService,
         ChartingService,

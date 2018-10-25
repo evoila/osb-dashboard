@@ -4,9 +4,10 @@
 
 
 @import './app/core/inline-loader';
-@import './app/shared/loader.scss';
 
-@import '../node_modules/font-awesome/css/font-awesome.css';
+html, body {
+  height: 100%; // we use 100% body scaling and handle overflow in sidebar content containers
+}
 
 a {
   cursor: pointer;
@@ -70,4 +71,8 @@ legend {
   @include media-breakpoint-down(xs) {
     margin: 1rem auto;
   }
+}
+
+.section-content {
+  padding: 15px 15px 15px 15px
 }

@@ -1,8 +1,18 @@
-import { Component, HostListener, OnInit, Input } from '@angular/core';
+import { Component, HostListener, OnInit, Input, Pipe, PipeTransform, Injectable, HostBinding } from '@angular/core';
 import { SidebarEntry, SidebarLink, SidebarLinkWithClick } from '../sidebar-entry';
 import { WindowService } from '../../window.service';
 
 const breakpointXs = 768; // md-breakpoint
+
+@Pipe({
+  name: 'sidebarLinkNotActiveFilter'
+})
+@Injectable()
+export class SidebarLinkNotActiveFilterPipe implements PipeTransform {
+  transform(links: SidebarLink[]): SidebarLink[] {
+    return links.filter(l => l.isActiveLink === undefined || l.isActiveLink);
+  }
+}
 
 @Component({
   selector: 'sb-sidebar-nav',
@@ -13,10 +23,14 @@ export class SidebarNavComponent implements OnInit {
   @Input() public menu: SidebarEntry[];
   @Input() public title: string;
 
+  @HostBinding('class.sidebar-nav-flex') public readonly flex = true;
+
   public isCollapsed = false;
   private readonly _window: Window;
 
-  constructor(windowRef: WindowService) {
+  constructor(
+    windowRef: WindowService
+  ) {
     this._window = windowRef.nativeWindow;
   }
 
