@@ -4,7 +4,9 @@
 .sidebar-layout {
   margin-top: $toolbar-height;
 }
-
+:host /deep/ .sidebar-nav-flex {
+  width: 100%;
+}
 .sidebar {
   position: fixed;
   left: 0;

@@ -15,6 +15,9 @@ $nav-text-color-light: $gray-600;
     }
   }
 }
+:host /deep/ .sidebar-nav-flex {
+  width: 100%;
+}
 
 .sidebar-layout-top-row {
   height: $toolbar-height;
