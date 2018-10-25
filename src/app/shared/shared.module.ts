@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { SchemaFormModule } from "angular2-schema-form";
+import { SchemaFormModule } from "ngx-schema-form";
 
 import { BackupComponent } from './backup/backup.component';
 import { ServiceKeysComponent } from './service-keys/service-keys.component';

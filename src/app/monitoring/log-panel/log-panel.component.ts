@@ -2,15 +2,16 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import * as moment from 'moment/moment';
 import { SearchService } from '../search.service';
 import { SearchRequest } from 'app/monitoring/model/search-request';
-import { Hits } from 'app/monitoring/model/search-response';
+import { Hits, SearchResponse } from 'app/monitoring/model/search-response';
 import { interval ,  Subscription ,  of ,  Observable } from 'rxjs';
-import { query } from '@angular/core/src/animation/dsl';
+import { query } from '@angular/animations';
 import { startWith ,  expand ,  timestamp } from 'rxjs/operators';
 import { TimeRange } from '../model/search-request';
 import { LogDataModel } from '../model/log-data-model';
 import { Notification, NotificationService } from '../../core/notification.service';
 import { NotificationType } from 'app/core';
 import { ServiceBinding } from '../model/service-binding';
+import { map } from 'rxjs/internal/operators/map';
 
 
 @Component({
@@ -209,7 +210,7 @@ export class LogPanelComponent implements OnInit, OnDestroy {
       this.notification.addSelfClosing(new Notification(NotificationType.Info, 'Request has been dispatched. Please stand by.'));
       this.inRequest = true;
     }
-    return this.searchService.getSearchResults(request).map(data => {
+    return this.searchService.getSearchResults(request).pipe( map((data: SearchResponse) => {
       if (!data.timed_out) {
         if (data.hits.total === 0) {
           if (!(this.hits && this.hits.hits && this.isStreaming)) {
@@ -253,6 +254,6 @@ export class LogPanelComponent implements OnInit, OnDestroy {
         return null;
 
       }
-    });
+    }));
   }
 }

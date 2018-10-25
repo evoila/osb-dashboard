@@ -14,6 +14,8 @@ import { ChartRequest } from 'app/monitoring/model/chart-request';
 
 import { Subject } from 'rxjs';
 import { error } from 'selenium-webdriver';
+import { filter, map } from 'rxjs/internal/operators';
+import { debounceTime } from 'rxjs/internal/operators/debounceTime';
 
 
 
@@ -45,18 +47,18 @@ export class PanelComponent implements OnInit {
   ngOnInit() {
     this.getData(this.route.snapshot.paramMap.get('id') || null);
     this.router.events
-    .filter((event) => event instanceof NavigationEnd)
-    .map(() => this.activatedRoute)
-    .map((rt) => {
-      while (rt.firstChild) {
-        rt = rt.firstChild;
-      }
-      return rt.snapshot.paramMap.get('id') || null;
-    })
-    .subscribe((event) => {
-      console.log(event);
-      this.getData(event);
-    });
+      .pipe(filter((event) => event instanceof NavigationEnd),
+      map(() => this.activatedRoute)
+      , map((rt) => {
+        while (rt.firstChild) {
+          rt = rt.firstChild;
+        }
+        return rt.snapshot.paramMap.get('id') || null;
+      }))
+      .subscribe((event) => {
+        console.log(event);
+        this.getData(event);
+      });
   }
   getData(id: any) {
     if (id) {

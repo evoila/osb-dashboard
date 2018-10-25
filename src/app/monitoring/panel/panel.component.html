@@ -6,8 +6,7 @@
   <div *ngIf="panel && panel.chartView">
     <div class="container">
       <div class="row" *ngFor="let chartRequests of panel.chartView">
-        <div class="col-{{chartRequest.size}} charts" *ngFor="let chartRequest of chartRequests" draggable [dragData]="chartRequest" droppable
-          (onDrop)="onDrop($event, chartRequest)">
+        <div class="col-{{chartRequest.size}} charts" *ngFor="let chartRequest of chartRequests">
           <div *ngIf="chartRequest.onEdit">
             <sb-prom-query-editor *ngIf="!chartRequest.isEs" [chartRequest]="chartRequest" [choosenChart]="chartRequest.choosenChart"
               (success)="saveChartQuery($event, chartRequest)" (cancel)="cancelEdit(chartRequest)"></sb-prom-query-editor>

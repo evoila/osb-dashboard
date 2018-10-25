@@ -1,6 +1,6 @@
 /* tslint:disable:no-console */
 
-import * as program from 'commander';
+import * as program from '../node_modules/commander';
 
 import { ChildProcessManager } from './child-process-manager';
 import * as spawn from 'cross-spawn';
@@ -10,15 +10,15 @@ const children = new ChildProcessManager();
 function serve(buildTarget: string, cb) {
   const target = process.env['TARGET'] || 'development';
   const aot = process.env['AOT'] || 'false';
-
+  const prod = target !== 'development';
   const c = {
     cmd: 'ng',
     args: [
       'serve',
+      buildTarget,
       '--progress=true',
-      '--target=' + target,
-      '--environment=' + buildTarget,
-      '--app=' + buildTarget,
+      '--prod=' + prod,
+      '--configuration=' + buildTarget,
       '--aot=' + aot,
       '--port', '9101'
     ]

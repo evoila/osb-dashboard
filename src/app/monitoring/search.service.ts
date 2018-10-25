@@ -7,7 +7,8 @@ import { SearchRequest } from './model/search-request';
 import { SearchResponse } from './model/search-response';
 import { Response } from '@angular/http/src/static_response';
 import { NotificationType, NotificationService, Notification } from 'app/core';
-import { error } from 'selenium-webdriver';
+
+import { catchError, map } from 'rxjs/operators';
 
 
 
@@ -20,22 +21,20 @@ export class SearchService {
     private notification: NotificationService
 
   ) { }
-  public getSearchResults(request: SearchRequest): Observable<SearchResponse> {
+  public getSearchResults(request: SearchRequest): Observable<SearchResponse | Response> {
     const endpoint = this.endpoint.getUri() + '/search'
-    return this.http.post(endpoint, request, this.httpOptions).map(
-      (data: Response) => data
-    )
-      .catch((error: any) => {
+    return this.http.post(endpoint, request, this.httpOptions).pipe(map((data: Response) => data)
+      , catchError((error: any) => {
         console.log(error);
         this.notification.addSelfClosing(new Notification(NotificationType.Error, error.error.message));
         return observableThrowError(error.error.message);
-      })
+      }));
   }
-  public getMappings(): Observable<Array<string>> {
+  public getMappings(): Observable<Array<string>| Response> {
     const endpoint = this.endpoint.getUri() + '/mappings'
-    return this.http.get(endpoint, this.httpOptions).map(
+    return this.http.get(endpoint, this.httpOptions).pipe(map(
       (data) => {
-        let returnVal: Array<String> = [];
+        let returnVal: Array<string> = [];
         Object.keys(data['mappings']['logMessages']['properties']).forEach(
           (item) => {
             const property = data['mappings']['logMessages']['properties'][item];
@@ -49,10 +48,10 @@ export class SearchService {
         )
         return returnVal;
       }
-    ).catch((error: any) => {
+    ), catchError((error: any) => {
       console.log(error);
       this.notification.addSelfClosing(new Notification(NotificationType.Error, error.error.message));
       return observableThrowError(error.json);
-    })
+    }))
   }
 }

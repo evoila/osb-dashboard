@@ -566,16 +566,6 @@ angular-font-awesome@^3.1.2:
   resolved "https://registry.yarnpkg.com/angular-font-awesome/-/angular-font-awesome-3.1.2.tgz#9378732612d8e8c71e0d7c2faa0faddc7f858ec9"
   integrity sha1-k3hzJhLY6MceDXwvqg+t3H+Fjsk=
 
-angular2-schema-form@^1.2.3:
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/angular2-schema-form/-/angular2-schema-form-1.2.3.tgz#4e22561cb4aa9124522d0599d6be3e0f320ef24b"
-  integrity sha512-m9lgeLeFameEnyUxvwl9I/oKH1d8u4mu1tWdDfaxqEdcchk8SASQcOrhoepB/lMF/0xrPFpkhKlX0j2n0YfkOQ==
-  dependencies:
-    body-parser "^1.15.1"
-    methods "^1.1.2"
-    raw-loader "0.5.1"
-    z-schema "^3.17.0"
-
 ansi-colors@^3.0.0:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/ansi-colors/-/ansi-colors-3.2.1.tgz#9638047e4213f3428a11944a7d4b31cba0a3ff95"
@@ -1022,7 +1012,7 @@ bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.1.1, bn.js@^4.4.0:
   resolved "https://registry.yarnpkg.com/bn.js/-/bn.js-4.11.8.tgz#2cde09eb5ee341f484746bb0309b3253b1b1442f"
   integrity sha512-ItfYfPLkWHUjckQCk8xC+LwxgK8NYcXywGigJgSwOP8Y2iyWT4f2vsZnoOXTTbo+o5yXmIUJ4gn5538SO5S3gA==
 
-body-parser@1.18.3, body-parser@^1.15.1, body-parser@^1.16.1:
+body-parser@1.18.3, body-parser@^1.16.1:
   version "1.18.3"
   resolved "https://registry.yarnpkg.com/body-parser/-/body-parser-1.18.3.tgz#5b292198ffdd553b3a0f20ded0592b956955c8b4"
   integrity sha1-WykhmP/dVTs6DyDe0FkrlWlVyLQ=
@@ -4467,7 +4457,7 @@ merge-descriptors@1.0.1:
   resolved "https://registry.yarnpkg.com/merge-descriptors/-/merge-descriptors-1.0.1.tgz#b00aaa556dd8b44568150ec9d1b953f3f90cbb61"
   integrity sha1-sAqqVW3YtEVoFQ7J0blT8/kMu2E=
 
-methods@^1.1.2, methods@~1.1.2:
+methods@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/methods/-/methods-1.1.2.tgz#5529a4d67654134edcc5266656835b0f851afcee"
   integrity sha1-VSmk1nZUE07cxSZmVoNbD4Ua/O4=
@@ -4759,11 +4749,6 @@ neo-async@^2.5.0:
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.0.tgz#b9d15e4d71c6762908654b5183ed38b753340835"
   integrity sha512-MFh0d/Wa7vkKO3Y3LlacqAEeHK0mckVqzDieUKTT+KGxi+zIpeVsFxymkIiRpbpDziHc290Xr9A1O4Om7otoRA==
 
-ng-drag-drop@^4.0.1:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/ng-drag-drop/-/ng-drag-drop-4.0.1.tgz#b434a2248def937e58ea6ad24198af189b2592cf"
-  integrity sha1-tDSiJI3vk35Y6mrSQZivGJslks8=
-
 ng2-nouislider@^1.7.8:
   version "1.7.13"
   resolved "https://registry.yarnpkg.com/ng2-nouislider/-/ng2-nouislider-1.7.13.tgz#65ad53f34f3efc39bb654f1ae85aa1d8b458a718"
@@ -4774,10 +4759,17 @@ ng4-loading-spinner@^1.1.0:
   resolved "https://registry.yarnpkg.com/ng4-loading-spinner/-/ng4-loading-spinner-1.2.3.tgz#cebe62285d37bd3cab01212ae39b9534067ab615"
   integrity sha512-AxokaWmIMSv4YeZcwzSCs0f1PBnn/lgOVpaXuR5PdnNqGkpDema6b2KwONLtdzmL5YqKOpQo8DoyTRhlzGoohQ==
 
-ngx-monaco-editor@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/ngx-monaco-editor/-/ngx-monaco-editor-5.0.0.tgz#4afbe93a21cd88bf64db83478c52b78edf937a2f"
-  integrity sha512-95MARPggYrpwk0Sf6IisaOw82Y/FQ5084kdX6vGzMLmaNnz4Dg2Uo/WoYTnbV+1299VMwdS0RgtQiZPhKlD/kQ==
+ngx-monaco-editor@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/ngx-monaco-editor/-/ngx-monaco-editor-6.0.0.tgz#c427c9a3d6dcd91b8e51a47d6cb3f7b7df899de5"
+  integrity sha512-sgNZblVUsIYHaWIKUqHopX3+rDL3DsjH9nsQoCuD7aA4p7Oppmd7UXwyT8OYTmimfcoufiA0tiIcH41XCZW58w==
+
+ngx-schema-form@^2.2.0-beta.1:
+  version "2.2.0-beta.1"
+  resolved "https://registry.yarnpkg.com/ngx-schema-form/-/ngx-schema-form-2.2.0-beta.1.tgz#1d8e57787d43baab150ce7b7f6afde8eeacf8f68"
+  integrity sha512-tNJR/rFEU2zHAOKOl47ujqM/7y08x8slPYyozgUgKt6aJa5JATqzf2Ee0WAF0fYrJzN4diF1fpNWHYqoA3qDGg==
+  dependencies:
+    tslib "^1.9.0"
 
 nice-try@^1.0.4:
   version "1.0.5"
@@ -6973,7 +6965,7 @@ tar@^4:
     safe-buffer "^5.1.2"
     yallist "^3.0.2"
 
-tempusdominus-bootstrap-4@^5.0.0-alpha18:
+tempusdominus-bootstrap-4@5.1.2:
   version "5.1.2"
   resolved "https://registry.yarnpkg.com/tempusdominus-bootstrap-4/-/tempusdominus-bootstrap-4-5.1.2.tgz#3c9906ca6e5d563faa0b81b2fdc6aa79cad9c0be"
   integrity sha512-ksD8qc4wOJeE19wvryXmEpRzMUSZu4wSOdG6zKSn8l4ccad16249KOX1j0CccyZpuuES/n4FLqLAUB+Dd1LTBA==
@@ -7123,7 +7115,7 @@ trim-right@^1.0.1:
   dependencies:
     glob "^7.1.2"
 
-ts-node@~4.1.0:
+ts-node@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-4.1.0.tgz#36d9529c7b90bb993306c408cd07f7743de20712"
   integrity sha512-xcZH12oVg9PShKhy3UHyDmuDLV3y7iKwX25aMVPt1SIXSuAfWkFiGPEkg+th8R4YKW/QCxDoW7lJdb15lx6QWg==
@@ -7835,7 +7827,7 @@ yn@^2.0.0:
   resolved "https://registry.yarnpkg.com/yn/-/yn-2.0.0.tgz#e5adabc8acf408f6385fc76495684c88e6af689a"
   integrity sha1-5a2ryKz0CPY4X8dklWhMiOavaJo=
 
-z-schema@^3.17.0:
+z-schema@^3.24.1:
   version "3.24.1"
   resolved "https://registry.yarnpkg.com/z-schema/-/z-schema-3.24.1.tgz#07a3643c8e061ec1af32e823c9f9e5e5e56e3c8d"
   integrity sha512-2eR8eq/v1coNqyBc5HzswEcoLbw+S33RMnR326uiuOIr97ve5vwPNMDrKS1IRCB12bZ3a8BrfGxrRwuSXUyPvw==

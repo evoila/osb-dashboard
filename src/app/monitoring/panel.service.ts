@@ -7,6 +7,7 @@ import { NotificationType, NotificationService, Notification } from 'app/core';
 import { JsonPipe } from '@angular/common/';
 import { error } from 'selenium-webdriver';
 import { ErrorserviceService } from 'app/monitoring/errorservice.service';
+import { catchError, map } from 'rxjs/internal/operators';
 
 @Injectable()
 export class PanelService {
@@ -28,20 +29,20 @@ export class PanelService {
 
     const uri = this.endpointService.getUri() + this.endpoint;
 
-    return this.http.get<Array<Panel>>(uri, options).map(data =>  data).
-    catch((err) => this.errorService.handleErrors(err));
+    return this.http.get<Array<Panel>>(uri, options).pipe(map(data =>  data),
+    catchError((err) => this.errorService.handleErrors(err)));
   }
 
   public getSpecificPanel(panelId: string): Observable<Panel> {
     const uri = this.endpointService.getUri() + this.endpoint + '/' + panelId;
-    return this.http.get<Panel>(uri, this.httpOptions).map(data =>  data).
-    catch((err) => this.errorService.handleErrors(err));
+    return this.http.get<Panel>(uri, this.httpOptions).pipe(map(data =>  data),
+    catchError((err) => this.errorService.handleErrors(err)));
   }
 
   public addPanel(panel: Panel): Observable<Panel> {
     const uri = this.endpointService.getUri() + this.endpoint;
-    return this.http.put<Panel>(uri, panel, this.httpOptions).map(data =>  data).
-    catch((err) => this.errorService.handleErrors(err));
+    return this.http.put<Panel>(uri, panel, this.httpOptions).pipe(map(data =>  data),
+    catchError((err) => this.errorService.handleErrors(err)));
   }
 
 }

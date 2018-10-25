@@ -4,7 +4,6 @@ import { MonitoringComponent } from 'app/monitoring/monitoring.component';
 import { MonitoringRoutingModule } from './monitoring-routing.module';
 import { NouisliderModule } from 'ng2-nouislider';
 import { HttpClientModule } from '@angular/common/http';
-import { NgDragDropModule } from 'ng-drag-drop';
 import { DlDateTimePickerDateModule } from 'angular-bootstrap-datetimepicker';
 import { MonacoEditorModule, NgxMonacoEditorConfig } from 'ngx-monaco-editor';
 
@@ -82,7 +81,6 @@ const monacoEditorConfig: NgxMonacoEditorConfig = {
         NgbAccordionModule.forRoot(),
         NgbAlertModule.forRoot(),
         HttpClientModule,
-        NgDragDropModule.forRoot(),
         DlDateTimePickerDateModule,
         AngularFontAwesomeModule,
         MonacoEditorModule.forRoot(monacoEditorConfig),

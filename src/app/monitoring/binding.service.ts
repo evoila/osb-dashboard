@@ -6,6 +6,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { NotificationService, Notification, NotificationType } from 'app/core';
 import { EndpointService } from './endpoint.service';
 import { ServiceBinding } from 'app/monitoring/model/service-binding';
+import { catchError, map } from 'rxjs/internal/operators';
 
 
 @Injectable()
@@ -20,13 +21,13 @@ export class BindingService {
     if (environment.baseUrls.serviceBrokerUrl !== '/*[[${endpointUrl}]]*/')  {
       let uri = environment.baseUrls.serviceBrokerUrl;
       uri += this.endpoint;
-      return this.http.get(uri, this.endpointService.httpOptions).
-        map(data => data as Array<ServiceBinding>).
-        catch(error => {
+      return this.http.get(uri, this.endpointService.httpOptions).pipe(
+        map(data => data as Array<ServiceBinding>),
+        catchError(error => {
           console.log(error);
           this.notification.addSelfClosing(new Notification(NotificationType.Error, error.message));
           return observableThrowError(error);
-        });
+        }));
     }
     return new Observable((observer) => observer.next(null));
   }

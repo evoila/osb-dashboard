@@ -1,22 +1,25 @@
 {
-  "compileOnSave": false,
   "compilerOptions": {
+    "sourceMap": true,
     "outDir": "./dist/out-tsc",
     "baseUrl": "src",
-    "sourceMap": true,
-    "declaration": false,
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "strictNullChecks": true,
-    "noImplicitThis": true,
+    "declaration": false,
     "noUnusedParameters": false,
     "noUnusedLocals": true,
-    "target": "es5",
+    "strictNullChecks": true,
+    "noImplicitThis": true,
+    "target": "ES2015",
     "lib": [
       "es2016",
+      "ES2015",
       "dom"
     ],
-    "module": "commonjs"
+    "module": "commonjs",
+    "paths": {
+      "custom-module-type": ["types/custom-module-type"]
+    }
   }
 }

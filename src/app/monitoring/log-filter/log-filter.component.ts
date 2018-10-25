@@ -1,7 +1,8 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap/modal/modal';
+
 import { SearchService } from 'app/monitoring/search.service';
-import { NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap/modal/modal-ref';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+
 
 
 @Component({
@@ -61,7 +62,7 @@ export class LogFilterComponent implements OnInit {
   getTopics() {
     this.searchService.getMappings().subscribe(
       data => {
-        this.topics = data;
+        this.topics = data as string[];
       },
       error => {
         //TODO: Error-Handling here

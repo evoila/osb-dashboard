@@ -4,7 +4,7 @@ import { ChartRequestVm } from 'app/monitoring/model/chart-request-vm';
 import { PanelService } from '../panel.service';
 import { Panel } from '../model/panel';
 import { environment } from 'environments/runtime-environment';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap/modal/modal';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
 
 import { EsChartRequest } from 'app/monitoring/model/es-chart-request';
@@ -13,6 +13,7 @@ import { ActivatedRoute, Router } from '@angular/router/';
 import { Location } from '@angular/common';
 import { error } from 'selenium-webdriver';
 import { Chart } from '../model/chart';
+import { debounceTime } from 'rxjs/internal/operators/debounceTime';
 
 
 
