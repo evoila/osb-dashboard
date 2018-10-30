@@ -1,7 +1,8 @@
-<div class="container" style="padding: 40px 0 40px 0">
-  <p><a class="link" routerLink="/autoscaler"><< Go Back</a></p>
+<div class="section-content">
   <form #form="ngForm" action="#" (ngSubmit)="onSubmit()">
-    <h5>Scaling</h5>
+    <h4>Scaling Configuration</h4>
+    <p>Below you can find the different Autoscaler Settings to your application. 
+    </p>
     <div class="form-group row">
       <label class="col-sm-3">Scaling Enabled</label>
       <div class="col-sm-3">
@@ -190,7 +191,7 @@
       <label for="requestMinQuotient">Current Quotient</label>
       
     </div>    
-    <div class="form-group row" *ngIf="configuration.ram.ramScalingEnabled">
+    <div class="form-group row" *ngIf="configuration.requests.quotientScalingEnabled">
       <label class="col-sm-2">Current/Min Quotient</label>
       <div class="col-sm-3">
         <input type="number" class="form-control" name="minQuotient" #requestMinQuotient="ngModel" [(ngModel)]="configuration.requests.quotient" disabled="true">

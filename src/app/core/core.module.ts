@@ -9,10 +9,9 @@ import { NotificationBannerComponent } from './notification-banner/notification-
 import { RouterModule } from '@angular/router';
 import { NotificationService, EntityService } from './';
 import { ShowErrorsComponent } from './show-errors/show-errors.component';
-import { HttpClientModule } from '@angular/common/http';
 
 import { SidebarLayoutComponent } from './sidebar/sidebar-layout/sidebar-layout.component';
-import { SidebarNavComponent } from './sidebar/sidebar-nav/sidebar-nav.component';
+import { SidebarNavComponent, SidebarLinkNotActiveFilterPipe } from './sidebar/sidebar-nav/sidebar-nav.component';
 import { ToolbarButtonComponent } from './sidebar/toolbar-button/toolbar-button.component';
 import { ToolbarComponent } from './sidebar/toolbar/toolbar.component';
 import { ToolbarLinkComponent } from './sidebar/toolbar-link/toolbar-link.component';
@@ -30,6 +29,7 @@ const components = [
   ShowErrorsComponent,
   SidebarLayoutComponent,
   SidebarNavComponent,
+  SidebarLinkNotActiveFilterPipe,
   ToolbarButtonComponent,
   ToolbarComponent,
   ToolbarLinkComponent
@@ -42,7 +42,7 @@ const components = [
     NgbCollapseModule.forRoot()
   ],
   declarations: [components],
-  exports: [components, SidebarNavComponent],
+  exports: [components],
   providers: []
 })
 export class CoreModule {
