@@ -1,0 +1,7 @@
+/** Fixup Safari hidden input buttons **/
+// see also http://stackoverflow.com/a/10822738/125407
+button[type=submit][hidden] {
+    display: initial !important;
+    visibility: hidden;
+    height: 1rem; // has the effect of ensuring consistent spaccing
+  }

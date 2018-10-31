@@ -1,0 +1,41 @@
+@import '../../core';
+
+.wizard-nav-item {
+  &.active {
+    box-shadow: 3px 0 0 $gray-300 inset;
+  }
+  // the order here is important so that .complete overrides .active
+  &.complete {
+    box-shadow: 3px 0 0 #60b515 inset;
+  }
+
+  &.disabled {
+    pointer-events: none;
+    cursor: not-allowed;
+  }
+
+  box-shadow: 3px 0 0 $gray-200 inset;
+  display: block;
+  padding: .25rem 0;
+}
+
+.wizard-nav-item > button {
+  color: $gray-400;
+  padding: .5rem;
+  margin-left: .5rem;
+  font-size: 13px;
+  width: calc(100% - 0.5rem);
+  text-align: left;
+}
+
+.wizard-nav-item {
+  &.active > button,
+  &.complete > button {
+    color: #000;
+  }
+}
+
+.wizard-nav-item.active > button {
+  text-decoration: none;
+  background-color: $gray-200
+}

@@ -1,0 +1,4 @@
+<li [id]="id" class="nav-item wizard-nav-item" [class.active]="active" [class.disabled]="!active && !isCompleted" [class.complete]="isCompleted"
+  [class.skipped]="isSkipped">
+  <button class="btn btn-link" (click)="onClick() ">{{title}}</button>
+</li>

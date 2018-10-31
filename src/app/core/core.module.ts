@@ -17,6 +17,11 @@ import { ToolbarComponent } from './sidebar/toolbar/toolbar.component';
 import { ToolbarLinkComponent } from './sidebar/toolbar-link/toolbar-link.component';
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 import { WindowService } from './window.service';
+import { WizardComponent } from './wizard/wizard/wizard.component';
+import { WizardPageSubmitButtonComponent } from './wizard/wizard-page-submit-button/wizard-page-submit-button.component';
+import { WizardPageComponent } from './wizard/wizard-page/wizard-page.component';
+import { WizardStepComponent } from './wizard/wizard-step/wizard-step.component';
+import { FocusDirective } from './wizard';
 
 export function coreHttpFactory(backend: XHRBackend) {
   return new CoreHttpService(backend);
@@ -32,7 +37,12 @@ const components = [
   SidebarLinkNotActiveFilterPipe,
   ToolbarButtonComponent,
   ToolbarComponent,
-  ToolbarLinkComponent
+  ToolbarLinkComponent,
+  WizardComponent,
+  WizardStepComponent,
+  WizardPageComponent,
+  FocusDirective,
+  WizardPageSubmitButtonComponent
 ]
 
 @NgModule({
