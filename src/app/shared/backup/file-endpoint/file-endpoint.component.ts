@@ -16,20 +16,22 @@ export class FileEndpointComponent implements OnInit {
   submitLabel = 'Validate';
 
   constructor(protected readonly backupService: BackupService,
-              protected readonly route: ActivatedRoute,
-              protected readonly router: Router,
-              protected readonly nService: NotificationService) { }
+    protected readonly route: ActivatedRoute,
+    protected readonly router: Router,
+    protected readonly nService: NotificationService) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
       console.log(params['fileEndpointId']);
-       if (params['fileEndpointId']) {
-         this.update = true;
+      if (params['fileEndpointId']) {
+        this.update = true;
+        if (params['fileEndpointId'] != 'new') {
           this.backupService.loadOne(this.ENTITY, params['fileEndpointId'])
             .subscribe(
-              (destination: any) => { this.destination = destination},
+              (destination: any) => { this.destination = destination },
             );
-       }
+        }
+      }
     });
 
   }
@@ -58,7 +60,7 @@ export class FileEndpointComponent implements OnInit {
       this.backupService.saveOne(this.destination, this.ENTITY, id)
         .subscribe((plan: any) => {
           this.redirect();
-      });
+        });
     }
   }
 

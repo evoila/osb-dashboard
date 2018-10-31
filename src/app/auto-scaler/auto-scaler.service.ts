@@ -10,7 +10,7 @@ import { EntityService } from '../core/entity.service';
 const serviceInstanceId = environment.serviceInstanceId;
 @Injectable()
 export class AutoScalerService extends EntityService {
-  readonly BACKUP_BASEURL = '';
+  readonly AUTOSCALER_BASEURL = '';
 
   constructor(protected readonly entityService: EntityService,
     protected readonly httpService: CoreHttpService) {
@@ -21,19 +21,19 @@ export class AutoScalerService extends EntityService {
   }
 
   public loadAll(entityRel: string): Observable<{} | any> {
-    return this.all(this.BACKUP_BASEURL + '/' + entityRel + '/serviceInstance/' + serviceInstanceId);
+    return this.all(this.AUTOSCALER_BASEURL + '/' + entityRel + '/serviceInstance/' + serviceInstanceId);
   }
 
   public deleteOne(entityRel: string): Observable<{} | any> {
-    return this.delete(this.BACKUP_BASEURL + '/' + entityRel);
+    return this.delete(this.AUTOSCALER_BASEURL + '/' + entityRel);
   }
 
   public loadOne(entityRel: string, id: string): Observable<{} | any> {
-    return this.get(this.BACKUP_BASEURL + '/' + entityRel + '/' + id);
+    return this.get(this.AUTOSCALER_BASEURL + '/' + entityRel + '/' + id);
   }
 
   public saveOne(entity: any, entityRel: string, id?: string): Observable<{} | any> {
-    return this.patch(this.BACKUP_BASEURL + '/' + entityRel + '/' + id, entity);
+    return this.patch(this.AUTOSCALER_BASEURL + '/' + entityRel + '/' + id, entity);
   }
 
 }

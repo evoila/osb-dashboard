@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { BindingComponent } from './binding/binding.component';
 import { AutoScalerService } from './auto-scaler.service';
 import { CoreModule } from '../core/core.module';
+import { BindingListComponent } from './binding-list/binding-list.component';
 
 @NgModule({
   imports: [
@@ -17,7 +18,7 @@ import { CoreModule } from '../core/core.module';
     AutoScalerRoutingModule,
     CoreModule
   ],
-  declarations: [AutoScalerComponent, BindingComponent],
+  declarations: [AutoScalerComponent, BindingComponent, BindingListComponent],
   providers: [AutoScalerService]
 })
 export class AutoScalerModule { }

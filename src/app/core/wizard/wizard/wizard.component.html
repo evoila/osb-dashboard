@@ -1,0 +1,35 @@
+<!--
+    Nesting fieldsets is perfectly valid HTML and allows us to disable all form fields and buttons on submit.
+    For more info, see: http://stackoverflow.com/a/9812938/125407
+  -->
+  <fieldset [disabled]="wizardFinishedOp">
+    <div class="wizard">
+      <div class="wizard-nav" [ngClass]="navClass">
+        <div *ngIf="title" class="wizard-title">{{title}}</div>
+        <ul>
+          <ng-content select="sb-wizard-step"></ng-content>
+        </ul>
+      </div>
+      <div class="wizard-content">
+        <div *ngIf="title" class="wizard-step-title">
+          {{currentStep?.title}}
+        </div>
+        <div class="wizard-page">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col">
+                <ng-content select="sb-wizard-page"></ng-content>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="wizard-footer" *ngIf="isFooterVisible">
+          <div class="float-right">
+            <button class="btn btn-outline" *ngIf="!isFirst" (click)="prev()">Back</button>
+            <button class="btn btn-primary" [disabled]="currentPage?.nextDisabled" id="nextProjectCreationStep" (click)="submit()">{{nextText}}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </fieldset>
+  
