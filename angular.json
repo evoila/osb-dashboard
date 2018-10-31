@@ -132,6 +132,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "deployUrl": "/app/",
             "outputPath": "dist/mysql",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -230,6 +231,7 @@
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
+            "deployUrl": "/app/",
             "protractorConfig": "./protractor.conf.js",
             "devServerTarget": "mysql:serve"
           }
@@ -253,6 +255,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "deployUrl": "/app/",
             "outputPath": "dist/monitoring",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -269,7 +272,7 @@
               {
                 "glob": "**/*",
                 "input": "node_modules/ngx-monaco-editor/assets/monaco",
-                "output": "/assets/monaco"
+                "output": "./assets/monaco"
               }
             ],
             "styles": [
@@ -356,6 +359,7 @@
       }
     },
     "monitoring-e2e": {
+      
       "root": "e2e",
       "sourceRoot": "e2e",
       "projectType": "application",
@@ -363,6 +367,7 @@
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
+            "deployUrl": "/app/",            
             "protractorConfig": "./protractor.conf.js",
             "devServerTarget": "monitoring:serve"
           }
@@ -386,6 +391,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "deployUrl": "/app/",
             "outputPath": "dist/mongodb",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -484,6 +490,7 @@
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
+            "deployUrl": "/app/",
             "protractorConfig": "./protractor.conf.js",
             "devServerTarget": "mongodb:serve"
           }
@@ -507,6 +514,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "deployUrl": "/app/",
             "outputPath": "dist/postgresql",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -605,6 +613,7 @@
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
+            "deployUrl": "/app/",
             "protractorConfig": "./protractor.conf.js",
             "devServerTarget": "postgresql:serve"
           }
@@ -628,6 +637,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "deployUrl": "/app/",
             "outputPath": "dist/lbaas",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -726,6 +736,7 @@
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
+            "deployUrl": "/app/",
             "protractorConfig": "./protractor.conf.js",
             "devServerTarget": "lbaas:serve"
           }
@@ -749,6 +760,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "deployUrl": "/app/",
             "outputPath": "dist/auto-scaler",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -849,6 +861,7 @@
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
+            "deployUrl": "/app/",
             "protractorConfig": "./protractor.conf.js",
             "devServerTarget": "auto-scaler:serve"
           }

@@ -16,6 +16,8 @@ import { Subject } from 'rxjs';
 import { error } from 'selenium-webdriver';
 import { filter, map } from 'rxjs/internal/operators';
 import { debounceTime } from 'rxjs/internal/operators/debounceTime';
+import { NotificationType } from '../../core/notification.service';
+import { Notification, NotificationService } from 'app/core';
 
 
 
@@ -34,10 +36,10 @@ export class PanelComponent implements OnInit {
   public toDateView: any;
   private steps: [string, string]
   private changed = false;
-  private _success = new Subject<string>();
   private successMessage?: String;
   constructor(private panelService: PanelService,
     private timeRangeService: EsTimerangeService,
+    private notification: NotificationService,
     private router: Router,
     private route: ActivatedRoute,
     private activatedRoute: ActivatedRoute) {
@@ -72,8 +74,6 @@ export class PanelComponent implements OnInit {
         this.toDateView = moment().unix();
         this.fromDateView = moment().subtract(5, 'days').unix();
       }
-      this._success.subscribe((message) => this.successMessage = message);
-      debounceTime.call(this._success, 2000).subscribe(() => this.successMessage = undefined);
     }
   }
 
@@ -158,11 +158,11 @@ export class PanelComponent implements OnInit {
   private saveChanges() {
     this.prepareForRequest(new Panel());
     this.panelService.addPanel(this.panel).subscribe(data => {
-      this._success.next('panel updated succesfully');
+      this.notification.addSelfClosing(new Notification(NotificationType.Info, 'panel updated succesfully'));
       this.setPanel(data);
       this.changed = false;
     }, (err) => {
-      this._success.next('panel updated succesfully');
+      this.notification.addSelfClosing(new Notification(NotificationType.Info, 'an error occured'));
     }
     );
   }

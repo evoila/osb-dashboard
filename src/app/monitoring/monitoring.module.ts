@@ -7,6 +7,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { DlDateTimePickerDateModule } from 'angular-bootstrap-datetimepicker';
 import { MonacoEditorModule, NgxMonacoEditorConfig } from 'ngx-monaco-editor';
 
+import { DragDropModule } from '@angular/cdk/drag-drop';
+
 
 
 
@@ -84,7 +86,8 @@ const monacoEditorConfig: NgxMonacoEditorConfig = {
         DlDateTimePickerDateModule,
         AngularFontAwesomeModule,
         MonacoEditorModule.forRoot(monacoEditorConfig),
-        CoreModule
+        CoreModule,
+        DragDropModule
     ],
     declarations: [MonitoringComponent,
         AppidComponent, LogPanelComponent,

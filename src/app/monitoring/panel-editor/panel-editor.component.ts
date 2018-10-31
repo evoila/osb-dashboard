@@ -158,8 +158,9 @@ export class PanelEditorComponent implements OnInit {
       }
       this.panelService.addPanel(this.panel).subscribe(
         k => {
+          console.log(k);
           this._success.next('panel created successfully redirecting now!');
-          this.router.navigate(['/monitoring/charts']);
+          this.router.navigate(['/monitoring/panel/' + k.panelId]);
         },
         error => {
           this._success.next("Error: Couldn't save Panel!" + error);
