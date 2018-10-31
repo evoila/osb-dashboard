@@ -44,7 +44,7 @@ export class MonitoringComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.loadPanels();
+    this.loadPanels(false);
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd),
       map(() => this.activatedRoute))

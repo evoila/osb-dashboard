@@ -28,7 +28,7 @@ function resetPath(path: string) {
 function compile(buildTarget: string, analyze: boolean, cb) {
   const target = process.env['TARGET'] || 'production';
   const aot = process.env['AOT'] || 'true';
-
+  const prod = target !== 'development';
   const outFolder = './dist/' + buildTarget;
 
   // these settings make the ng.cli output more amenable to webpack-bundle-anlayzer and source-map-explorer
@@ -45,9 +45,9 @@ function compile(buildTarget: string, analyze: boolean, cb) {
     cmd: 'ng',
     args: [
       'build',
-      '--target=' + target,
-      '--environment=' + buildTarget,
-      '--app=' + buildTarget,
+      buildTarget,
+      '--prod=' + prod,
+      '--configuration=' + buildTarget,
       '--aot=' + aot,
       '--progress=' + !isRunningInCi,
       '--output-path=' + outFolder,
