@@ -12,13 +12,14 @@
 <script th:inline="javascript">
   /*<![CDATA[*/
   window["INJECTED_ENVIRONMENT"] = {
-    serviceInstanceId: [[${ serviceInstanceId }]],
-    token: [[${ token }]],
+    serviceInstanceId: "fdaf180b-153e-40a2-b32b-0694ce877486",
+    token: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI2OGZkZTJiMmNiOGM0NTY1OTYyNmNjMDE4OGJhY2FjNSIsInN1YiI6ImNmOTMzYjU5LTA2ODctNDg0Yy04YjFkLTE4NDg1OTU2ZTM2YiIsInNjb3BlIjpbImNsb3VkX2NvbnRyb2xsZXJfc2VydmljZV9wZXJtaXNzaW9ucy5yZWFkIiwib3BlbmlkIl0sImNsaWVudF9pZCI6Im9zYi1sb2ctbWV0cmljLmNmLmRldi5ldS1kZS1jZW50cmFsLm1zaC5ob3N0IiwiY2lkIjoib3NiLWxvZy1tZXRyaWMuY2YuZGV2LmV1LWRlLWNlbnRyYWwubXNoLmhvc3QiLCJhenAiOiJvc2ItbG9nLW1ldHJpYy5jZi5kZXYuZXUtZGUtY2VudHJhbC5tc2guaG9zdCIsImdyYW50X3R5cGUiOiJhdXRob3JpemF0aW9uX2NvZGUiLCJ1c2VyX2lkIjoiY2Y5MzNiNTktMDY4Ny00ODRjLThiMWQtMTg0ODU5NTZlMzZiIiwib3JpZ2luIjoibWVzaGZlZCIsInVzZXJfbmFtZSI6ImI0NWRjOGZjLWViMGQtNDk2Mi1iNDI4LTY2NTY3ZjE1NDQ5ZCIsImVtYWlsIjoiamhpZW1lckBldm9pbGEuZGUiLCJhdXRoX3RpbWUiOjE1NDEwNzQwODMsInJldl9zaWciOiI5YjAxMGM0YSIsImlhdCI6MTU0MTA3NDA4NCwiZXhwIjoxODQxMTE3Mjg0LCJpc3MiOiJodHRwczovL3VhYS5jZi5kZXYuZXUtZGUtY2VudHJhbC5tc2guaG9zdC9vYXV0aC90b2tlbiIsInppZCI6InVhYSIsImF1ZCI6WyJvc2ItbG9nLW1ldHJpYy5jZi5kZXYuZXUtZGUtY2VudHJhbC5tc2guaG9zdCIsIm9wZW5pZCIsImNsb3VkX2NvbnRyb2xsZXJfc2VydmljZV9wZXJtaXNzaW9ucyJdfQ.1NeFV--ZHrOzMm6xrtBtdPpOZQxeuz2j3ClOzyo6ygM",
+    production: false,
     production: false,
     baseUrls: {
-      serviceBrokerUrl: [[${ endpointUrl }]],
+      serviceBrokerUrl: "https:\/\/osb-log-metric.cf.dev.eu-de-central.msh.host",
     },
-    customEndpoints: [[${ customEndpoints }]],
+    customEndpoints: [{"url":"https:\/\/osb-log-metric-dashboard-backend.cf.dev.eu-de-central.msh.host","description":"DashboardBackendURL"}],
     ui: {
       title: "Service Broker Panel",
       logoSrc: "./assets/core/sb-white.svg"

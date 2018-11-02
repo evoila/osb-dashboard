@@ -1,56 +1,25 @@
-h4, h6, p {
-    color: white;
-    text-align: center;
-}
-h6 {
-    padding-bottom: 1em;
-}
-label{
-    color: white;
-    text-align: center;
-    padding-right: 1em;
-    width: 8em;
-}
-.timefilter {
-    background-color: #3b3a36;
-    padding: 1em;
-    width: 96%;
-    margin-bottom: 1em;
-}
-label{
-    color: white;
-    text-align: center;
-    vertical-align: center; 
-    margin: 0 0.2em 0 0.2em;
-}
-select {
-    background-color: #3fb0ac;
-    color: white;
-}
-.input-group {
-    width: 100%;
-    margin: auto;
-    margin-bottom: 1em;
-}
-.calendar-view {
-    background-color: #414141;
-}
-:host ::ng-deep dl-date-time-picker .no-gutters>.col, .no-gutters {
-    color: #e9ece5;
-}
-:host ::ng-deep dl-date-time-picker .dl-abdtp-date-button[_ngcontent-c9] {
-    color: white;
+
+.timefilter-layout-top-row {
+    height: 55px;
+    border-bottom: 1px solid #dee2e6;
+    padding: .2rem 2rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    background-color: #fff;
+    z-index: 901;
 }
 
-:host ::ng-deep dl-date-time-picker .dl-abdtp-now[_ngcontent-c9], .dl-abdtp-now.disabled[_ngcontent-c9], .dl-abdtp-now.disabled[_ngcontent-c9]:hover, .dl-abdtp-now[_ngcontent-c9]:hover  {
-    color: #3fb0ac;
-    border: 1px solid #3fb0ac;
-}
-:host ::ng-deep dl-date-time-picker button {
-    background-color: #3fb0ac;
-    border: 1px solid white;
-    color: white;
-}
-:host ::ng-deep dl-date-time-picker button.col-10.dl-abdtp-view-label:hover {
-    background-color: #3fb0ac;
+.timefilter-toolbar {
+    position: fixed;
+    top: 56px;
+    left: 200px;
+    right: 0;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    padding: 1rem;
 }

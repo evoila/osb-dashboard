@@ -1,5 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { ChartRequest } from 'app/monitoring/model/chart-request';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ChartRequestVm } from 'app/monitoring/model/chart-request-vm';
 import { PanelService } from '../panel.service';
 import { Panel } from '../model/panel';
@@ -10,13 +9,7 @@ import { Subject } from 'rxjs';
 import { EsChartRequest } from 'app/monitoring/model/es-chart-request';
 import { PrometheusChartRequest } from 'app/monitoring/model/prom-chart-request';
 import { ActivatedRoute, Router } from '@angular/router/';
-import { Location } from '@angular/common';
-import { error } from 'selenium-webdriver';
-import { Chart } from '../model/chart';
-import { debounceTime } from 'rxjs/internal/operators/debounceTime';
-
-
-
+import { WizardComponent } from 'app/core/wizard';
 
 
 @Component({
@@ -34,19 +27,19 @@ export class PanelEditorComponent implements OnInit {
   public isCollapsed = true;
   public _success = new Subject<string>();
   public successMessage?: String;
+  @ViewChild(WizardComponent) wizard: WizardComponent;
+  
   constructor(
     private panelService: PanelService,
-    private modalService: NgbModal,
     private route: ActivatedRoute,
     private router: Router,
-    private location: Location
   ) {
 
   }
 
   ngOnInit() {
     this._success.subscribe((message) => this.successMessage = message);
-    debounceTime.call(this._success, 2000).subscribe(() => this.successMessage = undefined);
+
     if (this.route.snapshot.paramMap.has('id')) {
       const id = this.route.snapshot.paramMap.get('id');
       this.getPanel(id as string);
@@ -169,6 +162,10 @@ export class PanelEditorComponent implements OnInit {
     } else {
       this._success.next("Required Input is missing");
     }
+  }
+
+  public next($event) {
+    this.wizard.next();
   }
 
 }
