@@ -33,7 +33,7 @@
   <div *ngIf="catalogues.metricCharts">
     <h3>Charts prepared for Metrics</h3>
     <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0" *ngFor="let metricChart of catalogues.metricCharts; let i = index">
-      <ngb-panel *ngIf="metricChart.name" title="metricChart.name">
+      <ngb-panel *ngIf="metricChart.name" title="{{metricChart.name}}">
         <ng-template ngbPanelContent>
           <h5>Description</h5>
           {{metricChart.description}}

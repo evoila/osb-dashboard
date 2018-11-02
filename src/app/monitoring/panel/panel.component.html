@@ -2,7 +2,7 @@
 <div class="section-content">
 <sb-timefilter [toDate]="toDateView" [fromDate]="fromDateView" [stepVal]="steps" (fromDateChange)="setFromDate($event)"
   (toDateChange)="setToDate($event)" (stepChange)="setStep($event)"></sb-timefilter>
-<cdk-drop-list *ngIf="panel && panel.chartView" class="droppable" (dropped)="onDrop($event, ChartRequest)">
+<div cdkDropList *ngIf="panel && panel.chartView" class="droppable" (cdkDropListDropped)="onDrop($event, ChartRequest)">
   <div class="row" *ngFor="let chartRequests of panel.chartView" style="margin: 50px 0 0 0">
     <div class="col-{{chartRequest.size}} charts" *ngFor="let chartRequest of chartRequests" cdkDrag>
       <div *ngIf="chartRequest.onEdit">
@@ -16,7 +16,7 @@
         (editChart)="editChart($event ,chartRequest)" [chartId]="chartRequest.chartId" [options]="true"></sb-chart>
     </div>
   </div>
-</cdk-drop-list>
+</div>
 <div class="input-group edit-buttons">
   <button type="button" *ngIf="changed" (click)="saveChanges()" class="btn btn-info">Save Changes made on the
     Panel</button>

@@ -18,9 +18,7 @@ import { filter, map } from 'rxjs/internal/operators';
 import { debounceTime } from 'rxjs/internal/operators/debounceTime';
 import { NotificationType } from '../../core/notification.service';
 import { Notification, NotificationService } from 'app/core';
-
-
-
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 
 
@@ -130,11 +128,9 @@ export class PanelComponent implements OnInit {
     this.panel.chartQueries = this.panel.chartQueries.sort((k, j) => k.order - j.order);
     this.buildView();
   }
-  private onDrop(dragData: any, target: ChartRequest) {
+  private onDrop(dragData: CdkDragDrop<String[]>, target: ChartRequest) {
     if (this.panel.chartQueries) {
-      const targetIndex = this.panel.chartQueries.indexOf(target);
-      this.panel.chartQueries = this.panel.chartQueries.filter(k => k !== dragData.dragData);
-      this.panel.chartQueries.splice(targetIndex, 0, dragData.dragData as ChartRequestVm);
+      moveItemInArray(this.panel.chartQueries, dragData.previousIndex, dragData.currentIndex);
       this.changed = true;
       this.buildView();
     }
