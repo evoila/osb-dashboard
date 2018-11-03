@@ -38,7 +38,7 @@
         <p>Click on the Chartname to get a preview of the Chart</p>
       </div>
       <ngb-accordion [closeOthers]="true" draggable activeIds="static-1" *ngFor="let chartQuerie of chartVms">
-        <ngb-panel id="static-1" title="chartQuerie.name">
+        <ngb-panel id="static-1" title="{{chartQuerie.name}}">
           <ng-template ngbPanelContent>
             <sb-chart [requObj]="chartQuerie" [chartId]="chartQuerie.chartId"></sb-chart>
             <button type="button" (click)="deleteChartRequest(chartQuerie)" class="btn btn-danger">Delete</button>
