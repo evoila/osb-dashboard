@@ -32,8 +32,8 @@ export class PanelComponent implements OnInit {
   public menu: { [k: string]: any } = {};
   public fromDateView: any;
   public toDateView: any;
-  private steps: [string, string]
-  private changed = false;
+  public steps: [string, string]
+  public changed = false;
   private successMessage?: String;
   constructor(private panelService: PanelService,
     private timeRangeService: EsTimerangeService,
@@ -104,7 +104,7 @@ export class PanelComponent implements OnInit {
     }
     this.buildView();
   }
-  private edit() {
+  public edit() {
     if (this.changed) {
       this.saveChanges();
     }
