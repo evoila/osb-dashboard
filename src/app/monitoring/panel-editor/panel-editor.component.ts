@@ -28,7 +28,7 @@ export class PanelEditorComponent implements OnInit {
   public _success = new Subject<string>();
   public successMessage?: String;
   @ViewChild(WizardComponent) wizard: WizardComponent;
-  
+
   constructor(
     private panelService: PanelService,
     private route: ActivatedRoute,
