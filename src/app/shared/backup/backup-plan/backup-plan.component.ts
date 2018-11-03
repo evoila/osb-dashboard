@@ -3,6 +3,7 @@ import { BackupService } from '../backup.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationService, Notification } from '../../../core/notification.service';
 import { NotificationType } from 'app/core';
+import { GeneralService } from 'app/shared/general/general.service';
 
 @Component({
   selector: 'sb-backup-plan',
@@ -17,6 +18,7 @@ export class BackupPlanComponent implements OnInit {
   update = false;
 
   constructor(protected readonly backupService: BackupService,
+              protected readonly generalService: GeneralService,
               protected readonly route: ActivatedRoute,
               protected readonly router: Router,
               protected readonly nService: NotificationService) { }
@@ -27,14 +29,14 @@ export class BackupPlanComponent implements OnInit {
         (result: any) => { this.destinationList = result.content }
       );
 
-    this.backupService.loadAll('items')
+    this.generalService.customLoadAll('backup/' + this.generalService.getServiceInstanceId() + '/items')
       .subscribe(
         (result: any) => { this.itemList = result.content }
       );
   
 
     this.route.params.subscribe(params => {
-       if (params['planId']) {
+       if (params['planId'] && (params['planId'] != 'new')) {
          this.update = true;
           this.backupService.loadOne(this.ENTITY, params['planId'])
             .subscribe(
@@ -53,6 +55,7 @@ export class BackupPlanComponent implements OnInit {
 
   onSubmit(): void {
     const id = this.update ? this.plan.id : null;
+    this.plan.serviceInstanceId = this.backupService.getServiceInstanceId();
     this.backupService.saveOne(this.plan, this.ENTITY, id)
       .subscribe({
         next: (d) => {

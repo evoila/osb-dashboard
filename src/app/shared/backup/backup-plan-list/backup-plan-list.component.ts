@@ -27,7 +27,7 @@ export class BackupPlanListComponent implements OnInit {
   }
 
   startBackup(plan: string, id: string) {
-    this.backupService.saveOne({plan: plan}, 'backup', id)
+    this.backupService.saveOne({plan: plan}, 'backup')
       .subscribe({
         next: (d) => {
           this.nService.add(new Notification(NotificationType.Warning, 'Started Backup'));

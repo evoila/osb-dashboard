@@ -7,10 +7,11 @@ import { CoreHttpService, EntityService } from 'app/core';
 import { environment } from 'environments/runtime-environment';
 
 const serviceInstanceId = environment.serviceInstanceId;
+const endpoint = environment.baseUrls.serviceBrokerUrl;
 @Injectable()
 export class ServiceKeysService extends EntityService {
   SORT_CONFIG = 'sort=startDate,desc';
-  BACKUP_BASEURL = '/custom/v2/manage';
+  BACKUP_BASEURL = endpoint + '/custom/v2/manage';
 
   constructor(protected readonly httpService: CoreHttpService) {
     super(httpService);

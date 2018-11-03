@@ -3,5 +3,5 @@ export class ExtensionUrl {
 }
 export interface Server {
     url: string;
-    description: string;
+    identifier: string;
 }

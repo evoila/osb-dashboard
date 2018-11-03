@@ -5,10 +5,10 @@ import { Observable } from 'rxjs';
 import { environment } from 'environments/runtime-environment';
 
 const serviceInstanceId = environment.serviceInstanceId;
-
+const endpoint = environment.baseUrls.serviceBrokerUrl;
 @Injectable()
 export class LBaasService extends EntityService  {
-  readonly CERTIFICATE_BASEURL = '/custom/v2/manage/service_instances';
+  readonly CERTIFICATE_BASEURL = endpoint + '/custom/v2/manage/service_instances';
   
   constructor(protected readonly entityService: EntityService,
     protected readonly httpService: CoreHttpService) {

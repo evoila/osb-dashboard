@@ -1,45 +1,47 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-
-
-
 import { EntityService, CoreHttpService } from 'app/core';
-
+import { CustomEndpointService } from 'app/core/custom-endpoint.service';
 import { environment } from 'environments/runtime-environment';
-
 
 const serviceInstanceId = environment.serviceInstanceId;
 @Injectable()
 export class BackupService extends EntityService {
   SORT_CONFIG = 'sort=startDate,desc';
-  BACKUP_BASEURL = '/custom/v2/manage/backup';
+  BACKUP_BASEURL: string;
 
-  constructor(protected readonly httpService: CoreHttpService) {
-    super(httpService);
+  constructor(protected readonly httpService: CoreHttpService, 
+    protected readonly customEndpointService: CustomEndpointService) {      
+      super(httpService);
+      this.BACKUP_BASEURL = customEndpointService.getUri('osb-backup-manager');
+  }
+
+  public getServiceInstanceId(): string {
+    return serviceInstanceId;
   }
 
   public loadAll(entityRel: string): Observable<{} | any> {
-    return this.all(this.BACKUP_BASEURL + '/' + serviceInstanceId + '/' + entityRel + '?' + this.SORT_CONFIG);
+    return this.all(this.BACKUP_BASEURL + '/' + entityRel + '/byInstance/' + serviceInstanceId + '?' + this.SORT_CONFIG);
   }
 
   public deleteOne(entityRel: string, entity: any): Observable<{} | any> {
-    return this.delete(this.BACKUP_BASEURL + '/' + serviceInstanceId + '/' + entityRel + '/' + entity.id);
+    return this.delete(this.BACKUP_BASEURL + '/' + entityRel + '/' + entity.id);
   }
 
   public loadOne(entityRel: string, id: string): Observable<{} | any> {
-    return this.get(this.BACKUP_BASEURL + '/' + serviceInstanceId + '/' + entityRel + '/' + id);
+    return this.get(this.BACKUP_BASEURL + '/' + entityRel + '/' + id);
   }
 
   public saveOne(entity: any, entityRel: string, id?: string): Observable<{} | any> {
     if (id) {
-      return this.patch(this.BACKUP_BASEURL + '/' + serviceInstanceId + '/' + entityRel + '/' + id, entity);
+      return this.patch(this.BACKUP_BASEURL + '/' + entityRel + '/' + id, entity);
     } else {
-      return this.post(this.BACKUP_BASEURL + '/'  + serviceInstanceId + '/'  + entityRel, entity);
+      return this.post(this.BACKUP_BASEURL + '/'  + entityRel, entity);
     }
   }
 
   public validate(rel: string, entity: any): Observable<{} | any> {
-    return this.post(this.BACKUP_BASEURL + '/' + serviceInstanceId + '/' + rel + '/validate' , entity);
+    return this.post(this.BACKUP_BASEURL + '/' + rel + '/validate' , entity);
   }
 
 }

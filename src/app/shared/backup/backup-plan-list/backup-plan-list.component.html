@@ -8,10 +8,9 @@
     <thead class="thead-default">
       <tr>
         <th>#</th>
-        <th>Context</th>
-        <th>Type</th>
         <th>Frequency</th>
-        <th>Retention</th>
+        <th>Retention Period</th>
+        <th>Retention</th>        
         <th></th>
         <th></th>
       </tr>
@@ -19,9 +18,8 @@
     <tbody>
       <tr *ngFor="let plan of plans; let i = index">
         <th scope="row">{{i + 1}}</th>
-        <td>{{ plan.source.context }}</td>
-        <td>{{ plan.source.type }}</td>
         <td>{{ plan.frequency }}</td>
+        <td>{{ plan.retentionPeriod }}</td>
         <td>{{ plan.retentionStyle }}</td>
         <td><a href="#" routerLink="/backup/plans/{{plan.id}}">Details</a></td>
         <td><a href="#" (click)="startBackup(plan, plan.id)">Backup Now</a></td>

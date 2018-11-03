@@ -7,20 +7,18 @@
     <thead class="thead-default">
       <tr>
         <th>#</th>
-        <th>Auth URL</th>
-        <th>Domain</th>
-        <th>Project</th>
-        <th>Container</th>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Container/Bucket</th>
         <th></th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let destination of destinations; let i = index">
         <th scope="row">{{i + 1}}</th>
-        <td>{{ destination.authUrl }}</td>
-        <td>{{ destination.domain }}</td>
-        <td>{{ destination.projectName }}</td>
-        <td>{{ destination.containerName }}</td>
+        <td>{{ destination.name }}</td>
+        <td>{{ destination.type }}</td>
+        <td>{{ destination.containerName }}{{ destination.bucket }}</td>
         <td><a href="#" routerLink="/backup/file-endpoints/{{destination.id}}">Details</a></td>
       </tr>
     </tbody>

@@ -9,13 +9,15 @@ if (!injectedEnv) {
   // tslint:disable-next-line:no-console
   console.warn('DASHBOARD DEFAULT DEVELOPMENT ENV ACTIVE - DID YOU FORGET TO INJECT A RUNTIME ENV?');
   seedEnv = {
-
-    serviceInstanceId: '7d20760b-15ac-43ba-86e5-56c60ed2e010',
-    token: 'Bearer  eyJhbGciOiJSUzI1NiIsImtpZCI6ImtleS0xIiwidHlwIjoiSldUIn0.eyJqdGkiOiJmMjYwOWMxZGU5YWI0ZTQwYmU2Yzc1OTk1OTY0YzlmOSIsInN1YiI6IjY2NTFkOTgwLTYxOWYtNGY4NS04NGRjLTg5YzA4NTQ2NWMyNiIsInNjb3BlIjpbImNsb3VkX2NvbnRyb2xsZXIucmVhZCIsInBhc3N3b3JkLndyaXRlIiwiY2xvdWRfY29udHJvbGxlci53cml0ZSIsIm9wZW5pZCIsInVhYS51c2VyIl0sImNsaWVudF9pZCI6ImNmIiwiY2lkIjoiY2YiLCJhenAiOiJjZiIsImdyYW50X3R5cGUiOiJwYXNzd29yZCIsInVzZXJfaWQiOiI2NjUxZDk4MC02MTlmLTRmODUtODRkYy04OWMwODU0NjVjMjYiLCJvcmlnaW4iOiJtZXNoZmVkIiwidXNlcl9uYW1lIjoiYTFkNTYyN2ItYTgwNC00YjVjLTk0ZTYtMDA3OGQ0ZTQ1ODQ1IiwiZW1haWwiOiJqaGV5bEBldm9pbGEuZGUiLCJyZXZfc2lnIjoiMmJhNDY0OGEiLCJpYXQiOjE1NDA5Nzk5NjQsImV4cCI6MTU0MDk4MDU2NCwiaXNzIjoiaHR0cHM6Ly91YWEuY2YuZGV2LmV1LWRlLWNlbnRyYWwubXNoLmhvc3Qvb2F1dGgvdG9rZW4iLCJ6aWQiOiJ1YWEiLCJhdWQiOlsiY2xvdWRfY29udHJvbGxlciIsInBhc3N3b3JkIiwiY2YiLCJ1YWEiLCJvcGVuaWQiXX0.JPq6hjP2PcT27R_l83ZNYsqxTvf-d6sF3abSnn1ew5I_lbV_yMfpnnH_N8WD39j4kuij2AxQ-5ICtuzYem5isz_UxxoO1PjbPUgaUAZ6zFe_c_nP3EeT3duGnFQQI30Z9fUARxAOAjeI63CynOGOcdS6NWOyo_TrYSo7iRbSdHxu2QKyTMGiMJD3VvPFr0I1E8mV1keFD6kH-7zNXsRz1KSV5vst_zCizN_N22C-GrkZG6REIeeuMbHTtNFoN6mkhVN7qvHUXv2RazFFk41SQBuFX5LVIey2W18NrdCkqzC8TRCe5KnsJWSCQ-ycKIdsXIv5YDIKHEyjn5MpulHuiw',
+    serviceInstanceId: 'DD69H8D3-7876-4056-A0EE-DE8D3498259T',
+    token: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJmMjYwOWMxZGU5YWI0ZTQwYmU2Yzc1OTk1OTY0YzlmOSIsInN1YiI6IjY2NTFkOTgwLTYxOWYtNGY4NS04NGRjLTg5YzA4NTQ2NWMyNiIsInNjb3BlIjpbImNsb3VkX2NvbnRyb2xsZXIucmVhZCIsInBhc3N3b3JkLndyaXRlIiwiY2xvdWRfY29udHJvbGxlci53cml0ZSIsIm9wZW5pZCIsInVhYS51c2VyIl0sImNsaWVudF9pZCI6ImNmIiwiY2lkIjoiY2YiLCJhenAiOiJjZiIsImdyYW50X3R5cGUiOiJwYXNzd29yZCIsInVzZXJfaWQiOiI2NjUxZDk4MC02MTlmLTRmODUtODRkYy04OWMwODU0NjVjMjYiLCJvcmlnaW4iOiJtZXNoZmVkIiwidXNlcl9uYW1lIjoiYTFkNTYyN2ItYTgwNC00YjVjLTk0ZTYtMDA3OGQ0ZTQ1ODQ1IiwiZW1haWwiOiJqaGV5bEBldm9pbGEuZGUiLCJyZXZfc2lnIjoiMmJhNDY0OGEiLCJpYXQiOjE1NDA5Nzk5NjQsImV4cCI6MTg0MDk4MDU2NCwiaXNzIjoiaHR0cHM6Ly91YWEuY2YuZGV2LmV1LWRlLWNlbnRyYWwubXNoLmhvc3Qvb2F1dGgvdG9rZW4iLCJ6aWQiOiJ1YWEiLCJhdWQiOlsiY2xvdWRfY29udHJvbGxlciIsInBhc3N3b3JkIiwiY2YiLCJ1YWEiLCJvcGVuaWQiXX0.qPy7GmVXCWHVGmuDNlbUXNin2keXQb_emC5RIWzC9Sc',
     baseUrls: {
-      serviceBrokerUrl: 'https://osb-log-metric.cf.dev.eu-de-central.msh.host',
+      serviceBrokerUrl: 'http://localhost:8080',
     },
-    customEndpoints: [{"url":"https:\/\/osb-log-metric-dashboard-backend.cf.dev.eu-de-central.msh.host","description":"DashboardBackendURL"}],
+    customEndpoints: [
+      {"url":"http:\/\/localhost:8090","identifier":"log-metric-backend"},
+      {"url":"http:\/\/localhost:8081","identifier":"osb-backup-manager"}
+    ],
     ui: {
       title: 'Service Broker Panel',
       logoSrc: './assets/core/sb-white.svg'
@@ -24,12 +26,8 @@ if (!injectedEnv) {
 } else {
 
   seedEnv = {
-
     serviceInstanceId: '/*[[${serviceInstanceId}]]*/',
-
-
     token: '/*[[${token}]]*/',
-
     baseUrls: {
       serviceBrokerUrl: '/*[[${endpointUrl}]]*/',
     },

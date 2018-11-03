@@ -22,6 +22,7 @@ import { WizardPageSubmitButtonComponent } from './wizard/wizard-page-submit-but
 import { WizardPageComponent } from './wizard/wizard-page/wizard-page.component';
 import { WizardStepComponent } from './wizard/wizard-step/wizard-step.component';
 import { FocusDirective } from './wizard';
+import { CustomEndpointService } from './custom-endpoint.service';
 
 export function coreHttpFactory(backend: XHRBackend) {
   return new CoreHttpService(backend);
@@ -66,7 +67,8 @@ export class CoreModule {
         },
         NotificationService,
         EntityService,
-        WindowService
+        WindowService,
+        CustomEndpointService
      ]
     };
   }

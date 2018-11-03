@@ -1,11 +1,7 @@
-import { Injectable, DebugElement } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
 import { environment } from 'environments/runtime-environment';
-import { ExtensionUrl, Server } from '../core/extension-url';
-import { Observable } from 'rxjs';
-import { Environment } from '../../environments/runtime-environment';
-import { CatalogueService } from './catalogue.service';
-
+import { Server } from '../core/extension-url';
 
 @Injectable()
 export class EndpointService {
@@ -18,10 +14,9 @@ export class EndpointService {
     })
   };
 
-
   constructor() { }
   public getUri(): string {
-    const matchingEnvs: Array<Server> = environment.customEndpoints.filter((k: Server) => k.description === 'DashboardBackendURL');
+    const matchingEnvs: Array<Server> = environment.customEndpoints.filter((k: Server) => k.identifier === 'DashboardBackendURL');
     if (matchingEnvs.length > 0) {
       return matchingEnvs[0].url;
     } else {

@@ -8,16 +8,14 @@ import { CoreHttpService } from '../core/core-http.service';
 import { EntityService } from '../core/entity.service';
 
 const serviceInstanceId = environment.serviceInstanceId;
+const endpoint = environment.baseUrls.serviceBrokerUrl;
 @Injectable()
 export class AutoScalerService extends EntityService {
-  readonly AUTOSCALER_BASEURL = '';
+  AUTOSCALER_BASEURL = endpoint;
 
   constructor(protected readonly entityService: EntityService,
     protected readonly httpService: CoreHttpService) {
-    super(httpService);
-    this.setCustomHeader('secret', 'jbkneo38858fjvone92');
-    this.setCustomHeader('content-type', 'application/json;charset=UTF-8');
-    this.setCustomHeader('accept', 'application/json;charset=UTF-8');
+    super(httpService);    
   }
 
   public loadAll(entityRel: string): Observable<{} | any> {

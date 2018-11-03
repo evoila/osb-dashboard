@@ -5,14 +5,8 @@ import {
   Http, ConnectionBackend, RequestOptionsArgs,
   Headers, RequestOptions, Request, Response
 } from '@angular/http';
-
-
-
-
-
 import { environment } from 'environments/runtime-environment';
 
-const baseUrl = environment.baseUrls.serviceBrokerUrl;
 const authToken = environment.token;
 
 @Injectable()
@@ -46,8 +40,6 @@ export class CoreHttpService extends Http {
   }
 
   public request(req: Request, options?: RequestOptionsArgs): Observable<Response> {
-    this.applyBaseUrl(req, options);
-
     if (this.accessToken) {
       req.headers.set('Authorization', this.accessToken);
     } else {
@@ -61,19 +53,6 @@ export class CoreHttpService extends Http {
     req.headers.set('Content-Type', "application/json");
 
     return super.request(req, options);
-  }
-
-  private applyBaseUrl(req: Request, options?: RequestOptionsArgs) {
-    req.url = this.processUrl(req.url);
-  }
-
-  private processUrl(url: string): string {
-    // only prepend baseUrl if it's a relative path (i.e. not a self link or similar)
-    if (url.indexOf('http') !== 0) {
-      return baseUrl + url;
-    }
-  
-    return url;
   }
 
   public formatError<T>(error: Response | any): Observable<T> {

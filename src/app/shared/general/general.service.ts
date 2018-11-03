@@ -8,16 +8,26 @@ import { environment } from 'environments/runtime-environment';
 import { EntityService } from 'app/core';
 
 const serviceInstanceId = environment.serviceInstanceId;
+const endpoint = environment.baseUrls.serviceBrokerUrl;
 @Injectable()
 export class GeneralService extends EntityService {
-  readonly BACKUP_BASEURL = '/custom/v2/manage/';
+  GENERAL_BASEURL: string;
 
-  constructor(protected readonly httpService: CoreHttpService) {
+  constructor(protected readonly httpService: CoreHttpService) {    
     super(httpService);
+    this.GENERAL_BASEURL = endpoint + '/custom/v2/manage/';
+  }
+
+  public getServiceInstanceId(): string {
+    return serviceInstanceId;
   }
 
   public loadAll(): Observable<{} | any> {
-    return this.all(this.BACKUP_BASEURL + serviceInstanceId + '/');
+    return this.all(this.GENERAL_BASEURL + serviceInstanceId);
+  }
+
+  public customLoadAll(path: String): Observable<{} | any> {
+    return this.all(this.GENERAL_BASEURL + path);
   }
 
 }
