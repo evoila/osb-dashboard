@@ -1,0 +1,6 @@
+<label>{{field.label}}</label>
+<select class="form-control" [(ngModel)]="aggs[aggregationType.type][field.name]"
+  (change)="updateField($event)" [attr.required]="(field.required == true) ? true : null">
+  <option>-- Please select --</option>
+  <option *ngFor="let field of field.options" [value]="field.key">{{field.key}} ({{field.value.type}})</option>
+</select>

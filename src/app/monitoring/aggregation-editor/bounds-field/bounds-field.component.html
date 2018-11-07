@@ -1,0 +1,13 @@
+<div class="row" style="padding-left: 15px">
+  <div class="col-sm-5">
+    <input type="text" class="form-control" [(ngModel)]="minValue" (change)="updateMin($event)"
+      [attr.required]="(field.required == true) ? true : null" />
+  </div>
+  <div class="col-sm-5">
+    <input type="{{subField.type}}" class="form-control" [(ngModel)]="maxValue" (change)="updateMax($event)"
+      [attr.required]="((field.required == true) ? true : null) || minValue != null" />
+  </div>
+  <div class="col-sm-2">
+    &nbsp;
+  </div>
+</div>

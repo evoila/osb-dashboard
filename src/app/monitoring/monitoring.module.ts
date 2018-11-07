@@ -57,6 +57,8 @@ import { BindingService } from 'app/monitoring/binding.service';
 import { ErrorserviceService } from './errorservice.service';
 import { SidebarNavComponent } from 'app/core/sidebar';
 import { CoreModule } from 'app/core/core.module';
+import { AggregationEditorModule } from 'app/monitoring/aggregation-editor/aggregation-editor.module';
+import { CreateAggregationComponent } from './create-aggregation/create-aggregation.component';
 
 
 
@@ -87,12 +89,13 @@ const monacoEditorConfig: NgxMonacoEditorConfig = {
         AngularFontAwesomeModule,
         MonacoEditorModule.forRoot(monacoEditorConfig),
         CoreModule,
-        DragDropModule
+        DragDropModule,
+        AggregationEditorModule
     ],
     declarations: [MonitoringComponent,
         AppidComponent, LogPanelComponent,
         DateFormatPipe, ChartComponent, ChartDirective, PanelComponent, PanelEditorComponent, QueryEditorComponent, EsQueryEditorComponent,
-        PromQueryEditorComponent, LogListComponent, LogSearchComponent, LogFilterComponent, TimefilterComponent],
+        PromQueryEditorComponent, LogListComponent, LogSearchComponent, LogFilterComponent, TimefilterComponent, CreateAggregationComponent],
     providers: [
         EschartsService,
         ChartingService,

@@ -1,0 +1,13 @@
+<div class="row field-padding">
+  <div class="col-sm-5">
+    <input type="{{subField.fromType}}" class="form-control" [(ngModel)]="fromValue" (change)="updateFrom($event, index)" pattern="{{subField.fromPattern}}"
+      [attr.required]="(field.required == true) ? true : null" />
+  </div>
+  <div class="col-sm-5">
+    <input type="{{subField.toType}}" class="form-control" [(ngModel)]="toValue" (change)="updateTo($event, index)" pattern="{{subField.toPattern}}"
+      [attr.required]="((field.required == true) ? true : null) || fromValue != null" />
+  </div>
+  <div class="col-sm-2">
+    <button (click)="removeRange(index)" [hidden]="index == 0" class="btn btn-danger btn-sm" type="button">Remove</button>
+  </div>
+</div>

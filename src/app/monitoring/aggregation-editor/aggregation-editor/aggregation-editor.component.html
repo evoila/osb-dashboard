@@ -1,0 +1,34 @@
+<div class="row" style="margin: 0px">
+  <form class="form-horizontal" #chartForm="ngForm" (submit)="runAggregation()">
+    <div class="row">
+
+      <div class="form-group">
+        <label>Display Type</label>
+        <select class="form-control" name="type" [(ngModel)]="displayType.type" (ngModelChange)="setDisplayType($event)" required>
+          <option [value]="">-- Please select --</option>
+          <option *ngFor="let displayType of displayTypes" [value]="displayType.type">{{displayType.name}}</option>
+        </select>
+      </div>
+
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label>Use Text editor</label>
+          <input type="checkbox" name="useTextEditor" (change)="stringifyAggs()" [(ngModel)]="useTextEditor" ngControl="useTextEditor"
+          />
+        </div>
+        <aggregation-selector *ngIf="aggregationTypes.length > 0 && !useTextEditor" [aggs]="aggs" [displayType]="displayType" [additionalData]="data"
+          [aggregationTypes]="aggregationTypes" [index]="0">
+        </aggregation-selector>
+        <textarea rows="15" cols="60" name="aggs" *ngIf="useTextEditor" [(ngModel)]="aggs"></textarea>
+      </div>
+    </div>
+    <div class="row" *ngIf="displayType && displayType.type">
+      <div calss="col-md-12">
+        <button type="button" class="btn btn-primary" (click)="showAggregation()">Show Aggregation</button>
+        <button type="submit" class="btn btn-warn">Run Aggregation</button>
+      </div>
+    </div>
+  </form>
+</div>

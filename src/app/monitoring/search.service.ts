@@ -1,5 +1,5 @@
 
-import {throwError as observableThrowError,  Observable } from 'rxjs';
+import { throwError as observableThrowError, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { EndpointService } from './endpoint.service';
 import { HttpClient } from '@angular/common/http';
@@ -9,6 +9,7 @@ import { Response } from '@angular/http/src/static_response';
 import { NotificationType, NotificationService, Notification } from 'app/core';
 
 import { catchError, map } from 'rxjs/operators';
+import { Field } from 'app/monitoring/aggregation-editor/model/field';
 
 
 
@@ -30,7 +31,7 @@ export class SearchService {
         return observableThrowError(error.error.message);
       }));
   }
-  public getMappings(): Observable<Array<string>| Response> {
+  public getMappings(): Observable<Array<string> | Response> {
     const endpoint = this.endpoint.getUri() + '/mappings'
     return this.http.get(endpoint, this.httpOptions).pipe(map(
       (data) => {
@@ -49,6 +50,29 @@ export class SearchService {
         return returnVal;
       }
     ), catchError((error: any) => {
+      console.log(error);
+      this.notification.addSelfClosing(new Notification(NotificationType.Error, error.error.message));
+      return observableThrowError(error.json);
+    }))
+  }
+
+  public getMappingWithType(): Observable<Array<Field> | Response> {
+    const endpoint = this.endpoint.getUri() + '/mappings'
+    return this.http.get(endpoint, this.httpOptions).pipe(map(
+      (data) => {
+        let returnVal: Array<Field> = Array<Field>();
+        Object.keys(data['mappings']['logMessages']['properties']).forEach(
+          (item) => {
+            const property = data['mappings']['logMessages']['properties'][item];
+            if (!property['fields']) {
+              returnVal = [...returnVal, { 'key': item, 'value': { 'type': property['type'] } } as Field];
+            } else {
+              returnVal = [...returnVal, { 'key': item + '.' + Object.keys(property['fields'])[0],
+               'value': { 'type': Object.keys(property['fields'])[0] } } as Field];
+            }
+          })
+          return returnVal;
+    }), catchError((error: any) => {
       console.log(error);
       this.notification.addSelfClosing(new Notification(NotificationType.Error, error.error.message));
       return observableThrowError(error.json);

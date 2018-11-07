@@ -1,0 +1,3 @@
+<label>{{field.label}}</label>
+<input class="form-control" type="{{field.type}}" [(ngModel)]="aggs[aggregationType.type][field.name]"
+   (change)="updateField($event)" [attr.required]="(field.required == true) ? true : null" />

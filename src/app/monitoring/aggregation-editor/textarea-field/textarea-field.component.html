@@ -1,0 +1,4 @@
+<label>{{field.label}}</label>
+<textarea class="form-control" [(ngModel)]="textarea.value"
+  (ngModelChange)="updateField($event)" [attr.required]="(field.required == true) ? true : null">
+</textarea>

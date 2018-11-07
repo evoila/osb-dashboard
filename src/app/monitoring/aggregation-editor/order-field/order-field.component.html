@@ -1,0 +1,12 @@
+<div class="row" style="padding-left: 15px">
+  <div class="col-sm-6">
+    <input class="form-control" type="text" [(ngModel)]="subFieldName" (change)="updateField($event)" [attr.required]="(field.required == true) ? true : null" />
+  </div>
+  <div class="col-sm-6">
+    <select class="form-control" [(ngModel)]="subFieldSortDirection" (change)="updateField($event)"
+      [disabled]="subFieldName == null || subFieldName.length == 0" [attr.required]="((field.required == true) ? true : null) || subFieldName != null">
+      <option>-- Please select --</option>
+      <option *ngFor="let field of ['asc', 'desc']" [value]="field">{{ field }}</option>
+    </select>
+  </div>
+</div>

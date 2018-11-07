@@ -1,0 +1,4 @@
+<label>{{field.label}}</label>
+<select class="form-control" [(ngModel)]="additionalData.fieldToCount" required>
+  <option *ngFor="let val of field.options" [value]="val">{{val}}</option>
+</select>

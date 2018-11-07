@@ -1,0 +1,13 @@
+<div class="col-sm-5">
+  <select class="form-control" [(ngModel)]="subFieldName" (change)="updateField($event, index)" [attr.required]="(field.required == true) ? true : null">
+    <option>-- Please select --</option>
+    <option *ngFor="let field of field.options" [value]="field.key">{{field.key}}</option>
+  </select>
+</div>
+<div class="col-sm-5">
+  <input class="form-control" type="{{subField.subType}}" [(ngModel)]="subFieldValue" [disabled]="subFieldName == null || subFieldName.length == 0"
+    (change)="updateField($event, index)" [attr.required]="(field.required == true) ? true : null" />
+</div>
+<div class="col-sm-2">
+  <button (click)="field.subFields.splice(index, 1)" [hidden]="index == 0" class="btn btn-danger btn-sm" type="button">Remove</button>
+</div>
