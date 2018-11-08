@@ -11,9 +11,9 @@ import { FileEndpoint } from '../domain/file-endpoint';
   styleUrls: ['./backup-dashboard.component.scss']
 })
 export class BackupDashboardComponent implements OnInit {
-  jobs: Job[];
-  plans: BackupPlan[];
-  destinations: FileEndpoint[];
+  jobs: Job[] = new Array();
+  plans: BackupPlan[] = new Array();
+  destinations: FileEndpoint[] = new Array();
   
   constructor(protected readonly backupService: BackupService,
     protected readonly nService: NotificationService) { }
@@ -26,7 +26,7 @@ export class BackupDashboardComponent implements OnInit {
 
   private loadJobs() {
     this.backupService
-      .loadAll('jobs')
+      .loadAll('backupJobs')
       .subscribe((jobs: any) => {
         this.jobs = jobs.content;
       });
@@ -34,7 +34,7 @@ export class BackupDashboardComponent implements OnInit {
 
   private loadDestinations() {
     this.backupService
-      .loadAll('destinations')
+      .loadAll('fileDestinations')
       .subscribe((destinations: any) => {
         this.destinations = destinations.content;
       })
@@ -42,7 +42,7 @@ export class BackupDashboardComponent implements OnInit {
 
   private loadPlans() {
     this.backupService
-      .loadAll('plans')
+      .loadAll('backupPlans')
       .subscribe((plans: any) => {
         this.plans = plans.content;
       });

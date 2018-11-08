@@ -4,7 +4,6 @@ import { EntityService, CoreHttpService } from 'app/core';
 import { CustomEndpointService } from 'app/core/custom-endpoint.service';
 import { environment } from 'environments/runtime-environment';
 
-const serviceInstanceId = environment.serviceInstanceId;
 @Injectable()
 export class BackupService extends EntityService {
   SORT_CONFIG = 'sort=startDate,desc';
@@ -16,12 +15,12 @@ export class BackupService extends EntityService {
       this.BACKUP_BASEURL = customEndpointService.getUri('osb-backup-manager');
   }
 
-  public getServiceInstanceId(): string {
-    return serviceInstanceId;
+  public getServiceInstance(): string {
+    return environment.serviceInstance;
   }
 
   public loadAll(entityRel: string): Observable<{} | any> {
-    return this.all(this.BACKUP_BASEURL + '/' + entityRel + '/byInstance/' + serviceInstanceId + '?' + this.SORT_CONFIG);
+    return this.all(this.BACKUP_BASEURL + '/' + entityRel + '/byInstance/' + environment.serviceInstanceId + '?' + this.SORT_CONFIG);
   }
 
   public deleteOne(entityRel: string, entity: any): Observable<{} | any> {

@@ -1,5 +1,10 @@
-<div class="section-content">  
+<div class="section-content">
   <form>
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input type="text" class="form-control" id="name" name="name" #name="ngModel" [(ngModel)]="destination.name" required>
+      <show-errors [control]="name"></show-errors>
+    </div>
     <div class="form-group">
       <label for="name">Destination Types</label>
       <select class="form-control" [(ngModel)]="destination.type" name="type" required>
@@ -7,16 +12,18 @@
       </select>
     </div>
   </form>
-  <form #form="ngForm" *ngIf="destination.type == 'S3'" action="#" (ngSubmit)="onSubmit()" ngNativeValidate>    
+  <form #form="ngForm" *ngIf="destination.type == 'S3'" action="#" (ngSubmit)="onSubmit()" ngNativeValidate>
     <div class="form-group">
       <label for="authKey">AWS Secret</label>
-      <input type="text" class="form-control" name="authKey" #authKey="ngModel" [(ngModel)]="destination.authKey" required>
+      <input type="text" class="form-control" name="authKey" #authKey="ngModel" [(ngModel)]="destination.authKey"
+        required>
       <show-errors [control]="authKey"></show-errors>
       <small id="username" class="form-text text-muted">AWS Secret</small>
     </div>
     <div class="form-group">
       <label for="authSecret">AWS SecretKey</label>
-      <input type="password" class="form-control" name="authSecret" #authSecret="ngModel" [(ngModel)]="destination.authSecret" required>
+      <input type="password" class="form-control" name="authSecret" #authSecret="ngModel" [(ngModel)]="destination.authSecret"
+        required>
       <show-errors [control]="authSecret"></show-errors>
       <small id="password" class="form-text text-muted">AWS SecretKey</small>
     </div>
@@ -30,7 +37,8 @@
     </div>
     <div class="form-group">
       <label for="bucket">Bucket</label>
-      <input type="bucket" class="form-control" name="bucket" #bucket="ngModel" [(ngModel)]="destination.bucket" required>
+      <input type="bucket" class="form-control" name="bucket" #bucket="ngModel" [(ngModel)]="destination.bucket"
+        required>
       <show-errors [control]="bucket"></show-errors>
       <small id="bucket" class="form-text text-muted">AWS S3 Bucket</small>
     </div>
@@ -41,37 +49,43 @@
   <form #form="ngForm" *ngIf="destination.type == 'SWIFT'" action="#" (ngSubmit)="onSubmit()" ngNativeValidate>
     <div class="form-group">
       <label for="authUrl">Authentication URL</label>
-      <input type="text" class="form-control" name="authUrl" #authUrl="ngModel" [(ngModel)]="destination.authUrl" required>
+      <input type="text" class="form-control" name="authUrl" #authUrl="ngModel" [(ngModel)]="destination.authUrl"
+        required>
       <show-errors [control]="authUrl"></show-errors>
       <small id="authUrl" class="form-text text-muted">OpenStack API Keystone URL</small>
     </div>
     <div class="form-group">
       <label for="username">Username</label>
-      <input type="text" class="form-control" name="username" #username="ngModel" [(ngModel)]="destination.username" required>
+      <input type="text" class="form-control" name="username" #username="ngModel" [(ngModel)]="destination.username"
+        required>
       <show-errors [control]="username"></show-errors>
       <small id="username" class="form-text text-muted">Openstack Service User name</small>
     </div>
     <div class="form-group">
       <label for="password">Password</label>
-      <input type="password" class="form-control" name="password" #password="ngModel" [(ngModel)]="destination.password" required>
+      <input type="password" class="form-control" name="password" #password="ngModel" [(ngModel)]="destination.password"
+        required>
       <show-errors [control]="password"></show-errors>
       <small id="password" class="form-text text-muted">Openstack Service User password</small>
     </div>
     <div class="form-group">
       <label for="domain">Domain</label>
-      <input type="domain" class="form-control" name="domain" #domain="ngModel" [(ngModel)]="destination.domain" required>
+      <input type="domain" class="form-control" name="domain" #domain="ngModel" [(ngModel)]="destination.domain"
+        required>
       <show-errors [control]="domain"></show-errors>
       <small id="domain" class="form-text text-muted">Openstack Project domain</small>
     </div>
     <div class="form-group">
       <label for="projectName">Project</label>
-      <input type="projectName" class="form-control" name="projectName" #projectName="ngModel" [(ngModel)]="destination.projectName" required>
+      <input type="projectName" class="form-control" name="projectName" #projectName="ngModel" [(ngModel)]="destination.projectName"
+        required>
       <show-errors [control]="projectName"></show-errors>
       <small id="projectName" class="form-text text-muted">Openstack Project name</small>
     </div>
     <div class="form-group">
       <label for="containerName">Container Name</label>
-      <input type="containerName" class="form-control" name="containerName" #containerName="ngModel" [(ngModel)]="destination.containerName" required>
+      <input type="containerName" class="form-control" name="containerName" #containerName="ngModel" [(ngModel)]="destination.containerName"
+        required>
       <show-errors [control]="containerName"></show-errors>
       <small id="containerName" class="form-text text-muted">OpenStack Swift Container name</small>
     </div>

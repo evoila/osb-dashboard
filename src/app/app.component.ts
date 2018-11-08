@@ -1,16 +1,12 @@
 import { Component } from '@angular/core';
+import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
+import { Router, ActivatedRoute } from '@angular/router';
 
-import { environment } from 'environments/runtime-environment';
-
+import { BuildTargetService, ModuleSupport } from 'app/shared';
+import { GeneralService } from './shared/general/general.service';
 import { NotificationService, Notification } from './core/notification.service';
 
-import {
-  BuildTargetService, ModuleSupport
-} from 'app/shared';
-import { Router, ActivatedRoute } from '@angular/router';
-import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
-import { ExtensionUrl, Server } from './core/extension-url';
-
+import { environment } from 'environments/runtime-environment';
 
 @Component({
   selector: 'sb-root',
@@ -31,20 +27,21 @@ export class AppComponent implements OnInit {
     private readonly router: Router,
     private readonly route: ActivatedRoute,
     private readonly notifications: NotificationService,
+    private readonly generalService: GeneralService,
     buildTarget: BuildTargetService
   ) {
     this.dynamicModuleSupport = buildTarget.dynamicModuleSupport;
     this.sharedModuleSupport = buildTarget.sharedModuleSupport;
     this.moduleSupport = buildTarget.moduleSupport;
 
-    console.log('This is our starting point');
     this.notifications.notifications.subscribe(x => {
-      console.log(x)
-      this.notification = x
+      console.log("Showing notification: " + x);
+      this.notification = x;
     });
 
-    //this.router.navigateByUrl("/" + environment.serviceInstanceId, { skipLocationChange: true });
-    //this.router.navigate(["/home/" + environment.serviceInstanceId ], {replaceUrl:true});
+    this.generalService.loadServiceInstance().subscribe(serviceInstance => {
+      environment.serviceInstance = serviceInstance;
+    });
   }
 
   public closeNotification() {

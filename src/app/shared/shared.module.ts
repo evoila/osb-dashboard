@@ -11,7 +11,6 @@ import { BackupService } from './backup/backup.service';
 import { CoreModule } from '../core/core.module';
 import { BackupPlanComponent } from './backup/backup-plan/backup-plan.component';
 import { SharedRoutingModule } from './shared-routing.module';
-import { BackupJobDetailsComponent } from './backup/backup-job/backup-job-details/backup-job-details.component';
 import { RestoreJobComponent } from './backup/restore-job/restore-job.component';
 import { FileEndpointComponent } from './backup/file-endpoint/file-endpoint.component';
 import { GeneralComponent } from './general/general.component';
@@ -22,6 +21,8 @@ import { BackupDashboardComponent } from './backup/backup-dashboard/backup-dashb
 import { FileEndpointListComponent } from './backup/file-endpoint-list/file-endpoint-list.component';
 import { BackupPlanListComponent } from './backup/backup-plan-list/backup-plan-list.component';
 import { BackupJobListComponent } from './backup/backup-job-list/backup-job-list.component';
+import { RestoreListComponent } from './backup/restore-list/restore-list.component';
+import { BackupJobComponent } from './backup/backup-job/backup-job.component';
 
 const components = [BackupComponent,
   ServiceKeysComponent,
@@ -29,8 +30,10 @@ const components = [BackupComponent,
   BackupDashboardComponent,
   BackupPlanComponent,
   BackupPlanListComponent,
-  BackupJobDetailsComponent,
+  BackupJobListComponent,
+  BackupJobComponent,
   RestoreJobComponent,
+  RestoreListComponent,
   FileEndpointComponent,
   FileEndpointListComponent,
   GeneralComponent,
@@ -46,7 +49,7 @@ const components = [BackupComponent,
     CoreModule,
     SchemaFormModule
   ],
-  declarations: [...components, BackupDashboardComponent, FileEndpointListComponent, BackupPlanListComponent, BackupJobListComponent],
+  declarations: [...components],
   exports: [components],
   providers: [BackupService, GeneralService, ServiceKeysService]
 })

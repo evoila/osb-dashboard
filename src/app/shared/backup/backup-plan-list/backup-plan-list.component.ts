@@ -9,10 +9,10 @@ import { NotificationService, NotificationType, Notification } from 'app/core';
   styleUrls: ['./backup-plan-list.component.scss']
 })
 export class BackupPlanListComponent implements OnInit {
-  plans: BackupPlan[];
+  backupPlans: BackupPlan[];
   
   constructor(protected readonly backupService: BackupService,
-    protected readonly nService: NotificationService) { }
+    protected readonly notificationService: NotificationService) { }
 
   ngOnInit() {
     this.loadPlans();
@@ -20,21 +20,21 @@ export class BackupPlanListComponent implements OnInit {
 
   private loadPlans() {
     this.backupService
-      .loadAll('plans')
-      .subscribe((plans: any) => {
-        this.plans = plans.content;
+      .loadAll('backupPlans')
+      .subscribe((backupPlans: any) => {
+        this.backupPlans = backupPlans.content;
       });
   }
 
-  startBackup(plan: string, id: string) {
-    this.backupService.saveOne({plan: plan}, 'backup')
+  startBackup(backupPlan: string, id: string) {
+    this.backupService.saveOne({backupPlan: backupPlan}, 'backup')
       .subscribe({
         next: (d) => {
-          this.nService.add(new Notification(NotificationType.Warning, 'Started Backup'));
+          this.notificationService.addSelfClosing(new Notification(NotificationType.Warning, 'Started Backup'));
           this.loadPlans()
         },
         error: (e) => {
-          this.nService.add(new Notification(NotificationType.Warning, 'Could not start backup.'));
+          this.notificationService.addSelfClosing(new Notification(NotificationType.Warning, 'Could not start backup.'));
         }
       });
   }

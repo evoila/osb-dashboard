@@ -18,7 +18,7 @@ export class FileEndpointListComponent implements OnInit {
 
   private loadDestinations() {
     this.backupService
-      .loadAll('destinations')
+      .loadAll('fileDestinations')
       .subscribe((destinations: any) => {
         this.destinations = destinations.content;
       })

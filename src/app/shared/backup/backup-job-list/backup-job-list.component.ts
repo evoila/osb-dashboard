@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BackupService } from '../backup.service';
 import { Job } from '../domain/job';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'sb-backup-job-list',
@@ -8,19 +9,29 @@ import { Job } from '../domain/job';
   styleUrls: ['./backup-job-list.component.scss']
 })
 export class BackupJobListComponent implements OnInit {
+  withFilter: boolean = false;
   jobs: Job[];
   
-  constructor(protected readonly backupService: BackupService) { }
+  constructor(protected readonly backupService: BackupService,
+    protected readonly route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.loadJobs();
+    this.route.params.subscribe(params => {      
+      if (params['filter']) {
+        this.withFilter = true;
+      }
+      this.loadJobs(this.withFilter);
+    });
   }
 
-  private loadJobs() {
+  private loadJobs(withFilter: boolean) {
     this.backupService
-      .loadAll('jobs')
+      .loadAll('backupJobs')
       .subscribe((jobs: any) => {
-        this.jobs = jobs.content;
+        if (withFilter) 
+          this.jobs = jobs.content.filter(job => job.status == "SUCCEEDED");
+        else
+          this.jobs = jobs.content;
       });
   }
 

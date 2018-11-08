@@ -9,7 +9,7 @@ import { NotificationService, Notification, NotificationType } from '../../../co
   styleUrls: ['./file-endpoint.component.scss']
 })
 export class FileEndpointComponent implements OnInit {
-  readonly ENTITY: string = 'destinations';
+  readonly ENTITY: string = 'fileDestinations';
   destinationTypes = ['S3', 'SWIFT'];
   // https://docs.aws.amazon.com/de_de/general/latest/gr/rande.html#s3_region
   regions = [{
@@ -101,8 +101,6 @@ export class FileEndpointComponent implements OnInit {
 
   onSubmit(): void {
     if (!this.validated) {
-      this.destination.serviceInstanceId = this.backupService.getServiceInstanceId();
-
       this.backupService.validate(this.ENTITY, this.destination)
         .subscribe({
           next: (d) => {
@@ -115,8 +113,9 @@ export class FileEndpointComponent implements OnInit {
         });
     } else {
       const id = this.update ? this.destination.id : null;
+      this.destination.serviceInstance = this.backupService.getServiceInstance();
       this.backupService.saveOne(this.destination, this.ENTITY, id)
-        .subscribe((plan: any) => {
+        .subscribe((destination: any) => {
           this.redirect();
         });
     }
