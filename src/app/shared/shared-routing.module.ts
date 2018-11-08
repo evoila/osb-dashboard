@@ -3,7 +3,6 @@ import { RouterModule } from '@angular/router';
 import { BackupComponent } from './backup/backup.component';
 import { BackupPlanComponent } from './backup/backup-plan/backup-plan.component';
 import { RestoreJobComponent } from './backup/restore-job/restore-job.component';
-import { BackupJobDetailsComponent } from './backup/backup-job/backup-job-details/backup-job-details.component';
 import { FileEndpointComponent } from './backup/file-endpoint/file-endpoint.component';
 import { GeneralComponent } from './general/general.component';
 import { ServiceKeysComponent } from './service-keys/service-keys.component';
@@ -12,6 +11,8 @@ import { BackupDashboardComponent } from './backup/backup-dashboard/backup-dashb
 import { BackupPlanListComponent } from './backup/backup-plan-list/backup-plan-list.component';
 import { FileEndpointListComponent } from './backup/file-endpoint-list/file-endpoint-list.component';
 import { BackupJobListComponent } from './backup/backup-job-list/backup-job-list.component';
+import { RestoreListComponent } from './backup/restore-list/restore-list.component';
+import { BackupJobComponent } from './backup/backup-job/backup-job.component';
 
 export const ROUTES = [{
   path: '',
@@ -26,20 +27,20 @@ export const ROUTES = [{
       pathMatch: 'full'
     },
     {
-      path: 'plans',
+      path: 'backup-plans',
       component: BackupPlanListComponent
     },
     {
-      path: 'plans/:planId',
+      path: 'backup-plans/:planId',
       component: BackupPlanComponent
     },
     {
-      path: 'jobs',
+      path: 'backup-jobs',
       component: BackupJobListComponent
     },
     {
-      path: 'jobs/:jobId',
-      component: BackupJobDetailsComponent
+      path: 'backup-jobs/:jobId',
+      component: BackupJobComponent
     },
     {
       path: 'file-endpoints',
@@ -50,7 +51,15 @@ export const ROUTES = [{
       component: FileEndpointComponent
     },
     {
-      path: 'create-restore',
+      path: 'restore-points/:filter',
+      component: BackupJobListComponent
+    },
+    {
+      path: 'restore-jobs',
+      component: RestoreListComponent
+    },
+    {
+      path: 'restore-jobs/:restoreId',
       component: RestoreJobComponent
     },
   ]

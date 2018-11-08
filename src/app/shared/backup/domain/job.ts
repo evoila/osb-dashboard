@@ -5,7 +5,7 @@ export interface Job {
 
     startDate: number;
 
-    instanceId: string;
+    serviceInstance: string;
 
     // Possible values are STARTED, IN PROGRESS, SUCCESS and FAILED.
     status: string;

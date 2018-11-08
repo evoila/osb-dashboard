@@ -11,7 +11,7 @@ import { GeneralService } from 'app/shared/general/general.service';
   styleUrls: ['./backup-plan.component.scss']
 })
 export class BackupPlanComponent implements OnInit {
-  readonly ENTITY: string = 'plans';
+  readonly ENTITY: string = 'backupPlans';
   plan: any = {}
   destinationList: any = [];
   itemList: any = [];
@@ -21,10 +21,10 @@ export class BackupPlanComponent implements OnInit {
               protected readonly generalService: GeneralService,
               protected readonly route: ActivatedRoute,
               protected readonly router: Router,
-              protected readonly nService: NotificationService) { }
+              protected readonly notificationService: NotificationService) { }
 
   ngOnInit() {
-    this.backupService.loadAll('destinations')
+    this.backupService.loadAll('fileDestinations')
       .subscribe(
         (result: any) => { this.destinationList = result.content }
       );
@@ -55,15 +55,17 @@ export class BackupPlanComponent implements OnInit {
 
   onSubmit(): void {
     const id = this.update ? this.plan.id : null;
-    this.plan.serviceInstanceId = this.backupService.getServiceInstanceId();
+    this.plan.serviceInstance = this.backupService.getServiceInstance();
     this.backupService.saveOne(this.plan, this.ENTITY, id)
       .subscribe({
         next: (d) => {
-          this.nService.add(new Notification(NotificationType.Info, 'Backup Plan Created'));
+          this.notificationService
+            .addSelfClosing(new Notification(NotificationType.Info, 'Backup Plan Created'));
           this.redirect();
         },
         error: (e) => {
-          this.nService.add(new Notification(NotificationType.Warning, 'Could not create Backup Plan. Please check your entries.'));
+          this.notificationService
+            .addSelfClosing(new Notification(NotificationType.Warning, 'Could not create Backup Plan. Please check your entries.'));
         }
       });
   }
