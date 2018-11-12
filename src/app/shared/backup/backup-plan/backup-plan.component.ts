@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationService, Notification } from '../../../core/notification.service';
 import { NotificationType } from 'app/core';
 import { GeneralService } from 'app/shared/general/general.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'sb-backup-plan',
@@ -21,7 +22,8 @@ export class BackupPlanComponent implements OnInit {
               protected readonly generalService: GeneralService,
               protected readonly route: ActivatedRoute,
               protected readonly router: Router,
-              protected readonly notificationService: NotificationService) { }
+              protected readonly notificationService: NotificationService,
+              protected readonly modalService: NgbModal) { }
 
   ngOnInit() {
     this.backupService.loadAll('fileDestinations')
@@ -46,11 +48,15 @@ export class BackupPlanComponent implements OnInit {
     });
   }
 
-  delete(): void {
-    this.backupService.deleteOne(this.ENTITY, this.plan)
+  delete(content): void {
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      this.backupService.deleteOne(this.ENTITY, this.plan)
       .subscribe((plan: any) => {
         this.redirect();
       });
+    }, (reason) => {
+      // we do nothing here, because user does not want to delete entity
+    });
   }
 
   onSubmit(): void {
@@ -71,7 +77,7 @@ export class BackupPlanComponent implements OnInit {
   }
 
   private redirect(): void {
-    this.router.navigate(['/backup']);
+    this.router.navigate(['/backup/backup-plans']);
   }
 
 }

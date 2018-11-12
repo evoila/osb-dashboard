@@ -2,15 +2,18 @@
   <form #form="ngForm" action="#" (ngSubmit)="onSubmit()" ngNativeValidate>
     <div class="form-group">
       <label for="name">Name</label>
-      <input type="text" class="form-control" id="name" name="name" #name="ngModel" [(ngModel)]="plan.name"
-        required>
+      <input type="text" class="form-control" id="name" name="name" #name="ngModel" [(ngModel)]="plan.name" required>
       <show-errors [control]="name"></show-errors>
     </div>
     <div class="form-group">
-        <label for="name">Paused</label>
-        <input type="checkbox" class="form-control" id="paused" name="paused" #paused="ngModel" [(ngModel)]="plan.paused"
-          required>
-      </div>
+      <label for="name">Paused</label>
+      <input type="checkbox" class="form-control" id="paused" name="paused" #paused="ngModel" [(ngModel)]="plan.paused">
+    </div>
+    <div class="form-group">
+      <label for="name">Compression</label>
+      <input type="checkbox" class="form-control" id="compression" name="compression" #compression="ngModel"
+        [(ngModel)]="plan.compression">
+    </div>
     <div class="form-group">
       <label for="frequency">Frequency</label>
       <input type="text" class="form-control" id="frequency" name="frequency" #frequency="ngModel" [(ngModel)]="plan.frequency"
@@ -76,4 +79,18 @@
     <button type="button" *ngIf="update" class="btn btn-danger" (click)="delete()">Delete</button>
     <button type="submit" class="btn btn-primary" [disabled]="!form.form.valid">Submit</button>
   </form>
+  <ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Delete Entity</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p>Do you really want to delete this Backup Plan?</p>>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+    </div>
+  </ng-template>
 </div>

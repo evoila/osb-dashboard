@@ -6,7 +6,6 @@ import { environment } from 'environments/runtime-environment';
 
 @Injectable()
 export class BackupService extends EntityService {
-  SORT_CONFIG = 'sort=startDate,desc';
   BACKUP_BASEURL: string;
 
   constructor(protected readonly httpService: CoreHttpService, 
@@ -19,8 +18,31 @@ export class BackupService extends EntityService {
     return environment.serviceInstance;
   }
 
-  public loadAll(entityRel: string): Observable<{} | any> {
-    return this.all(this.BACKUP_BASEURL + '/' + entityRel + '/byInstance/' + environment.serviceInstanceId + '?' + this.SORT_CONFIG);
+  private pagingAndSortingHandler(pagingAndSorting: any): string {
+    var resultString: string;
+    resultString = "?size=" + pagingAndSorting.pageSize;
+    resultString += "&page=" + (pagingAndSorting.page - 1);
+
+    return resultString;
+  }
+
+  private filterHandler(filterQuery: any): string {
+    var resultString: string = "";
+    Object.keys(filterQuery).forEach(key => {
+      resultString += "&" + key + "=" + filterQuery[key];
+    });
+
+    return resultString;
+  }
+
+  public loadAll(entityRel: string, pagingAndSorting?: any): Observable<{} | any> {
+    return this.all(this.BACKUP_BASEURL + '/' + entityRel + '/byInstance/' 
+      + environment.serviceInstanceId + this.pagingAndSortingHandler(pagingAndSorting));
+  }
+
+  public loadAllFiltered(entityRel: string, filterQuery?: any, pagingAndSorting?: any): Observable<{} | any> {
+    return this.all(this.BACKUP_BASEURL + '/' + entityRel + '/byInstance/' 
+      + environment.serviceInstanceId + '/filtered' + this.pagingAndSortingHandler(pagingAndSorting) + this.filterHandler(filterQuery));
   }
 
   public deleteOne(entityRel: string, entity: any): Observable<{} | any> {

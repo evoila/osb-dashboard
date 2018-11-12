@@ -10,6 +10,7 @@
         <th>#</th>
         <th>Name</th>
         <th>Frequency</th>
+        <th>Paused</th>
         <th>Retention Period</th>
         <th>Retention</th>        
         <th></th>
@@ -21,6 +22,7 @@
         <th scope="row">{{i + 1}}</th>
         <td>{{ backupPlan.name }}</td>
         <td>{{ backupPlan.frequency }}</td>
+        <td>{{ backupPlan.paused }}</td>
         <td>{{ backupPlan.retentionPeriod }}</td>
         <td>{{ backupPlan.retentionStyle }}</td>
         <td><a href="#" routerLink="/backup/backup-plans/{{backupPlan.id}}">Details</a></td>

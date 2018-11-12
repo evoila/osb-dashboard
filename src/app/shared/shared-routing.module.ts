@@ -13,6 +13,7 @@ import { FileEndpointListComponent } from './backup/file-endpoint-list/file-endp
 import { BackupJobListComponent } from './backup/backup-job-list/backup-job-list.component';
 import { RestoreListComponent } from './backup/restore-list/restore-list.component';
 import { BackupJobComponent } from './backup/backup-job/backup-job.component';
+import { RestorePointListComponent } from './backup/restore-point-list/restore-point-list.component';
 
 export const ROUTES = [{
   path: '',
@@ -52,7 +53,7 @@ export const ROUTES = [{
     },
     {
       path: 'restore-points/:filter',
-      component: BackupJobListComponent
+      component: RestorePointListComponent
     },
     {
       path: 'restore-jobs',

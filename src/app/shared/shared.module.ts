@@ -23,6 +23,8 @@ import { BackupPlanListComponent } from './backup/backup-plan-list/backup-plan-l
 import { BackupJobListComponent } from './backup/backup-job-list/backup-job-list.component';
 import { RestoreListComponent } from './backup/restore-list/restore-list.component';
 import { BackupJobComponent } from './backup/backup-job/backup-job.component';
+import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { RestorePointListComponent } from './backup/restore-point-list/restore-point-list.component';
 
 const components = [BackupComponent,
   ServiceKeysComponent,
@@ -32,6 +34,7 @@ const components = [BackupComponent,
   BackupPlanListComponent,
   BackupJobListComponent,
   BackupJobComponent,
+  RestorePointListComponent,
   RestoreJobComponent,
   RestoreListComponent,
   FileEndpointComponent,
@@ -47,7 +50,8 @@ const components = [BackupComponent,
     RouterModule,
     SharedRoutingModule,
     CoreModule,
-    SchemaFormModule
+    SchemaFormModule,
+    NgbPaginationModule
   ],
   declarations: [...components],
   exports: [components],

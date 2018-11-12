@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { BackupService } from '../backup.service';
-import { Job } from '../domain/job';
 import { ActivatedRoute } from '@angular/router';
+import { Job } from '../domain/job';
 
 @Component({
-  selector: 'sb-backup-job-list',
-  templateUrl: './backup-job-list.component.html',
-  styleUrls: ['./backup-job-list.component.scss']
+  selector: 'sb-restore-point-list',
+  templateUrl: './restore-point-list.component.html',
+  styleUrls: ['./restore-point-list.component.scss']
 })
-export class BackupJobListComponent implements OnInit {
+export class RestorePointListComponent implements OnInit {
   pageSizes = [10, 25, 50, 100, 250];
   pagination: any = {
     page: 1,
@@ -18,9 +18,8 @@ export class BackupJobListComponent implements OnInit {
     rotate: true,
     boundaryLinks: true
   };
-  withFilter: boolean = false;
   jobs: Job[];
-  
+
   constructor(protected readonly backupService: BackupService,
     protected readonly route: ActivatedRoute) { }
 
@@ -43,11 +42,10 @@ export class BackupJobListComponent implements OnInit {
 
   private loadJobs() {
     this.backupService
-      .loadAll('backupJobs', this.pagination)
+      .loadAllFiltered('backupJobs', { jobStatus : 'SUCCEEDED'}, this.pagination)
       .subscribe((jobs: any) => {
-        this.updateResponse(jobs.number, jobs.totalElements);        
-          this.jobs = jobs.content;        
+        this.updateResponse(jobs.number, jobs.totalElements);
+        this.jobs = jobs.content;
       });
   }
-
 }

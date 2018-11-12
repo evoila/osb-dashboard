@@ -7,7 +7,7 @@ import { SchemaFormModule, WidgetRegistry, DefaultWidgetRegistry } from "ngx-sch
 
 import {
   NgbDropdownModule, NgbCollapseModule, NgbTypeaheadModule,
-  NgbTooltipModule, NgbModalModule, NgbPopoverModule, NgbTabsetModule
+  NgbTooltipModule, NgbModalModule, NgbPopoverModule, NgbTabsetModule, NgbPaginationModule
 } from '@ng-bootstrap/ng-bootstrap';
 
 import { buildTarget } from 'environments/target';
@@ -32,13 +32,13 @@ export function buildBuildTargetService(): BuildTargetService {
     FormsModule,
     HttpModule,
 
-    NgbDropdownModule.forRoot(),
-    NgbCollapseModule.forRoot(),
-    NgbTooltipModule.forRoot(),
-    NgbModalModule.forRoot(),
-    NgbPopoverModule.forRoot(),
-    NgbTypeaheadModule.forRoot(),
-    NgbTabsetModule.forRoot(),
+    NgbDropdownModule,
+    NgbCollapseModule,
+    NgbTooltipModule,
+    NgbModalModule,
+    NgbPopoverModule,
+    NgbTypeaheadModule,
+    NgbTabsetModule,
 
     SchemaFormModule.forRoot(),
     CoreModule.forRoot(),
