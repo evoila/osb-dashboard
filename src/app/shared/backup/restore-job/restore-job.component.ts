@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BackupService } from '../backup.service';
-import { Job } from '../domain/job';
+import { RestoreJob } from '../domain/backup-job';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationService, NotificationType, Notification } from 'app/core';
 
@@ -11,7 +11,7 @@ import { NotificationService, NotificationType, Notification } from 'app/core';
 })
 export class RestoreJobComponent implements OnInit {
   readonly ENTITY = 'restoreJobs';
-  job: Job | any = {};
+  job: RestoreJob | any = {};
 
   constructor(protected readonly backupService: BackupService,
     protected readonly route: ActivatedRoute,

@@ -17,7 +17,7 @@
     <thead class="thead-dark">
       <tr>
         <th>#</th>
-        <th>Name</th>
+        <th>Backup Plan</th>
         <th>Start Date</th>
         <th>Status</th>
         <th>Type</th>
@@ -27,12 +27,12 @@
     <tbody>
       <tr *ngFor="let job of jobs; let i = index">
         <th scope="row">{{i + 1}}</th>
-        <td>{{ job.backupPlan.name }}</td>
+        <td *ngIf="job.backupPlan != null">{{ job.backupPlan.name }}</td>
+        <td *ngIf="job.backupPlan == null">Plan deleted</td>
         <td>{{ job.startDate | date:"dd.MM.yyyy - hh:mm" }}</td>
         <td>{{ job.status }}</td>
         <td>{{ job.jobType }}</td>
-        <td *ngIf="!withFilter"><a href="#" routerLink="/backup/backup-jobs/{{job.id}}">Details</a></td>
-        <td *ngIf="withFilter"><a href="#" routerLink="/backup/restore-jobs/{{job.id}}">Restore</a></td>
+        <td><a href="#" routerLink="/backup/restore-jobs/{{job.id}}">Restore</a></td>
       </tr>
     </tbody>
   </table>

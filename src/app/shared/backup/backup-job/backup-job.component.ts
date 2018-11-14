@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BackupService } from '../backup.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Job } from '../domain/job';
+import { BackupJob } from '../domain/backup-job';
 
 @Component({
   selector: 'sb-backup-job',
@@ -10,7 +10,7 @@ import { Job } from '../domain/job';
 })
 export class BackupJobComponent implements OnInit {
   readonly ENTITY = 'backupJobs';
-  job: Job | any = {};
+  job: BackupJob | any = {};
 
   constructor(protected readonly backupService: BackupService,
     protected readonly route: ActivatedRoute,

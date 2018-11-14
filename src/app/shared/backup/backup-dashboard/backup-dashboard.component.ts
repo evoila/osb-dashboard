@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BackupService } from '../backup.service';
 import { NotificationService } from 'app/core';
-import { Job } from '../domain/job';
+import { BackupJob } from '../domain/backup-job';
 import { BackupPlan } from '../domain/backup-plan';
 import { FileEndpoint } from '../domain/file-endpoint';
 
@@ -11,7 +11,7 @@ import { FileEndpoint } from '../domain/file-endpoint';
   styleUrls: ['./backup-dashboard.component.scss']
 })
 export class BackupDashboardComponent implements OnInit {
-  jobs: Job[] = new Array();
+  jobs: BackupJob[] = new Array();
   plans: BackupPlan[] = new Array();
   destinations: FileEndpoint[] = new Array();
   

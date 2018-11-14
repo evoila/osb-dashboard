@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { BackupService } from '../backup.service';
-import { Job } from '../domain/job';
+import { BackupJob } from '../domain/backup-job';
 import { ActivatedRoute } from '@angular/router';
+import { Pagination } from '../domain/pagination';
 
 @Component({
   selector: 'sb-backup-job-list',
@@ -10,7 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class BackupJobListComponent implements OnInit {
   pageSizes = [10, 25, 50, 100, 250];
-  pagination: any = {
+  pagination: Pagination = {
     page: 1,
     collectionSize: 0,
     pageSize: 10,
@@ -19,7 +20,7 @@ export class BackupJobListComponent implements OnInit {
     boundaryLinks: true
   };
   withFilter: boolean = false;
-  jobs: Job[];
+  jobs: BackupJob[];
   
   constructor(protected readonly backupService: BackupService,
     protected readonly route: ActivatedRoute) { }

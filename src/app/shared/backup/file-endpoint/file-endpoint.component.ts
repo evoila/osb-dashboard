@@ -122,7 +122,7 @@ export class FileEndpointComponent implements OnInit {
   }
 
   private redirect(): void {
-    this.router.navigate(['/backup']);
+    this.router.navigate(['/backup/file-endpoints']);
   }
 
 }

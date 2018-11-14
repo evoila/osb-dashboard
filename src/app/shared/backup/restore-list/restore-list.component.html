@@ -1,24 +1,38 @@
 <div class="section-content">
-    <h2>Recent Restore Jobs</h2>
-    <p>These are all your recently executed Backup Jobs. The list contains active Backup Plans as well as
-      manually triggered Backup Jobs
-    </p>
-    <table class="table table-hover">
-      <thead class="thead-dark">
-        <tr>
-          <th>#</th>
-          <th>Start Date</th>
-          <th>Status</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let job of jobs; let i = index">
-          <th scope="row">{{i + 1}}</th>
-          <td>{{ job.startDate | date:"dd.MM.yyyy - hh:mm" }}</td>
-          <td>{{ job.status }}</td>
-          <td><a href="#" routerLink="/backup/restore-jobs/{{job.id}}">Details</a></td>
-        </tr>
-      </tbody>
-    </table>
+  <h2>Recent Restore Jobs</h2>
+  <p>These are all your recently executed Backup Jobs. The list contains active Backup Plans as well as
+    manually triggered Backup Jobs
+  </p>
+  <div class="row">
+    <div class="col-sm-10">&nbsp;</div>
+    <div class="col-sm-2 pageSizeSelector">
+      <select class="form-control" id="pageSize" name="pageSize" #pageSize="ngModel" [(ngModel)]="pagination.pageSize"
+        (change)="pageChange()">
+        <option *ngFor="let i of pageSizes" [ngValue]="i">
+          {{i}}
+        </option>
+      </select>
     </div>
+  </div>
+  <table class="table table-hover">
+    <thead class="thead-dark">
+      <tr>
+        <th>#</th>
+        <th>Start Date</th>
+        <th>Status</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let job of jobs; let i = index">
+        <th scope="row">{{i + 1}}</th>
+        <td>{{ job.startDate | date:"dd.MM.yyyy - hh:mm" }}</td>
+        <td>{{ job.status }}</td>
+        <td><a href="#" routerLink="/backup/restore-jobs/{{job.id}}">Details</a></td>
+      </tr>
+    </tbody>
+  </table>
+  <ngb-pagination class="d-flex justify-content-end" [(collectionSize)]="pagination.collectionSize" [(page)]="pagination.page"
+    [(pageSize)]="pagination.pageSize" [maxSize]="pagination.maxSize" [rotate]="pagination.rotate" [boundaryLinks]="pagination.boundaryLinks"
+    (pageChange)="pageChange($event)"></ngb-pagination>
+</div>

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BackupService } from '../backup.service';
 import { BackupPlan } from '../domain/backup-plan';
 import { NotificationService, NotificationType, Notification } from 'app/core';
+import { Pagination } from '../domain/pagination';
 
 @Component({
   selector: 'sb-backup-plan-list',
@@ -9,6 +10,15 @@ import { NotificationService, NotificationType, Notification } from 'app/core';
   styleUrls: ['./backup-plan-list.component.scss']
 })
 export class BackupPlanListComponent implements OnInit {
+  pageSizes = [10, 25, 50, 100, 250];
+  pagination: Pagination = {
+    page: 1,
+    collectionSize: 0,
+    pageSize: 10,
+    maxSize: 5,
+    rotate: true,
+    boundaryLinks: true
+  };
   backupPlans: BackupPlan[];
   
   constructor(protected readonly backupService: BackupService,
@@ -18,9 +28,20 @@ export class BackupPlanListComponent implements OnInit {
     this.loadPlans();
   }
 
+  pageChange(page?: number): void {
+    if (page)
+      this.pagination.page = page;
+    this.loadPlans();
+  }
+
+  updateResponse(page: number, collectionSize: number): void {
+    this.pagination.page = (page + 1);
+    this.pagination.collectionSize = collectionSize;
+  }
+
   private loadPlans() {
     this.backupService
-      .loadAll('backupPlans')
+      .loadAll('backupPlans', this.pagination)
       .subscribe((backupPlans: any) => {
         this.backupPlans = backupPlans.content;
       });

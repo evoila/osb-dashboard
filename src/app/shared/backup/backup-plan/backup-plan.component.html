@@ -76,7 +76,7 @@
       <small id="fileDestination" class="form-text text-muted">Select the file destination where the backups are
         stored.</small>
     </div>
-    <button type="button" *ngIf="update" class="btn btn-danger" (click)="delete()">Delete</button>
+    <button type="button" *ngIf="update" class="btn btn-danger" (click)="delete(content)">Delete</button>
     <button type="submit" class="btn btn-primary" [disabled]="!form.form.valid">Submit</button>
   </form>
   <ng-template #content let-modal>
@@ -87,10 +87,3 @@
       </button>
     </div>
     <div class="modal-body">
-      <p>Do you really want to delete this Backup Plan?</p>>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
-    </div>
-  </ng-template>
-</div>

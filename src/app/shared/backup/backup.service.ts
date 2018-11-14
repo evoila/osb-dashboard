@@ -19,8 +19,12 @@ export class BackupService extends EntityService {
   }
 
   private pagingAndSortingHandler(pagingAndSorting: any): string {
-    var resultString: string;
-    resultString = "?size=" + pagingAndSorting.pageSize;
+    var resultString: string = "";
+
+    if (pagingAndSorting == null || pagingAndSorting.length == 0)
+      return resultString;
+
+    resultString += "?size=" + pagingAndSorting.pageSize;
     resultString += "&page=" + (pagingAndSorting.page - 1);
 
     return resultString;
@@ -28,6 +32,10 @@ export class BackupService extends EntityService {
 
   private filterHandler(filterQuery: any): string {
     var resultString: string = "";
+
+    if (filterQuery == null)
+      return resultString;
+
     Object.keys(filterQuery).forEach(key => {
       resultString += "&" + key + "=" + filterQuery[key];
     });
