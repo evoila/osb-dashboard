@@ -31,7 +31,7 @@ export class RestoreJobComponent implements OnInit {
     });
   }
   
-  restore(backupJob, item: string, file: string) {
+  restore(backupJob: any, item: string, file: string) {
     let restoreRequest = {
       backupJob: backupJob,
       items: [{

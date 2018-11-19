@@ -19,7 +19,7 @@ export class AutoScalerService extends EntityService {
   }
 
   public loadAll(entityRel: string): Observable<{} | any> {
-    return this.all(this.BACKUP_BASEURL + '/' + entityRel + '/serviceInstance/' + serviceInstanceId);
+    return this.all(this.BACKUP_BASEURL + '/' + entityRel + '/serviceInstance/' + serviceInstanceId + '/bindings');
   }
 
   public deleteOne(entityRel: string): Observable<{} | any> {

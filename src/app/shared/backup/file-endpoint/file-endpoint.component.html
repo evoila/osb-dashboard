@@ -59,35 +59,35 @@
       <input type="text" class="form-control" name="username" #username="ngModel" [(ngModel)]="destination.username"
         required>
       <show-errors [control]="username"></show-errors>
-      <small id="username" class="form-text text-muted">Openstack Service User name</small>
+      <small id="username" class="form-text text-muted">Openstack Service Username</small>
     </div>
     <div class="form-group">
       <label for="password">Password</label>
       <input type="password" class="form-control" name="password" #password="ngModel" [(ngModel)]="destination.password"
         required>
       <show-errors [control]="password"></show-errors>
-      <small id="password" class="form-text text-muted">Openstack Service User password</small>
+      <small id="password" class="form-text text-muted">Openstack Service password</small>
     </div>
     <div class="form-group">
       <label for="domain">Domain</label>
       <input type="domain" class="form-control" name="domain" #domain="ngModel" [(ngModel)]="destination.domain"
         required>
       <show-errors [control]="domain"></show-errors>
-      <small id="domain" class="form-text text-muted">Openstack Project domain</small>
+      <small id="domain" class="form-text text-muted">Openstack Project Domain</small>
     </div>
     <div class="form-group">
-      <label for="projectName">Project</label>
-      <input type="projectName" class="form-control" name="projectName" #projectName="ngModel" [(ngModel)]="destination.projectName"
+      <label for="project_name">Project</label>
+      <input type="project_name" class="form-control" name="project_name" #project_name="ngModel" [(ngModel)]="destination.project_name"
         required>
-      <show-errors [control]="projectName"></show-errors>
-      <small id="projectName" class="form-text text-muted">Openstack Project name</small>
+      <show-errors [control]="project_name"></show-errors>
+      <small id="project_name" class="form-text text-muted">Openstack Project Name</small>
     </div>
     <div class="form-group">
-      <label for="containerName">Container Name</label>
-      <input type="containerName" class="form-control" name="containerName" #containerName="ngModel" [(ngModel)]="destination.containerName"
+      <label for="container_name">Container Name</label>
+      <input type="container_name" class="form-control" name="container_name" #container_name="ngModel" [(ngModel)]="destination.container_name"
         required>
-      <show-errors [control]="containerName"></show-errors>
-      <small id="containerName" class="form-text text-muted">OpenStack Swift Container name</small>
+      <show-errors [control]="container_name"></show-errors>
+      <small id="container_name" class="form-text text-muted">OpenStack Swift Container Name</small>
     </div>
     <button *ngIf="update" type="button" class="btn btn-danger" (click)="delete()">Delete</button>
     <button type="submit" class="btn btn-primary" [disabled]="!form.form.valid">{{submitLabel}}</button>

@@ -29,7 +29,7 @@
         <th scope="row">{{i + 1}}</th>
         <td *ngIf="job.backupPlan != null">{{ job.backupPlan.name }}</td>
         <td *ngIf="job.backupPlan == null">Plan deleted</td>
-        <td>{{ job.startDate | date:"dd.MM.yyyy - hh:mm" }}</td>
+        <td>{{ job.startDate | date:"dd.MM.yyyy - HH:mm" }}</td>
         <td>{{ job.status }}</td>
         <td>{{ job.jobType }}</td>
         <td *ngIf="!withFilter"><a href="#" routerLink="/backup/backup-jobs/{{job.id}}">Details</a></td>

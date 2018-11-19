@@ -25,23 +25,27 @@
           <td>{{agentExecutionReponse.key}}</td>
         </tr>
         <tr>
-          <th>Status</th>
-          <td>{{agentExecutionReponse.value.status}}</td>
-        </tr>
-        <tr>
           <th>Start Time</th>
-          <td>{{agentExecutionReponse.value.start_time}}</td>
+          <td>{{agentExecutionReponse.value.start_time | date:"dd.MM.yyyy - HH:mm" }}</td>
         </tr>
         <tr>
           <th>End Time</th>
-          <td>{{agentExecutionReponse.value.end_time}}</td>
+          <td>{{agentExecutionReponse.value.end_time | date:"dd.MM.yyyy - HH:mm" }}</td>
         </tr>
         <tr>
           <th>Execution Time (in Seconds)</th>
           <td>{{agentExecutionReponse.value.execution_time_ms / 1000}}</td>
         </tr>
         <tr>
-          <th>Pre-backup Log</th>
+          <th>Status</th>
+          <td>{{agentExecutionReponse.value.status}}</td>
+        </tr>
+        <tr>
+          <th>Error Message</th>
+          <td>{{agentExecutionReponse.value.error_message}}</td>
+        </tr>
+        <tr>
+          <th>Pre-Backup Log</th>
           <td>
             <code>
                     {{agentExecutionReponse.value.pre_backup_check_log}}
@@ -49,7 +53,7 @@
           </td>
         </tr>
         <tr>
-          <th>Pre-backup Error Log</th>
+          <th>Pre-Backup Error Log</th>
           <td>
             <code>
                     {{agentExecutionReponse.value.pre_backup_check_errorlog}}
@@ -57,7 +61,7 @@
           </td>
         </tr>
         <tr>
-          <th>Pre-backup Log</th>
+          <th>Pre-Backup Log</th>
           <td>
             <code>
                 {{agentExecutionReponse.value.pre_backup_lock_log}}
@@ -65,7 +69,7 @@
           </td>
         </tr>
         <tr>
-          <th>Pre-backup Error Log</th>
+          <th>Pre-Backup Error Log</th>
           <td>
             <code>
                 {{agentExecutionReponse.value.pre_backup_lock_errorlog}}
@@ -73,7 +77,7 @@
           </td>
         </tr>
         <tr>
-          <th>backup Log</th>
+          <th>Backup Log</th>
           <td>
             <code>
                 {{agentExecutionReponse.value.backup_log}}
@@ -81,7 +85,7 @@
           </td>
         </tr>
         <tr>
-          <th>backup Error Log</th>
+          <th>Backup Error Log</th>
           <td>
             <code>
                 {{agentExecutionReponse.value.backup_errorlog}}
@@ -89,7 +93,7 @@
           </td>
         </tr>
         <tr>
-          <th>Post-backup Cleanup Log</th>
+          <th>Post-Backup Cleanup Log</th>
           <td>
             <code>
                 {{agentExecutionReponse.value.backup_cleanup_log}}
@@ -97,7 +101,7 @@
           </td>
         </tr>
         <tr>
-          <th>Post-backup Cleanup Error Log</th>
+          <th>Post-Backup Cleanup Error Log</th>
           <td>
             <code>
                 {{agentExecutionReponse.value.backup_cleanup_errorlog}}
@@ -105,7 +109,7 @@
           </td>
         </tr>
         <tr>
-          <th>Post-backup Unlock Log</th>
+          <th>Post-Backup Unlock Log</th>
           <td>
             <code>
                 {{agentExecutionReponse.value.post_backup_unlock_log}}

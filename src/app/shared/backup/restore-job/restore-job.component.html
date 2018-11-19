@@ -38,20 +38,24 @@
           <td>{{agentExecutionReponse.key}}</td>
         </tr>
         <tr>
-          <th>Status</th>
-          <td>{{agentExecutionReponse.value.status}}</td>
-        </tr>
-        <tr>
           <th>Start Time</th>
-          <td>{{agentExecutionReponse.value.start_time}}</td>
+          <td>{{agentExecutionReponse.value.start_time | date:"dd.MM.yyyy - HH:mm" }}</td>
         </tr>
         <tr>
           <th>End Time</th>
-          <td>{{agentExecutionReponse.value.end_time}}</td>
+          <td>{{agentExecutionReponse.value.end_time | date:"dd.MM.yyyy - HH:mm" }}</td>
         </tr>
         <tr>
           <th>Execution Time (in Seconds)</th>
           <td>{{agentExecutionReponse.value.execution_time_ms / 1000}}</td>
+        </tr>
+        <tr>
+          <th>Status</th>
+          <td>{{agentExecutionReponse.value.status}}</td>
+        </tr>
+        <tr>
+          <th>Error Message</th>
+          <td>{{agentExecutionReponse.value.error_message}}</td>
         </tr>
         <tr>
           <th>Pre-restore Log</th>
