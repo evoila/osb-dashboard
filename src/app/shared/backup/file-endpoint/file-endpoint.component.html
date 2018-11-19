@@ -2,7 +2,8 @@
   <form>
     <div class="form-group">
       <label for="name">Name</label>
-      <input type="text" class="form-control" id="name" name="name" #name="ngModel" [(ngModel)]="destination.name" required>
+      <input type="text" class="form-control" id="name" name="name" #name="ngModel" [(ngModel)]="destination.name"
+        required>
       <show-errors [control]="name"></show-errors>
     </div>
     <div class="form-group">
@@ -89,7 +90,23 @@
       <show-errors [control]="container_name"></show-errors>
       <small id="container_name" class="form-text text-muted">OpenStack Swift Container Name</small>
     </div>
-    <button *ngIf="update" type="button" class="btn btn-danger" (click)="delete()">Delete</button>
+    <button type="button" *ngIf="update" class="btn btn-danger" (click)="delete(content)">Delete</button>
     <button type="submit" class="btn btn-primary" [disabled]="!form.form.valid">{{submitLabel}}</button>
   </form>
+  <ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Delete Entity</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&nbsp;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p><strong>Are you sure you want to delete this Endpoint?</strong></p>
+      <p>All information associated to this endpoint will be permanently deleted.</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancel</button>
+      <button type="button" class="btn btn-danger" (click)="modal.close('Ok click')">Ok</button>
+    </div>
+  </ng-template>
 </div>
