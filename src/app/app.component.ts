@@ -35,7 +35,6 @@ export class AppComponent implements OnInit {
     this.moduleSupport = buildTarget.moduleSupport;
 
     this.notifications.notifications.subscribe(x => {
-      console.log("Showing notification: " + x);
       this.notification = x;
     });
 
