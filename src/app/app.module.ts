@@ -2,12 +2,22 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-
-import { SchemaFormModule, WidgetRegistry, DefaultWidgetRegistry } from "ngx-schema-form";
+import * as monShared from './monitoring/shared/shared.module';
 
 import {
-  NgbDropdownModule, NgbCollapseModule, NgbTypeaheadModule,
-  NgbTooltipModule, NgbModalModule, NgbPopoverModule, NgbTabsetModule
+  SchemaFormModule,
+  WidgetRegistry,
+  DefaultWidgetRegistry
+} from 'ngx-schema-form';
+
+import {
+  NgbDropdownModule,
+  NgbCollapseModule,
+  NgbTypeaheadModule,
+  NgbTooltipModule,
+  NgbModalModule,
+  NgbPopoverModule,
+  NgbTabsetModule
 } from '@ng-bootstrap/ng-bootstrap';
 
 import { buildTarget } from 'environments/target';
@@ -19,6 +29,7 @@ import { CoreModule } from './core/core.module';
 import { BuildTargetService } from 'app/shared';
 import { SharedModule } from './shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
 
 export function buildBuildTargetService(): BuildTargetService {
   return new BuildTargetService(buildTarget);
@@ -31,6 +42,8 @@ export function buildBuildTargetService(): BuildTargetService {
     BrowserAnimationsModule,
     FormsModule,
     HttpModule,
+    HttpClientModule,
+    monShared.SharedModule.forRoot(),
 
     NgbDropdownModule.forRoot(),
     NgbCollapseModule.forRoot(),
@@ -46,7 +59,7 @@ export function buildBuildTargetService(): BuildTargetService {
 
     ...buildTarget.coreModules,
 
-    AppRoutingModule,
+    AppRoutingModule
   ],
   providers: [
     { provide: BuildTargetService, useFactory: buildBuildTargetService },
@@ -54,6 +67,4 @@ export function buildBuildTargetService(): BuildTargetService {
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {
-
-}
+export class AppModule {}

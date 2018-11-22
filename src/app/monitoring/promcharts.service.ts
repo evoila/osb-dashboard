@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { EndpointService } from 'app/monitoring/endpoint.service';
+import { EndpointService } from 'app/monitoring/shared/services/endpoint.service';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { PrometheusChartRequest } from 'app/monitoring/model/prom-chart-request';
 import { ChartRequest } from './model/chart-request';
 import { Observable } from 'rxjs';
 import { Chart } from './model/chart';
-import { ErrorserviceService } from 'app/monitoring/errorservice.service';
+import { ErrorserviceService } from 'app/monitoring/shared/services/errorservice.service';
 import { map } from 'rxjs/internal/operators/map';
 import { catchError } from 'rxjs/internal/operators/catchError';
 
@@ -17,12 +17,20 @@ export class PromchartsService {
     private http: HttpClient,
     private endpointService: EndpointService,
     private errorService: ErrorserviceService
-  ) { }
-  public getCharts(prometheusQuerie: PrometheusChartRequest, chartId: String): Observable<Chart > {
+  ) {}
+  public getCharts(
+    prometheusQuerie: PrometheusChartRequest,
+    chartId: String
+  ): Observable<Chart> {
     if (chartId) {
-      const uri: string = this.endpointService.getUri() + this.endpoint + chartId
-      return this.http.post<Chart>(uri, prometheusQuerie, this.httpOptions).pipe( map((data) => data),
-      catchError((err) => this.errorService.handleErrors(err)));
+      const uri: string =
+        this.endpointService.getUri() + this.endpoint + chartId;
+      return this.http
+        .post<Chart>(uri, prometheusQuerie, this.httpOptions)
+        .pipe(
+          map(data => data),
+          catchError(err => this.errorService.handleErrors(err))
+        );
     } else {
       throw new Error('chartId is missing in Object');
     }

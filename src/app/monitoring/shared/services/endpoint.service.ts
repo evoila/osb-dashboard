@@ -1,22 +1,25 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
 import { environment } from 'environments/runtime-environment';
-import { Server } from '../core/extension-url';
+import { Server } from '../../../core/extension-url';
 
 @Injectable()
 export class EndpointService {
-  private baseUrl = 'https://osb-log-metric-dashboard-backend.cf.dev.eu-de-central.msh.host';
+  private baseUrl =
+    'https://osb-log-metric-dashboard-backend.cf.dev.eu-de-central.msh.host';
   // private baseUrl = 'http://localhost';
   private authToken = environment.token;
-  public httpOptions = {
+  public readonly httpOptions = {
     headers: new HttpHeaders({
-      'Authorization': this.authToken
+      Authorization: this.authToken
     })
   };
 
-  constructor() { }
+  constructor() {}
   public getUri(): string {
-    const matchingEnvs: Array<Server> = environment.customEndpoints.filter((k: Server) => k.identifier === 'DashboardBackendURL');
+    const matchingEnvs: Array<Server> = environment.customEndpoints.filter(
+      (k: Server) => k.identifier === 'DashboardBackendURL'
+    );
     if (matchingEnvs.length > 0) {
       return matchingEnvs[0].url;
     } else {
@@ -24,4 +27,3 @@ export class EndpointService {
     }
   }
 }
-

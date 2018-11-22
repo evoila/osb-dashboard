@@ -3,7 +3,11 @@ import { Route, RouterModule } from '@angular/router';
 
 import { buildTarget } from 'environments/target';
 
-import { BackupComponent, ServiceKeysComponent, NoContentComponent } from './shared';
+import {
+  BackupComponent,
+  ServiceKeysComponent,
+  NoContentComponent
+} from './shared';
 
 import { HomeComponent } from './core';
 
@@ -30,11 +34,10 @@ export const ROUTES: Route[] = [
   {
     path: '**',
     component: NoContentComponent
-  },
+  }
 ];
 @NgModule({
   imports: [RouterModule.forRoot(ROUTES, { useHash: true })],
   exports: [RouterModule]
 })
-export class AppRoutingModule {
-}
+export class AppRoutingModule {}

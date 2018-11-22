@@ -14,6 +14,7 @@ if (!injectedEnv) {
     baseUrls: {
       serviceBrokerUrl: 'https://osb-log-metric.cf.dev.eu-de-central.msh.host',
     },
+    production: false,
     customEndpoints: [
       {"url":"http:\/\/localhost:8090","identifier":"log-metric-backend"},
       {"url":"http:\/\/localhost:8081","identifier":"osb-backup-manager"}
@@ -31,6 +32,7 @@ if (!injectedEnv) {
     baseUrls: {
       serviceBrokerUrl: '/*[[${endpointUrl}]]*/',
     },
+    production: true,
     ui: {
       title: 'Service Broker Panel',
       logoSrc: './assets/core/sb-white.svg'
