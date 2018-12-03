@@ -8,6 +8,8 @@ export const LOAD_OPTIONS_SUCCESS = '[Options] Load Options Success';
 
 export class LoadOptions implements Action {
   readonly type = LOAD_OPTIONS;
+  // the Type of Chart that should be referenced
+  constructor(public payload: string) {}
 }
 
 export class LoadOptionsFail implements Action {

@@ -25,7 +25,8 @@ export function reducer(
       };
     }
     case fromOptions.LOAD_OPTIONS_SUCCESS: {
-      const data = action.payload;
+      // trim null values return by kotlin case chartjs can't compute them
+      const data = clean(action.payload);
       const entities = buildObject(data, state);
       return {
         ...state,
@@ -65,6 +66,21 @@ const buildObject = function reduceData(
   );
 };
 
+function clean(entities: Array<ChartOptionsEntity>) {
+  return entities.map(entity => {
+    return { ...entity, options: cleanObject(entity.options) };
+  });
+}
+
+function cleanObject(obj: any) {
+  const returnVal: any = {};
+  for (const propName in obj) {
+    if (!(obj[propName] === null)) {
+      returnVal[propName] = obj[propName];
+    }
+  }
+  return returnVal;
+}
 export const getOptionsLoading = (state: OptionsState) => state.loading;
 export const getOptionsLoaded = (state: OptionsState) => state.loaded;
 export const getOptionsEntities = (state: OptionsState) => state.entities;

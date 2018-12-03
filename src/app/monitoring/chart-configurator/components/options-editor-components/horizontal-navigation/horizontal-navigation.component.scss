@@ -1,0 +1,42 @@
+div#hnContainer{
+    position: fixed;
+    width: calc(100% - 200px);
+}
+ul {
+    background-color: #3b3a36;
+    margin-bottom: 0;
+}
+li.hnElements {
+    list-style: none;
+    display: inline-block;
+    height: 4em; 
+    width: 17%;
+    background-color: #3b3a36;
+    color: white;
+    border-right: 2px solid black;
+    padding: 1em;
+    text-align: center;
+    vertical-align: middle;
+}
+li.hnElements:last-child {
+    border: none;
+}
+li.scroll_right, li.scroll_left{
+    width: 6%;
+}
+li.scroll_right{
+    text-align: right;
+}
+
+li.scroll_left{
+    text-align: left;
+}
+#hnActivator {
+    width: 4em;
+    margin: auto;
+    background-color: #3b3a36;
+    color: white;
+    text-align: center;
+    border-bottom-left-radius: 35%;
+    border-bottom-right-radius: 35%;
+}

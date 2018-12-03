@@ -16,7 +16,7 @@ import { catchError } from 'rxjs/internal/operators';
 export class OptionsService {
   private readonly url: string;
   private readonly httpOptions = this.endpointService.httpOptions;
-  private readonly endpoint = '/charting/options/';
+  private readonly endpoint = '/charting/options';
 
   constructor(
     private http: HttpClient,

@@ -1,0 +1,8 @@
+<div>
+  <sb-horizontal-navigation
+    *ngIf="optionsViewModel"
+    [elements]="optionsViewModel"
+    (choosenOptions)="userSelectedOption($event)"
+  ></sb-horizontal-navigation>
+  <sb-preview></sb-preview>
+</div>

@@ -1,9 +1,5 @@
 import * as fromBindings from '../actions/binding.action';
-import { Action } from '@ngrx/store';
-import { Actions } from '@ngrx/effects';
-import { BindingAction } from '../actions/binding.action';
 import { ServiceBinding } from '../../../model/service-binding';
-import { getOptionsLoading } from './options.reducer';
 
 export interface BindingsState {
   entities: Array<ServiceBinding>;

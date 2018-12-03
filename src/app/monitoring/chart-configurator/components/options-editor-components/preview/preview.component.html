@@ -1,0 +1,9 @@
+<div>
+  <h2 *ngIf="!options">
+    Choose a Options Preset from the Selection above. I will prerender that for
+    you.
+  </h2>
+  <div *ngIf="chart$">
+    <canvas sbSimpleChart [observableInput]="chart$"></canvas>
+  </div>
+</div>

@@ -4,8 +4,6 @@ import * as fromStore from '../../store';
 import { BindingsState } from 'app/monitoring/chart-configurator/store/reducers/binding.reducer';
 import { Store } from '@ngrx/store';
 import { SpaceAndOrg, ServiceBinding } from '../../../model/service-binding';
-import { ChartOptionsEntity } from '../../model/chart-options-entity';
-import { getAllBindingsEntities } from '../../store/reducers/index';
 
 @Component({
   selector: 'sb-configurator',

@@ -1,6 +1,7 @@
 export class OptionsRequestObject {
-  public org: String;
-  public space: String;
-  public serviceInstanceId: String;
-  constructor(org: String, space: String, serviceInstanceId: String) {}
+  public org: string;
+  public space: string;
+  public serviceInstanceId: string;
+  public chartType: string;
+  constructor(org: string, space: string, serviceInstanceId: string) {}
 }

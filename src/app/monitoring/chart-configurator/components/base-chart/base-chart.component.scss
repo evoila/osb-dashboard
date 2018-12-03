@@ -1,0 +1,28 @@
+.choosechart {
+    width: 100%;
+    margin-top: 4em;
+
+}
+
+div.card {
+    background: white;
+    border-radius: 3%;
+    margin: 0.4em 0.4em 0.4em 0.4em;
+}
+div.card:hover {
+    transform: scale(1.1);
+    z-index: 1;
+}
+
+div.lowerd-third {
+    background-color: #3fb0ac;
+    color: white;
+    width: 100%;
+    z-index: 1;
+    display: flex;
+    border-top-left-radius: 5%;
+    border-top-right-radius: 5%;
+    align-items: center;
+    height: 3em;
+    justify-content: center;
+}

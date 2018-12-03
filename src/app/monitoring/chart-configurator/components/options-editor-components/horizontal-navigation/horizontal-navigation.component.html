@@ -1,0 +1,20 @@
+<div id="hnContainer">
+  <ul *ngIf="!hidden">
+    <li class="scroll_left hnElements" (click)="next()">
+      <i class="fas fa-arrow-left"></i>
+    </li>
+    <li
+      class="hnElements"
+      *ngFor="let i of calcBoundryArray(from, to)"
+      (click)="choose(i)"
+    >
+      <i class="fas fa-atom" fa-lg></i> {{ _elements[i].name }}
+    </li>
+    <li class="scroll_right hnElements" (click)="prev()">
+      <i class="fas fa-arrow-right"></i>
+    </li>
+  </ul>
+  <div id="hnActivator" (click)="hidden = !hidden">
+    <i class="fas fa-caret-down"></i>
+  </div>
+</div>
