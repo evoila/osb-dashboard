@@ -79,5 +79,4 @@ export class BackupPlanComponent implements OnInit {
   private redirect(): void {
     this.router.navigate(['/backup/backup-plans']);
   }
-
 }

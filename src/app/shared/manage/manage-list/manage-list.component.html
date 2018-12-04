@@ -1,0 +1,37 @@
+<div class="section-content">
+  <h2>Databases</h2>
+  <p>The following table contains all currently configured Databases in your Service Instance. You can add databases to your instance.
+    Database deletion is disabled at the moment.
+  </p>
+  <p><a class="btn btn-secondary" routerLink="/manage/create" role="button">Create Database »</a></p>
+  <div class="row">
+    <div class="col-sm-10">&nbsp;</div>
+    <div class="col-sm-2 pageSizeSelector">
+      <select class="form-control" id="pageSize" name="pageSize" #pageSize="ngModel" [(ngModel)]="pagination.pageSize" (change)="pageChange()">
+        <option *ngFor="let i of pageSizes" [ngValue]="i">
+          {{i}}
+        </option>
+      </select>
+    </div>
+  </div>
+  <table class="table table-hover">
+    <thead class="thead-dark">
+      <tr>
+        <th>#</th>
+        <th>Database</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let i of itemList">
+        <td></td>
+        <td>
+          {{i.name}}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <ngb-pagination class="d-flex justify-content-end" [(collectionSize)]="pagination.collectionSize" [(page)]="pagination.page"
+    [(pageSize)]="pagination.pageSize" [maxSize]="pagination.maxSize" [rotate]="pagination.rotate" [boundaryLinks]="pagination.boundaryLinks"
+    (pageChange)="pageChange($event)"></ngb-pagination>
+</div>

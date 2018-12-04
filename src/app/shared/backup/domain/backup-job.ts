@@ -30,11 +30,8 @@ enum JobStatus {
 }
 
 export interface BackupJob extends AbstractJob {
-
     files: any;
-
 }
 
 export interface RestoreJob extends AbstractJob {
-
 }

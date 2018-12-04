@@ -1,0 +1,10 @@
+<div class="section-content">
+    <form #form="ngForm" action="#" (ngSubmit)="onSubmit()" ngNativeValidate>
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="name" name="name" #name="ngModel" [(ngModel)]="manage.name" required>
+        <show-errors [control]="name"></show-errors>
+      </div>    
+      <button type="submit" class="btn btn-primary" [disabled]="!form.form.valid">Submit</button>
+    </form>
+  </div>

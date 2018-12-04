@@ -14,10 +14,25 @@ import { BackupJobListComponent } from './backup/backup-job-list/backup-job-list
 import { RestoreListComponent } from './backup/restore-list/restore-list.component';
 import { BackupJobComponent } from './backup/backup-job/backup-job.component';
 import { RestorePointListComponent } from './backup/restore-point-list/restore-point-list.component';
+import { ManageComponent } from './manage/manage.component';
+import { ManageListComponent } from './manage/manage-list/manage-list.component';
+import { ManageCreateComponent } from './manage/manage-create/manage-create.component';
 
 export const ROUTES = [{
   path: '',
   component: GeneralComponent 
+},
+{
+  path: 'manage',
+  component: ManageComponent,
+  children: [{
+      path: '',
+      component: ManageListComponent,
+      pathMatch: 'full'
+  },{
+    path: 'create',
+    component: ManageCreateComponent
+  }],
 },
 {
   path: 'backup',

@@ -10,8 +10,8 @@ import { Pagination } from '../domain/pagination';
   styleUrls: ['./backup-job-list.component.scss']
 })
 export class BackupJobListComponent implements OnInit {
-  pageSizes = [10, 25, 50, 100, 250];
-  pagination: Pagination = {
+  private pageSizes = [5, 10, 25, 50, 100, 250];
+  private pagination: Pagination = {
     page: 1,
     collectionSize: 0,
     pageSize: 10,
@@ -19,8 +19,7 @@ export class BackupJobListComponent implements OnInit {
     rotate: true,
     boundaryLinks: true
   };
-  withFilter: boolean = false;
-  jobs: BackupJob[];
+  private jobs: BackupJob[];
   
   constructor(protected readonly backupService: BackupService,
     protected readonly route: ActivatedRoute) { }

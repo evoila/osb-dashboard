@@ -18,6 +18,7 @@ export class ModuleSupport {
   // note: using class instead of interface to work around https://github.com/angular/angular-cli/issues/2034
   general: boolean;
   backup: boolean;
+  management: boolean;
   serviceKeys: boolean;
 }
 
