@@ -35,7 +35,7 @@ export class BackupJobListComponent implements OnInit {
       this.pagination.page = page;
     this.loadJobs();
   }
-
+  
   updateResponse(page: number, collectionSize: number): void {
     this.pagination.page = (page + 1);
     this.pagination.collectionSize = collectionSize;

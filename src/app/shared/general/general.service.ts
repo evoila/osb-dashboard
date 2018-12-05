@@ -27,8 +27,8 @@ export class GeneralService extends EntityService {
     return this.get(this.MANAGE_BASE_URL + environment.serviceInstanceId);
   }
 
-  public customLoadAll(path: string): Observable<{} | any> {
-    return this.all(this.MANAGE_BASE_URL + path);
+  public customLoadAll(path: string, pagingAndSorting?: any): Observable<{} | any> {
+    return this.all(this.MANAGE_BASE_URL + path + this.pagingAndSortingHandler(pagingAndSorting));
   }
 
   public customSave(path: string, entity: any): Observable<{} | any> {

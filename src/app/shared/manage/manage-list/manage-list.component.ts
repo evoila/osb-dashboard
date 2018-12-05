@@ -21,11 +21,27 @@ export class ManageListComponent implements OnInit {
   
   constructor(protected readonly generalService: GeneralService) { }
 
+  pageChange(page?: number): void {
+    if (page)
+      this.pagination.page = page;
+    this.loadItems();
+  }
+  
+  updateResponse(page: number, collectionSize: number): void {
+    this.pagination.page = (page + 1);
+    this.pagination.collectionSize = collectionSize;
+  }
+
+  loadItems(): void {
+    this.generalService.customLoadAll('backup/' + this.generalService.getServiceInstanceId() + '/items', this.pagination)
+    .subscribe((items: any) => {
+      this.updateResponse(items.number, items.totalElements);        
+        this.itemList = items.content;        
+    });
+  }
+
   ngOnInit() {
-    this.generalService.customLoadAll('backup/' + this.generalService.getServiceInstanceId() + '/items')
-      .subscribe(
-        (result: any) => { this.itemList = result.content }
-      );
+    this.loadItems();
   }
 
 }

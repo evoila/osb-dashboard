@@ -18,32 +18,6 @@ export class BackupService extends EntityService {
     return environment.serviceInstance;
   }
 
-  private pagingAndSortingHandler(pagingAndSorting: any): string {
-    var resultString: string = '';
-
-    if (pagingAndSorting == null || pagingAndSorting.length == 0) {
-      return resultString;
-    }
-
-    resultString += '?size=' + pagingAndSorting.pageSize;
-    resultString += '&page=' + (pagingAndSorting.page - 1);
-
-    return resultString;
-  }
-
-  private filterHandler(filterQuery: any): string {
-    var resultString: string = '';
-
-    if (filterQuery == null)
-      return resultString;
-
-    Object.keys(filterQuery).forEach(key => {
-      resultString += '&' + key + '=' + filterQuery[key];
-    });
-
-    return resultString;
-  }
-
   public loadAll(entityRel: string, pagingAndSorting?: any): Observable<any> {
     return this.all(this.BACKUP_BASEURL + '/' + entityRel + '/byInstance/' 
       + environment.serviceInstanceId + this.pagingAndSortingHandler(pagingAndSorting));
