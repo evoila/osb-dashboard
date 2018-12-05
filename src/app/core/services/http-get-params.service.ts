@@ -8,9 +8,9 @@ export class HttpGetParamsService {
   constructor() {}
 
   public convertParams(objetToTransform: any): HttpParams {
-    const params = new HttpParams();
+    let params = new HttpParams();
     Object.keys(objetToTransform).forEach((key: string) => {
-      params.append(key, objetToTransform[key]);
+      params = params.append(key, objetToTransform[key]);
     });
     return params;
   }

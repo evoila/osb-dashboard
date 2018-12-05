@@ -1,10 +1,37 @@
 import { Action } from '@ngrx/store';
+/*
+ * Available Topics for expert Mode
+ */
+
+export const TOPIC_ANIMATION = 'Topic Animation';
+export const TOPIC_LEDGEND = 'Topic Ledgend';
+export const TOPIC_TITLE = 'Topic Title';
+
+export class TopicAnimation {
+  readonly type = TOPIC_ANIMATION;
+}
+export class TopicLedgend {
+  readonly type = TOPIC_LEDGEND;
+}
+export class TopicTitle {
+  readonly type = TOPIC_TITLE;
+}
+
+export type ExpertModeTopics = TopicAnimation | TopicLedgend | TopicTitle;
+/*
+ * Generic Actions
+ */
 
 export const UPDATE_OPTIONS_FAIL = '[Options Toolbox] Update Options Fail';
-
+export const OPEN_EXPERT_MODE = '[Options Toolbox] Open Title expert-mode';
+export const CLOSE_EXPERT_MODE = '[Options Toolbox] Close Title expert-mode';
 export class UpdateOptionsFail implements Action {
   readonly type = UPDATE_OPTIONS_FAIL;
   constructor(public payload: string) {}
+}
+export class OpenExpertMode {
+  readonly type = OPEN_EXPERT_MODE;
+  constructor(public payload: ExpertModeTopics) {}
 }
 /*
  * Animations actions
@@ -20,7 +47,7 @@ export class SetAnimationDisabled implements Action {
 export class SetAnimation implements Action {
   readonly type = SET_ANIMATION;
   // payload sets the type of animation eg line
-  constructor(public payload: String) {}
+  constructor(public payload: string) {}
 }
 
 type ToolboxAnimationAction = SetAnimationDisabled | SetAnimation;
@@ -31,34 +58,38 @@ type ToolboxAnimationAction = SetAnimationDisabled | SetAnimation;
 
 export const SET_LEDGEND_DISABLED = '[Options Toolbox] Set Ledgend None';
 export const SET_LEDGEND_POSITION = '[Options Toolbox] Set Ledgend Position';
-export const OPEN_LEDGEND_EXPERT_MODE =
-  '[Options Toolbox] OPEN_LEDGEND_EXPERT_MODE';
-export const CLOSE_LEDGEND_EXPERT_MODE =
-  '[Options Toolbox] CLOSE_LEDGEND_EXPERT_MODE';
 
 export class SetLedgendDisabled implements Action {
   readonly type = SET_LEDGEND_DISABLED;
 }
 export class SetLedgendPosition implements Action {
   readonly type = SET_LEDGEND_POSITION;
-  constructor(public payload: String) {}
-}
-export class OpenLedgendExpertMode implements Action {
-  readonly type = OPEN_LEDGEND_EXPERT_MODE;
-}
-export class CloseLedgendExpertMode implements Action {
-  readonly type = CLOSE_LEDGEND_EXPERT_MODE;
+  constructor(public payload: string) {}
 }
 
-type ToolboxLedgendAction =
-  | SetLedgendDisabled
-  | SetLedgendPosition
-  | OpenLedgendExpertMode
-  | CloseLedgendExpertMode;
+export type ToolboxLedgendAction = SetLedgendDisabled | SetLedgendPosition;
+
+/*
+ * Title Actions
+ */
+export const SET_TITLE_DISABLED = '[Options Toolbox] Set Title Disabled';
+export const SET_TITLE_POSITION = '[Options Toolbox] Set Title Position';
+
+export class SetTitleDisabled implements Action {
+  readonly type = SET_TITLE_DISABLED;
+}
+
+export class SetTitlePosition implements Action {
+  readonly type = SET_TITLE_POSITION;
+  constructor(public payload: string) {}
+}
+
+export type ToolboxTitleAction = SetTitleDisabled | SetTitlePosition;
 
 /*
  * Final export
  */
 export type OptionsToolboxAction =
   | ToolboxLedgendAction
-  | ToolboxAnimationAction;
+  | ToolboxAnimationAction
+  | ToolboxTitleAction;

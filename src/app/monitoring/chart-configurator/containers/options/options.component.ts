@@ -9,6 +9,11 @@ import { take } from 'rxjs/internal/operators';
 import { HorizontalNavViewModel } from '../../components/options-editor-components/horizontal-navigation/horizontal-navigation.component';
 import { OptionsState } from '../../store/reducers/options.reducer';
 
+import {
+  ActionViewModel,
+  OptionDomainViewModel
+} from '../../components/options-editor-components/options-toolbox/options-toolbox.component';
+
 @Component({
   selector: 'sb-options',
   templateUrl: './options.component.html',
@@ -22,6 +27,8 @@ export class OptionsComponent implements OnInit {
 
   // Locks the auto-reload Mechanism after second Loading attempt
   private retry = false;
+
+  private optionsDomainViewModel = optionsDomain;
 
   ngOnInit() {
     this.store.select(fromStore.getAllOptionsLoaded).subscribe(loaded => {
@@ -51,7 +58,7 @@ export class OptionsComponent implements OnInit {
     return Object.keys(options)
       .map(k => options[k])
       .map(option => {
-        return { name: option.name, id: option.id };
+        return { name: option.name!!, id: option.id!! };
       });
   }
 
@@ -62,3 +69,31 @@ export class OptionsComponent implements OnInit {
     );
   }
 }
+
+const animationActions = [
+  {
+    name: 'disableAnimation',
+    Action: fromStore.SetAnimationDisabled,
+    iconClass: 'fas fa-toggle-off'
+  },
+  {
+    name: 'Linear animation',
+    Action: fromStore.SetAnimation,
+    iconClass: 'fas fa-chart-line',
+    payload: 'linear'
+  },
+  {
+    name: 'Ease in Quad animation',
+    Action: fromStore.SetAnimation,
+    iconClass: 'fas fa-toggle-off',
+    payload: 'easeInQuad'
+  }
+] as Array<ActionViewModel>;
+
+const optionsDomain = [
+  {
+    name: 'Animation',
+    iconClass: 'fas fa-signature',
+    actions: animationActions
+  }
+] as Array<OptionDomainViewModel>;

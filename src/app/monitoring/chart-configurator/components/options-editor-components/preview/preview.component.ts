@@ -5,15 +5,18 @@ import { ChartOptionsEntity } from '../../../model/chart-options-entity';
 import { ExampleChartsService } from '../../../services/example-charts.service';
 import { Observable } from 'rxjs';
 
+
 @Component({
   selector: 'sb-preview',
   templateUrl: './preview.component.html',
   styleUrls: ['./preview.component.scss']
 })
 export class PreviewComponent implements OnInit {
-  chartEmitter: any;
+  private chartEmitter: any;
   public chart$: Observable<any>;
   public options: ChartOptionsEntity;
+
+  
 
   constructor(
     private store: Store<fromStore.ChartIncreationAction>,

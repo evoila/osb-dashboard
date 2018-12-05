@@ -18,7 +18,7 @@ export class EndpointService {
   constructor() {}
   public getUri(): string {
     const matchingEnvs: Array<Server> = environment.customEndpoints.filter(
-      (k: Server) => k.identifier === 'DashboardBackendURL'
+      (k: Server) => k.identifier === 'log-metric-backend'
     );
     if (matchingEnvs.length > 0) {
       return matchingEnvs[0].url;

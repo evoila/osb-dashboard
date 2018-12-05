@@ -19,7 +19,8 @@ export const ROUTES = [
       },
       {
         path: 'configurator',
-        component: ConfiguratorComponent
+        loadChildren:
+          'app/monitoring/chart-configurator/chart-configurator.module#ChartConfiguratorModule'
       },
       {
         path: 'logs',

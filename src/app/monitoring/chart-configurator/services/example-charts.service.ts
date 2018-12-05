@@ -12,6 +12,6 @@ export class ExampleChartsService {
     return chartTypes.chartObjectForType[chartType];
   }
   public generateChartFromTypeAndOptions(type: string, options: ChartOptions) {
-    return { ...chartTypes.chartObjectForType[type], options };
+    return { ...chartTypes.chartObjectForType[type], options: {...options} };
   }
 }

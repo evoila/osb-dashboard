@@ -1,3 +1,19 @@
-<p>
-  options-toolbox works!
-</p>
+<div>
+    <h2>I'm rendering</h2>
+  <ul>
+    <li
+      *ngFor="let optionDomain of optionDomains; let i = index"
+      (click)="showActions(i)"
+    >
+      <i class="{{optionDomain.iconClass}} fa-lg"></i> {{ optionDomain.name }}
+      <ul *ngIf="optionDomain.actions && visibleActions === i">
+        <li
+          *ngFor="let action of optionDomain.actions"
+          (click)="dispatchActions(action)"
+        >
+          <i class="{{action.iconClass}} fa-lg"></i> {{ action.name }}
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>

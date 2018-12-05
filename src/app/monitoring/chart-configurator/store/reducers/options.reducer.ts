@@ -57,7 +57,7 @@ const buildObject = function reduceData(
     ) => {
       return {
         ...entities,
-        [option.id]: option
+        [option.id!!]: option
       };
     },
     {
