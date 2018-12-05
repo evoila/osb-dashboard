@@ -8,10 +8,10 @@ import { SidebarEntry } from 'app/core/sidebar';
 })
 export class BackupComponent implements OnInit {
   menu: SidebarEntry[] = [{
-      name: 'Dashboard',
+      name: 'Overview',
       isCollapsible: false,
       links: [{
-        name: 'Overview',
+        name: 'Dashboard',
         href: '/backup',
         iconClass: 'fas fa-tachometer-alt'
       }]
