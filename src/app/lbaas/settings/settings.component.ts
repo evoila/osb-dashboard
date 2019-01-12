@@ -42,7 +42,7 @@ export class SettingsComponent implements OnInit {
     });
   }
 
-  public save(): void {
+  public save($event: any): void {
     let payload = {};
     payload[this.instanceGroupName] = this.jsonSchema.data; 
     
