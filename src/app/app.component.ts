@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
-import { Router, ActivatedRoute } from '@angular/router';
 
 import { BuildTargetService, ModuleSupport } from 'app/shared';
 import { GeneralService } from './shared/general/general.service';
@@ -21,15 +20,14 @@ export class AppComponent implements OnInit {
   public readonly sharedModuleSupport: any;
 
   public notification: Notification | null = null;
+
   ngOnInit() {
   }
-  constructor(
-    private readonly router: Router,
-    private readonly route: ActivatedRoute,
-    private readonly notifications: NotificationService,
+
+  constructor(private readonly notifications: NotificationService,
     private readonly generalService: GeneralService,
-    buildTarget: BuildTargetService
-  ) {
+    buildTarget: BuildTargetService) {
+      
     this.dynamicModuleSupport = buildTarget.dynamicModuleSupport;
     this.sharedModuleSupport = buildTarget.sharedModuleSupport;
     this.moduleSupport = buildTarget.moduleSupport;

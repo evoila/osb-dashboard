@@ -22,9 +22,9 @@ export class GeneralService extends EntityService {
   public getServiceInstance(): string {
     return environment.serviceInstance;
   }
-
+  
   public loadServiceInstance(): Observable<{} | any> {
-    return this.get(this.MANAGE_BASE_URL + environment.serviceInstanceId);
+    return this.get(this.MANAGE_BASE_URL + 'service_instances/' + environment.serviceInstanceId);
   }
 
   public customLoadAll(path: string, pagingAndSorting?: any): Observable<{} | any> {

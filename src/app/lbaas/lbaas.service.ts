@@ -28,6 +28,6 @@ export class LBaasService extends EntityService  {
   }
 
   public validateOrSubmit(entity: any, entityRel: string): Observable<{} | any> {
-    return this.post(this.CERTIFICATE_BASEURL + '/' + serviceInstanceId + '/' + entityRel, entity);
+    return this.patch(this.CERTIFICATE_BASEURL + '/' + serviceInstanceId + '/' + entityRel, entity);
   }
 }

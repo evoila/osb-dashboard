@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
-
 export enum NotificationType {
   Warning = <any>"warning",
   Info = <any>"info",
@@ -31,7 +30,7 @@ export class NotificationService {
     this._notifications.next(notification);
   }
 
-  public addSelfClosing(notification: Notification, debounce: number = 2500) {
+  public addSelfClosing(notification: Notification, debounce: number = 5000) {
     this._notifications.next(notification);
     setTimeout(() => this._notifications.next(null), debounce);
   }

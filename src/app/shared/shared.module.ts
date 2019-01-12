@@ -1,11 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { SchemaFormModule } from "ngx-schema-form";
 
 import { BackupComponent } from './backup/backup.component';
 import { ServiceKeysComponent } from './service-keys/service-keys.component';
-import { NoContentComponent } from './no-content/no-content.component';
 import { RouterModule } from '@angular/router';
 import { BackupService } from './backup/backup.service';
 import { CoreModule } from '../core/core.module';
@@ -29,9 +27,11 @@ import { ManageComponent } from './manage/manage.component';
 import { ManageListComponent } from './manage/manage-list/manage-list.component';
 import { ManageCreateComponent } from './manage/manage-create/manage-create.component';
 
-const components = [BackupComponent,
+const components = [
+  GeneralComponent,
   ServiceKeysComponent,
-  NoContentComponent,
+  ServiceKeysDetailComponent,
+  BackupComponent,
   BackupDashboardComponent,
   BackupPlanComponent,
   BackupPlanListComponent,
@@ -41,9 +41,7 @@ const components = [BackupComponent,
   RestoreJobComponent,
   RestoreListComponent,
   FileEndpointComponent,
-  FileEndpointListComponent,
-  GeneralComponent,
-  ServiceKeysDetailComponent
+  FileEndpointListComponent  
 ]
 
 @NgModule({
@@ -53,7 +51,6 @@ const components = [BackupComponent,
     RouterModule,
     SharedRoutingModule,
     CoreModule,
-    SchemaFormModule,
     NgbPaginationModule
   ],
   declarations: [...components, ManageComponent, ManageListComponent, ManageCreateComponent],

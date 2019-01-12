@@ -52,3 +52,44 @@ $sidebar-height-sm-down: 50px;
 $toolbar-height: 50px;
 
 $enable-shadows: false;
+
+:host ::ng-deep {
+    select-framework-widget div.list-group-item { 
+        border: 0;
+        padding: 0 0.75rem 0.75rem 0;
+    }
+
+    button.close span {
+        color: #000 !important;
+        text-decoration: none !important;
+        opacity: .75 !important;
+    }
+}
+
+:host ::ng-deep {
+    select-widget-widget {
+        legend {
+            display: none;
+        }
+
+        [draggable=true]:hover {
+            box-shadow: none;
+        }
+
+        input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        section-widget > div > label:first-child {
+            font-weight: 500;
+            font-size: 1.2rem;
+        } 
+    }
+    
+
+    button {
+        color: #fff;
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+} 

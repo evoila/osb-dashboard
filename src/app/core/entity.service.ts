@@ -43,8 +43,7 @@ export class EntityService {
       .get(url).pipe(
       map(res => {
         return res.json() as any;
-      })
-      , catchError(e => this.httpService.formatError(e)));
+      }), catchError(e => this.httpService.formatError(e)));
   }
 
   protected delete(url: string): Observable<{} | any> {
@@ -52,8 +51,7 @@ export class EntityService {
       .delete(url).pipe(
       map(res => {
         return res.json() as any;
-      })
-      , catchError(e => this.httpService.formatError(e)));
+      }), catchError(e => this.httpService.formatError(e)));
   }
 
   protected all(url: string): Observable<{} | any> {
@@ -61,8 +59,7 @@ export class EntityService {
       .get(url).pipe(
       map(res => {
         return res.json() as any;
-      }),
-      catchError(e => this.httpService.formatError(e)));
+      }), catchError(e => this.httpService.formatError(e)));
   }
 
   protected post(url: string, entity: any): Observable<{} | any> {
@@ -70,8 +67,7 @@ export class EntityService {
       .post(url, entity).pipe(
       map(res => {
         return res.json() as any;
-      })
-      , catchError(e => this.httpService.formatError(e)));
+      }), catchError(e => this.httpService.formatError(e)));
   }
 
   protected patch(url: string, entity: any): Observable<{} | any> {
@@ -79,8 +75,7 @@ export class EntityService {
       .patch(url, entity).pipe(
       map(res => {
         return res.json() as any;
-      })
-      , catchError(e => this.httpService.formatError(e)));
+      }), catchError(e => this.httpService.formatError(e)));
   }
 
 }

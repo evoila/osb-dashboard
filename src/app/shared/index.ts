@@ -5,4 +5,4 @@
 export * from './build-target.service';
 export * from './backup/backup.component';
 export * from './service-keys/service-keys.component';
-export * from './no-content/no-content.component'
+export * from './general/general.component';

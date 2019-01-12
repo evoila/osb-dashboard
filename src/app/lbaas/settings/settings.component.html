@@ -1,0 +1,20 @@
+<div class="section-content">
+  <div class="card" style="margin-bottom: 30px">
+    <div class="card-header">
+      <i class="fas fa-info-circle"></i>&nbsp;<b>IMPORTANT</b>
+    </div>
+    <div class="card-body">
+      <p>To enable your custom Load Balancer for your Workload you need to configure your DNS according to your
+        preferences and direct
+        all entries to the Public IP below.
+      </p>
+      <b>
+        Public IP: {{publicIp}}
+      </b>
+    </div>
+  </div>
+  <h4>Configuration of General Settings</h4>
+  <json-schema-form loadExternalAssets="false" [schema]="jsonSchema.schema" [layout]="jsonSchema.layout" [(data)]="jsonSchema.data"
+    framework="bootstrap-4" (onSubmit)="save($event)">
+  </json-schema-form>
+</div>
