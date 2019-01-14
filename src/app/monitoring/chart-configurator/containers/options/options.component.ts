@@ -9,6 +9,7 @@ import { take } from 'rxjs/internal/operators';
 import { HorizontalNavViewModel } from '../../components/options-editor-components/horizontal-navigation/horizontal-navigation.component';
 import { OptionsState } from '../../store/reducers/options.reducer';
 
+
 import {
   ActionViewModel,
   OptionDomainViewModel
@@ -23,12 +24,12 @@ export class OptionsComponent implements OnInit {
   // Actual Data
   private options: { [id: string]: ChartOptionsEntity };
   // Options View Model is a very flat representation for Child Components to render View
-  private optionsViewModel: Array<HorizontalNavViewModel>;
+  public optionsViewModel: Array<HorizontalNavViewModel>;
 
   // Locks the auto-reload Mechanism after second Loading attempt
   private retry = false;
 
-  private optionsDomainViewModel = optionsDomain;
+  public optionsDomainViewModel = optionsDomain;
 
   ngOnInit() {
     this.store.select(fromStore.getAllOptionsLoaded).subscribe(loaded => {
@@ -86,14 +87,79 @@ const animationActions = [
     name: 'Ease in Quad animation',
     Action: fromStore.SetAnimation,
     iconClass: 'fas fa-toggle-off',
-    payload: 'easeInQuad'
-  }
+    payload: 'easeInOutBounce'
+  }, 
 ] as Array<ActionViewModel>;
 
+const ledgendActions = [
+  {
+    name: 'Disable Ledgend',
+    Action: fromStore.SetLedgendDisabled,
+    iconClass: ''
+  },
+  {
+    name: 'Display Ledgend Right',
+    Action: fromStore.SetLedgendPosition,
+    iconClass: '',
+    payload: 'right'
+  },
+  {
+    name: 'Display Ledgend Left',
+    Action: fromStore.SetLedgendPosition,
+    iconClass: '',
+    payload: 'left'
+  },
+  {
+    name: 'Display Ledgend Bottom',
+    Action: fromStore.SetLedgendPosition,
+    iconClass: '',
+    payload: 'bottom'
+  },
+  {
+    name: 'Display Ledgend Top',
+    Action: fromStore.SetLedgendPosition,
+    iconClass: '',
+    payload: 'top'
+  }
+]
+const titleActions = [
+  {
+    name: 'Disable Title',
+    Action: fromStore.SetTitleDisabled,
+  },
+  {
+    name: 'Position Title Left',
+    Action: fromStore.SetTitlePosition,
+    payload: 'left'
+  },
+  {
+    name: 'Position Title Right',
+    Action: fromStore.SetTitlePosition,
+    payload: 'right'
+  },
+  {
+    name: 'Position Title Top',
+    Action: fromStore.SetTitlePosition,
+    payload: 'top'
+  },
+  {
+    name: 'Position Title Bottom',
+    Action: fromStore.SetTitlePosition,
+    payload: 'bottom'
+  }
+]
 const optionsDomain = [
   {
     name: 'Animation',
     iconClass: 'fas fa-signature',
     actions: animationActions
+  },
+  {
+    name: 'Ledgend',
+    actions: ledgendActions
+  },
+  {
+    name: 'Title',
+    actions: titleActions
   }
 ] as Array<OptionDomainViewModel>;

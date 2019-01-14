@@ -2,7 +2,7 @@ import { Injectable, OnInit } from '@angular/core';
 import { Effect, Actions } from '@ngrx/effects';
 import * as fromOptionsToolbox from '../actions/options.toolbox.action';
 import { Store } from '@ngrx/store';
-import { withLatestFrom, switchMap, map } from 'rxjs/operators';
+import { withLatestFrom, switchMap } from 'rxjs/operators';
 import {
   getChartIncreationOptions,
   getChartIncreationOptionsSet
@@ -11,7 +11,6 @@ import { ChartOptionsEntity } from '../../model/chart-options-entity';
 import { SetChartOptions } from '../actions/chart.increation.action';
 
 import { of, Observable } from 'rxjs';
-import { take } from 'rxjs/internal/operators';
 import { ChartIncreationState } from '../reducers/chart.increation.reducer';
 
 
@@ -31,67 +30,62 @@ export class OptionsToolboxEffect implements OnInit {
     );
   };
 
-  private returnError = () =>
-    of(new fromOptionsToolbox.UpdateOptionsFail('options not Set'));
+  // The purpose of this Method is to initialize vairables if not set to not spread an undefined Object
+  private initializeIfNotSet(data :any, objectKey: string){
+    return data.options[objectKey]? data.options[objectKey] : {};
+  }
 
-  /*---- Animations ----*/
-  // TODO: Reimplement with latestFromStore Function
-  @Effect()
-  disabledAnimations$ = this.actions
-    .ofType(fromOptionsToolbox.SET_ANIMATION_DISABLED)
-    .pipe(
-      switchMap(() => {
-        return this.store.select(getChartIncreationOptionsSet).pipe(
-          take(1),
-          switchMap(isSet => {
-            return this.store.select(getChartIncreationOptions).pipe(
-              take(1),
-              switchMap(
-                (
-                  options
-                ): Observable<
-                  SetChartOptions | fromOptionsToolbox.UpdateOptionsFail
-                > => {
-                  if (isSet) {
-                    const optionsEntity = {
-                      ...options[Object.keys(options)[0]]
-                    };
-                    const newOptionsState = Object.assign(optionsEntity, {
-                      options: { animation: false }
-                    } as ChartOptionsEntity);
-                    return of(new SetChartOptions(newOptionsState));
-                  }
-                  return this.returnError();
-                }
-              )
-            );
-          })
-        );
-      })
-    );
-
-  @Effect()
-  setAnimation$ = this.actions.ofType(fromOptionsToolbox.SET_ANIMATION).pipe(
-    map(payload => payload),
-    this.latestFromStore(),
-    switchMap(
-      (
-        payload
-      ): Observable<SetChartOptions | fromOptionsToolbox.UpdateOptionsFail> => {
-        if (payload.isSet) {
-          const easing: string = payload.payload.payload;
-          const optionsEntity = {
+  private loadAndDispatch = (closure: (optionsEntity: ChartOptionsEntity ,data?: any) => ChartOptionsEntity ) => {
+    return switchMap((payload:{payload: any, isSet: boolean, options: any}): Observable<
+        SetChartOptions | fromOptionsToolbox.UpdateOptionsFail
+      > => {
+        if (payload['isSet']) { 
+          const data = payload['payload']['payload'];
+          const optionsEntity: ChartOptionsEntity = {
             ...payload.options[Object.keys(payload.options)[0]]
           };
-          const newOptionsState = Object.assign(optionsEntity, {
-            options: { animation: { easing } }
-          } as ChartOptionsEntity);
+          const newOptionsState = data? closure(optionsEntity ,data): closure(optionsEntity);
           return of(new SetChartOptions(newOptionsState));
         }
         return this.returnError();
+    });
+}
+  private returnError = () =>
+    of(new fromOptionsToolbox.UpdateOptionsFail('options not Set'));
+
+
+  @Effect()
+  disabledAnimations$ = this.actions.ofType(fromOptionsToolbox.SET_ANIMATION_DISABLED).pipe(this.latestFromStore(),
+   this.loadAndDispatch((optionsEntity, data) => {
+    return {
+      ...optionsEntity,
+      options: {
+        ...optionsEntity.options,
+        animation: false
       }
-    )
-  );
+    }as ChartOptionsEntity; 
+  } 
+  ));
+
+
+  @Effect()
+  setAnimation$ = this.actions.ofType(fromOptionsToolbox.SET_ANIMATION).pipe(
+    this.latestFromStore(),
+    this.loadAndDispatch((optionsEntity, data) => {
+      // has to be set because spread-operator on undefined will cause an runtime error
+      const animationObject = this.initializeIfNotSet(optionsEntity, 'animation');
+      return {
+        ...optionsEntity,
+        options: {
+          ...optionsEntity.options,
+          animation:{
+            ...animationObject,
+            easing: data
+          }
+        }
+      }
+    })
+  )
 
   /*---- Ledgends ----*/
   @Effect()
@@ -99,28 +93,16 @@ export class OptionsToolboxEffect implements OnInit {
     .ofType(fromOptionsToolbox.SET_LEDGEND_DISABLED)
     .pipe(
       this.latestFromStore(),
-      switchMap(
-        (
-          payload
-        ): Observable<
-          SetChartOptions | fromOptionsToolbox.UpdateOptionsFail
-        > => {
-          if (payload.isSet) {
-            const optionsEntity: ChartOptionsEntity = {
-              ...payload.options[Object.keys(payload.options)[0]]
-            };
-            const newOptionsState = {
-              ...optionsEntity,
-              options: {
-                ...optionsEntity.options,
-                ledgend: { ...optionsEntity.options.legend, display: false }
-              }
-            };
-            return of(new SetChartOptions(newOptionsState));
+      this.loadAndDispatch((optionsEntity, data) => {
+        const ledgendObject = this.initializeIfNotSet(optionsEntity, 'legend');
+        return {
+          ...optionsEntity,
+          options: {
+            ...optionsEntity.options,
+            legend: { ...ledgendObject, display: false }
           }
-          return this.returnError();
-        }
-      )
+        };
+      })
     );
 
   @Effect()
@@ -128,38 +110,65 @@ export class OptionsToolboxEffect implements OnInit {
     .ofType(fromOptionsToolbox.SET_LEDGEND_POSITION)
     .pipe(
       this.latestFromStore(),
-      switchMap(
-        (
-          payload
-        ): Observable<
-          SetChartOptions | fromOptionsToolbox.UpdateOptionsFail
-        > => {
-          if (payload.isSet) {
-            const position: string = payload.payload.payload;
-            const optionsEntity: ChartOptionsEntity = {
-              ...payload.options[Object.keys(payload.options)[0]]
-            };
-            const newOptionsState = {
-              ...optionsEntity,
-              options: {
-                ...optionsEntity.options,
-                ledgend: {
-                  ...optionsEntity.options.legend,
-                  display: true,
-                  position
-                }
-              }
-            };
-            return of(new SetChartOptions(newOptionsState));
+      this.loadAndDispatch((optionsEntity, data)=> {
+        const ledgendObject = this.initializeIfNotSet(optionsEntity, 'legend');
+        return {
+          ...optionsEntity,
+          options: {
+            ...optionsEntity.options,
+            legend: {
+              ...ledgendObject,
+              display: true,
+              position: data
+            }
           }
-          return this.returnError();
-        }
-      )
+        };
+      })
     );
-  
-  
+
   @Effect()
-  
+  setTitleDisabled$ = this.actions.
+  ofType(fromOptionsToolbox.SET_TITLE_DISABLED).
+  pipe(
+    this.latestFromStore(),
+    this.loadAndDispatch((optionsEntity, data) => {
+      const titleObject = this.initializeIfNotSet(optionsEntity, 'title');
+      return {
+        ...optionsEntity,
+        options: {
+          ...optionsEntity.options,
+          title: {
+            ...titleObject,
+            display: false
+          }
+        }
+      };
+    })
+  )
+
+
+
+  @Effect()
+  setTitlePosition$ = this.actions.
+  ofType(fromOptionsToolbox.SET_TITLE_POSITION).
+  pipe(
+    this.latestFromStore(),
+    this.loadAndDispatch((optionsEntity, data) => {
+      const titleObject = this.initializeIfNotSet(optionsEntity, 'title');
+      return {
+        ...optionsEntity,
+        options: {
+          ...optionsEntity.options,
+          title: {
+            ...titleObject,
+            display: true,
+            position: data
+          }
+        }
+      };
+    })
+  )
+
 
   constructor(
     private actions: Actions,

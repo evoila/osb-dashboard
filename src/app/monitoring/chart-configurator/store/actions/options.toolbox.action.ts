@@ -1,4 +1,5 @@
 import { Action } from '@ngrx/store';
+
 /*
  * Available Topics for expert Mode
  */
@@ -86,6 +87,17 @@ export class SetTitlePosition implements Action {
 
 export type ToolboxTitleAction = SetTitleDisabled | SetTitlePosition;
 
+/*
+ * Layout Actions
+ */
+
+  export const LAYOUT_SET_PADDING = '[Options Toolbox] Layout Set Padding';
+
+  export class LayoutSetPadding implements Action {
+    readonly type = LAYOUT_SET_PADDING;
+    constructor(public payload: string | {left:number, right:number, top:number, bottom:number}) {}
+  }
+  export type ToolboxLayoutAction = LayoutSetPadding;
 /*
  * Final export
  */

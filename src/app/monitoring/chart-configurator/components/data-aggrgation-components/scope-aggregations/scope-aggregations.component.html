@@ -1,0 +1,34 @@
+<div cdkDropList (cdkDropListDropped)="drop($event)" id="list-2" cdkDropListConnectedTo="list-1">
+  <ngb-accordion  #acc="ngbAccordion">
+      <ngb-panel>
+          <ng-template ngbPanelTitle>
+            <span> Drag your aggregations in this field to add them to the chart</span>
+          </ng-template>
+        </ngb-panel>
+        <ng-container *ngIf="aggregations$ | async as aggregations">
+    <ngb-panel *ngFor="let aggregation of aggregations | keyvalue">
+      <ng-template ngbPanelTitle>
+          
+        <span [ngClass]="getWarnClass(aggregation.key)"><i *ngIf="!aggregation.value.appId" class="fas fa-exclamation-triangle"></i>{{aggregation.value.aggregation.name}} </span>
+          
+        
+      </ng-template>
+      <ng-template ngbPanelContent>
+          <div class="row">
+              <div class="form-group">
+                <label>Name</label>
+                <input class="form-control" type="text" name="name" [ngModel]="aggregation.value.name" (ngModelChange)="updateName($event, aggregation.key)" required>
+              </div>
+              <div class="form-group">
+                <sb-appid [selected]="aggregation.value.appId" (app)="updateId($event, aggregation.key)"></sb-appid>
+              </div>
+          </div>
+          <div class="row" >
+            <button type="button" class="btn btn-danger" (click)="delete(aggregation.key)">delete</button>
+            <button type="button" class="btn btn-primary" (click)="update(aggregation.key, aggregation.value)">save</button>
+        </div>
+      </ng-template>
+    </ngb-panel>
+  </ng-container>
+  </ngb-accordion>
+</div>

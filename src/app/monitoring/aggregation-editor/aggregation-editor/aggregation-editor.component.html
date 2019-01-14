@@ -1,12 +1,37 @@
 <div class="row" style="margin: 0px">
   <form class="form-horizontal" #chartForm="ngForm" (submit)="runAggregation()">
+    
     <div class="row">
+      <div class="form-group">
+        <label>Name</label>
+        <input class="form-control" type="text" name="name" [(ngModel)]="name" required>
+      </div>
+    </div>
 
+    <div class="row">
+      <div class="form-group">
+        <label>Describe what your aggregation does</label>
+        <textarea class="form-control" rows="3" cols="60" name="description" [(ngModel)]="description"></textarea> 
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form-group">
+        <label>Choose between Logs and Metrics</label>
+        <select class="form-control" name="type" [ngModel]="dataStructure" (ngModelChange)="setDataStructure($event)" required>
+          <option [value]="">-- Please select --</option>
+          <option *ngFor="let struct of datatStructures" [value]="struct">{{struct}}</option>
+        </select>
+      </div>
+
+    </div>
+
+    <div class="row" *ngIf="!emittedType">
       <div class="form-group">
         <label>Display Type</label>
-        <select class="form-control" name="type" [(ngModel)]="displayType.type" (ngModelChange)="setDisplayType($event)" required>
+        <select class="form-control" name="type" [ngModel]="displayType.type" (ngModelChange)="setDisplayType($event)" required>
           <option [value]="">-- Please select --</option>
-          <option *ngFor="let displayType of displayTypes" [value]="displayType.type">{{displayType.name}}</option>
+          <option *ngFor="let displayTypeIterator of displayTypes" [value]="displayTypeIterator.type">{{displayTypeIterator.name}}</option>
         </select>
       </div>
 
@@ -24,10 +49,10 @@
         <textarea rows="15" cols="60" name="aggs" *ngIf="useTextEditor" [(ngModel)]="aggs"></textarea>
       </div>
     </div>
-    <div class="row" *ngIf="displayType && displayType.type">
+    <div class="row" >
       <div calss="col-md-12">
-        <button type="button" class="btn btn-primary" (click)="showAggregation()">Show Aggregation</button>
-        <button type="submit" class="btn btn-warn">Run Aggregation</button>
+        <button type="button" class="btn btn-danger" (click)="cancel()">Cancel</button>
+        <button *ngIf="displayType && displayType.type" type="submit" class="btn btn-primary"(click)="runAggregation()">Save</button>
       </div>
     </div>
   </form>

@@ -2,30 +2,39 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StoreModule } from '@ngrx/store';
 import { reducers, effects } from './store';
-import { OptionsComponent } from './containers/options/options.component';
 import { EffectsModule } from '@ngrx/effects';
-import { ConfiguratorComponent } from './containers/configurator/configurator.component';
 
 import { SharedModule } from '../shared/shared.module';
 import { services } from './services/index';
 import { ChartDirective } from './chart.directive';
 import { ConfiguratorRoutingModule } from './configurator-routing.module';
 import { componentsDeclarations } from './components/index';
+import { containerComponents } from './containers';
+import { BottomSheetAggregationSheet } from './components/data-aggrgation-components/aggregation-list/aggregation-list.component';
+import { MatBottomSheetModule } from '@angular/material';
+import { AggregationEditorModule } from '../aggregation-editor/aggregation-editor.module';
+import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule } from '@angular/forms';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
     StoreModule.forFeature('charts', reducers),
     EffectsModule.forFeature(effects),
     SharedModule,
     ConfiguratorRoutingModule,
-    ConfiguratorRoutingModule
+    MatBottomSheetModule,
+    AggregationEditorModule,
+    NgbAccordionModule,
+    DragDropModule
   ],
+  entryComponents: [BottomSheetAggregationSheet],
   declarations: [
-    OptionsComponent,
-    ConfiguratorComponent,
     ChartDirective,
-    ...componentsDeclarations
+    ...componentsDeclarations,
+    ...containerComponents
   ],
   providers: services
 })

@@ -1,0 +1,13 @@
+<h2> aggregation works
+</h2>
+<ng-container
+  *ngIf="aggregationEditorPresent; then aggregationEditorActive; else datAggregationActive ">
+</ng-container>
+<ng-template #datAggregationActive>
+  <p> Test</p>
+  <sb-aggregation-list [aggregations]="aggregations$" (aggregationEditor)="aggregationEditorPresent = !aggregationEditorPresent"> </sb-aggregation-list>
+  <sb-scope-aggregations></sb-scope-aggregations>
+</ng-template>
+<ng-template #aggregationEditorActive>
+    <sb-create-aggregation (result)="getAggregationResult($event)" [type]="chartType" (close)="aggregationEditorPresent = !aggregationEditorPresent"></sb-create-aggregation>
+</ng-template>

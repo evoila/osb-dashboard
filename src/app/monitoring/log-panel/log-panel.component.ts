@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import * as moment from 'moment/moment';
-import { SearchService } from '../search.service';
+import { SearchService } from '../shared/services/search.service';
 import { SearchRequest } from 'app/monitoring/model/search-request';
 import { Hits, SearchResponse } from 'app/monitoring/model/search-response';
 import { interval, Subscription, of, Observable } from 'rxjs';

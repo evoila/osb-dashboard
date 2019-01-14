@@ -1,9 +1,7 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 
-import { SearchService } from 'app/monitoring/search.service';
+import { SearchService } from 'app/monitoring/shared/services/search.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-
-
 
 @Component({
   selector: 'sb-log-filter',
@@ -19,10 +17,10 @@ export class LogFilterComponent implements OnInit {
   public value: string;
   private modal: NgbModalRef | null = null;
 
-
-  constructor(private modalService: NgbModal,
-    private searchService: SearchService,
-  ) { }
+  constructor(
+    private modalService: NgbModal,
+    private searchService: SearchService
+  ) {}
 
   ngOnInit() {
     this.getTopics();
@@ -38,11 +36,9 @@ export class LogFilterComponent implements OnInit {
 
       this.emitChanges();
       this.modal!!.close();
-
     }
     this.topic = '';
     this.value = '';
-
   }
   delete(filter: [string, string]) {
     this.filters = this.filters.filter(k => k !== filter);
@@ -62,10 +58,11 @@ export class LogFilterComponent implements OnInit {
   getTopics() {
     this.searchService.getMappings().subscribe(
       data => {
-        this.topics = data as string[];
+        // since this is a Log-Specific Feature we alwys want the definition of the log-Type
+        this.topics = data['logs'] as string[];
       },
       error => {
-        //TODO: Error-Handling here
+        // TODO: Error-Handling here
       }
     );
   }

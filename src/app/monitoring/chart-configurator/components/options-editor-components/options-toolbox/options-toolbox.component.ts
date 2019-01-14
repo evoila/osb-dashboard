@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ChartIncreationAction } from '../../../store/actions/chart.increation.action';
 import { Store } from '@ngrx/store';
+import { NavigateToAggregations } from '../../../store/actions/router.action';
 
 @Component({
   selector: 'sb-options-toolbox',
@@ -8,8 +9,6 @@ import { Store } from '@ngrx/store';
   styleUrls: ['./options-toolbox.component.scss']
 })
 export class OptionsToolboxComponent implements OnInit {
-
-
   // used to unfold actions in the template -1 indicates no action visible
   public visibleActions = -1;
 
@@ -23,9 +22,12 @@ export class OptionsToolboxComponent implements OnInit {
       this.store.dispatch(new action.Action());
     }
   }
+  public saveOptions() {
+    this.store.dispatch(new NavigateToAggregations());
+  }
   public showActions(index: number) {
     if (this.visibleActions === index) {
-      this.visibleActions = 0;
+      this.visibleActions = -1;
     } else {
       this.visibleActions = index;
     }

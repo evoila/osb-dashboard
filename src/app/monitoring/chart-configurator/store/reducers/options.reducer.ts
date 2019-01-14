@@ -1,6 +1,5 @@
 import * as fromOptions from '../actions/options.action';
 import { ChartOptionsEntity } from 'app/monitoring/chart-configurator/model/chart-options-entity';
-import { LOAD_OPTIONS_FAIL } from '../actions/options.action';
 
 export interface OptionsState {
   entities: { [id: string]: ChartOptionsEntity };

@@ -1,13 +1,17 @@
-import { Component, OnInit, OnChanges, Output, Input, EventEmitter } from '@angular/core';
-
+import {
+  Component,
+  OnInit,
+  OnChanges,
+  Output,
+  Input,
+  EventEmitter
+} from '@angular/core';
 
 import { AggregationTemplateService } from '../aggregation-template.service';
-
 
 import { Observable } from 'rxjs';
 import { ChartingUtilsService } from '../charting-utils.service';
 import { Field } from 'app/monitoring/aggregation-editor/model/field';
-
 
 @Component({
   selector: 'aggregation-editor',
@@ -16,10 +20,15 @@ import { Field } from 'app/monitoring/aggregation-editor/model/field';
 })
 export class AggregationEditorComponent implements OnInit, OnChanges {
   @Output() result = new EventEmitter();
-  @Input()
-  public fields: Observable<Array<Field>>;
-  @Input()
-  public type: String;
+  @Input('fields')
+  public fields$: Observable<Map<string, Array<Field>>>;
+  public fields: Map<string, Array<Field>>;
+  @Input('type')
+  public emittedType: string;
+  public type: string;
+
+  public name: string;
+  public description: string;
 
   @Input() set aggregations(aggregations: any) {
     this.aggsAsText = aggregations[0].command;
@@ -30,11 +39,13 @@ export class AggregationEditorComponent implements OnInit, OnChanges {
   public displayTypes: Array<any>;
   public displayType: any = {};
   public availableSearchObjects: Array<string>;
+  public dataStructure: string;
+  public datatStructures = ['logs', 'metrics'];
   public request: any = {
-    'stored_fields': ['*'],
-    'index': ['*'],
-    'body': null,
-    'type': ''
+    stored_fields: ['*'],
+    index: ['*'],
+    body: null,
+    type: ''
   };
   public data = {
     searchObjectName: '',
@@ -42,34 +53,29 @@ export class AggregationEditorComponent implements OnInit, OnChanges {
     fields: Array<Field>()
   };
   public aggs: any = {
-    'aggs': {
-      0: {
-      }
+    aggs: {
+      0: {}
     }
   };
-  public useTextEditor: boolean = false;
-  private aggsAsText: string
+  public useTextEditor = false;
+  private aggsAsText: string;
 
-
-  constructor(private aggregationTemplateService: AggregationTemplateService,
-    private chartingUtils: ChartingUtilsService) {
+  constructor(
+    private aggregationTemplateService: AggregationTemplateService,
+    private chartingUtils: ChartingUtilsService
+  ) {
     this.loadDisplayTypes();
   }
 
   ngOnInit() {
-
-    this.loadFields();
-    this.setDisplayType(this.displayType.type);
-
-    if (this.type) {
-      this.displayType = {
-        'type': this.type
-      };
-    }
+    this.setDisplayType(this.emittedType);
+    this.fields$.subscribe((fields: Map<string, Array<Field>>) => {
+      this.fields = fields;
+    });
 
     if (!this.data.searchObjectName) {
       this.displayType = {
-        'type': ''
+        type: ''
       };
     }
   }
@@ -86,71 +92,86 @@ export class AggregationEditorComponent implements OnInit, OnChanges {
 
   public stringifyAggs() {
     if (this.useTextEditor) {
-      this.aggs = this.aggsAsText
+      this.aggs = this.aggsAsText;
     } else {
       this.aggs = JSON.parse(this.aggsAsText);
     }
   }
 
+  public loadFields(struct: string) {
+    this.data.fields = this.fields[struct];
+    this.aggregationTypes = this.aggregationTemplateService.getAggregationTypes(
+      this.data.fields,
+      this.displayType.type
+    );
+  }
+  private getAggregationTypes() {
+    this.aggregationTypes = this.aggregationTemplateService.getAggregationTypes(
+      this.data.fields,
+      this.type
+    );
+  }
 
-  public loadFields() {
-    this.fields.subscribe((fields: Array<Field>) => {
-      this.data.fields = fields;
-      this.aggregationTypes = this.aggregationTemplateService.getAggregationTypes(this.data.fields, 'line');
-    });
+  public setDataStructure(struct: string) {
+    this.dataStructure = struct;
+    this.setDisplayType(this.type);
+    this.loadFields(struct);
+    if (this.type) {
+      this.getAggregationTypes();
+    }
   }
 
   public setDisplayType($event: any): boolean {
-    const type = $event;
-    if (this.data.fields.length === 0) {
-      return false;
-    }
+    this.type = $event;
 
-    if (type) {
-      this.aggregationTypes = this.aggregationTemplateService
-        .getAggregationTypes(this.data.fields, type);
-
-      this.displayType = this.displayTypes
-        .filter((el: any) => { return el.type === type; })[0];
+    if (this.type) {
+      if (this.data.fields.length !== 0) {
+        this.getAggregationTypes();
+      }
+      this.displayType = this.chartingUtils
+        .chartTypes()
+        .filter((el: any) => el.type === this.type)[0];
     }
     return true;
-
   }
 
-
   public runAggregation(): boolean {
-    let parsedAggs: any = {};
-
     if (this.useTextEditor) {
-      parsedAggs = this.parseAggs(this.aggs);
+      this.aggs = this.parseAggs(this.aggs);
     }
-
-    this.result.emit({
+    const applicableOn = this.aggregationTemplateService.getChartTypeForAggregation(
+      this.aggs
+    );
+    const returnVal = {
       type: this.displayType.type,
-      aggregations: this.useTextEditor ? parsedAggs : this.aggs,
+      aggregations: this.aggs,
       searchObjectName: this.data.searchObjectName,
       fieldToCount: this.data.fieldToCount,
-    });
+      applicableOn,
+      name: this.name,
+      description: this.description
+    };
+    this.result.emit(returnVal);
     return true;
   }
 
   private parseAggs(aggs: any) {
     let parsed = {};
     try {
-      parsed = JSON.parse(this.aggs)
+      parsed = JSON.parse(this.aggs);
     } catch (err) {
-      alert('Parsing aggregation string error see console')
+      alert('Parsing aggregation string error see console');
       console.log(err);
     }
 
     return parsed;
   }
 
-
-  public showAggregation(): void {
-    console.log(this.aggs);
+  public cancel(): void {
+    this.result.emit('cancel');
   }
 
-  debug(o: any): string { return JSON.stringify(o); }
-
+  debug(o: any): string {
+    return JSON.stringify(o);
+  }
 }

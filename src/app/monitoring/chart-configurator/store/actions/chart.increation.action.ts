@@ -1,8 +1,20 @@
 import { Action } from '@ngrx/store';
 import { ChartOptionsEntity } from '../../model/chart-options-entity';
+import { AggregationRequestObject } from '../../model/aggregationRequestObject';
+import { SearchResponse } from '../../../model/search-response';
 export const SET_CHART_TYPE = '[Increation] Set Chart Type';
 export const SET_CHART_OPTIONS = '[Increation] Set Chart Options';
+
 export const SET_CHART_AGGREGATIONS = '[Increation] Set Chart Aggregations';
+export const UPDATE_CHART_AGGREGATIONS =
+  '[Increation] Update Chart Aggregations';
+export const DELETE_CHART_AGGREGATIONS =
+  '[Increation] Delete Chart Aggregations';
+
+export const FIRE_AGGREGATIONS = '[Increation] Fire Aggregation';
+export const FIRE_AGGREGATIONS_SUCCESS =
+  '[Increation] Fire Aggregation Success';
+export const FIRE_AGGREGATIONS_FAILED = '[Increation] Fire Aggregation Failed';
 
 export class SetChartType implements Action {
   readonly type = SET_CHART_TYPE;
@@ -14,11 +26,43 @@ export class SetChartOptions implements Action {
 }
 export class SetChartAggregations implements Action {
   readonly type = SET_CHART_AGGREGATIONS;
-  // Todo implement Datastructure
-  constructor(public payload: Array<any>) {}
+  constructor(public payload: AggregationRequestObject) {}
 }
+export class UpdateChartAggregations implements Action {
+  readonly type = UPDATE_CHART_AGGREGATIONS;
+  constructor(
+    public payload: AggregationRequestObject,
+    public aggUuid: string
+  ) {}
+}
+export class DeleteChartAggregations implements Action {
+  readonly type = DELETE_CHART_AGGREGATIONS;
+  constructor(public aggUuid: string) {}
+}
+
+export class FireAggregations implements Action {
+  readonly type = FIRE_AGGREGATIONS;
+  constructor(public payload: Array<AggregationRequestObject>) {}
+}
+
+export class FireAggregationsFailed implements Action {
+  readonly type = FIRE_AGGREGATIONS_FAILED;
+}
+
+export class FireAggregationSuccess implements Action {
+  readonly type = FIRE_AGGREGATIONS_SUCCESS;
+  constructor(public payload: Array<SearchResponse>) {}
+}
+
+export type FireTypes =
+  | FireAggregations
+  | FireAggregationSuccess
+  | FireAggregationsFailed;
 
 export type ChartIncreationAction =
   | SetChartType
   | SetChartOptions
-  | SetChartAggregations;
+  | SetChartAggregations
+  | UpdateChartAggregations
+  | DeleteChartAggregations
+  | FireTypes;

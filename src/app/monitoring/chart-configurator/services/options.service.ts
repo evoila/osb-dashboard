@@ -7,7 +7,6 @@ import { Observable } from 'rxjs/internal/Observable';
 import { ChartOptionsEntity } from '../model/chart-options-entity';
 import { HttpGetParamsService } from '../../../core/services/http-get-params.service';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { error } from 'util';
 import { catchError } from 'rxjs/internal/operators';
 
 @Injectable({

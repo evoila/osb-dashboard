@@ -54,18 +54,13 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { storeFreeze } from 'ngrx-store-freeze';
 
 import { WindowService } from './window.service';
-import { AppidComponent } from './appid/appid.component';
 import { LogPanelComponent } from './log-panel/log-panel.component';
 import { LogListComponent } from './log-list/log-list.component';
-import { SearchService } from './search.service';
 import { LogSearchComponent } from './log-search/log-search.component';
 import { LogFilterComponent } from './log-filter/log-filter.component';
 import { TimefilterComponent } from './timefilter/timefilter.component';
 
-import { SidebarNavComponent } from 'app/core/sidebar';
 import { CoreModule } from 'app/core/core.module';
-import { AggregationEditorModule } from 'app/monitoring/aggregation-editor/aggregation-editor.module';
-import { CreateAggregationComponent } from './create-aggregation/create-aggregation.component';
 import { environment } from '../../environments/runtime-environment';
 import { StoreDevtools } from '@ngrx/store-devtools/src/devtools';
 import { SharedModule } from './shared/shared.module';
@@ -104,7 +99,6 @@ const monacoEditorConfig: NgxMonacoEditorConfig = {
     CoreModule,
     DragDropModule,
     SharedModule,
-    AggregationEditorModule,
     ChartConfiguratorModule,
     StoreModule.forRoot(reducers, { metaReducers }),
     EffectsModule.forRoot([]),
@@ -113,7 +107,6 @@ const monacoEditorConfig: NgxMonacoEditorConfig = {
   ],
   declarations: [
     MonitoringComponent,
-    AppidComponent,
     LogPanelComponent,
     DateFormatPipe,
     ChartComponent,
@@ -126,8 +119,7 @@ const monacoEditorConfig: NgxMonacoEditorConfig = {
     LogListComponent,
     LogSearchComponent,
     LogFilterComponent,
-    TimefilterComponent,
-    CreateAggregationComponent
+    TimefilterComponent
   ],
   providers: [
     EschartsService,
@@ -138,7 +130,6 @@ const monacoEditorConfig: NgxMonacoEditorConfig = {
     PromchartsService,
     EsTimerangeService,
     WindowService,
-    SearchService,
     { provide: RouterStateSerializer, useClass: CustomSerializer }
   ]
 })

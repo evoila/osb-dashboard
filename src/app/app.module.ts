@@ -29,7 +29,8 @@ import { CoreModule } from './core/core.module';
 import { BuildTargetService } from 'app/shared';
 import { SharedModule } from './shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthenticationInterceptor } from './core/services/authentication.interceptor';
 
 export function buildBuildTargetService(): BuildTargetService {
   return new BuildTargetService(buildTarget);
@@ -63,7 +64,12 @@ export function buildBuildTargetService(): BuildTargetService {
   ],
   providers: [
     { provide: BuildTargetService, useFactory: buildBuildTargetService },
-    { provide: WidgetRegistry, useClass: DefaultWidgetRegistry }
+    { provide: WidgetRegistry, useClass: DefaultWidgetRegistry },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthenticationInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

@@ -1,13 +1,13 @@
 <div>
-    <h2>I'm rendering</h2>
   <ul>
-    <li
+    <li class="category"
       *ngFor="let optionDomain of optionDomains; let i = index"
       (click)="showActions(i)"
     >
       <i class="{{optionDomain.iconClass}} fa-lg"></i> {{ optionDomain.name }}
-      <ul *ngIf="optionDomain.actions && visibleActions === i">
+      <ul class="dropup" *ngIf="optionDomain.actions && visibleActions === i">
         <li
+          class="dropup-content"
           *ngFor="let action of optionDomain.actions"
           (click)="dispatchActions(action)"
         >
@@ -16,4 +16,7 @@
       </ul>
     </li>
   </ul>
+</div>
+<div class="input-group">
+  <button type="button"(click)="saveOptions()" class="btn btn-info">Next</button>
 </div>

@@ -1,14 +1,15 @@
 import { throwError as observableThrowError, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { EndpointService } from './shared/services/endpoint.service';
+import { EndpointService } from './endpoint.service';
 import { HttpClient } from '@angular/common/http';
-import { SearchRequest } from './model/search-request';
-import { SearchResponse } from './model/search-response';
+import { SearchRequest } from '../../model/search-request';
+import { SearchResponse } from '../../model/search-response';
 import { Response } from '@angular/http/src/static_response';
 import { NotificationType, NotificationService, Notification } from 'app/core';
 
 import { catchError, map } from 'rxjs/operators';
 import { Field } from 'app/monitoring/aggregation-editor/model/field';
+import { AggregationRequestObject } from 'app/monitoring/chart-configurator/model/aggregationRequestObject';
 
 @Injectable()
 export class SearchService {
@@ -33,26 +34,37 @@ export class SearchService {
       })
     );
   }
-  public getMappings(): Observable<Array<string> | Response> {
+
+  public fireAggregation(
+    request: Array<AggregationRequestObject>
+  ): Observable<Array<SearchResponse>> {
+    const endpoint = this.endpoint.getUri() + '/aggregation';
+    return this.http.post<Array<SearchResponse>>(endpoint, request);
+  }
+
+  public getMappings(): Observable<Map<string, Array<string> | Response>> {
     const endpoint = this.endpoint.getUri() + '/mappings';
     return this.http.get(endpoint, this.httpOptions).pipe(
-      map(data => {
-        let returnVal: Array<string> = [];
-        Object.keys(data['mappings']['logMessages']['properties']).forEach(
-          item => {
-            const property =
-              data['mappings']['logMessages']['properties'][item];
+      map((dataAsObject: any) => {
+        const datas = new Map<string, any>(Object.entries(dataAsObject));
+        const returnVal = new Map<string, Array<string>>();
+        Object.keys(datas).forEach((data, index) => {
+          Object.keys(data['mappings']['_doc']['properties']).forEach(item => {
+            const property = data['mappings']['_doc']['properties'][item];
+            returnVal[index] = returnVal[index]
+              ? returnVal[index]
+              : new Array<string>();
             // Some Fields have a Subfield. For more information see Ticket MONF-56
             if (!property['fields']) {
-              returnVal = [...returnVal, item];
+              returnVal[index] = [...returnVal[index], item];
             } else {
-              returnVal = [
-                ...returnVal,
+              returnVal[index] = [
+                ...returnVal[index],
                 item + '.' + Object.keys(property['fields'])[0]
               ];
             }
-          }
-        );
+          });
+        });
         return returnVal;
       }),
       catchError((error: any) => {
@@ -65,31 +77,34 @@ export class SearchService {
     );
   }
 
-  public getMappingWithType(): Observable<Array<Field> | Response> {
+  public getMappingWithType(): Observable<Map<string, Array<Field>>> {
     const endpoint = this.endpoint.getUri() + '/mappings';
     return this.http.get(endpoint, this.httpOptions).pipe(
-      map(data => {
-        let returnVal: Array<Field> = Array<Field>();
-        Object.keys(data['mappings']['logMessages']['properties']).forEach(
-          item => {
-            const property =
-              data['mappings']['logMessages']['properties'][item];
+      map((dataAsObject: Map<string, any>) => {
+        const returnVal = new Map<string, Array<Field>>();
+        const datas = new Map<string, any>(Object.entries(dataAsObject));
+        datas.forEach((data, key) => {
+          Object.keys(data['mappings']['_doc']['properties']).forEach(item => {
+            const property = data['mappings']['_doc']['properties'][item];
+            returnVal[key] = returnVal[key]
+              ? returnVal[key]
+              : new Array<string>();
             if (!property['fields']) {
-              returnVal = [
-                ...returnVal,
+              returnVal[key] = [
+                ...returnVal[key],
                 { key: item, value: { type: property['type'] } } as Field
               ];
             } else {
-              returnVal = [
-                ...returnVal,
+              returnVal[key] = [
+                ...returnVal[key],
                 {
                   key: item + '.' + Object.keys(property['fields'])[0],
                   value: { type: Object.keys(property['fields'])[0] }
                 } as Field
               ];
             }
-          }
-        );
+          });
+        });
         return returnVal;
       }),
       catchError((error: any) => {
