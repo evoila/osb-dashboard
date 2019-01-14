@@ -34,7 +34,7 @@ export class LetsencryptComponent implements OnInit {
     });
     this.formSchemaService.loadFormSchemaValues()
       .subscribe((result: any) => {
-      this.jsonSchema.data = result;
+      this.jsonSchema.data = result.parameters[this.instanceGroupName];
     });
   }
 

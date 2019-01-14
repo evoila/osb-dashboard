@@ -4,7 +4,6 @@ import { FormSchemaService } from 'app/core/form-schema.service';
 import { NotificationService, Notification, NotificationType } from '../../core/notification.service';
 import { TaskPollingService } from 'app/core';
 import { EnrichedJsonSchema } from 'app/core/domain/json-schema';
-import { GeneralService } from 'app/shared/general/general.service';
 
 @Component({
   selector: 'sb-settings',

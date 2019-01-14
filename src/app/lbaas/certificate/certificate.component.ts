@@ -37,8 +37,8 @@ export class CertificateComponent implements OnInit {
         "placeholder": "Please enter your PEM file contents for your private key and your certificate here."
       }];  
       this.formSchemaService.loadFormSchemaValues()
-        .subscribe((result: any) => {
-        this.jsonSchema.data = result;
+        .subscribe((result: any) => {        
+        this.jsonSchema.data = result.parameters[this.instanceGroupName];
       });    
     });
   }
