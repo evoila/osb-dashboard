@@ -7,7 +7,7 @@ import { EndpointService } from './endpoint.service';
 import { ServiceBinding } from 'app/monitoring/model/service-binding';
 import { catchError, map } from 'rxjs/internal/operators';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class BindingService {
   private instanceId = environment.serviceInstanceId;
   private endpoint = `/custom/v2/manage/${this.instanceId}/service_bindings`;

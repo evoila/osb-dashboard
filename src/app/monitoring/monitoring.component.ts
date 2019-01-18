@@ -1,17 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { EntityService } from 'app/core';
 import { Chart } from './model/chart';
-
-import { DragDropModule } from '@angular/cdk/drag-drop';
-
-import { PanelService } from './panel.service';
-import { environment } from '../../environments/runtime-environment';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router } from '@angular/router';
 import { SidebarEntry } from 'app/core/sidebar/sidebar-entry';
-import { ActivatedRoute } from '@angular/router/';
-import { filter } from 'rxjs/internal/operators/filter';
-import { map } from 'rxjs/internal/operators/map';
-import { reducers } from './store';
+import { PanelState } from './shared/store/reducers/panel.reducer';
+import { Store } from '@ngrx/store';
+import { LoadPanels } from './shared/store/actions/panel.action';
+import { getAllPanels } from './shared/store/selectors/panel.selector';
+import { map, take, filter } from 'rxjs/operators';
 
 @Component({
   selector: 'sb-monitoring',
@@ -24,7 +19,12 @@ export class MonitoringComponent implements OnInit {
     {
       name: 'Panels',
       isCollapsible: false,
-      links: []
+      links: [
+        {
+          name: 'Panel Configurator',
+          href: 'panelconfigurator'
+        }
+      ]
     },
     {
       name: 'Logs',
@@ -48,54 +48,43 @@ export class MonitoringComponent implements OnInit {
     }
   ];
 
-  constructor(
-    private entityService: EntityService,
-    private panelService: PanelService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute
-  ) {}
+  constructor(private store: Store<PanelState>, private router: Router) {}
 
   ngOnInit() {
-    this.loadPanels(false);
-    this.router.events
-      .pipe(
-        filter(event => event instanceof NavigationEnd),
-        map(() => this.activatedRoute)
-      )
-      .subscribe(event => {
-        this.loadPanels(true);
-      });
+    this.store.dispatch(new LoadPanels());
+    this.loadPanels();
   }
 
-  loadPanels(linkEvent: boolean) {
-    this.panelService
-      .getAllPanels(environment.serviceInstanceId)
-      .subscribe(data => {
-        if (data) {
-          this.menu[0].links = [];
-          data.forEach(k => {
-            const link = {
-              name: k.name,
-              href: 'panel/' + k.panelId,
-              iconClass: 'icon-bar-chart'
-            };
-            if (!this.menu[0].links) {
-              this.menu[0].links = [];
-            }
-            this.menu[0].links = [...this.menu[0].links, link];
-          });
-        }
-        const link = {
-          name: 'AddPanel',
-          href: 'paneleditor',
-          iconClass: 'fa fa-plus'
-        };
-        this.menu[0].links = [...this.menu[0].links, link];
-        // directing to the first panel
-        const firstLink = this.menu[0].links[0]['href'];
-        if (!linkEvent) {
-          this.router.navigate(['monitoring/' + firstLink]);
-        }
-      });
+  loadPanels() {
+    this.store
+      .select(getAllPanels)
+      .pipe(
+        filter(data => data != []),
+        map(data => {
+          if (data) {
+            this.menu[0].links = [];
+            data.forEach(k => {
+              const link = {
+                name: k.name,
+                href: 'panel/' + k.id!!,
+                iconClass: 'icon-bar-chart'
+              };
+              if (!this.menu[0].links) {
+                this.menu[0].links = [];
+              }
+              this.menu[0].links = [...this.menu[0].links, link];
+            });
+          }
+          const link = {
+            name: 'Add Panel',
+            href: 'panelconfigurator',
+            iconClass: 'fa fa-plus'
+          };
+          this.menu[0].links = [...this.menu[0].links, link];
+          // directing to the first panel
+          return this.menu[0].links[0]['href'];
+        })
+      )
+      .subscribe(k => this.router.navigate(['monitoring/' + k]));
   }
 }

@@ -16,7 +16,7 @@ import {
 import { of } from 'rxjs/internal/observable/of';
 import { Store } from '@ngrx/store';
 
-import { getBindingsSpaceAndOrg } from '../selectors/bindings.selector';
+import { getBindingsSpaceAndOrg } from '../../../shared/store/selectors/bindings.selector';
 
 @Injectable()
 export class OptionsEffects {

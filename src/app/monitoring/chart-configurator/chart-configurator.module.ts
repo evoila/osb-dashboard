@@ -36,6 +36,6 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     ...componentsDeclarations,
     ...containerComponents
   ],
-  providers: services
+  providers: [...services]
 })
 export class ChartConfiguratorModule {}

@@ -11,5 +11,5 @@ span.empty::after{
     content: "empty result";
 }
 span.error::after{
-    content: "broken aggregation";
+    content: "!broken aggregation!";
 }

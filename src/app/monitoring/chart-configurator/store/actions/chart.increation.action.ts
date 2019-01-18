@@ -16,6 +16,12 @@ export const FIRE_AGGREGATIONS_SUCCESS =
   '[Increation] Fire Aggregation Success';
 export const FIRE_AGGREGATIONS_FAILED = '[Increation] Fire Aggregation Failed';
 
+export const CHECK_AGGREGATION_RESULT = '[Increation] Check Aggregation Result';
+export const CHECK_AGGREGATION_RESULT_FINISHED =
+  '[Increation] Check AggregationResult finished';
+
+export const FLUSH_STATE = '[Increation] Flush State';
+
 export class SetChartType implements Action {
   readonly type = SET_CHART_TYPE;
   constructor(public payload: string) {}
@@ -42,7 +48,7 @@ export class DeleteChartAggregations implements Action {
 
 export class FireAggregations implements Action {
   readonly type = FIRE_AGGREGATIONS;
-  constructor(public payload: Array<AggregationRequestObject>) {}
+  constructor(public payload: { [id: string]: AggregationRequestObject }) {}
 }
 
 export class FireAggregationsFailed implements Action {
@@ -54,10 +60,28 @@ export class FireAggregationSuccess implements Action {
   constructor(public payload: Array<SearchResponse>) {}
 }
 
+export class CheckAggregationResult implements Action {
+  readonly type = CHECK_AGGREGATION_RESULT;
+  constructor(
+    public request: { [id: string]: AggregationRequestObject },
+    public response: Array<SearchResponse>
+  ) {}
+}
+export class CheckAggregationResultFinished implements Action {
+  readonly type = CHECK_AGGREGATION_RESULT_FINISHED;
+  constructor(public payload: { [id: string]: string }) {}
+}
+export class FlushState implements Action {
+  readonly type = FLUSH_STATE;
+}
+
 export type FireTypes =
   | FireAggregations
   | FireAggregationSuccess
-  | FireAggregationsFailed;
+  | FireAggregationsFailed
+  | CheckAggregationResult
+  | CheckAggregationResultFinished
+  | FlushState;
 
 export type ChartIncreationAction =
   | SetChartType

@@ -1,0 +1,19 @@
+<div cdkDropList (cdkDropListDropped)="drop($event)" id="panel-list-2" cdkDropListConnectedTo="panel-list-1">
+    <ngb-accordion #acc="ngbAccordion">
+      <ng-container *ngIf="charts$ | async as charts">
+        <ngb-panel *ngIf="charts">
+            <ng-template ngbPanelTitle>
+              <span>Drag your charts here</span>
+            </ng-template>
+        </ngb-panel>
+        <ngb-panel *ngFor="let chart of charts | keyvalue">
+          <ng-template ngbPanelTitle>
+            <span>{{chart.value.name}}</span>
+          </ng-template>
+          <ng-template ngbPanelContent>
+              <button type="button" class="btn btn-danger" (click)="delete(chart.key)">delete</button>
+          </ng-template>
+        </ngb-panel>
+      </ng-container>
+    </ngb-accordion>
+</div>

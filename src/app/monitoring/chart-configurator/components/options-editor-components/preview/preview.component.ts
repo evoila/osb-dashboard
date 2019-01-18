@@ -5,7 +5,6 @@ import { ChartOptionsEntity } from '../../../model/chart-options-entity';
 import { ExampleChartsService } from '../../../services/example-charts.service';
 import { Observable } from 'rxjs';
 
-
 @Component({
   selector: 'sb-preview',
   templateUrl: './preview.component.html',
@@ -15,8 +14,6 @@ export class PreviewComponent implements OnInit {
   private chartEmitter: any;
   public chart$: Observable<any>;
   public options: ChartOptionsEntity;
-
-  
 
   constructor(
     private store: Store<fromStore.ChartIncreationAction>,
@@ -34,8 +31,8 @@ export class PreviewComponent implements OnInit {
         if (loaded) {
           this.store
             .select(fromStore.getChartIncreationOptions)
-            .subscribe((options: { [id: string]: ChartOptionsEntity }) => {
-              this.options = options[Object.keys(options)[0]];
+            .subscribe((options: ChartOptionsEntity) => {
+              this.options = options;
               this.store
                 .select(fromStore.getChartIncreationType)
                 .subscribe((type: string) => {

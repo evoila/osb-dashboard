@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import * as fromStore from '../../store';
-import { BindingsState } from 'app/monitoring/chart-configurator/store/reducers/binding.reducer';
+import { BindingsState } from 'app/monitoring/shared/store/reducers/binding.reducer';
 import { Store } from '@ngrx/store';
-import { SpaceAndOrg, ServiceBinding } from '../../../model/service-binding';
+import { SpaceAndOrg } from '../../../model/service-binding';
 
 @Component({
   selector: 'sb-configurator',

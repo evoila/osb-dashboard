@@ -1,0 +1,15 @@
+<div>
+    <h2>Create a new Panel</h2>
+    <div class="row">
+        <div class="form-group">
+            <label>Name</label>
+            <input class="form-control" type="text" name="name" [(ngModel)]="name" required>
+            <label>Description</label>
+            <input class="form-control" type="text" name="description" [(ngModel)]="description" required>
+        </div>
+    </div>
+    <sb-charts-in-panel [charts]="chartsInPanel$"></sb-charts-in-panel>
+    <sb-chart-list [charts]="charts$"></sb-chart-list>
+    <button type="button" class="btn btn-danger" (click)="cancel()">cancel</button>
+    <button type="button" class="btn btn-primary" (click)="save()">save</button>
+</div>

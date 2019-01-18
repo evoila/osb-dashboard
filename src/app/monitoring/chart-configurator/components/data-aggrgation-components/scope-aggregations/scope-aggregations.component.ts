@@ -6,19 +6,17 @@ import { ChartIncreationState } from '../../../store/reducers/chart.increation.r
 import { Store } from '@ngrx/store';
 import { getChartIncreationAggregations } from 'app/monitoring/chart-configurator/store/selectors/chart.increation.selector';
 import { Aggregation } from '../../../model/aggregation';
-import { CfAuthParameterService } from '../../../services/cfauth-param.service';
+import { CfAuthParameterService } from '../../../../shared/services/cfauth-param.service';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { SetChartAggregations } from 'app/monitoring/chart-configurator/store';
 import { ServiceBinding } from '../../../../model/service-binding';
 import {
-  getChartIncreationAggregationResponse,
-  getReadyForRequestAggregationsId
-} from '../../../store/selectors/chart.increation.selector';
-import {
   UpdateChartAggregations,
   DeleteChartAggregations
 } from '../../../store/actions/chart.increation.action';
-import { switchMap, map, filter } from 'rxjs/operators';
+import { getChartIncreationAggregationState } from '../../../store/selectors/chart.increation.selector';
+import { BindingsState } from '../../../../shared/store/reducers/binding.reducer';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'sb-scope-aggregations',
@@ -29,50 +27,21 @@ export class ScopeAggregationsComponent implements OnInit {
   aggregations$: Observable<{ [id: string]: AggregationRequestObject }>;
   private aggScopes: { [id: string]: { name?: string; appId?: string } } = {};
   private aggregationRequestResults: { [id: string]: string } = {};
+  private authParamService: CfAuthParameterService;
   constructor(
     private store: Store<ChartIncreationState>,
-    private authParamService: CfAuthParameterService
-  ) {}
+    storeBindings: Store<BindingsState>,
+    authParamService: CfAuthParameterService
+  ) {
+    this.authParamService = authParamService.construct(storeBindings);
+  }
 
   ngOnInit() {
     this.aggregations$ = this.store.select(getChartIncreationAggregations);
     // evaluate if aggregations work and mark them based on their status
     this.store
-      .select(getChartIncreationAggregationResponse)
-      .pipe(
-        switchMap(response => {
-          return this.store.select(getReadyForRequestAggregationsId).pipe(
-            filter(k => k && k.length > 0),
-            map(ids => {
-              if (response.length == ids.length) {
-                ids.map((id, index) => {
-                  if (response[index]['error']) {
-                    this.aggregationRequestResults = {
-                      ...this.aggregationRequestResults,
-                      [id]: 'error'
-                    };
-                  } else if (
-                    response[index]['aggregations'][
-                      Object.keys(response[index]['aggregations'])[0]
-                    ]['buckets'].length == 0
-                  ) {
-                    this.aggregationRequestResults = {
-                      ...this.aggregationRequestResults,
-                      [id]: 'empty'
-                    };
-                  } else {
-                    this.aggregationRequestResults = {
-                      ...this.aggregationRequestResults,
-                      [id]: 'ok'
-                    };
-                  }
-                });
-              }
-            })
-          );
-        })
-      )
-      .subscribe();
+      .select(getChartIncreationAggregationState)
+      .subscribe(aggs => (this.aggregationRequestResults = aggs));
   }
 
   public getWarnClass(id: string) {
@@ -95,13 +64,16 @@ export class ScopeAggregationsComponent implements OnInit {
     };
   }
   public drop(event: CdkDragDrop<Aggregation>) {
-    this.authParamService.createCfAuthScope().subscribe(authScope => {
-      const aggregationRq = {
-        aggregation: event.item.data,
-        authScope
-      } as AggregationRequestObject;
-      this.store.dispatch(new SetChartAggregations(aggregationRq));
-    });
+    this.authParamService
+      .createCfAuthScope()
+      .pipe(take(1))
+      .subscribe(authScope => {
+        const aggregationRq = {
+          aggregation: event.item.data,
+          authScope
+        } as AggregationRequestObject;
+        this.store.dispatch(new SetChartAggregations(aggregationRq));
+      });
   }
   public update(key: string, aggregation: AggregationRequestObject) {
     const { name, appId } = this.aggScopes[key];

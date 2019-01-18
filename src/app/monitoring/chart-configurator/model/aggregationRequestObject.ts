@@ -5,4 +5,6 @@ export interface AggregationRequestObject {
   appId?: string;
   authScope?: CfAuthScope;
   name?: string;
+  size?: number;
+  range?: { [id: string]: any };
 }

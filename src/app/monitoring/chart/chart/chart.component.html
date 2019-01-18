@@ -6,29 +6,18 @@
         <fa name="refresh" (click)="update()"></fa>
       </div>
     <div class="row justify-content-center">
-      <div class="col-md-12" *ngIf="chart && chart.data && chart.data.length > 0">
-        <div style="height: 600px; width: 100%">
-          <canvas sb-chart-dir class="chart" height="100" [data]="chart.data" [labelsArray]="chart.labels" [seriesArray]="chart.series"
-            [type]="chart.type" [options]="chart.options"></canvas>
-        </div>
+      <div (click)="test()" class="col-md-12" style="height: 600px; width: 100%">
+          <canvas sb-chart-dir height="100" class="chart" [data]="chartView.data" [labelsArray]="chartView.labels" [seriesArray]="chartView.series"
+            [type]="chartView.type" [options]="chartView.options"></canvas>
       </div>
-      <div class="col-md-12" style="height: 300px; width: 100%" *ngIf="!chart">
+      <div class="col-md-12" style="height: 300px; width: 100%" *ngIf="!chartView">
         <div style="width: 10%; margin: 95px auto;">
           <span>Bitte warten...</span>
         </div>
       </div>
-      <div class="col-md-12" style="height: 300px; width: 100%; padding-top: 50px;" *ngIf="chart && (!chart.data || !chart.data.length)">
+      <div class="col-md-12" style="height: 300px; width: 100%; padding-top: 50px;" *ngIf="chartView && (!chartView.data || !chartView.data.length)">
         <div style="width: 50%; margin: 95px auto;">
           <span>Keine Daten verfügbar</span>
-        </div>
-      </div>
-      <div class="col-md-12" style="height: 300px; width: 100%; padding-top: 50px;" *ngIf="errorMessage">
-        <div class="alert alert-danger">
-          <p>Aggregation error</p>
-          <button class="btn btn-sm btn-outline-danger" (click)="showErrorMessage = !showErrorMessage">Show error message</button>
-          <div [hidden]="!showErrorMessage">
-            <p>{{errorMessage}}</p>
-          </div>
         </div>
       </div>
     </div>

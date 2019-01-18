@@ -1,26 +1,32 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { EndpointService } from '../../shared/services/endpoint.service';
-import { CfAuthParameterService } from './cfauth-param.service';
+import { CfAuthParameterService } from '../../shared/services/cfauth-param.service';
 import { Aggregation } from '../model/aggregation';
 import { Observable } from 'rxjs';
 import { flatMap } from 'rxjs/operators';
+import { MonitoringModule } from '../../monitoring.module';
+import { BindingsState } from '../../shared/store/reducers/binding.reducer';
+import { Store } from '@ngrx/store';
 
-@Injectable()
+@Injectable({ providedIn: MonitoringModule })
 export class AggregationService {
   private readonly url: string;
   private readonly endpoint = '/charting/aggregations';
+  private authParamService: CfAuthParameterService;
 
   constructor(
     private http: HttpClient,
     private endpointService: EndpointService,
-    private cfAuthParams: CfAuthParameterService
+    authParamService: CfAuthParameterService,
+    storeBindings: Store<BindingsState>
   ) {
+    this.authParamService = authParamService.construct(storeBindings);
     this.url = this.endpointService.getUri() + this.endpoint;
   }
 
   public getAllAggregations(chartType: string): Observable<Array<Aggregation>> {
-    return this.cfAuthParams.createCfAuthParameters().pipe(
+    return this.authParamService.createCfAuthParameters().pipe(
       flatMap(param => {
         const params = param.append('chartType', chartType);
         return this.http.get<Array<Aggregation>>(this.url, { params });

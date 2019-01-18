@@ -1,17 +1,14 @@
-import { Component, Input, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Chart as ChartModel } from '../../model/chart';
-import { ChartRequest } from 'app/monitoring/model/chart-request';
-import { EschartsService } from '../../escharts.service';
-import { EsChartRequest } from 'app/monitoring/model/es-chart-request';
-import { ChartingService } from '../../charting.service';
-import { AfterViewInit } from '@angular/core/src/metadata/lifecycle_hooks';
-import { ChartRequestVm } from 'app/monitoring/model/chart-request-vm';
-import { PromChartingService } from '../../prom-charting.service';
-import { PrometheusChartRequest } from '../../model/prom-chart-request';
-import { PromchartsService } from '../../promcharts.service';
+import { ChartingService } from '../../services/charting.service';
 
-
-
+import { ChartInPanel } from '../../model/chart-in-panel';
+import { ChartModelState } from '../../shared/store/reducers/chart.reducer';
+import { Store, select } from '@ngrx/store';
+import { FireAggregationRequest } from '../../shared/store/actions/chart.actions';
+import { getAggregationResponseAndLoaded } from 'app/monitoring/shared/store/selectors/chart.selector';
+import { filter, map } from 'rxjs/operators';
+import { getAggregationResponseAndLoadedById } from '../../shared/store/selectors/chart.selector';
 
 @Component({
   selector: 'sb-chart',
@@ -19,84 +16,68 @@ import { PromchartsService } from '../../promcharts.service';
   styleUrls: ['./chart.component.scss']
 })
 export class ChartComponent implements OnInit, OnDestroy {
-  @Output('chartDelete')
-  chartDelete = new EventEmitter();
-  @Output('editChart')
-  editChart = new EventEmitter();
-  @Input() requObj: ChartRequestVm;
-  @Input() chartId: string;
-  @Input() options: boolean;
-
-
-  public isInAggregatedView = true;
-  public errorMessage: string | null;
-  public chart: ChartModel;
-  public userIsAdmin: boolean;
-  public userFlats: any;
-  private showErrorMessage = false;
-  private filtersChangeSubscription: any;
-  public tempChart: ChartModel;
-
+  @Input('chart')
+  chart: ChartInPanel;
+  chartView: ChartModel;
   constructor(
-    private esChartsService: EschartsService,
     private chartingService: ChartingService,
-    private promChartsService: PromchartsService,
-    private promChartingService: PromChartingService
-  ) { }
+    private store: Store<ChartModelState>
+  ) {}
 
   ngOnInit() {
-    this.getChart();
+    this.store.dispatch(
+      new FireAggregationRequest(this.chart.chart.aggregations, this.chart.id!!)
+    );
+    this.updateEsChart();
   }
 
-  public ngOnDestroy() {
-  }
-  private edit() {
-    if (this.chart) {
-      this.editChart.emit(this.tempChart);
-    }
-  }
+  public ngOnDestroy() {}
 
-  private update() {
-    this.getChart();
+  public update() {}
+  test() {
+    console.log(this.chartView);
   }
-
-  private getChart() {
-    if (this.requObj.isEs) {
-      this.requObj.chartId = this.chartId;
-      this.esChartsService.getChart(this.requObj as EsChartRequest).
-        subscribe(data => {
-          const aggregationResult = data.aggregationResults[0];
-          const aggregations = data.aggregations;
-          this.isInAggregatedView = data.showInAggregatedView;
-          this.tempChart = data as ChartModel;
-          if (aggregationResult.hits.total != 0) {
-            this.updateEsChart({
-              aggregations: aggregations,
-              results: aggregationResult
-            });
-          } else {
-            this.errorMessage = 'No Data!'
-          }
-
-        }, error => {
-          this.errorMessage = error;
-        });
-    } else {
-      this.promChartsService.getCharts(this.requObj as PrometheusChartRequest, this.chartId).
-        subscribe(data => {
-          data = data['chart'];
-          this.tempChart = data as ChartModel;
-          this.chart = this.promChartingService.constructChart(data['prometheusResponses'], data['prometheusQueries'], this.tempChart);
-          console.log(this.chart);
-        });
-    }
-  }
-
-  private updateEsChart(query: any): void {
-    if (query.results && query.results.aggregations) {
-      this.chart = this.chartingService.unwrapForPlotBucket(this.tempChart,
-        query.aggregations[0],
-        query.results.aggregations);
-    }
+  private updateEsChart(): void {
+    this.store
+      .pipe(select(getAggregationResponseAndLoadedById, this.chart.id))
+      .pipe(
+        filter(k => k != undefined && Object.keys(k.results).length > 0),
+        map(result => {
+          return result.results.map(k => {
+            return this.chartingService.unwrapForPlotBucket(
+              new ChartModel(),
+              k.query.aggregation.actualAggregation,
+              k.response.aggregations
+            );
+          });
+        }),
+        filter(charts => charts.length > 0),
+        map(charts => {
+          return charts.reduce((acc, chart, index, arr) => {
+            if (index == 0) {
+              return chart;
+            } else {
+              let labels = acc.labels;
+              if (chart.labels > acc.labels) {
+                labels = chart.labels;
+              }
+              return {
+                ...acc,
+                data: [...acc.data, ...chart.data],
+                series: [...acc.series, ...chart.series],
+                labels: labels
+              };
+            }
+          });
+        }),
+        map(chart => {
+          return {
+            ...chart,
+            options: this.chart.chart.option,
+            type: this.chart.chart.type
+          };
+        })
+      )
+      .subscribe(k => (this.chartView = k));
   }
 }

@@ -31,10 +31,31 @@ export const getReadyForRequestAggregations = createSelector(
     const chartIncreation = chartIncreationState.aggregations;
     return Object.keys(chartIncreation)
       .filter(id => chartIncreation[id].appId)
-      .map(id => chartIncreation[id] as AggregationRequestObject);
+      .reduce<{ [id: string]: AggregationRequestObject }>(
+        (prev: any, curr, i, arr) => {
+          if (i == 0) {
+            return { [curr]: chartIncreation[curr] } as {
+              [id: string]: AggregationRequestObject;
+            };
+          } else {
+            return { ...prev, [curr]: chartIncreation[curr] } as {
+              [id: string]: AggregationRequestObject;
+            };
+          }
+        },
+        {}
+      );
   }
 );
 
+export const getReadyForRequestAggregationsArray = createSelector(
+  getReadyForRequestAggregations,
+  readyObjects => {
+    return Array.from(
+      new Map<string, any>(Object.entries(readyObjects))[Symbol.iterator]()
+    ).map(k => k[1]);
+  }
+);
 export const getReadyForRequestAggregationsId = createSelector(
   getAllChartIncreationState,
   chartIncreationState => {
@@ -56,3 +77,16 @@ export const getChartIncreationAggregationResponseLoaded = createSelector(
   getAllChartIncreationState,
   fromChartIncreation.getAggregationsFiredLoaded
 );
+
+export const getChartIncreationAggregationState = createSelector(
+  getAllChartIncreationState,
+  fromChartIncreation.getAggregationsState
+);
+
+export const hasError = (state: { [id: string]: string }) => {
+  return (
+    Array.from(new Map<string, any>(Object.entries(state))[Symbol.iterator]())
+      .map(k => k[1])
+      .filter(type => type != 'ok').length > 0
+  );
+};

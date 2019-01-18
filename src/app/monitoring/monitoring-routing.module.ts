@@ -1,21 +1,19 @@
-import { NgModule, Component } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MonitoringComponent } from './monitoring.component';
 
-import { QueryEditorComponent } from 'app/monitoring/query-editor/query-editor.component';
-import { PanelComponent } from './panel/panel.component';
-import { PanelEditorComponent } from './panel-editor/panel-editor.component';
-import { LogPanelComponent } from './log-panel/log-panel.component';
-import { ConfiguratorComponent } from './chart-configurator/containers/configurator/configurator.component';
+import { PanelComponent } from './containers/panel/panel.component';
+import { LogPanelComponent } from './containers/log-panel/log-panel.component';
 
-export const ROUTES = [
+export const ROUTES: Routes = [
   {
     path: '',
     component: MonitoringComponent,
     children: [
       {
-        path: 'paneleditor/:id',
-        component: PanelEditorComponent
+        path: 'panelconfigurator',
+        loadChildren:
+          './panel-configurator/panel-configurator.module#PanelConfiguratorModule'
       },
       {
         path: 'configurator',
@@ -29,14 +27,6 @@ export const ROUTES = [
       {
         path: 'panel/:id',
         component: PanelComponent
-      },
-      {
-        path: 'paneleditor',
-        component: PanelEditorComponent
-      },
-      {
-        path: 'queryeditor',
-        component: QueryEditorComponent
       }
     ]
   }

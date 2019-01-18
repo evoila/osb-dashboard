@@ -3,26 +3,30 @@ import * as fromChartIncreation from '../actions/chart.increation.action';
 import { AggregationRequestObject } from '../../model/aggregationRequestObject';
 import * as uuid from 'uuid';
 import { SearchResponse } from '../../../model/search-response';
+import { CHECK_AGGREGATION_RESULT_FINISHED } from '../actions/chart.increation.action';
 
 export interface ChartIncreationState {
   // Chart Type eg. Line, Bar, etc
   type: string;
-  options: { [id: string]: ChartOptionsEntity };
+  option: ChartOptionsEntity;
   aggregations: { [id: string]: AggregationRequestObject };
   optionsSet: boolean;
   aggregationResponse: Array<SearchResponse>;
   aggregationLoading: boolean;
   aggregationLoaded: boolean;
+  // holds tells which aggregations are working and which not
+  aggregationsState: { [id: string]: string };
 }
 
 export const initialState: ChartIncreationState = {
   type: '',
-  options: {},
+  option: new ChartOptionsEntity(),
   aggregations: {},
   optionsSet: false,
   aggregationResponse: [],
   aggregationLoading: false,
-  aggregationLoaded: false
+  aggregationLoaded: false,
+  aggregationsState: {}
 };
 
 export function reducer(
@@ -38,10 +42,10 @@ export function reducer(
       };
     }
     case fromChartIncreation.SET_CHART_OPTIONS: {
-      const options = convertObject(action.payload);
+      const option = action.payload;
       return {
         ...state,
-        options,
+        option,
         optionsSet: true
       };
     }
@@ -85,6 +89,16 @@ export function reducer(
         aggregationResponse: action.payload
       };
     }
+    case fromChartIncreation.CHECK_AGGREGATION_RESULT_FINISHED: {
+      const aggregationsState = action.payload;
+      return {
+        ...state,
+        aggregationsState
+      };
+    }
+    case fromChartIncreation.FLUSH_STATE: {
+      return initialState;
+    }
   }
   return state;
 }
@@ -100,7 +114,7 @@ function convertObject(
 export const getChartIncreationType = (state: ChartIncreationState) =>
   state.type;
 export const getChartIncreationOptions = (state: ChartIncreationState) =>
-  state.options;
+  state.option;
 export const getChartIncreationAggregations = (state: ChartIncreationState) =>
   state.aggregations;
 export const getChartIncreationOptionsSet = (state: ChartIncreationState) =>
@@ -112,3 +126,6 @@ export const getAggregationsFiredLoaded = (state: ChartIncreationState) =>
   state.aggregationLoaded;
 export const getAggregationsFiredLoading = (state: ChartIncreationState) =>
   state.aggregationLoading;
+
+export const getAggregationsState = (state: ChartIncreationState) =>
+  state.aggregationsState;

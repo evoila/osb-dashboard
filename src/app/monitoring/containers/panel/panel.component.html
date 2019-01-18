@@ -1,0 +1,25 @@
+
+<div class="section-content">
+<sb-timefilter [toDate]="toDateView" [fromDate]="fromDateView" [stepVal]="steps" (fromDateChange)="setFromDate($event)"
+  (toDateChange)="setToDate($event)" (stepChange)="setStep($event)"></sb-timefilter>
+
+
+  <div *ngIf="panel" >
+    <div class="row" *ngFor="let chartRequests of panel.charts" style="margin: 50px 0 0 0">
+      <div class="col-{{chartRequest.size}} charts" *ngFor="let chartRequest of chartRequests" cdkDrag>
+        <div *ngIf="chartRequest.onEdit">
+          <!--TODO Invoke Chart Editor from here later on-->
+        </div>
+        <sb-chart [chart]="chartRequest"></sb-chart>
+      </div>
+    </div>
+  </div>
+<div class="input-group edit-buttons">
+  <button type="button" *ngIf="changed" (click)="saveChanges()" class="btn btn-info">Save Changes made on the
+    Panel</button>
+  <button type="button" (click)="edit()" class="btn btn-info">Edit Panel Settings</button>
+</div>
+
+<div *ngIf="!panel$">Bitte warten...</div>
+<button type="button" (click)="test()" class="btn btn-info">Edit Panel Settings</button>
+</div>
