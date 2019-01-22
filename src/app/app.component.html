@@ -1,35 +1,38 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
   <a class="navbar-brand" href="#">Management UI</a>
-  <button class="navbar-toggler" type="button" (click)="isNavbarCollapsed = !isNavbarCollapsed" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+  <button class="navbar-toggler" type="button" (click)="isNavbarCollapsed = !isNavbarCollapsed" data-toggle="collapse"
+    data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
-   </button>
+  </button>
   <div [ngbCollapse]="isNavbarCollapsed" class="collapse navbar-collapse" id="navbarTogglerDemo02">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item active" *ngIf="dynamicModuleSupport.autoscaler">
-        <a class="nav-link" routerLink="/autoscaler" routerLinkActive="active">Auto Scaler </a>
+      <li class="nav-item" *ngIf="dynamicModuleSupport.autoscaler">
+        <a class="nav-link" routerLink="/autoscaler" routerLinkActive="active">Auto Scaler</a>
       </li>
-      <li class="nav-item active" *ngIf="dynamicModuleSupport.lbaas">
-        <a class="nav-link" routerLink="/lbaas" routerLinkActive="active">Configure Certificates </a>
+      <li class="nav-item" *ngIf="dynamicModuleSupport.lbaas">
+        <a class="nav-link" routerLink="/lbaas" routerLinkActive="active">Configuration</a>
       </li>
-      <li class="nav-item active" *ngIf="dynamicModuleSupport.monitoring">
+      <li class="nav-item" *ngIf="dynamicModuleSupport.postgresql">
+        <a class="nav-link" routerLink="/postgresql" routerLinkActive="active">Configuration</a>
+      </li>
+      <li class="nav-item" *ngIf="dynamicModuleSupport.monitoring">
         <a class="nav-link" routerLink="/monitoring" routerLinkActive="active">Monitoring</a>
       </li>
-      <li class="nav-item active" *ngIf="sharedModuleSupport.backup">
-        <a class="nav-link" routerLink="/backup" routerLinkActive="active">Backup </a>
+      <li class="nav-item" *ngIf="sharedModuleSupport.backup">
+        <a class="nav-link" routerLink="/backup" routerLinkActive="active">Backup</a>
       </li>
-      <li class="nav-item active" *ngIf="sharedModuleSupport.serviceKeys">
-        <a class="nav-link" routerLink="/service-keys" routerLinkActive="active">Service Keys </a>
+      <li class="nav-item" *ngIf="sharedModuleSupport.serviceKeys">
+        <a class="nav-link" routerLink="/service-keys" routerLinkActive="active">Service Keys</a>
       </li>
     </ul>
     <ul class="nav navbar-nav ml-auto">
-      <li class="nav-item active">
+      <li class="nav-item">
+        <sb-task-polling></sb-task-polling>
       </li>
     </ul>
   </div>
 </nav>
-<div class="main">
-  <div class="main-outlet">
-    <router-outlet></router-outlet>
-  </div>
+<main class="flex-fill">
+  <router-outlet></router-outlet>
   <sb-notification-banner *ngIf="notification" [notification]="notification" (close)="closeNotification()"></sb-notification-banner>
-</div>
+</main>

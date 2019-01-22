@@ -1,3 +1,12 @@
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+ }
+
+.flex-fill {
+    flex:1 1 auto;
+}
 
 .fixed-top {
     position: fixed;

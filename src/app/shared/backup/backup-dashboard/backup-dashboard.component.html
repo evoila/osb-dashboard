@@ -1,35 +1,58 @@
 <div class="section-content">
-    <div class="row">      
-      <div class="col-lg-6">
-        <h2>Recent Backup Jobs</h2>
-        <p>These are all your recently executed Backup Jobs. The list contains active Backup Plans as well as
-            manually triggered Backup Jobs
-        </p>
-        <table class="table">
-            <thead class="thead-default">
-                <tr>
-                    <th>#</th>
-                    <th>Start Date</th>
-                    <th>Instance</th>
-                    <th>Status</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let job of jobs; let i = index">
-                    <th scope="row">{{i + 1}}</th>
-                    <td>{{ job.startDate | date:"dd.MM.yyyy - hh:mm" }}</td>
-                    <td>{{ job.instanceId }}</td>
-                    <td>{{ job.status }}</td>
-                    <td><a href="#" routerLink="/backup/jobs/{{job.id}}">Details</a></td>
-                </tr>
-            </tbody>
-        </table>
-      </div>
-      <div class="col-lg-6">
-          <h2>Restore data from Backup</h2>
-          <p>Click the button below to restore data from a backup stored in a Swift container.</p>
-          <p><a class="btn btn-secondary" routerLink="/backup/create-restore" role="button">Restore from Backup »</a></p>
-      </div>
+    <h2>Backup Dashboard</h2>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <h2>Successful Backup Jobs: {{jobs.length}}</h2>
+                    <p>These are all your recently executed Backup Jobs. The list contains active Backup Plans as well as
+                    manually triggered Backup Jobs.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <h2>Active Plans: {{plans.length}}</h2>  
+                    <p>Number of Backups Plans running at the moment for the Service Instance.</p>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
+    <div class="row" style="padding-top:30px">
+        <div class="col-lg-8">
+            <h4>Recent Backup Jobs</h4>
+            <p>These are all your recently executed Backup Jobs. The list contains active Backup Plans as well as
+                manually triggered Backup Jobs
+            </p>
+            <table class="table table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Backup Plan</th>
+                        <th>Start Date</th>
+                        <th>Type</th>
+                        <th>Status</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let job of jobs; let i = index">
+                        <th scope="row">{{i + 1}}</th>
+                        <td *ngIf="job.backupPlan != null">{{ job.backupPlan.name }}</td>
+                        <td *ngIf="job.backupPlan == null">Plan deleted</td>
+                        <td>{{ job.startDate | date:"dd.MM.yyyy - hh:mm" }}</td>
+                        <td>{{ job.status }}</td>
+                        <td>{{ job.jobType }}</td>
+                        <td><a href="#" routerLink="/backup/backup-jobs/{{job.id}}">Details</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-lg-4">
+            <h4>Restore data from Backup</h4>
+            <p>Click the button below to restore data from a backup stored in a Swift container.</p>
+            <p><a class="btn btn-secondary" routerLink="/backup/create-restore" role="button">Restore from Backup »</a></p>
+        </div>
+    </div>
+</div>

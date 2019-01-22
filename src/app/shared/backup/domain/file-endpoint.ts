@@ -1,23 +1,26 @@
 export interface FileEndpoint {
 
-    authUrl: string;
-
+    serviceInstance: any;
+    name: string;
     username: string;
-
-    password: string;
-
-    domain: string;
-
-    projectName: string;
-
-    // Type is always SWIFT for now
-    type: string;
-
-    containerName: string;
-
-    id: string;
-
-    // Do not provide when creating a request
+    password: string; 
+    destinationType: string;
     filename: string;
 
+}
+
+export interface SwiftEndpoint extends FileEndpoint {
+
+    authUrl: string;
+    domain: string;
+    containerName: string;
+    projectName: string;
+}
+
+export interface S3Endpoint extends FileEndpoint {
+
+    authKey: string;
+    authSecret: string;
+    region: string;
+    bucket: string;
 }

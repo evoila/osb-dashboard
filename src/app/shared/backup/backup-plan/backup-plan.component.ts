@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationService, Notification } from '../../../core/notification.service';
 import { NotificationType } from 'app/core';
 import { GeneralService } from 'app/shared/general/general.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'sb-backup-plan',
@@ -11,7 +12,7 @@ import { GeneralService } from 'app/shared/general/general.service';
   styleUrls: ['./backup-plan.component.scss']
 })
 export class BackupPlanComponent implements OnInit {
-  readonly ENTITY: string = 'plans';
+  readonly ENTITY: string = 'backupPlans';
   plan: any = {}
   destinationList: any = [];
   itemList: any = [];
@@ -21,10 +22,11 @@ export class BackupPlanComponent implements OnInit {
               protected readonly generalService: GeneralService,
               protected readonly route: ActivatedRoute,
               protected readonly router: Router,
-              protected readonly nService: NotificationService) { }
+              protected readonly notificationService: NotificationService,
+              protected readonly modalService: NgbModal) { }
 
   ngOnInit() {
-    this.backupService.loadAll('destinations')
+    this.backupService.loadAll('fileDestinations')
       .subscribe(
         (result: any) => { this.destinationList = result.content }
       );
@@ -46,30 +48,35 @@ export class BackupPlanComponent implements OnInit {
     });
   }
 
-  delete(): void {
-    this.backupService.deleteOne(this.ENTITY, this.plan)
+  delete(content): void {
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      this.backupService.deleteOne(this.ENTITY, this.plan)
       .subscribe((plan: any) => {
         this.redirect();
       });
+    }, (reason) => {
+      // we do nothing here, because user does not want to delete entity
+    });
   }
 
   onSubmit(): void {
     const id = this.update ? this.plan.id : null;
-    this.plan.serviceInstanceId = this.backupService.getServiceInstanceId();
+    this.plan.serviceInstance = this.backupService.getServiceInstance();
     this.backupService.saveOne(this.plan, this.ENTITY, id)
       .subscribe({
         next: (d) => {
-          this.nService.add(new Notification(NotificationType.Info, 'Backup Plan Created'));
+          this.notificationService
+            .addSelfClosing(new Notification(NotificationType.Info, 'Backup Plan Created'));
           this.redirect();
         },
         error: (e) => {
-          this.nService.add(new Notification(NotificationType.Warning, 'Could not create Backup Plan. Please check your entries.'));
+          this.notificationService
+            .addSelfClosing(new Notification(NotificationType.Warning, 'Could not create Backup Plan. Please check your entries.'));
         }
       });
   }
 
   private redirect(): void {
-    this.router.navigate(['/backup']);
+    this.router.navigate(['/backup/backup-plans']);
   }
-
 }

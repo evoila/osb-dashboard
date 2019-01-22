@@ -4,7 +4,6 @@ import { DbEndpoint } from './db-endpoint';
 export interface BackupRequest {
 
     source: DbEndpoint;
-
     destination: FileEndpoint;
 
 }

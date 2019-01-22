@@ -3,8 +3,6 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
-import { SchemaFormModule, WidgetRegistry, DefaultWidgetRegistry } from "ngx-schema-form";
-
 import {
   NgbDropdownModule, NgbCollapseModule, NgbTypeaheadModule,
   NgbTooltipModule, NgbModalModule, NgbPopoverModule, NgbTabsetModule
@@ -32,15 +30,14 @@ export function buildBuildTargetService(): BuildTargetService {
     FormsModule,
     HttpModule,
 
-    NgbDropdownModule.forRoot(),
-    NgbCollapseModule.forRoot(),
-    NgbTooltipModule.forRoot(),
-    NgbModalModule.forRoot(),
-    NgbPopoverModule.forRoot(),
-    NgbTypeaheadModule.forRoot(),
-    NgbTabsetModule.forRoot(),
-
-    SchemaFormModule.forRoot(),
+    NgbDropdownModule,
+    NgbCollapseModule,
+    NgbTooltipModule,
+    NgbModalModule,
+    NgbPopoverModule,
+    NgbTypeaheadModule,
+    NgbTabsetModule,
+    
     CoreModule.forRoot(),
     SharedModule,
 
@@ -49,8 +46,7 @@ export function buildBuildTargetService(): BuildTargetService {
     AppRoutingModule,
   ],
   providers: [
-    { provide: BuildTargetService, useFactory: buildBuildTargetService },
-    { provide: WidgetRegistry, useClass: DefaultWidgetRegistry }
+    { provide: BuildTargetService, useFactory: buildBuildTargetService }
   ],
   bootstrap: [AppComponent]
 })

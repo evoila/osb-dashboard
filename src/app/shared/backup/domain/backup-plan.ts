@@ -4,16 +4,15 @@ export interface BackupPlan {
 
     // Do not provide during creation
     id: string;
-
+    name: string;
+    compression: boolean;
+    paused: boolean;
     frequency: string;
-
     retentionStyle: string;
-
+    retentionPeriod: number;    
+    items: Array<string>; 
     // Either number of files, or hours, or days or whatever
-    retentionPeriod: number;
-
     destination: FileEndpoint;
-
     source: DbEndpoint;
 
 }

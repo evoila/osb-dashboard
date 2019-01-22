@@ -9,7 +9,8 @@
     font-size: 16px;
     padding: 10px 0;
     margin-top: 100px;
-    border-bottom: 1px solid #CCC;
+    color: #000;
+    opacity: 0.75;
   
     .close {
       margin-right: 1rem;
@@ -17,7 +18,7 @@
   }
 
   .warning {
-    background: #FFEEA9;
+    background: #FFEEA9;    
   }
 
   .info {

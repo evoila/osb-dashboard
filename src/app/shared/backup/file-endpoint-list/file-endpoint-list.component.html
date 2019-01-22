@@ -3,8 +3,18 @@
   <p>These are your backup configuration endpoints. You can reuse them to create new backup definitions.
   </p>
   <p><a class="btn btn-secondary" routerLink="/backup/file-endpoints/new" role="button">Create File Endpoint »</a></p>
-  <table class="table">
-    <thead class="thead-default">
+  <div class="row">
+    <div class="col-sm-10">&nbsp;</div>
+    <div class="col-sm-2 pageSizeSelector">
+      <select class="form-control" id="pageSize" name="pageSize" #pageSize="ngModel" [(ngModel)]="pagination.pageSize" (change)="pageChange()">
+        <option *ngFor="let i of pageSizes" [ngValue]="i">
+          {{i}}
+        </option>
+      </select>
+    </div>
+  </div>
+  <table class="table table-hover">
+      <thead class="thead-dark">
       <tr>
         <th>#</th>
         <th>Name</th>
@@ -18,9 +28,12 @@
         <th scope="row">{{i + 1}}</th>
         <td>{{ destination.name }}</td>
         <td>{{ destination.type }}</td>
-        <td>{{ destination.containerName }}{{ destination.bucket }}</td>
+        <td>{{ destination.container_name }}{{ destination.bucket }}</td>
         <td><a href="#" routerLink="/backup/file-endpoints/{{destination.id}}">Details</a></td>
       </tr>
     </tbody>
   </table>
+  <ngb-pagination class="d-flex justify-content-end" [(collectionSize)]="pagination.collectionSize" [(page)]="pagination.page"
+    [(pageSize)]="pagination.pageSize" [maxSize]="pagination.maxSize" [rotate]="pagination.rotate" 
+    [boundaryLinks]="pagination.boundaryLinks" (pageChange)="pageChange($event)"></ngb-pagination>
 </div>

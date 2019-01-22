@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { HomeComponent } from './home.component';
+import { JsonFormSchemaComponent } from './json-form-schema.component';
 
-describe('HomeComponent', () => {
-  let component: HomeComponent;
-  let fixture: ComponentFixture<HomeComponent>;
+describe('JsonFormSchemaComponent', () => {
+  let component: JsonFormSchemaComponent;
+  let fixture: ComponentFixture<JsonFormSchemaComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HomeComponent ]
+      declarations: [ JsonFormSchemaComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HomeComponent);
+    fixture = TestBed.createComponent(JsonFormSchemaComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

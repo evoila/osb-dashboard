@@ -1,5 +1,5 @@
 
-import {throwError as observableThrowError,  Observable } from 'rxjs';
+import { throwError as observableThrowError,  Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import {
   Http, ConnectionBackend, RequestOptionsArgs,
@@ -17,8 +17,8 @@ export class CoreHttpService extends Http {
   public static makeOptions(accessToken?: string): RequestOptions {
     const headers = new Headers();
 
-    headers.append('Accept', 'application/hal+json;charset=UTF-8');
-    headers.append('Content-Type', 'application/hal+json;charset=UTF-8');
+    headers.append('Accept', 'application/json;charset=UTF-8');
+    headers.append('Content-Type', 'application/json;charset=UTF-8');
 
     if (accessToken) {
       headers.append('Authorization', accessToken);

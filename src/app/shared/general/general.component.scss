@@ -1,0 +1,22 @@
+@import '../../../styles.scss';
+
+.card-columns {
+    @include media-breakpoint-only(lg) {
+        column-count: 2;
+    }
+    @include media-breakpoint-only(xl) {
+        column-count: 2;
+    }
+}
+
+.footer {
+    position: relativ;
+    bottom: 0;
+    width: 100%;
+    background-color: #f5f5f5;
+    padding: 10px 20px 10px 20px;
+}
+
+.footer-text {
+    font-size: 85%; color: #6c757d!important;
+}

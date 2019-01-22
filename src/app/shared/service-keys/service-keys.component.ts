@@ -17,8 +17,8 @@ export class ServiceKeysComponent implements OnInit {
       name: 'Overview',
       isCollapsible: false,
       links: [{
-        name: 'All Keys',
-        href: '',
+        name: 'Service Keys',
+        href: '/service-keys',
         iconClass: 'fas fa-server'
       }]
     }

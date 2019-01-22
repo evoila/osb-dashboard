@@ -3,12 +3,24 @@
   <p>These are the currently active Backup Plans for your service instance. If the list is empty, please create
     a new Backup Plan.
   </p>
-  <p><a class="btn btn-secondary" routerLink="/backup/plans/new" role="button">Create Backup Plan »</a></p>
-  <table class="table">
-    <thead class="thead-default">
+  <p><a class="btn btn-secondary" routerLink="/backup/backup-plans/new" role="button">Create Backup Plan »</a></p>
+  <div class="row">
+    <div class="col-sm-10">&nbsp;</div>
+    <div class="col-sm-2 pageSizeSelector">
+      <select class="form-control" id="pageSize" name="pageSize" #pageSize="ngModel" [(ngModel)]="pagination.pageSize" (change)="pageChange()">
+        <option *ngFor="let i of pageSizes" [ngValue]="i">
+          {{i}}
+        </option>
+      </select>
+    </div>
+  </div>
+  <table class="table table-hover">
+      <thead class="thead-dark">
       <tr>
         <th>#</th>
+        <th>Name</th>
         <th>Frequency</th>
+        <th>Paused</th>
         <th>Retention Period</th>
         <th>Retention</th>        
         <th></th>
@@ -16,14 +28,19 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let plan of plans; let i = index">
+      <tr *ngFor="let backupPlan of backupPlans; let i = index">
         <th scope="row">{{i + 1}}</th>
-        <td>{{ plan.frequency }}</td>
-        <td>{{ plan.retentionPeriod }}</td>
-        <td>{{ plan.retentionStyle }}</td>
-        <td><a href="#" routerLink="/backup/plans/{{plan.id}}">Details</a></td>
-        <td><a href="#" (click)="startBackup(plan, plan.id)">Backup Now</a></td>
+        <td>{{ backupPlan.name }}</td>
+        <td>{{ backupPlan.frequency }}</td>
+        <td>{{ backupPlan.paused }}</td>
+        <td>{{ backupPlan.retentionPeriod }}</td>
+        <td>{{ backupPlan.retentionStyle }}</td>
+        <td><a href="#" routerLink="/backup/backup-plans/{{backupPlan.id}}">Details</a></td>
+        <td><button type="button" class="btn btn-link" (click)="startBackup(backupPlan, backupPlan.id)">Backup Now</button></td>
       </tr>
     </tbody>
   </table>
+  <ngb-pagination class="d-flex justify-content-end" [(collectionSize)]="pagination.collectionSize" [(page)]="pagination.page"
+    [(pageSize)]="pagination.pageSize" [maxSize]="pagination.maxSize" [rotate]="pagination.rotate" 
+    [boundaryLinks]="pagination.boundaryLinks" (pageChange)="pageChange($event)"></ngb-pagination>
 </div>

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { Notification } from 'app/core';
+import { Notification } from '../notification.service';
 
 @Component({
   selector: 'sb-notification-banner',

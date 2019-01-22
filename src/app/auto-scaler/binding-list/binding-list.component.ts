@@ -7,7 +7,7 @@ import { AutoScalerService } from '../auto-scaler.service';
   styleUrls: ['./binding-list.component.scss']
 })
 export class BindingListComponent implements OnInit {
-  readonly ENTITY = 'bindings';
+  readonly ENTITY = 'manage';
   bindings: any[] = [];
   
   constructor(readonly asService: AutoScalerService) { }

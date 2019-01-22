@@ -4,10 +4,8 @@ import { EntityService, CoreHttpService } from 'app/core';
 import { CustomEndpointService } from 'app/core/custom-endpoint.service';
 import { environment } from 'environments/runtime-environment';
 
-const serviceInstanceId = environment.serviceInstanceId;
 @Injectable()
 export class BackupService extends EntityService {
-  SORT_CONFIG = 'sort=startDate,desc';
   BACKUP_BASEURL: string;
 
   constructor(protected readonly httpService: CoreHttpService, 
@@ -16,23 +14,29 @@ export class BackupService extends EntityService {
       this.BACKUP_BASEURL = customEndpointService.getUri('osb-backup-manager');
   }
 
-  public getServiceInstanceId(): string {
-    return serviceInstanceId;
+  public getServiceInstance(): string {
+    return environment.serviceInstance;
   }
 
-  public loadAll(entityRel: string): Observable<{} | any> {
-    return this.all(this.BACKUP_BASEURL + '/' + entityRel + '/byInstance/' + serviceInstanceId + '?' + this.SORT_CONFIG);
+  public loadAll(entityRel: string, pagingAndSorting?: any): Observable<any> {
+    return this.all(this.BACKUP_BASEURL + '/' + entityRel + '/byInstance/' 
+      + environment.serviceInstanceId + this.pagingAndSortingHandler(pagingAndSorting));
   }
 
-  public deleteOne(entityRel: string, entity: any): Observable<{} | any> {
+  public loadAllFiltered(entityRel: string, filterQuery?: any, pagingAndSorting?: any): Observable<any> {
+    return this.all(this.BACKUP_BASEURL + '/' + entityRel + '/byInstance/' 
+      + environment.serviceInstanceId + '/filtered' + this.pagingAndSortingHandler(pagingAndSorting) + this.filterHandler(filterQuery));
+  }
+
+  public deleteOne(entityRel: string, entity: any): Observable<any> {
     return this.delete(this.BACKUP_BASEURL + '/' + entityRel + '/' + entity.id);
   }
 
-  public loadOne(entityRel: string, id: string): Observable<{} | any> {
+  public loadOne(entityRel: string, id: string): Observable<any> {
     return this.get(this.BACKUP_BASEURL + '/' + entityRel + '/' + id);
   }
 
-  public saveOne(entity: any, entityRel: string, id?: string): Observable<{} | any> {
+  public saveOne(entity: any, entityRel: string, id?: string): Observable<any> {
     if (id) {
       return this.patch(this.BACKUP_BASEURL + '/' + entityRel + '/' + id, entity);
     } else {
@@ -40,7 +44,7 @@ export class BackupService extends EntityService {
     }
   }
 
-  public validate(rel: string, entity: any): Observable<{} | any> {
+  public validate(rel: string, entity: any): Observable<any> {
     return this.post(this.BACKUP_BASEURL + '/' + rel + '/validate' , entity);
   }
 

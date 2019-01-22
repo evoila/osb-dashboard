@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BackupService } from '../backup.service';
 import { BackupPlan } from '../domain/backup-plan';
 import { NotificationService, NotificationType, Notification } from 'app/core';
+import { Pagination } from '../domain/pagination';
 
 @Component({
   selector: 'sb-backup-plan-list',
@@ -9,32 +10,52 @@ import { NotificationService, NotificationType, Notification } from 'app/core';
   styleUrls: ['./backup-plan-list.component.scss']
 })
 export class BackupPlanListComponent implements OnInit {
-  plans: BackupPlan[];
+  pageSizes = [10, 25, 50, 100, 250];
+  pagination: Pagination = {
+    page: 1,
+    collectionSize: 0,
+    pageSize: 10,
+    maxSize: 5,
+    rotate: true,
+    boundaryLinks: true
+  };
+  backupPlans: BackupPlan[];
   
   constructor(protected readonly backupService: BackupService,
-    protected readonly nService: NotificationService) { }
+    protected readonly notificationService: NotificationService) { }
 
   ngOnInit() {
     this.loadPlans();
   }
 
+  pageChange(page?: number): void {
+    if (page)
+      this.pagination.page = page;
+    this.loadPlans();
+  }
+
+  updateResponse(page: number, collectionSize: number): void {
+    this.pagination.page = (page + 1);
+    this.pagination.collectionSize = collectionSize;
+  }
+
   private loadPlans() {
     this.backupService
-      .loadAll('plans')
-      .subscribe((plans: any) => {
-        this.plans = plans.content;
+      .loadAll('backupPlans', this.pagination)
+      .subscribe((backupPlans: any) => {
+        this.backupPlans = backupPlans.content;
       });
   }
 
-  startBackup(plan: string, id: string) {
-    this.backupService.saveOne({plan: plan}, 'backup')
+  startBackup(backupPlan: string, id: string) {
+    this.backupService.saveOne({backupPlan: backupPlan}, 'backup')
       .subscribe({
         next: (d) => {
-          this.nService.add(new Notification(NotificationType.Warning, 'Started Backup'));
+          this.notificationService.addSelfClosing(new Notification(NotificationType.Warning, 'Started Backup'));
           this.loadPlans()
         },
         error: (e) => {
-          this.nService.add(new Notification(NotificationType.Warning, 'Could not start backup.'));
+          this.notificationService.addSelfClosing(new Notification(NotificationType.Warning, 'Could not start backup.'));
         }
       });
   }

@@ -3,9 +3,8 @@ import { Route, RouterModule } from '@angular/router';
 
 import { buildTarget } from 'environments/target';
 
-import { BackupComponent, ServiceKeysComponent, NoContentComponent } from './shared';
+import { BackupComponent, ServiceKeysComponent, GeneralComponent } from './shared';
 
-import { HomeComponent } from './core';
 
 // needs to be exported for AOT
 export const ROUTES: Route[] = [
@@ -16,7 +15,7 @@ export const ROUTES: Route[] = [
   },
   {
     path: 'home',
-    component: HomeComponent
+    component: GeneralComponent
   },
   {
     path: 'backup',
@@ -29,7 +28,7 @@ export const ROUTES: Route[] = [
   ...buildTarget.extensionModules,
   {
     path: '**',
-    component: NoContentComponent
+    component: GeneralComponent
   },
 ];
 @NgModule({

@@ -1,0 +1,141 @@
+<div class="section-content">
+    <h3>Backup Job</h3>
+    <h4>Destination</h4>
+    <table class="table">
+      <tbody *ngIf="job.destination">
+        <tr>
+          <th>Destination Name</th>
+          <td>{{job.destination.name}}</td>
+        </tr>
+        <tr>
+          <th>Destination Type</th>
+          <td>{{job.destination.type}}</td>
+        </tr>
+        <tr>
+          <th>Container/Bucket</th>
+          <td>{{job.destination.container}}{{job.destination.bucket}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <h4>Execution information</h4>
+    <table class="table">
+      <tbody *ngFor="let agentExecutionReponse of job.agentExecutionReponses | keyvalue">
+        <tr>
+          <th>Database</th>
+          <td>{{agentExecutionReponse.key}}</td>
+        </tr>
+        <tr>
+          <th>Start Time</th>
+          <td>{{agentExecutionReponse.value.start_time | date:"dd.MM.yyyy - HH:mm" }}</td>
+        </tr>
+        <tr>
+          <th>End Time</th>
+          <td>{{agentExecutionReponse.value.end_time | date:"dd.MM.yyyy - HH:mm" }}</td>
+        </tr>
+        <tr>
+          <th>Execution Time (in Seconds)</th>
+          <td>{{agentExecutionReponse.value.execution_time_ms / 1000}}</td>
+        </tr>
+        <tr>
+          <th>Status</th>
+          <td>{{agentExecutionReponse.value.status}}</td>
+        </tr>
+        <tr>
+          <th>Error Message</th>
+          <td>{{agentExecutionReponse.value.error_message}}</td>
+        </tr>
+        <tr>
+          <th>Pre-Backup Log</th>
+          <td>
+            <code>
+                    {{agentExecutionReponse.value.pre_backup_check_log}}
+                  </code>
+          </td>
+        </tr>
+        <tr>
+          <th>Pre-Backup Error Log</th>
+          <td>
+            <code>
+                    {{agentExecutionReponse.value.pre_backup_check_errorlog}}
+                  </code>
+          </td>
+        </tr>
+        <tr>
+          <th>Pre-Backup Log</th>
+          <td>
+            <code>
+                {{agentExecutionReponse.value.pre_backup_lock_log}}
+              </code>
+          </td>
+        </tr>
+        <tr>
+          <th>Pre-Backup Error Log</th>
+          <td>
+            <code>
+                {{agentExecutionReponse.value.pre_backup_lock_errorlog}}
+              </code>
+          </td>
+        </tr>
+        <tr>
+          <th>Backup Log</th>
+          <td>
+            <code>
+                {{agentExecutionReponse.value.backup_log}}
+              </code>
+          </td>
+        </tr>
+        <tr>
+          <th>Backup Error Log</th>
+          <td>
+            <code>
+                {{agentExecutionReponse.value.backup_errorlog}}
+              </code>
+          </td>
+        </tr>
+        <tr>
+          <th>Post-Backup Cleanup Log</th>
+          <td>
+            <code>
+                {{agentExecutionReponse.value.backup_cleanup_log}}
+              </code>
+          </td>
+        </tr>
+        <tr>
+          <th>Post-Backup Cleanup Error Log</th>
+          <td>
+            <code>
+                {{agentExecutionReponse.value.backup_cleanup_errorlog}}
+              </code>
+          </td>
+        </tr>
+        <tr>
+          <th>Post-Backup Unlock Log</th>
+          <td>
+            <code>
+                {{agentExecutionReponse.value.post_backup_unlock_log}}
+              </code>
+          </td>
+        </tr>
+        <tr>
+          <th>Post-restore Unlock Error Log</th>
+          <td>
+            <code>
+                {{agentExecutionReponse.value.post_restore_unlock_errorlog}}
+              </code>
+          </td>
+        </tr>
+      </tbody>
+    </table>  
+    <h4>Files</h4>
+    <table class="table">
+      <tbody *ngIf="job.files">
+        <tr *ngFor="let item of job.files | keyvalue">
+          <td>{{item.key}}</td>
+          <td>{{item.value}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div>
+      <button type="submit" class="btn btn-danger pull-right" (click)="delete()">Delete</button>
+    </div>
+  </div>

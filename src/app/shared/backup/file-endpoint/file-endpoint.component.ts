@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BackupService } from '../backup.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationService, Notification, NotificationType } from '../../../core/notification.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'sb-file-endpoint',
@@ -9,7 +10,7 @@ import { NotificationService, Notification, NotificationType } from '../../../co
   styleUrls: ['./file-endpoint.component.scss']
 })
 export class FileEndpointComponent implements OnInit {
-  readonly ENTITY: string = 'destinations';
+  readonly ENTITY: string = 'fileDestinations';
   destinationTypes = ['S3', 'SWIFT'];
   // https://docs.aws.amazon.com/de_de/general/latest/gr/rande.html#s3_region
   regions = [{
@@ -77,7 +78,8 @@ export class FileEndpointComponent implements OnInit {
   constructor(protected readonly backupService: BackupService,
     protected readonly route: ActivatedRoute,
     protected readonly router: Router,
-    protected readonly nService: NotificationService) { }
+    protected readonly nService: NotificationService,
+    protected readonly modalService: NgbModal) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -92,17 +94,20 @@ export class FileEndpointComponent implements OnInit {
     });
   }
 
-  delete(): void {
-    this.backupService.deleteOne(this.ENTITY, this.destination)
-      .subscribe((destination: any) => {
+  delete(content): void {
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      this.backupService.deleteOne(this.ENTITY, this.destination)
+      .subscribe((plan: any) => {
         this.redirect();
       });
+    }, (reason) => {
+      // we do nothing here, because user does not want to delete entity
+    });
   }
+
 
   onSubmit(): void {
     if (!this.validated) {
-      this.destination.serviceInstanceId = this.backupService.getServiceInstanceId();
-
       this.backupService.validate(this.ENTITY, this.destination)
         .subscribe({
           next: (d) => {
@@ -115,15 +120,16 @@ export class FileEndpointComponent implements OnInit {
         });
     } else {
       const id = this.update ? this.destination.id : null;
+      this.destination.serviceInstance = this.backupService.getServiceInstance();
       this.backupService.saveOne(this.destination, this.ENTITY, id)
-        .subscribe((plan: any) => {
+        .subscribe((destination: any) => {
           this.redirect();
         });
     }
   }
 
   private redirect(): void {
-    this.router.navigate(['/backup']);
+    this.router.navigate(['/backup/file-endpoints']);
   }
 
 }
