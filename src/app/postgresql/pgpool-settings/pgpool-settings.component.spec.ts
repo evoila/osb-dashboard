@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ManageCreateComponent } from './manage-create.component';
+import { PgpoolSettingsComponent } from './pgpool-settings.component';
 
-describe('ManageCreateComponent', () => {
-  let component: ManageCreateComponent;
-  let fixture: ComponentFixture<ManageCreateComponent>;
+describe('PgpoolSettingsComponent', () => {
+  let component: PgpoolSettingsComponent;
+  let fixture: ComponentFixture<PgpoolSettingsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ManageCreateComponent ]
+      declarations: [ PgpoolSettingsComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ManageCreateComponent);
+    fixture = TestBed.createComponent(PgpoolSettingsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

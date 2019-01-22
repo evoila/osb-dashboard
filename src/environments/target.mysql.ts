@@ -10,7 +10,6 @@ export const buildTarget: BuildTarget = {
   sharedModules: {
     general: true,
     backup: true,
-    management: true,
     serviceKeys: true
   },
   extensionModules: [

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ManageListComponent } from './manage-list.component';
+import { JsonFormSchemaComponent } from './json-form-schema.component';
 
-describe('ManageListComponent', () => {
-  let component: ManageListComponent;
-  let fixture: ComponentFixture<ManageListComponent>;
+describe('JsonFormSchemaComponent', () => {
+  let component: JsonFormSchemaComponent;
+  let fixture: ComponentFixture<JsonFormSchemaComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ManageListComponent ]
+      declarations: [ JsonFormSchemaComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ManageListComponent);
+    fixture = TestBed.createComponent(JsonFormSchemaComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

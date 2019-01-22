@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ManageComponent } from './manage.component';
+import { PostgresqlSettingsComponent } from './postgresql-settings.component';
 
-describe('ManageComponent', () => {
-  let component: ManageComponent;
-  let fixture: ComponentFixture<ManageComponent>;
+describe('PostgresqlSettingsComponent', () => {
+  let component: PostgresqlSettingsComponent;
+  let fixture: ComponentFixture<PostgresqlSettingsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ManageComponent ]
+      declarations: [ PostgresqlSettingsComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ManageComponent);
+    fixture = TestBed.createComponent(PostgresqlSettingsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

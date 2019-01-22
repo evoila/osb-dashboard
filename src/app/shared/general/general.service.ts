@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { CoreHttpService } from '../../core/core-http.service';
-import { EntityService } from 'app/core';
+import { CoreHttpService } from 'app/core/core-http.service';
+import { EntityService } from 'app/core/entity.service';
 
 import { environment } from 'environments/runtime-environment';
 
@@ -10,7 +10,7 @@ import { environment } from 'environments/runtime-environment';
 export class GeneralService extends EntityService {
   MANAGE_BASE_URL: string;
 
-  constructor(protected readonly httpService: CoreHttpService) {    
+  constructor(protected readonly httpService: CoreHttpService) {     
     super(httpService);
     this.MANAGE_BASE_URL = environment.baseUrls.serviceBrokerUrl + '/custom/v2/manage/';
   }
@@ -21,6 +21,14 @@ export class GeneralService extends EntityService {
 
   public getServiceInstance(): string {
     return environment.serviceInstance;
+  }
+
+  public saveOne(entity: any, entityRel?: string): Observable<{} | any> {
+    let url = this.MANAGE_BASE_URL + 'service_instances/' + environment.serviceInstanceId;
+    if (entityRel)
+      url += '/' + entityRel;
+
+    return this.patch(url, entity);
   }
   
   public loadServiceInstance(): Observable<{} | any> {

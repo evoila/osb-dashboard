@@ -23,9 +23,6 @@ import { RestoreListComponent } from './backup/restore-list/restore-list.compone
 import { BackupJobComponent } from './backup/backup-job/backup-job.component';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { RestorePointListComponent } from './backup/restore-point-list/restore-point-list.component';
-import { ManageComponent } from './manage/manage.component';
-import { ManageListComponent } from './manage/manage-list/manage-list.component';
-import { ManageCreateComponent } from './manage/manage-create/manage-create.component';
 
 const components = [
   GeneralComponent,
@@ -53,7 +50,7 @@ const components = [
     CoreModule,
     NgbPaginationModule
   ],
-  declarations: [...components, ManageComponent, ManageListComponent, ManageCreateComponent],
+  declarations: [...components],
   exports: [components],
   providers: [BackupService, GeneralService, ServiceKeysService]
 })

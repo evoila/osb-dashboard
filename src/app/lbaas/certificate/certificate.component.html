@@ -14,7 +14,5 @@
     </div>
   </div>
   <h4>Configuration of Certifcates</h4>
-  <json-schema-form loadExternalAssets="false" [schema]="jsonSchema.schema" [layout]="jsonSchema.layout" [(data)]="jsonSchema.data"
-    framework="bootstrap-4" (onSubmit)="save($event)">
-  </json-schema-form>
+  <sb-json-form-schema [form-layout]="formLayout" [form-elements]="formElements" [instance-group-name]="instanceGroupName"></sb-json-form-schema>
 </div>

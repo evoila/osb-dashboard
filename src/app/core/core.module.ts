@@ -24,6 +24,8 @@ import { FormSchemaService } from './form-schema.service';
 import { TaskPollingService } from './task-polling.service';
 import { TaskPollingComponent } from './task-polling/task-polling.component';
 import { ShowErrorsComponent } from './show-errors/show-errors.component';
+import { JsonFormSchemaComponent } from './json-form-schema/json-form-schema.component';
+import { Bootstrap4FrameworkModule } from 'angular6-json-schema-form';
 
 export function coreHttpFactory(backend: XHRBackend) {
   return new CoreHttpService(backend);
@@ -44,7 +46,8 @@ const components = [
   WizardPageComponent,
   FocusDirective,
   WizardPageSubmitButtonComponent,
-  TaskPollingComponent
+  TaskPollingComponent,
+  JsonFormSchemaComponent
 ]
 
 @NgModule({
@@ -52,7 +55,8 @@ const components = [
     CommonModule,
     RouterModule,
     NgbCollapseModule.forRoot(),
-    NgbDropdownModule.forRoot()
+    NgbDropdownModule.forRoot(),
+    Bootstrap4FrameworkModule
   ],
   declarations: [components],
   exports: [components],

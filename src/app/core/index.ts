@@ -9,3 +9,4 @@ export * from './task-polling.service';
 export * from './show-errors/show-errors.component';
 export * from './notification-banner/notification-banner.component';
 export * from './task-polling/task-polling.component';
+export * from './json-form-schema/json-form-schema.component';
