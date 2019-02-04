@@ -1,5 +1,5 @@
 <div class="col-md-12" *ngIf="chart && chart.data && chart.data.length > 0">
-    <div style="height: 600px; width: 100%">
+    <div style="height: 250px; width: 100%">
       <canvas sb-chart-dir class="chart" height="100" [data]="chart.data" [labelsArray]="chart.labels" [seriesArray]="chart.series"
         [type]="chart.type" [options]="chart.options"></canvas>
     </div>

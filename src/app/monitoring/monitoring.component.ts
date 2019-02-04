@@ -15,6 +15,7 @@ import { map, take, filter } from 'rxjs/operators';
 })
 export class MonitoringComponent implements OnInit {
   public chart: Chart;
+  private notYetNavigate = true;
   public menu: SidebarEntry[] = [
     {
       name: 'Panels',
@@ -85,6 +86,9 @@ export class MonitoringComponent implements OnInit {
           return this.menu[0].links[0]['href'];
         })
       )
-      .subscribe(k => this.router.navigate(['monitoring/' + k]));
+      .subscribe(k => {
+        this.notYetNavigate && this.router.navigate(['monitoring/' + k]);
+        this.notYetNavigate = false;
+      });
   }
 }

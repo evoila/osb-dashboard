@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, Output } from '@angular/core';
 import { EventEmitter } from '@angular/core';
-import { WidgetChooserComponent } from 'ngx-schema-form';
 
 @Component({
   selector: 'sb-horizontal-navigation',

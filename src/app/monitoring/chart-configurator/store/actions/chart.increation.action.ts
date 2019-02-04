@@ -22,6 +22,8 @@ export const CHECK_AGGREGATION_RESULT_FINISHED =
 
 export const FLUSH_STATE = '[Increation] Flush State';
 
+export const SET_CHART_NAME = '[Increation] Set Appname';
+
 export class SetChartType implements Action {
   readonly type = SET_CHART_TYPE;
   constructor(public payload: string) {}
@@ -74,6 +76,10 @@ export class CheckAggregationResultFinished implements Action {
 export class FlushState implements Action {
   readonly type = FLUSH_STATE;
 }
+export class SetChartName implements Action {
+  readonly type = SET_CHART_NAME;
+  constructor(public payload: string) {}
+}
 
 export type FireTypes =
   | FireAggregations
@@ -86,6 +92,7 @@ export type FireTypes =
 export type ChartIncreationAction =
   | SetChartType
   | SetChartOptions
+  | SetChartName
   | SetChartAggregations
   | UpdateChartAggregations
   | DeleteChartAggregations

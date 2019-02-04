@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AggregationState } from '../../store/reducers/aggregation.reducer';
 import { Store } from '@ngrx/store';
-import { tap, take } from 'rxjs/operators';
+import { tap, take, filter, debounceTime } from 'rxjs/operators';
 import {
   LoadAggregations,
   SaveAggregation
@@ -34,7 +34,10 @@ import { Chart } from '../../../shared/model/chart';
 import { Router } from '@angular/router';
 import { BindingsState } from '../../../shared/store/reducers/binding.reducer';
 import { getChartSaved } from '../../../shared/store/selectors/chart.selector';
-import { FlushState } from '../../store/actions/chart.increation.action';
+import {
+  FlushState,
+  SetChartName
+} from '../../store/actions/chart.increation.action';
 
 @Component({
   selector: 'sb-data-aggregation',
@@ -101,7 +104,8 @@ export class DataAggregationComponent implements OnInit {
       .pipe(
         tap((chartType: string) =>
           this.aggregationStore.dispatch(new LoadAggregations(chartType))
-        )
+        ),
+        take(1)
       )
       .subscribe(chartType => (this.chartType = chartType));
 
@@ -123,16 +127,26 @@ export class DataAggregationComponent implements OnInit {
 
     this.chartStore
       .select(getReadyForRequestAggregations)
-      .subscribe(aggregationRqs => {
-        if (
-          Object.keys(aggregationRqs).length !=
-            Object.keys(this.previousFinishedAggs).length ||
-          checkNotEquals(aggregationRqs, this.previousFinishedAggs)
-        ) {
-          this.chartStore.dispatch(new FireAggregations(aggregationRqs));
+      .pipe(
+        filter(aggregationRqs => {
+          const returnValue =
+            Object.keys(aggregationRqs).length !=
+              Object.keys(this.previousFinishedAggs).length ||
+            checkNotEquals(aggregationRqs, this.previousFinishedAggs);
           this.previousFinishedAggs = aggregationRqs;
+          return returnValue;
+        }),
+        debounceTime(300)
+      )
+      .subscribe(aggregationRqs => {
+        {
+          this.chartStore.dispatch(new FireAggregations(aggregationRqs));
         }
       });
+  }
+  public setName(name: string) {
+    this.chartStore.dispatch(new SetChartName(name));
+    this.name = name;
   }
   public save() {
     if (

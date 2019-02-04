@@ -13,7 +13,10 @@ import { containerComponents } from './containers';
 import { BottomSheetAggregationSheet } from './components/data-aggrgation-components/aggregation-list/aggregation-list.component';
 import { MatBottomSheetModule } from '@angular/material';
 import { AggregationEditorModule } from '../aggregation-editor/aggregation-editor.module';
-import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
+import {
+  NgbAccordionModule,
+  NgbTabsetModule
+} from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
@@ -28,6 +31,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     MatBottomSheetModule,
     AggregationEditorModule,
     NgbAccordionModule,
+    NgbTabsetModule,
     DragDropModule
   ],
   entryComponents: [BottomSheetAggregationSheet],

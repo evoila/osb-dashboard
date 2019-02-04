@@ -6,11 +6,7 @@ import { switchMap, map, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { AggregationRequestObject } from '../../model/aggregationRequestObject';
 import { Store } from '@ngrx/store';
-import {
-  CheckAggregationResult,
-  CheckAggregationResultFinished
-} from '../actions/chart.increation.action';
-import { query } from '@angular/animations';
+import { CheckAggregationResult } from '../actions/chart.increation.action';
 
 @Injectable()
 export class ChartIncreationEffect {
@@ -24,10 +20,17 @@ export class ChartIncreationEffect {
           .pipe(
             map(response => {
               return { response, query: k.payload };
-            })
+            }),
+            catchError(error =>
+              of(new chartIncActions.FireAggregationsFailed())
+            )
           );
       }),
-      map(k => {
+      map((k: any) => {
+        if (k.type) {
+          return k;
+        }
+        k = k as { response: any; query: any };
         this.store.dispatch(new CheckAggregationResult(k.query, k.response));
         return new chartIncActions.FireAggregationSuccess(k.response);
       }),

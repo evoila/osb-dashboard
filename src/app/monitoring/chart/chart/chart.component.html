@@ -6,8 +6,8 @@
         <fa name="refresh" (click)="update()"></fa>
       </div>
     <div class="row justify-content-center">
-      <div (click)="test()" class="col-md-12" style="height: 600px; width: 100%">
-          <canvas sb-chart-dir height="100" class="chart" [data]="chartView.data" [labelsArray]="chartView.labels" [seriesArray]="chartView.series"
+      <div *ngIf="chartView && chartView.data" class="col-md-12" style="height: 600px; width: 100%">
+          <canvas  sb-chart-dir height="100" class="chart" [data]="chartView.data" [labelsArray]="chartView.labels" [seriesArray]="chartView.series"
             [type]="chartView.type" [options]="chartView.options"></canvas>
       </div>
       <div class="col-md-12" style="height: 300px; width: 100%" *ngIf="!chartView">

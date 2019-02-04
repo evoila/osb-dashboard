@@ -15,6 +15,7 @@ import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
 
 import { ChartConfiguratorModule } from '../../chart-configurator/chart-configurator.module';
+import { getBindingsLoadingState } from '../store/selectors/bindings.selector';
 
 @Injectable({ providedIn: ChartConfiguratorModule })
 export class CfAuthParameterService {
@@ -47,11 +48,14 @@ export class CfAuthParameterService {
   public construct(store: Store<BindingsState>) {
     if (!this.store) {
       this.store = store;
-      this.orgAndSpace$ = store.select(getAllBindingsLoaded).pipe(
-        filter((loaded: boolean) => {
+      this.orgAndSpace$ = store.select(getBindingsLoadingState).pipe(
+        filter(state => {
           // dispatch Event if
-          !loaded && this.store.dispatch(new LoadBindings());
-          return loaded == true;
+          !state.loaded &&
+            !state.loading &&
+            this.store.dispatch(new LoadBindings());
+
+          return state.loaded == true;
         }),
         switchMap(k => store.select(getBindingsSpaceAndOrg))
       );

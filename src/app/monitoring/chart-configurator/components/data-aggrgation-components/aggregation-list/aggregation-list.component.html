@@ -1,7 +1,7 @@
 <div class="aggregationList">
-  <ul cdkDropList id="list-1" cdkDropListConnectedTo="list-2"> 
-    <li *ngFor="let aggregation of aggregations" cdkDrag matTooltip="pull to aggregation Area
+  <ul cdkDropList id="list-1" class="list-group" cdkDropListConnectedTo="list-2"> 
+    <li class="list-group-item" *ngFor="let aggregation of aggregations" cdkDrag matTooltip="pull to aggregation Area
      to use aggregation or click to view aggregation" [cdkDragData]="aggregation" (click)="showAggregation(aggregation)"><a>{{aggregation.name}}</a></li>
-     <li (click)="openAggregationEditor()">Create Aggregation</li>
+     <li class="list-group-item" (click)="openAggregationEditor()">Create Aggregation</li>
   </ul>
 </div>

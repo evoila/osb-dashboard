@@ -1,0 +1,34 @@
+<div id="singleViewComponent">
+  <div class="preview-section">
+    <sb-chart-preview> </sb-chart-preview>
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="chartTypeSelect">Chart-Type</label>
+      <select id="chartTypeSelect" class="form-control" (ngModelChange)="setChartType($event)" [ngModel]="chartType"> 
+        <option>---Please Select---</option>
+        <option [ngValue]="type" *ngFor="let type of chartTypes">{{type}}</option>
+      </select>
+    </div>
+    <div class="form-group col-md-6">
+      <label>Name</label>
+      <input class="form-control" type="text" name="name" [ngModel]="name" (ngModelChange)="setName($event)" required>
+    </div>
+  </div>
+  <ngb-tabset *ngIf="chartType" (tabChange)="beforeChange($event)">
+    <ngb-tab id="aggregations" title="Add Data">
+      <ng-template ngbTabContent>
+        <sb-data-aggregation></sb-data-aggregation>
+      </ng-template>
+    </ngb-tab>
+    <ngb-tab id="chartoptions" title="Chart-Options">
+      <ng-template ngbTabContent>
+        <sb-options></sb-options>
+      </ng-template>
+    </ngb-tab>
+  </ngb-tabset>
+  <div *ngIf="chartType" class="row sb-buttons" >
+      <button type="button" class="btn btn-danger" (click)="cancel()">cancel</button>
+      <button type="button" class="btn btn-primary" (click)="save()">save</button>
+  </div>
+</div>

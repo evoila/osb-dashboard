@@ -4,7 +4,6 @@ import * as chartTypes from '../../model/chart-types';
 import { OptionsState } from 'app/monitoring/chart-configurator/store/reducers/options.reducer';
 import { Store } from '@ngrx/store';
 import { Component, OnInit } from '@angular/core';
-import { SetChartType } from '../../store/actions/chart.increation.action';
 
 @Component({
   selector: 'sb-base-chart',
@@ -19,7 +18,7 @@ export class BaseChartComponent implements OnInit {
     let tempObject: any = {};
     Object.keys(chartTypes.chartObjectForType).forEach((k, index, array) => {
       tempObject = { ...tempObject, [k]: chartTypes.chartObjectForType[k] };
-      if ((index + 1) % 2 == 0 || index + 1 === array.length) {
+      if ((index + 1) % 3 == 0 || index + 1 === array.length) {
         this.charts = [...this.charts, { ...tempObject }];
         tempObject = {};
       }
@@ -27,7 +26,7 @@ export class BaseChartComponent implements OnInit {
   }
   public chooseChart(chartName: string) {
     this.store.dispatch(new fromStore.SetChartType(chartName));
-    this.store.dispatch(new fromStore.NavigateToOptions(chartName));
+    // this.store.dispatch(new fromStore.NavigateToOptions(chartName));
   }
-  constructor(private store: Store<OptionsState>) {}
+  constructor(private store: Store<OptionsState>) { }
 }

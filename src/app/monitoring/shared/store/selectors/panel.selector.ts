@@ -19,6 +19,9 @@ export const getPanelViewModelById = createSelector(
   getAllPanels,
   (panels, id: string) => {
     const panel = panels.filter(k => k.id == id)[0];
+    if (!panel || !panel.charts) {
+      return {};
+    }
     const charts: Chart[][] = panel.charts.reduce(
       (prev, next, i, arr) => {
         if (i == 0) {

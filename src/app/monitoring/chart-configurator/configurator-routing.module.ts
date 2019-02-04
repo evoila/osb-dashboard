@@ -4,13 +4,17 @@ import { OptionsComponent } from 'app/monitoring/chart-configurator/containers/o
 import { RouterModule } from '@angular/router';
 import { ConfiguratorComponent } from 'app/monitoring/chart-configurator/containers/configurator/configurator.component';
 import { DataAggregationComponent } from './containers/data-aggregation/data-aggregation.component';
+import { SingleViewEditorComponent } from './containers/single-view-editor/single-view-editor.component';
 
 const routes: Routes = [
   {
     path: '',
     component: ConfiguratorComponent
   },
-
+  {
+    path: 'single',
+    component: SingleViewEditorComponent
+  },
   {
     path: 'options/:id',
     component: OptionsComponent

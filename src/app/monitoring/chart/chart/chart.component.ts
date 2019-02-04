@@ -34,16 +34,14 @@ export class ChartComponent implements OnInit, OnDestroy {
   public ngOnDestroy() {}
 
   public update() {}
-  test() {
-    console.log(this.chartView);
-  }
+
   private updateEsChart(): void {
     this.store
       .pipe(select(getAggregationResponseAndLoadedById, this.chart.id))
       .pipe(
         filter(k => k != undefined && Object.keys(k.results).length > 0),
         map(result => {
-          return result.results.map(k => {
+          return result!!.results.map(k => {
             return this.chartingService.unwrapForPlotBucket(
               new ChartModel(),
               k.query.aggregation.actualAggregation,

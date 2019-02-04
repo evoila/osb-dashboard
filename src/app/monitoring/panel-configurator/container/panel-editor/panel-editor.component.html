@@ -1,15 +1,32 @@
-<div>
-    <h2>Create a new Panel</h2>
-    <div class="row">
-        <div class="form-group">
-            <label>Name</label>
-            <input class="form-control" type="text" name="name" [(ngModel)]="name" required>
-            <label>Description</label>
-            <input class="form-control" type="text" name="description" [(ngModel)]="description" required>
-        </div>
+<div class="sb-container">
+    <div class="sb-textfields" >
+        <h2>Create a new Panel</h2>
+        <div class="row">
+            <div class="col">
+                <label>Name</label>
+                <input class="form-control" type="text" name="name" [(ngModel)]="name" required>
+            </div>
+            <div class="col">
+                <label>Description</label>
+                <input class="form-control" type="text" name="description" [(ngModel)]="description" required>
+            </div>
+        </div> 
     </div>
-    <sb-charts-in-panel [charts]="chartsInPanel$"></sb-charts-in-panel>
-    <sb-chart-list [charts]="charts$"></sb-chart-list>
-    <button type="button" class="btn btn-danger" (click)="cancel()">cancel</button>
-    <button type="button" class="btn btn-primary" (click)="save()">save</button>
+    <div class="sb-main">
+        <ng-container *ngIf="charts$ | async as charts; then displayCharts; else error"></ng-container>
+        <ng-template #displayCharts >
+            <sb-chart-list [charts]="charts$"></sb-chart-list>
+        </ng-template>
+        <ng-template #error>
+            <h6 #error>Upss... It seems like there are no Charts in the DB.</h6>
+            <h6 #error> You may want to Check out the Editor and create one! </h6>
+        </ng-template>
+    </div>
+    <div class="sb-right">
+        <sb-charts-in-panel [charts]="chartsInPanel$"></sb-charts-in-panel>
+    </div>
+    <div class="sb-buttons">
+        <button type="button" class="btn btn-danger" (click)="cancel()">cancel</button>
+        <button type="button" class="btn btn-primary" (click)="save()">save</button>
+    </div>
 </div>

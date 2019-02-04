@@ -18,6 +18,5 @@ export class ConfiguratorComponent implements OnInit {
     // load application Bindings. This is nessecary for the next few Steps within Configuration
     this.store.dispatch(new fromStore.LoadBindings());
     this.bindings$ = this.store.select(fromStore.getBindingsSpaceAndOrg);
-    this.bindings$.subscribe(k => console.log(k));
   }
 }

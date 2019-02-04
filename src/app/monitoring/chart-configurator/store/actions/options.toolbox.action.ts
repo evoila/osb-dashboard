@@ -28,11 +28,11 @@ export const OPEN_EXPERT_MODE = '[Options Toolbox] Open Title expert-mode';
 export const CLOSE_EXPERT_MODE = '[Options Toolbox] Close Title expert-mode';
 export class UpdateOptionsFail implements Action {
   readonly type = UPDATE_OPTIONS_FAIL;
-  constructor(public payload: string) {}
+  constructor(public payload: string) { }
 }
 export class OpenExpertMode {
   readonly type = OPEN_EXPERT_MODE;
-  constructor(public payload: ExpertModeTopics) {}
+  constructor(public payload: ExpertModeTopics) { }
 }
 /*
  * Animations actions
@@ -48,7 +48,7 @@ export class SetAnimationDisabled implements Action {
 export class SetAnimation implements Action {
   readonly type = SET_ANIMATION;
   // payload sets the type of animation eg line
-  constructor(public payload: string) {}
+  constructor(public payload: string) { }
 }
 
 type ToolboxAnimationAction = SetAnimationDisabled | SetAnimation;
@@ -65,7 +65,7 @@ export class SetLedgendDisabled implements Action {
 }
 export class SetLedgendPosition implements Action {
   readonly type = SET_LEDGEND_POSITION;
-  constructor(public payload: string) {}
+  constructor(public payload: string) { }
 }
 
 export type ToolboxLedgendAction = SetLedgendDisabled | SetLedgendPosition;
@@ -75,6 +75,7 @@ export type ToolboxLedgendAction = SetLedgendDisabled | SetLedgendPosition;
  */
 export const SET_TITLE_DISABLED = '[Options Toolbox] Set Title Disabled';
 export const SET_TITLE_POSITION = '[Options Toolbox] Set Title Position';
+export const SET_TITLE = '[Options Toolbox] Set Title';
 
 export class SetTitleDisabled implements Action {
   readonly type = SET_TITLE_DISABLED;
@@ -82,22 +83,27 @@ export class SetTitleDisabled implements Action {
 
 export class SetTitlePosition implements Action {
   readonly type = SET_TITLE_POSITION;
-  constructor(public payload: string) {}
+  constructor(public payload: string) { }
 }
 
-export type ToolboxTitleAction = SetTitleDisabled | SetTitlePosition;
+export class SetTitle implements Action {
+  readonly type = SET_TITLE;
+  constructor(public payload: string) { }
+}
+
+export type ToolboxTitleAction = SetTitleDisabled | SetTitlePosition | SetTitle;
 
 /*
  * Layout Actions
  */
 
-  export const LAYOUT_SET_PADDING = '[Options Toolbox] Layout Set Padding';
+export const LAYOUT_SET_PADDING = '[Options Toolbox] Layout Set Padding';
 
-  export class LayoutSetPadding implements Action {
-    readonly type = LAYOUT_SET_PADDING;
-    constructor(public payload: string | {left:number, right:number, top:number, bottom:number}) {}
-  }
-  export type ToolboxLayoutAction = LayoutSetPadding;
+export class LayoutSetPadding implements Action {
+  readonly type = LAYOUT_SET_PADDING;
+  constructor(public payload: string | { left: number, right: number, top: number, bottom: number }) { }
+}
+export type ToolboxLayoutAction = LayoutSetPadding;
 /*
  * Final export
  */

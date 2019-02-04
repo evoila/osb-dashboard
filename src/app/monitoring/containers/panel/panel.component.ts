@@ -41,9 +41,7 @@ export class PanelComponent implements OnInit {
   ngOnInit() {
     this.registerRouterEvents();
   }
-  test() {
-    console.log(this.panel);
-  }
+
   registerRouterEvents() {
     this.routerStore
       .select(getParams)
@@ -54,7 +52,10 @@ export class PanelComponent implements OnInit {
             .pipe(take(1))
         ),
         filter(
-          k => k != undefined && (k.charts != null && k.charts != undefined)
+          (k: any) =>
+            k != undefined &&
+            k != {} &&
+            (k.charts != null && k.charts != undefined)
         ),
         map(k => {
           return { ...k };

@@ -1,23 +1,16 @@
-<ng-container
-  *ngIf="aggregationEditorPresent; then aggregationEditorActive; else datAggregationActive ">
-</ng-container>
-<ng-template #datAggregationActive>
-    <div class="row">
-        <div class="form-group">
-          <label>Name</label>
-          <input class="form-control" type="text" name="name" [(ngModel)]="name" required>
+<div class="sb-container">
+  <ng-container
+    *ngIf="aggregationEditorPresent; then aggregationEditorActive; else datAggregationActive ">
+  </ng-container>
+  <ng-template #datAggregationActive>
+      <div class="row sb-textfields">
+          
         </div>
-      </div>
-  
-  <sb-aggregation-list [aggregations]="aggregations$" (aggregationEditor)="aggregationEditorPresent = !aggregationEditorPresent"> </sb-aggregation-list>
-  <sb-scope-aggregations></sb-scope-aggregations>
-  <sb-chart-preview></sb-chart-preview>
-</ng-template>
-<ng-template #aggregationEditorActive>
-    <sb-create-aggregation (result)="getAggregationResult($event)" [type]="chartType" (close)="aggregationEditorPresent = !aggregationEditorPresent"></sb-create-aggregation>
-</ng-template>
-
-<div class="row" >
-  <button type="button" class="btn btn-danger" (click)="cancel()">cancel</button>
-  <button type="button" class="btn btn-danger" (click)="save()">save</button>
+    
+    <sb-aggregation-list class="sb-main" [aggregations]="aggregations$" (aggregationEditor)="aggregationEditorPresent = !aggregationEditorPresent"> </sb-aggregation-list>
+    <sb-scope-aggregations class="sb-right"></sb-scope-aggregations>
+  </ng-template>
+  <ng-template #aggregationEditorActive>
+      <sb-create-aggregation (result)="getAggregationResult($event)" [type]="chartType" (close)="aggregationEditorPresent = !aggregationEditorPresent"></sb-create-aggregation>
+  </ng-template>
 </div>

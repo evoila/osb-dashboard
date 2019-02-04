@@ -2,6 +2,10 @@ import { createSelector } from '@ngrx/store';
 import { getChartState, ChartState } from '../reducers/index';
 import * as fromChartIncreation from '../reducers/chart.increation.reducer';
 import { AggregationRequestObject } from '../../model/aggregationRequestObject';
+import { ChartIncreationState } from '../reducers/chart.increation.reducer';
+import { Chart } from '../../../shared/model/chart';
+import { CfAuthScope } from '../../model/cfAuthScope';
+import { ChartOptionsEntity } from '../../model/chart-options-entity';
 
 export const getAllChartIncreationState = createSelector(
   getChartState,
@@ -82,7 +86,37 @@ export const getChartIncreationAggregationState = createSelector(
   getAllChartIncreationState,
   fromChartIncreation.getAggregationsState
 );
+export const buildChart = createSelector(
+  getAllChartIncreationState,
+  (state: ChartIncreationState) => {
+    const option: ChartOptionsEntity | {} = state.option;
+    if (
+      state &&
+      state.type &&
+      option != {} &&
+      state.aggregations &&
+      state.chartName != '' &&
+      Object.keys(state.aggregations).length > 0 &&
+      !hasError(state.aggregationsState)
+    ) {
+      const aggregations = extractArray(state.aggregations);
+      return {
+        name: state.chartName,
+        type: state.type,
+        option: state.option,
+        aggregations,
+        authScope: {} as CfAuthScope
+      } as Chart;
+    }
+    return {};
+  }
+);
 
+const extractArray = (aggs: { [id: string]: AggregationRequestObject }) => {
+  return Array.from(
+    new Map<string, any>(Object.entries(aggs))[Symbol.iterator]()
+  ).map(k => k[1]);
+};
 export const hasError = (state: { [id: string]: string }) => {
   return (
     Array.from(new Map<string, any>(Object.entries(state))[Symbol.iterator]())

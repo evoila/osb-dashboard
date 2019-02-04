@@ -3,7 +3,6 @@ import * as fromChartIncreation from '../actions/chart.increation.action';
 import { AggregationRequestObject } from '../../model/aggregationRequestObject';
 import * as uuid from 'uuid';
 import { SearchResponse } from '../../../model/search-response';
-import { CHECK_AGGREGATION_RESULT_FINISHED } from '../actions/chart.increation.action';
 
 export interface ChartIncreationState {
   // Chart Type eg. Line, Bar, etc
@@ -14,8 +13,9 @@ export interface ChartIncreationState {
   aggregationResponse: Array<SearchResponse>;
   aggregationLoading: boolean;
   aggregationLoaded: boolean;
-  // holds tells which aggregations are working and which not
+  // tells which aggregations are working and which not
   aggregationsState: { [id: string]: string };
+  chartName: string;
 }
 
 export const initialState: ChartIncreationState = {
@@ -26,7 +26,8 @@ export const initialState: ChartIncreationState = {
   aggregationResponse: [],
   aggregationLoading: false,
   aggregationLoaded: false,
-  aggregationsState: {}
+  aggregationsState: {},
+  chartName: ''
 };
 
 export function reducer(
@@ -98,6 +99,12 @@ export function reducer(
     }
     case fromChartIncreation.FLUSH_STATE: {
       return initialState;
+    }
+    case fromChartIncreation.SET_CHART_NAME: {
+      return {
+        ...state,
+        chartName: action.payload
+      };
     }
   }
   return state;

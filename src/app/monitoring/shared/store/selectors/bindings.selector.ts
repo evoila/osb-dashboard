@@ -31,6 +31,15 @@ export const getAllBindingsLoading = createSelector(
   fromBindings.getBindingsLoading
 );
 
+export const getBindingsLoadingState = createSelector(
+  getAllBindingsState,
+  state => {
+    return {
+      loading: state.loading,
+      loaded: state.loaded
+    };
+  }
+);
 // Returns a Single State and Org object
 export const getBindingsSpaceAndOrg = createSelector(
   getAllBindingsEntities,
