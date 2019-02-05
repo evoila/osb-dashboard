@@ -20,16 +20,19 @@ export class ChartingService {
   private noSeriesCharts = ['pie', 'doughnut'];
   private acceptedDateFormats: Array<any> = ['DD.MM.YYYY'];
   private isNested;
+  private name: string;
 
-  constructor() {}
+  constructor() { }
 
   public unwrapForPlotBucket(
     chart: Chart,
     query: any,
+    name: string,
     result: any,
     index?: number,
     key?: string
   ) {
+    this.name = name;
     this.resetChart(chart);
     query = query['aggs'];
     this.isNested = this.isNestedResult(result);
@@ -185,7 +188,7 @@ export class ChartingService {
       return false;
     }
     if (!this.isNested) {
-      this.fill(chart['series'], true, 'query');
+      this.fill(chart['series'], true, this.name);
     }
     bucket[bucketIndex].buckets.forEach((bucket: any, index: number) => {
       if (
@@ -226,7 +229,7 @@ export class ChartingService {
 
         label = null;
       } else if (bucket[nestedIndex].value != null) {
-        this.fill(chart['series'], true, 'selected-field');
+        this.fill(chart['series'], true, this.name);
 
         let label = bucket.key;
         if (bucket.key_as_string) {

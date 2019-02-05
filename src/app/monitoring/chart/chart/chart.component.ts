@@ -22,7 +22,7 @@ export class ChartComponent implements OnInit, OnDestroy {
   constructor(
     private chartingService: ChartingService,
     private store: Store<ChartModelState>
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.store.dispatch(
@@ -31,9 +31,9 @@ export class ChartComponent implements OnInit, OnDestroy {
     this.updateEsChart();
   }
 
-  public ngOnDestroy() {}
+  public ngOnDestroy() { }
 
-  public update() {}
+  public update() { }
 
   private updateEsChart(): void {
     this.store
@@ -45,6 +45,7 @@ export class ChartComponent implements OnInit, OnDestroy {
             return this.chartingService.unwrapForPlotBucket(
               new ChartModel(),
               k.query.aggregation.actualAggregation,
+              k.query.aggregation.name,
               k.response.aggregations
             );
           });

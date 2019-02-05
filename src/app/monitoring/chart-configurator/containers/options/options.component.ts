@@ -8,12 +8,8 @@ import { RouterStateUrl, getParamByName } from '../../../store/reducers/index';
 import { take } from 'rxjs/internal/operators';
 import { HorizontalNavViewModel } from '../../components/options-editor-components/horizontal-navigation/horizontal-navigation.component';
 import { OptionsState } from '../../store/reducers/options.reducer';
+import { SelectFieldType, ActionViewModel, OptionDomainViewModel, FormActionViewModel } from '../../model/optionViewModels';
 
-
-import {
-  ActionViewModel,
-  OptionDomainViewModel
-} from '../../components/options-editor-components/options-toolbox/options-toolbox.component';
 
 @Component({
   selector: 'sb-options',
@@ -52,7 +48,7 @@ export class OptionsComponent implements OnInit {
   constructor(
     private store: Store<OptionsState>,
     private routerStore: Store<RouterAction<RouterStateUrl>>
-  ) {}
+  ) { }
 
   // Utility Functions
   private buildViewModel(options: { [id: string]: ChartOptionsEntity }) {
@@ -88,7 +84,7 @@ const animationActions = [
     Action: fromStore.SetAnimation,
     iconClass: 'fas fa-toggle-off',
     payload: 'easeInOutBounce'
-  }, 
+  },
 ] as Array<ActionViewModel>;
 
 const ledgendActions = [
@@ -148,18 +144,35 @@ const titleActions = [
     payload: 'bottom'
   }
 ]
+
+const ledgendSelect = {
+  name: 'Select Ledgends',
+  type: new SelectFieldType(),
+  options: ledgendActions
+} as FormActionViewModel
+const animationSelect = {
+  name: 'Select Animation',
+  type: new SelectFieldType(),
+  options: animationActions
+} as FormActionViewModel
+const titleSelect = {
+  name: 'Select how the Title should be displayed',
+  type: new SelectFieldType(),
+  options: titleActions
+} as FormActionViewModel
+
 const optionsDomain = [
   {
     name: 'Animation',
     iconClass: 'fas fa-signature',
-    actions: animationActions
+    actions: [animationSelect]
   },
   {
     name: 'Ledgend',
-    actions: ledgendActions
+    actions: [ledgendSelect]
   },
   {
     name: 'Title',
-    actions: titleActions
+    actions: [titleSelect]
   }
 ] as Array<OptionDomainViewModel>;

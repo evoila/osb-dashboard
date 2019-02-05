@@ -32,7 +32,7 @@ export class ChartPreviewComponent implements OnInit {
   constructor(
     private store: Store<ChartIncreationState>,
     private chartingService: ChartingService
-  ) {}
+  ) { }
 
   ngOnInit() {
     // get the Aggregation Matching the Result cause the Charting Utils Service
@@ -78,6 +78,7 @@ export class ChartPreviewComponent implements OnInit {
                 return this.chartingService.unwrapForPlotBucket(
                   new Chart(),
                   queRey.aggregation.aggregation.actualAggregation,
+                  queRey.aggregation.name!!,
                   queRey.response.aggregations
                 );
               });

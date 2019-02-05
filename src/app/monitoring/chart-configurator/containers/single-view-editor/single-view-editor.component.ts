@@ -26,6 +26,7 @@ import * as chartTypes from '../../model/chart-types';
 import { getOptionsState } from '../../store/selectors/options.selector';
 import { SetChartName } from '../../store/actions/chart.increation.action';
 import { SetTitle } from '../../store';
+import { ChartOptionsEntity } from '../../model/chart-options-entity';
 
 @Component({
   selector: 'sb-single-view-editor',
@@ -36,6 +37,7 @@ export class SingleViewEditorComponent implements OnInit {
   chartTypes: Array<string>;
   chartType: string;
   name: string;
+  options: Array<ChartOptionsEntity>;
 
   authParamService: CfAuthParameterService;
   constructor(
@@ -69,8 +71,10 @@ export class SingleViewEditorComponent implements OnInit {
           ).map(k => k[1]);
         })
       )
-      .subscribe(enteties =>
+      .subscribe(enteties => {
+        this.options = enteties
         this.store.dispatch(new SetChartOptions(enteties[0]))
+      }
       );
   }
 
@@ -89,6 +93,9 @@ export class SingleViewEditorComponent implements OnInit {
     this.store.dispatch(new SetChartName(name));
     this.store.dispatch(new SetTitle(name));
     this.name = name;
+  }
+  public setChartOption(option: ChartOptionsEntity) {
+    this.store.dispatch(new SetChartOptions(option))
   }
 
   public save() {
