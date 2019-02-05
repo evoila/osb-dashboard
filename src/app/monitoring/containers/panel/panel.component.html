@@ -1,10 +1,9 @@
-
 <div class="section-content">
-<sb-timefilter [toDate]="toDateView" [fromDate]="fromDateView" [stepVal]="steps" (fromDateChange)="setFromDate($event)"
-  (toDateChange)="setToDate($event)" (stepChange)="setStep($event)"></sb-timefilter>
+  <sb-timefilter [toDate]="toDateView" [fromDate]="fromDateView" [stepVal]="steps" (fromDateChange)="setFromDate($event)"
+    (toDateChange)="setToDate($event)" (stepChange)="setStep($event)"></sb-timefilter>
 
 
-  <div *ngIf="panel" >
+  <div *ngIf="panel">
     <div class="row" *ngFor="let chartRequests of panel.charts" style="margin: 50px 0 0 0">
       <div class="col-{{chartRequest.size}} charts" *ngFor="let chartRequest of chartRequests" cdkDrag>
         <div *ngIf="chartRequest.onEdit">
@@ -14,8 +13,8 @@
       </div>
     </div>
   </div>
-<div class="input-group edit-buttons">
-  <button type="button" *ngIf="changed" (click)="saveChanges()" class="btn btn-info">Save Changes made on the
-    Panel</button>
-  <button type="button" (click)="edit()" class="btn btn-info">Edit Panel Settings</button>
-</div>
+  <div class="input-group edit-buttons">
+    <button type="button" *ngIf="changed" (click)="saveChanges()" class="btn btn-info">Save Changes made on the
+      Panel</button>
+    <button type="button" class="btn btn-info">Edit Panel Settings</button>
+  </div>

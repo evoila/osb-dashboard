@@ -28,6 +28,7 @@ export class PanelComponent implements OnInit {
   public steps: [string, string];
   public changed = false;
   public timeRange: { [key: string]: any };
+  edit: boolean;
   constructor(
     private timeRangeService: EsTimerangeService,
     private router: Router,
@@ -92,13 +93,13 @@ export class PanelComponent implements OnInit {
     return moment(date).format('DD:MM:YY, hh:mm:ss a');
   }
 
-  private onDrop(dragData: CdkDragDrop<String[]>, target: ChartRequest) {}
+  private onDrop(dragData: CdkDragDrop<String[]>, target: ChartRequest) { }
 
   private editChart(chart: Chart, chartRequest: ChartRequest) {
     chartRequest['onEdit'] = true;
     chartRequest['choosenChart'] = chart;
   }
 
-  private saveChartQuery(newRequest: ChartRequest, oldRequest: ChartRequest) {}
-  private saveChanges() {}
+  private saveChartQuery(newRequest: ChartRequest, oldRequest: ChartRequest) { }
+  private saveChanges() { }
 }

@@ -19,6 +19,7 @@ export class ChartComponent implements OnInit, OnDestroy {
   @Input('chart')
   chart: ChartInPanel;
   chartView: ChartModel;
+  options: boolean;
   constructor(
     private chartingService: ChartingService,
     private store: Store<ChartModelState>
