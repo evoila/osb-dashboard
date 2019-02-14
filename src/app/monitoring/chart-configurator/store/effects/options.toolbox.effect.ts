@@ -32,7 +32,7 @@ export class OptionsToolboxEffect implements OnInit {
     return switchMap((payload: [any, boolean, ChartOptionsEntity]): Observable<
       SetChartOptions | fromOptionsToolbox.UpdateOptionsFail
     > => {
-      if (payload['isSet']) {
+      if (payload[0]) {
         const data = payload[0]['payload'];
         const optionsEntity: ChartOptionsEntity = {
           ...payload[2]

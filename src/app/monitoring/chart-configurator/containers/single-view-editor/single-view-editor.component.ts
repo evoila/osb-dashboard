@@ -102,6 +102,7 @@ export class SingleViewEditorComponent implements OnInit {
     this.store
       .select(buildChart)
       .pipe(
+        take(2),
         map((k: any) => {
           if (k === {} || !k.name || !k.type) {
             alert(
@@ -135,8 +136,7 @@ export class SingleViewEditorComponent implements OnInit {
               );
             })
           );
-        }),
-        take(2)
+        })
       )
       .subscribe();
   }
