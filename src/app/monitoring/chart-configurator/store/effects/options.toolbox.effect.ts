@@ -19,15 +19,8 @@ export class OptionsToolboxEffect implements OnInit {
   private latestFromStore = () => {
     return withLatestFrom(
       this.store.select(getChartIncreationOptionsSet),
-      this.store.select(getChartIncreationOptions),
-      (
-        payload: any,
-        isSet: boolean,
-        options: { [id: string]: ChartOptionsEntity }
-      ) => {
-        return { payload, isSet, options };
-      }
-    );
+      this.store.select(getChartIncreationOptions)
+    )
   };
 
   // The purpose of this Method is to initialize vairables if not set to not spread an undefined Object
@@ -36,13 +29,13 @@ export class OptionsToolboxEffect implements OnInit {
   }
 
   private loadAndDispatch = (closure: (optionsEntity: ChartOptionsEntity, data?: any) => ChartOptionsEntity) => {
-    return switchMap((payload: { payload: any, isSet: boolean, options: any }): Observable<
+    return switchMap((payload: [any, boolean, ChartOptionsEntity]): Observable<
       SetChartOptions | fromOptionsToolbox.UpdateOptionsFail
     > => {
       if (payload['isSet']) {
-        const data = payload['payload']['payload'];
+        const data = payload[0]['payload'];
         const optionsEntity: ChartOptionsEntity = {
-          ...payload.options
+          ...payload[2]
         };
         const newOptionsState = data ? closure(optionsEntity, data) : closure(optionsEntity);
         return of(new SetChartOptions(newOptionsState));
