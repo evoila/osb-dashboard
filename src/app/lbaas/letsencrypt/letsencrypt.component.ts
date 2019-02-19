@@ -42,9 +42,9 @@ export class LetsencryptComponent implements OnInit {
     let payload = {};
     payload[this.instanceGroupName] = this.jsonSchema.data;
 
-    this.asService.validateOrSubmit(payload, 'validate').subscribe(response => {
-      if (response.message === "OK") {
-        this.nService.addSelfClosing(new Notification(NotificationType.Info, response.message));
+    this.asService.validateOrSubmit(payload, 'validate').subscribe({
+      next: (d) => {
+        this.nService.addSelfClosing(new Notification(NotificationType.Info, d.message));
         this.asService.validateOrSubmit(payload, '').subscribe({
           next: (d) => {
             this.taskPolling.pollState("Updating Service", "state", "description");
@@ -54,9 +54,10 @@ export class LetsencryptComponent implements OnInit {
             this.nService.addSelfClosing(new Notification(NotificationType.Error, 'Error updating Service'));
           }
         });
-      } else {
+      },
+      error: (e) => {
         this.nService.addSelfClosing(new Notification(NotificationType.Error, 
-          'The following domains could not be resolved: ' + response.message));
+          'The following domains could not be resolved: ' + e.message));
       }
     });
   }
