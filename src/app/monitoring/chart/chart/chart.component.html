@@ -1,6 +1,6 @@
 <div class="card">
   <div class="card-body">
-    <h5 *ngIf="chart" class="card-title">{{chart.options.title.text}}</h5>
+    <h5 *ngIf="chart" class="card-title">{{chart.chart.option.name}}</h5>
     <div *ngIf="options">
       <fa name="cog" (click)="edit()"></fa>
       <fa name="refresh" (click)="update()"></fa>
@@ -15,7 +15,8 @@
           <span>Bitte warten...</span>
         </div>
       </div>
-      <div class="col-md-12" style="height: 300px; width: 100%; padding-top: 50px;" *ngIf="chartView && (!chartView.data || !chartView.data.length)">
+      <div class="col-md-12" style="height: 300px; width: 100%; padding-top: 50px;"
+        *ngIf="chartView && (!chartView.data || !chartView.data.length)">
         <div style="width: 50%; margin: 95px auto;">
           <span>Keine Daten verfügbar</span>
         </div>
