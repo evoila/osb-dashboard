@@ -20,7 +20,16 @@ export interface ChartIncreationState {
 
 export const initialState: ChartIncreationState = {
   type: '',
-  option: new ChartOptionsEntity(),
+  option: {
+    "name": "Testchart",
+    "public": true,
+    "options": {
+    },
+    "chartTypes": [
+      "bar",
+      "line"
+    ]
+  },
   aggregations: {},
   optionsSet: false,
   aggregationResponse: [],
