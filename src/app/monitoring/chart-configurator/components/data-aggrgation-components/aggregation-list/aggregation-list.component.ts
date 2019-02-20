@@ -13,6 +13,10 @@ import {
   MatBottomSheetRef,
   MAT_BOTTOM_SHEET_DATA
 } from '@angular/material';
+import { ChartIncreationState } from 'app/monitoring/chart-configurator/store/reducers/chart.increation.reducer';
+import { Store } from '@ngrx/store';
+import { DeleteAggregation } from 'app/monitoring/chart-configurator/store';
+import { AggregationState } from '../../../store/reducers/aggregation.reducer';
 
 @Component({
   selector: 'sb-aggregation-list',
@@ -28,7 +32,7 @@ export class AggregationListComponent implements OnInit {
   public openAggregationEditor$ = new EventEmitter<Boolean>();
 
   public aggregations: Array<Aggregation>;
-  constructor(private bottomSheet: MatBottomSheet) {}
+  constructor(private bottomSheet: MatBottomSheet) { }
 
   ngOnInit() {
     this.aggregations$.subscribe(
@@ -50,10 +54,13 @@ export class AggregationListComponent implements OnInit {
 })
 export class BottomSheetAggregationSheet {
   constructor(
+    private store: Store<AggregationState>,
     private bottomSheetRef: MatBottomSheetRef<BottomSheetAggregationSheet>,
     @Inject(MAT_BOTTOM_SHEET_DATA) public data: Aggregation
-  ) {}
-
+  ) { }
+  delete() {
+    this.store.dispatch(new DeleteAggregation(this.data));
+  }
   dismiss(): void {
     this.bottomSheetRef.dismiss();
   }

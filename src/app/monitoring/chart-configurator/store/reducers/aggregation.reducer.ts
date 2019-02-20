@@ -1,5 +1,6 @@
 import { Aggregation } from '../../model/aggregation';
 import * as fromActions from '../actions/aggregation.action';
+import { DELETE_AGGREGATION_FAIL } from '../actions/aggregation.action';
 
 export interface AggregationState {
   entities: Array<Aggregation>;
@@ -7,6 +8,8 @@ export interface AggregationState {
   loading: boolean;
   saveing: boolean;
   saved: boolean;
+  deleting: boolean;
+  deleted: boolean;
 }
 
 export const initialState: AggregationState = {
@@ -14,7 +17,9 @@ export const initialState: AggregationState = {
   loaded: false,
   loading: false,
   saveing: false,
-  saved: false
+  saved: false,
+  deleting: false,
+  deleted: false
 };
 
 export function reducer(
@@ -52,6 +57,29 @@ export function reducer(
         saved: true,
         saveing: false
       };
+    }
+    case fromActions.DELETE_AGGREGATION: {
+      return {
+        ...state,
+        deleted: false,
+        deleting: true
+      }
+    }
+    case fromActions.DELETE_AGGREGATION_FAIL: {
+      return {
+        ...state,
+        deleted: false,
+        deleting: false
+      }
+    }
+    case fromActions.DELETE_AGGREGATION_SUCCESS: {
+      const entities = state.entities.filter(k => k.id != action.payload.id);
+      return {
+        ...state,
+        entities,
+        deleting: false,
+        deleted: true
+      }
     }
   }
   return state;

@@ -31,8 +31,19 @@ export class AggregationEffect {
       );
     })
   );
+
+  @Effect()
+  deleteAggregation$ = this.actions.ofType(aggregations.DELETE_AGGREGATION).pipe(
+    switchMap((value: aggregations.DeleteAggregation) => {
+      return this.aggregationService.deleteAggregation(value.payload.id!!).pipe(
+        map(aggregation => new aggregations.DeleteAggregationSuccess(aggregation)),
+        catchError(error => of(new aggregations.DeleteAggregationFail))
+      );
+    })
+  );
+
   constructor(
     private aggregationService: AggregationService,
     private actions: Actions
-  ) {}
+  ) { }
 }

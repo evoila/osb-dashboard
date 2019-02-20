@@ -12,6 +12,12 @@ export const SAVE_AGGREGATION_FAIL = '[Aggregations] Save Aggregation Fail';
 export const SAVE_AGGREGATION_SUCCESS =
   '[Aggregations] Save Aggregation Success';
 
+// Delete Agrgegation 
+export const DELETE_AGGREGATION = '[Aggregations] Delete Aggregation';
+export const DELETE_AGGREGATION_FAIL = '[Aggregations] Delete Aggregation Fail';
+export const DELETE_AGGREGATION_SUCCESS =
+  '[Aggregations] Delete Aggregation Success';
+
 // Update Aggregation to in MVP-2
 
 /*
@@ -22,7 +28,7 @@ export const SAVE_AGGREGATION_SUCCESS =
 export class LoadAggregations implements Action {
   readonly type = LOAD_AGGREGATIONS;
   // Chart Type needs to be specified
-  constructor(public payload: string) {}
+  constructor(public payload: string) { }
 }
 
 export class LoadAggregationsFail implements Action {
@@ -31,7 +37,7 @@ export class LoadAggregationsFail implements Action {
 
 export class LoadAggregationsSuccess implements Action {
   readonly type = LOAD_AGGREGATIONS_SUCCESS;
-  constructor(public payload: Array<Aggregation>) {}
+  constructor(public payload: Array<Aggregation>) { }
 }
 
 export type AggregationLoadAction =
@@ -42,11 +48,11 @@ export type AggregationLoadAction =
 // Save Aggregation
 export class SaveAggregation implements Action {
   readonly type = SAVE_AGGREGATION;
-  constructor(public payload: Aggregation) {}
+  constructor(public payload: Aggregation) { }
 }
 export class SaveAggregationSuccess implements Action {
   readonly type = SAVE_AGGREGATION_SUCCESS;
-  constructor(public payload: Aggregation) {}
+  constructor(public payload: Aggregation) { }
 }
 export class SaveAggregationFail implements Action {
   readonly type = SAVE_AGGREGATION_FAIL;
@@ -56,5 +62,23 @@ export type AggregationSaveAction =
   | SaveAggregationFail
   | SaveAggregationSuccess;
 
+// Delete Aggregation
+export class DeleteAggregation implements Action {
+  readonly type = DELETE_AGGREGATION;
+  constructor(public payload: Aggregation) { }
+}
+export class DeleteAggregationSuccess implements Action {
+  readonly type = DELETE_AGGREGATION_SUCCESS;
+  constructor(public payload: Aggregation) { }
+}
+export class DeleteAggregationFail implements Action {
+  readonly type = DELETE_AGGREGATION_FAIL;
+}
+
+export type AggregationDeleteAction =
+  | DeleteAggregation
+  | DeleteAggregationFail
+  | DeleteAggregationSuccess;
+
 // Final Type Export
-export type AggregationAction = AggregationLoadAction | AggregationSaveAction;
+export type AggregationAction = AggregationLoadAction | AggregationSaveAction | AggregationDeleteAction;
