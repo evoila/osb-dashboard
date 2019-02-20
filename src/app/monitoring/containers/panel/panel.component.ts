@@ -6,7 +6,7 @@ import { EsTimerangeService } from 'app/monitoring/services/es-timerange.service
 
 import { ChartRequest } from 'app/monitoring/model/chart-request';
 
-import { filter, map, switchMap, take, takeLast } from 'rxjs/operators';
+import { filter, map, switchMap, take } from 'rxjs/operators';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { PanelVm } from 'app/monitoring/shared/model/panel.vm';
 import { PanelState } from 'app/monitoring/shared/store/reducers/panel.reducer';
@@ -14,6 +14,7 @@ import { Store, select } from '@ngrx/store';
 import { getPanelViewModelById } from '../../shared/store/selectors/panel.selector';
 import { State } from 'app/monitoring/store';
 import { getParams } from '../../store/reducers/index';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'sb-panel',
@@ -27,7 +28,8 @@ export class PanelComponent implements OnInit {
   public toDateView: any;
   public steps: [string, string];
   public changed = false;
-  public timeRange: { [key: string]: any };
+  private timeRangeEmitter$: any;
+  public timeRange$: Observable<{ [key: string]: any }> = new Observable(k => this.timeRangeEmitter$ = k);
   edit: boolean;
   constructor(
     private timeRangeService: EsTimerangeService,
@@ -82,10 +84,10 @@ export class PanelComponent implements OnInit {
   }
   private setDateRange() {
     if (this.toDateView && this.fromDateView) {
-      this.timeRange = this.timeRangeService.setTimeRange(
+      this.timeRangeEmitter$.next(this.timeRangeService.setTimeRange(
         this.fromDateView,
         this.toDateView
-      );
+      ));
     }
   }
 

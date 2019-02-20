@@ -6,9 +6,10 @@ import { ChartInPanel } from '../../model/chart-in-panel';
 import { ChartModelState } from '../../shared/store/reducers/chart.reducer';
 import { Store, select } from '@ngrx/store';
 import { FireAggregationRequest } from '../../shared/store/actions/chart.actions';
-import { getAggregationResponseAndLoaded } from 'app/monitoring/shared/store/selectors/chart.selector';
 import { filter, map } from 'rxjs/operators';
 import { getAggregationResponseAndLoadedById } from '../../shared/store/selectors/chart.selector';
+import { AggregationRequestObject } from '../../chart-configurator/model/aggregationRequestObject';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'sb-chart',
@@ -18,6 +19,9 @@ import { getAggregationResponseAndLoadedById } from '../../shared/store/selector
 export class ChartComponent implements OnInit, OnDestroy {
   @Input('chart')
   chart: ChartInPanel;
+  @Input('daterange')
+  range$: Observable<{ [key: string]: any }>;
+
   chartView: ChartModel;
   options: boolean;
   constructor(
@@ -25,11 +29,25 @@ export class ChartComponent implements OnInit, OnDestroy {
     private store: Store<ChartModelState>
   ) { }
 
+
   ngOnInit() {
     this.store.dispatch(
       new FireAggregationRequest(this.chart.chart.aggregations, this.chart.id!!)
     );
+
     this.updateEsChart();
+
+    this.range$.subscribe(range => {
+      if (range) {
+        const updatedArray = this.chart.chart.aggregations.map(k => {
+          return { ...k, range: range };
+        });
+        this.store.dispatch(
+          new FireAggregationRequest(updatedArray, this.chart.id!!)
+        );
+        this.updateEsChart();
+      }
+    })
   }
 
   public ngOnDestroy() { }
