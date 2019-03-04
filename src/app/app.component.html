@@ -18,6 +18,9 @@
       <li class="nav-item" *ngIf="dynamicModuleSupport.monitoring">
         <a class="nav-link" routerLink="/monitoring" routerLinkActive="active">Monitoring</a>
       </li>
+      <li class="nav-item" *ngIf="dynamicModuleSupport.rabbitmq">
+        <a class="nav-link" routerLink="/rabbitmq" routerLinkActive="active">Rabbitmq</a>
+      </li>
       <li class="nav-item" *ngIf="sharedModuleSupport.backup">
         <a class="nav-link" routerLink="/backup" routerLinkActive="active">Backup</a>
       </li>
