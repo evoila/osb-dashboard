@@ -12,6 +12,9 @@
       <li class="nav-item" *ngIf="dynamicModuleSupport.lbaas">
         <a class="nav-link" routerLink="/lbaas" routerLinkActive="active">Configuration</a>
       </li>
+      <li class="nav-item" *ngIf="dynamicModuleSupport.mysql">
+        <a class="nav-link" routerLink="/mysql" routerLinkActive="active">Configuration</a>
+      </li>
       <li class="nav-item" *ngIf="dynamicModuleSupport.postgresql">
         <a class="nav-link" routerLink="/postgresql" routerLinkActive="active">Configuration</a>
       </li>
