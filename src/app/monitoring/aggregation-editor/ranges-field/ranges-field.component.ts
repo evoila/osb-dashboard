@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'ranges-field',
@@ -11,6 +11,7 @@ export class RangesFieldComponent implements OnInit {
   @Input() aggregationType: any;
   @Input() index: number;
   @Input() subFieldName: string;
+  @Output('result') resultEmitter = new EventEmitter();
   public fromValue: number;
   public toValue: number;
 
@@ -37,6 +38,7 @@ export class RangesFieldComponent implements OnInit {
     this.checkField();
     this.aggs[this.aggregationType.type][this.field.name][index]['to'] = $event.target.value;
     this.cleanup();
+    this.resultEmitter.next(this.aggs);
   }
 
   public removeRange(index: number): void {
@@ -59,8 +61,8 @@ export class RangesFieldComponent implements OnInit {
       this.aggs[this.aggregationType.type][this.field.name][this.index]['from'].length === 0) &&
       (this.aggs[this.aggregationType.type][this.field.name][this.index]['to'] == null ||
         this.aggs[this.aggregationType.type][this.field.name][this.index]['to'].length === 0)) {
-          delete this.aggs[this.aggregationType.type][this.field.name][this.index];
-        }
+      delete this.aggs[this.aggregationType.type][this.field.name][this.index];
+    }
   }
 
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ChartingUtilsService } from '../charting-utils.service';
 
 
@@ -16,12 +16,16 @@ export class AggregationSelectorComponent implements OnInit {
   @Input() displayType: string;
   @Input() aggregationTypes: any;
   @Input() additionalData: any;
+
+  // Emits updated data on every Change
+  @Output('aggs') aggregationEventEmitter = new EventEmitter();
+
   private AGGS_KEY = 'aggs';
   public aggregationType: any = {};
   public aggType: string;
   public idx: string;
 
-  constructor(readonly chartingUtils: ChartingUtilsService) {}
+  constructor(readonly chartingUtils: ChartingUtilsService) { }
 
   ngOnInit() {
     this.idx = this.index.toString();
@@ -42,20 +46,20 @@ export class AggregationSelectorComponent implements OnInit {
     this.aggregationType.fields.forEach(field => {
 
       if (!this.aggs[this.AGGS_KEY][this.idx][this.aggregationType.type] ||
-          !this.aggs[this.AGGS_KEY][this.idx][this.aggregationType.type][field.name] ||
-          !this.aggs[this.AGGS_KEY][this.idx][this.aggregationType.type][field.name].length) {
+        !this.aggs[this.AGGS_KEY][this.idx][this.aggregationType.type][field.name] ||
+        !this.aggs[this.AGGS_KEY][this.idx][this.aggregationType.type][field.name].length) {
+        return false;
+      }
+
+      if (field.subFields) {
+        const fieldObjToMultiply = field.subFields.find(subfieldObj => subfieldObj.type === field.name);
+        this.aggs[this.AGGS_KEY][this.idx][this.aggregationType.type][field.name].forEach((subFieldObj, index) => {
+          if (index === 0) { // first item already displayed
             return false;
           }
-
-        if (field.subFields) {
-          const fieldObjToMultiply = field.subFields.find(subfieldObj => subfieldObj.type === field.name);
-          this.aggs[this.AGGS_KEY][this.idx][this.aggregationType.type][field.name].forEach((subFieldObj, index) => {
-            if (index === 0) { // first item already displayed
-              return false;
-            }
-            field.subFields.push(fieldObjToMultiply);
-          });
-        }
+          field.subFields.push(fieldObjToMultiply);
+        });
+      }
     });
   }
 
@@ -92,6 +96,11 @@ export class AggregationSelectorComponent implements OnInit {
       return false;
     }
     return false;
+  }
+
+  public mergeResult(event: any) {
+    this.aggs = { ...this.aggs, 'aggs': { [this.idx]: { ...this.aggs['aggs'][this.idx], ...event } } };
+    this.aggregationEventEmitter.next(this.aggs);
   }
 
   public clone(field: any): any {

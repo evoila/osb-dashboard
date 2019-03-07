@@ -54,7 +54,7 @@ export class ChartingService {
     /*unnested Aggregations have no Key-Attribute.
      * To Display them Properly we have to add one to add
      * a series later on */
-    if (bucket['0'] && bucket['0']['buckets'][0][0]) {
+    if (bucket && bucket['0'] && bucket['0']['buckets'][0][0]) {
       // check if Bucket has nested index
       return true;
     } else {

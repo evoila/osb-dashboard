@@ -8,6 +8,7 @@ import {
   LoadPanelsFailed
 } from '../actions/panel.action';
 import { of } from 'rxjs';
+import { UPDATE_PANEL, UpdatePanel, DELETE_PANEL } from '../actions/panel.action';
 import {
   SAVE_PANEL,
   SavePanel,
@@ -18,7 +19,7 @@ import {
 @Injectable()
 export class PanelEffect {
   @Effect()
-  loadAggregations$ = this.actions.ofType(LOAD_PANELS).pipe(
+  loadPanel$ = this.actions.ofType(LOAD_PANELS).pipe(
     switchMap(action =>
       this.panelService.getAllCharts().pipe(
         map(result => new LoadPanelsSuccess(result)),
@@ -28,7 +29,7 @@ export class PanelEffect {
   );
 
   @Effect()
-  saveAggregations$ = this.actions.ofType(SAVE_PANEL).pipe(
+  savePanel$ = this.actions.ofType(SAVE_PANEL).pipe(
     switchMap((action: SavePanel) =>
       this.panelService.createChart(action.payload).pipe(
         map(k => new SavePanelSuccess()),
@@ -36,5 +37,26 @@ export class PanelEffect {
       )
     )
   );
-  constructor(private actions: Actions, private panelService: PanelService) {}
+
+  @Effect()
+  updatePanel$ = this.actions.ofType(UPDATE_PANEL).pipe(
+    switchMap((action: UpdatePanel) =>
+      this.panelService.updatePanel(action.payload).pipe(
+        map(k => new SavePanelSuccess()),
+        catchError(error => of(new SavePanelFailed()))
+      )
+    )
+  )
+
+  @Effect()
+  deletePanel$ = this.actions.ofType(DELETE_PANEL).pipe(
+    switchMap((action: UpdatePanel) =>
+      this.panelService.deletePanel(action.payload).pipe(
+        map(k => new SavePanelSuccess()),
+        catchError(error => of(new SavePanelFailed()))
+      )
+    )
+  )
+
+  constructor(private actions: Actions, private panelService: PanelService) { }
 }

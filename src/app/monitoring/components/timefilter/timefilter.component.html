@@ -1,20 +1,33 @@
 <div class="timefilter-layout-top-row timefilter-toolbar">
-  <div class="col-lg-1">
-    From
-  </div>
-  <div class="col-lg-2">
-    <input type="text" class="form-control" id="from" name="from" readonly="readonly" *ngIf="fromDateString"
-      [ngModel]="fromDateString" placeholder="From" (click)="isCollapsedFrom = !isCollapsedFrom">
-    <dl-date-time-picker [(ngModel)]="fromDateView" (change)="setFromDate()" [ngbCollapse]="!isCollapsedFrom">
-    </dl-date-time-picker>
-  </div>
-  <div class="col-lg-1">
-    To
-  </div>
-  <div class="col-lg-2">
-    <input type="text" id="to" name="to" class="form-control" readonly="readonly" placeholder="To" *ngIf="toDateString"
-      [ngModel]="toDateString" (click)="isCollapsedTo = !isCollapsedTo">
-    <dl-date-time-picker [ngbCollapse]="!isCollapsedTo" [(ngModel)]="toDateView" (change)="setToDate()">
-    </dl-date-time-picker>
-  </div>
+  <form class="form-inline">
+    <div class="form-group">
+      <div class="input-group">
+        <label>From</label>
+        <input class="form-control" placeholder="yyyy-mm-dd" name="fromdp" [ngModel]="fromDateModel"
+          (ngModelChange)="setFromDateChange($event)" ngbDatepicker #c="ngbDatepicker">
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary calendar" (click)="c.toggle()" type="button"></button>
+        </div>
+
+      </div>
+    </div>
+  </form>
+
+  <ngb-timepicker [ngModel]="fromTimeModel" [minuteStep]="minuteStep"
+    (ngModelChange)="toggleTimeChange($event, 'From')">
+  </ngb-timepicker>
+  <form class="form-inline">
+    <div class="form-group">
+      <div class="input-group">
+        <label>To</label>
+        <input class="form-control" placeholder="yyyy-mm-dd" name="todp" [ngModel]="toDateModel"
+          (ngModelChange)="setToDateChange($event)" ngbDatepicker #d="ngbDatepicker">
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+        </div>
+      </div>
+    </div>
+  </form>
+  <ngb-timepicker [ngModel]="toTimeModel" (ngModelChange)="toggleTimeChange($event, 'To')" [minuteStep]="minuteStep">
+  </ngb-timepicker>
 </div>

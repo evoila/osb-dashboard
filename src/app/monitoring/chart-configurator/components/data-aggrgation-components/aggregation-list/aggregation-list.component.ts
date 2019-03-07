@@ -13,9 +13,8 @@ import {
   MatBottomSheetRef,
   MAT_BOTTOM_SHEET_DATA
 } from '@angular/material';
-import { ChartIncreationState } from 'app/monitoring/chart-configurator/store/reducers/chart.increation.reducer';
 import { Store } from '@ngrx/store';
-import { DeleteAggregation } from 'app/monitoring/chart-configurator/store';
+import { DeleteAggregation, EditAggregation } from 'app/monitoring/chart-configurator/store';
 import { AggregationState } from '../../../store/reducers/aggregation.reducer';
 
 @Component({
@@ -63,5 +62,8 @@ export class BottomSheetAggregationSheet {
   }
   dismiss(): void {
     this.bottomSheetRef.dismiss();
+  }
+  edit() {
+    this.store.dispatch(new EditAggregation(this.data));
   }
 }

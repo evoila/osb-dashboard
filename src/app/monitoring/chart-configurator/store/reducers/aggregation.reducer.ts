@@ -58,6 +58,23 @@ export function reducer(
         saveing: false
       };
     }
+    case fromActions.UPDATE_AGGREGATION_FAIL: {
+      return {
+        ...state,
+        saveing: false,
+        saved: false
+      };
+    }
+    case fromActions.UPDATE_AGGREGATION_SUCCESS: {
+      let entities = [...state.entities.filter(k => k.id != action.payload.id)];
+      entities = [...entities, action.payload];
+      return {
+        ...state,
+        entities,
+        saved: true,
+        saveing: false
+      };
+    }
     case fromActions.DELETE_AGGREGATION: {
       return {
         ...state,

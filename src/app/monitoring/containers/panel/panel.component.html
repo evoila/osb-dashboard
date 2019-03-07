@@ -1,6 +1,6 @@
 <div class="section-content">
-  <sb-timefilter [toDate]="toDateView" [fromDate]="fromDateView" [stepVal]="steps"
-    (fromDateChange)="setFromDate($event)" (toDateChange)="setToDate($event)" (stepChange)="setStep($event)">
+  <sb-timefilter [toDate]="toDateView" [fromDate]="fromDateView" (fromDateChange)="setFromDate($event)"
+    (toDateChange)="setToDate($event)">
   </sb-timefilter>
 
 
@@ -17,5 +17,5 @@
   <div class="input-group edit-buttons">
     <button type="button" *ngIf="changed" (click)="saveChanges()" class="btn btn-info">Save Changes made on the
       Panel</button>
-    <button type="button" class="btn btn-info">Edit Panel Settings</button>
+    <button type="button" (click)="editPanel()" class="btn btn-info">Edit Panel Settings</button>
   </div>

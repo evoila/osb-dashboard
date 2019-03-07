@@ -7,6 +7,7 @@ import {
 import { Panel } from '../../../shared/model/panel';
 import { Chart } from '../../../shared/model/chart';
 import { ChartInPanel } from '../../../model/chart-in-panel';
+import { getMultipleValuesInSingleSelectionError } from '@angular/cdk/collections';
 
 export const getPanelIncreationState = createSelector(
   getPanelState,
@@ -18,6 +19,13 @@ export const getPanelIncreationCharts = createSelector(
   getCharts
 );
 
+export const getPanelNameAndDescription = createSelector(
+  getPanelIncreationState,
+  (state) => {
+    return { name: state.name, description: state.description };
+  }
+)
+
 export const buildFunctionalPanel = createSelector<
   PanelIncreationState,
   PanelIncreationState,
@@ -26,12 +34,14 @@ export const buildFunctionalPanel = createSelector<
   getPanelIncreationState,
   (state: PanelIncreationState) => {
     const charts = constructChartInPanel(deconstructCharts(state.charts));
-    return {
+    let panel = {
       authScope: state.authScope,
       charts,
       name: state.name,
       description: state.description
     } as Panel;
+    panel = state.id ? { ...panel, id: state.id } : panel;
+    return panel;
   }
 );
 
@@ -43,6 +53,12 @@ export const panelReadyForBuild = createSelector(
     state.name &&
     Object.keys(state.charts).length > 0
 );
+
+export const getPanelOnEdit = createSelector(
+  getPanelIncreationState,
+  state => state.onEdit
+);
+
 function deconstructCharts(obj: any) {
   return Array.from(new Map(Object.entries(obj))[Symbol.iterator]()).map(
     k => k[1] as Chart
@@ -53,3 +69,4 @@ function constructChartInPanel(arr: Chart[]) {
     return { order, chart, size: 12 } as ChartInPanel;
   });
 }
+

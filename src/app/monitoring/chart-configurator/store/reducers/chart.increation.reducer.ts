@@ -3,6 +3,7 @@ import * as fromChartIncreation from '../actions/chart.increation.action';
 import { AggregationRequestObject } from '../../model/aggregationRequestObject';
 import * as uuid from 'uuid';
 import { SearchResponse } from '../../../model/search-response';
+import { Aggregation } from '../../model/aggregation';
 
 export interface ChartIncreationState {
   // Chart Type eg. Line, Bar, etc
@@ -16,6 +17,7 @@ export interface ChartIncreationState {
   // tells which aggregations are working and which not
   aggregationsState: { [id: string]: string };
   chartName: string;
+  aggregationOnEdit?: Aggregation;
 }
 
 export const initialState: ChartIncreationState = {
@@ -36,7 +38,8 @@ export const initialState: ChartIncreationState = {
   aggregationLoading: false,
   aggregationLoaded: false,
   aggregationsState: {},
-  chartName: ''
+  chartName: '',
+
 };
 
 export function reducer(
@@ -114,6 +117,24 @@ export function reducer(
         ...state,
         chartName: action.payload
       };
+    }
+    case fromChartIncreation.EDIT_AGGREGATION: {
+      return {
+        ...state,
+        aggregationOnEdit: action.payload
+      }
+    }
+    case fromChartIncreation.EDIT_AGGREGATION_SUCCESS: {
+      return {
+        ...state,
+        aggregationOnEdit: undefined
+      }
+    }
+    case fromChartIncreation.EDIT_AGGREGATION_CANCELED: {
+      return {
+        ...state,
+        aggregationOnEdit: undefined
+      }
     }
   }
   return state;

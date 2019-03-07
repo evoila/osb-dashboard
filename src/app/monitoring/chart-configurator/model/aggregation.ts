@@ -7,4 +7,5 @@ export interface Aggregation {
   actualAggregation: any;
   authScope: CfAuthScope;
   chartTypes: Array<string>;
+  index?: string;
 }

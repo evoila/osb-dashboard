@@ -2,29 +2,36 @@
   <label>Aggregation Type</label>
   <select class="form-control" [(ngModel)]="aggType" (change)="initAggregationTree($event)">
     <option>-- Please select --</option>
-    <option *ngFor="let aggregationType of aggregationTypes" [value]="aggregationType.type">{{aggregationType.name}}</option>
+    <option *ngFor="let aggregationType of aggregationTypes" [value]="aggregationType.type">{{aggregationType.name}}
+    </option>
   </select>
 </div>
 <div *ngIf="aggregationType">
   <div *ngFor="let field of aggregationType.fields">
     <div [ngSwitch]="field.type">
       <div *ngSwitchCase="'text'" class="form-group">
-        <input-field [field]="field" [aggs]="aggs['aggs'][idx]" [hidden]="expertModeOn(field.expertMode)" [aggregationType]="aggregationType"></input-field>
+        <input-field [field]="field" [aggs]="aggs['aggs'][idx]" [hidden]="expertModeOn(field.expertMode)"
+          [aggregationType]="aggregationType" (result)="mergeResult($event)"></input-field>
       </div>
       <div *ngSwitchCase="'number'" class="form-group">
-        <input-field [field]="field" [aggs]="aggs['aggs'][idx]" [hidden]="expertModeOn(field.expertMode)" [aggregationType]="aggregationType"></input-field>
+        <input-field [field]="field" [aggs]="aggs['aggs'][idx]" [hidden]="expertModeOn(field.expertMode)"
+          [aggregationType]="aggregationType" (result)="mergeResult($event)"></input-field>
       </div>
       <div *ngSwitchCase="'checkbox'" class="form-group">
-        <input-field [field]="field" [aggs]="aggs['aggs'][idx]" [hidden]="expertModeOn(field.expertMode)" [aggregationType]="aggregationType"></input-field>
+        <input-field [field]="field" [aggs]="aggs['aggs'][idx]" [hidden]="expertModeOn(field.expertMode)"
+          [aggregationType]="aggregationType" (result)="mergeResult($event)"></input-field>
       </div>
       <div *ngSwitchCase="'textarea'" class="form-group">
-        <textarea-field [field]="field" [aggs]="aggs['aggs'][idx]" [hidden]="expertModeOn(field.expertMode)" [aggregationType]="aggregationType"></textarea-field>
+        <textarea-field [field]="field" [aggs]="aggs['aggs'][idx]" [hidden]="expertModeOn(field.expertMode)"
+          [aggregationType]="aggregationType" (result)="mergeResult($event)"></textarea-field>
       </div>
       <div *ngSwitchCase="'select'" class="form-group">
-        <select-field [field]="field" [aggs]="aggs['aggs'][idx]" [hidden]="expertModeOn(field.expertMode)" [aggregationType]="aggregationType"></select-field>
+        <select-field [field]="field" [aggs]="aggs['aggs'][idx]" (result)="mergeResult($event)"
+          [hidden]="expertModeOn(field.expertMode)" [aggregationType]="aggregationType"></select-field>
       </div>
       <div *ngSwitchCase="'custom-select'" class="form-group">
-        <select-field [field]="field" [aggs]="aggs['aggs'][idx]" [hidden]="expertModeOn(field.expertMode)" [aggregationType]="aggregationType"></select-field>
+        <select-field [field]="field" [aggs]="aggs['aggs'][idx]" [hidden]="expertModeOn(field.expertMode)"
+          (result)="mergeResult($event)" [aggregationType]="aggregationType"></select-field>
       </div>
       <div *ngSwitchCase="'value-select'">
         <value-select-field [field]="field" [additionalData]="additionalData"></value-select-field>
@@ -34,24 +41,28 @@
         <div *ngFor="let subField of field.subFields; let i = index;">
           <div [ngSwitch]="subField.type">
             <div *ngSwitchCase="'params'" class="row field-padding">
-              <params-field [field]="field" [subField]="subField" [index]="i" [aggs]="aggs['aggs'][idx]" [hidden]="expertModeOn(field.expertMode)"
-                [aggregationType]="aggregationType"></params-field>
+              <params-field [field]="field" [subField]="subField" [index]="i" [aggs]="aggs['aggs'][idx]"
+                [hidden]="expertModeOn(field.expertMode)" [aggregationType]="aggregationType"
+                (result)="mergeResult($event)"></params-field>
             </div>
             <div *ngSwitchCase="'filters'" class="row field-padding">
-              <filters-field [field]="field" [subField]="subField" [index]="i" [aggs]="aggs['aggs'][idx]" [hidden]="expertModeOn(field.expertMode)"
-                [aggregationType]="aggregationType"></filters-field>
+              <filters-field [field]="field" [subField]="subField" [index]="i" [aggs]="aggs['aggs'][idx]"
+                [hidden]="expertModeOn(field.expertMode)" [aggregationType]="aggregationType"
+                (result)="mergeResult($event)"></filters-field>
             </div>
             <div *ngSwitchCase="'order'" class="row field-padding">
-              <order-field [field]="field" [subField]="subField" [index]="i" [aggs]="aggs['aggs'][idx]" [hidden]="expertModeOn(field.expertMode)"
-                [aggregationType]="aggregationType"></order-field>
+              <order-field [field]="field" [subField]="subField" [index]="i" [aggs]="aggs['aggs'][idx]"
+                [hidden]="expertModeOn(field.expertMode)" [aggregationType]="aggregationType"
+                (result)="mergeResult($event)"></order-field>
             </div>
             <div *ngSwitchCase="'extended_bounds'" class="row field-padding">
-              <bounds-field [field]="field" [subField]="subField" [index]="i" [aggs]="aggs['aggs'][idx]" [hidden]="expertModeOn(field.expertMode)"
-                [aggregationType]="aggregationType"></bounds-field>
+              <bounds-field [field]="field" [subField]="subField" [index]="i" [aggs]="aggs['aggs'][idx]"
+                [hidden]="expertModeOn(field.expertMode)" [aggregationType]="aggregationType"></bounds-field>
             </div>
             <div *ngSwitchCase="'ranges'">
-              <ranges-field [field]="field" [subField]="subField" [index]="i" [aggs]="aggs['aggs'][idx]" [hidden]="expertModeOn(field.expertMode)"
-                [aggregationType]="aggregationType"></ranges-field>
+              <ranges-field [field]="field" [subField]="subField" [index]="i" [aggs]="aggs['aggs'][idx]"
+                [hidden]="expertModeOn(field.expertMode)" [aggregationType]="aggregationType"
+                (result)="mergeResult($event)"></ranges-field>
             </div>
           </div>
         </div>
@@ -69,8 +80,8 @@
       <div *ngSwitchCase="'aggregation'" class="form-group">
         <label>Sub Aggregation</label>
         <div style="margin-left: 25px">
-          <aggregation-selector [aggs]="aggs['aggs'][idx]" [displayType]="displayType" [additionalData]="additionalData" [aggregationTypes]="aggregationTypes"
-            [index]="index+1">
+          <aggregation-selector [aggs]="aggs['aggs'][idx]" [displayType]="displayType" [additionalData]="additionalData"
+            [aggregationTypes]="aggregationTypes" [index]="index+1">
           </aggregation-selector>
         </div>
       </div>

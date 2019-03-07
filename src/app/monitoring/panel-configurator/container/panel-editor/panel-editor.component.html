@@ -1,6 +1,9 @@
 <div class="sb-container">
-    <div class="sb-textfields" >
-        <h2>Create a new Panel</h2>
+    <div class="sb-textfields">
+        <h2 *ngIf="!onEdit">Create a new Panel</h2>
+
+        <h2 *ngIf="onEdit">Edit {{name}} here</h2>
+
         <div class="row">
             <div class="col">
                 <label>Name</label>
@@ -10,11 +13,11 @@
                 <label>Description</label>
                 <input class="form-control" type="text" name="description" [(ngModel)]="description" required>
             </div>
-        </div> 
+        </div>
     </div>
     <div class="sb-main">
         <ng-container *ngIf="charts$ | async as charts; then displayCharts; else error"></ng-container>
-        <ng-template #displayCharts >
+        <ng-template #displayCharts>
             <sb-chart-list [charts]="charts$"></sb-chart-list>
         </ng-template>
         <ng-template #error>
@@ -29,4 +32,10 @@
         <button type="button" class="btn btn-danger" (click)="cancel()">cancel</button>
         <button type="button" class="btn btn-primary" (click)="save()">save</button>
     </div>
+
+
+    <div class="sb-button-right" *ngIf="onEdit">
+        <button type="button" class="btn btn-danger" (click)="save(true)">delete</button>
+    </div>
+
 </div>

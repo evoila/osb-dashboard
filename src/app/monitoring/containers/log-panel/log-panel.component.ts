@@ -3,7 +3,7 @@ import * as moment from 'moment/moment';
 import { SearchService } from '../../shared/services/search.service';
 import { SearchRequest } from 'app/monitoring/model/search-request';
 import { Hits, SearchResponse } from 'app/monitoring/model/search-response';
-import { interval, Subscription, of, Observable } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { TimeRange } from '../../model/search-request';
 import { LogDataModel } from '../../model/log-data-model';
 import {
@@ -54,8 +54,8 @@ export class LogPanelComponent implements OnInit, OnDestroy {
   constructor(
     private searchService: SearchService,
     private notification: NotificationService
-  ) {}
-  ngOnInit() {}
+  ) { }
+  ngOnInit() { }
 
   ngOnDestroy() {
     this.stopStreaming();
@@ -122,6 +122,7 @@ export class LogPanelComponent implements OnInit, OnDestroy {
     this.subscription && this.subscription!!.unsubscribe();
     this.from = 0;
     this.isSequel = false;
+    this.inRequest = false;
   }
 
   updateFilters(filters: Array<Map<string, any>>) {

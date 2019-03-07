@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+
 
 @Component({
   selector: 'filters-field',
@@ -11,26 +12,29 @@ export class FiltersFieldComponent {
   @Input() aggregationType: any;
   @Input() index: number;
   @Input() subFieldName: string;
+  @Output('result') resultEmitter = new EventEmitter();
   public subFieldValue: string;
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit() {
     if (this.aggs[this.aggregationType.type] == null)
       this.aggs[this.aggregationType.type] = {};
   }
 
-  updateField($event : any, index : number) : void {
+  updateField($event: any, index: number): void {
     if (this.aggs[this.aggregationType.type][this.field.name] == null)
       this.aggs[this.aggregationType.type][this.field.name] = {};
 
     this.aggs[this.aggregationType.type][this.field.name][index] = {
-      'term' : {}
+      'term': {}
     };
     this.aggs[this.aggregationType.type][this.field.name][index]['term'][this.subFieldName] = $event.target.value;
 
     if (this.subFieldName == null || this.subFieldName.length == 0)
       delete this.aggs[this.aggregationType.type][this.field.name][index];
+
+    this.resultEmitter.next(this.aggs);
   }
 
 

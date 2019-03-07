@@ -3,17 +3,21 @@ import { CfAuthScope } from '../../../chart-configurator/model/cfAuthScope';
 import * as fromPanelIncreation from '../actions/panel-increation.action';
 import * as uuid from 'uuid';
 
+
 export interface PanelIncreationState {
+  id?: string;
   charts: { [id: string]: Chart };
   name: string;
   description: string;
   authScope: CfAuthScope;
+  onEdit: boolean;
 }
 export const initialState: PanelIncreationState = {
   charts: {},
   name: '',
   description: '',
-  authScope: {} as CfAuthScope
+  authScope: {} as CfAuthScope,
+  onEdit: false
 };
 
 export function reducer(
@@ -55,6 +59,26 @@ export function reducer(
     }
     case fromPanelIncreation.FLUSH_STATE: {
       return initialState;
+    }
+    case fromPanelIncreation.SET_STATE_FOR_UPDATE: {
+      const { id, authScope, charts, name, description } = action.payload
+      // deconstruct from ChartsInPanel Datatype to normal Chart Datatype
+      const newCharts = charts.map(k => k.chart).reduce<{ [id: string]: Chart }>(
+        (prev, curr, index, arr) => {
+          if (index == 0) {
+            return { [curr.id!!]: curr }
+          }
+          return { ...prev, [curr.id!!]: curr }
+        }, {}
+      )
+      return {
+        id,
+        authScope,
+        charts: newCharts,
+        name,
+        description,
+        onEdit: true
+      }
     }
   }
   return state;

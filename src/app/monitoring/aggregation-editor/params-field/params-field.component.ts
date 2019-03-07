@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+
 
 @Component({
   selector: 'params-field',
@@ -11,6 +12,7 @@ export class ParamsFieldComponent {
   @Input() aggregationType: any;
   @Input() index: number;
   @Input() subFieldName: string;
+  @Output('result') resultEmitter = new EventEmitter();
   public subFieldValue: string;
 
   constructor() {
@@ -21,16 +23,19 @@ export class ParamsFieldComponent {
       this.aggs[this.aggregationType.type] = {};
   }
 
-  updateFieldName($event : any) : void {
+  updateFieldName($event: any): void {
     this.aggs[this.aggregationType.type][this.field.name] = {};
     this.aggs[this.aggregationType.type][this.field.name][$event.target.value] = {};
+    this.resultEmitter.next(this.aggs);
   }
 
-  updateField($event : any) : void {
+  updateField($event: any): void {
     this.aggs[this.aggregationType.type][this.field.name][this.subFieldName] = $event.target.value;
 
     if (this.aggs[this.aggregationType.type][this.field.name].length == 0)
       delete this.aggs[this.aggregationType.type][this.field.name];
+
+    this.resultEmitter.next(this.aggs);
   }
 
 }

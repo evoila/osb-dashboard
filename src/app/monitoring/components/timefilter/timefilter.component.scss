@@ -1,6 +1,6 @@
 
 .timefilter-layout-top-row {
-    height: 55px;
+    height: 80px;
     border-bottom: 1px solid #dee2e6;
     padding: .2rem 2rem;
     display: -webkit-box;
@@ -22,4 +22,10 @@
     display: -ms-flexbox;
     display: flex;
     padding: 1rem;
+}
+.form-group{
+    padding: 0 0.5em 0 0.5em;
+}
+.input-group label {
+    padding: 0 0.5em 0 0.5em;
 }

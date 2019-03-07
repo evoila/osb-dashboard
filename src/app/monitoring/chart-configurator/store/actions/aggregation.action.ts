@@ -18,7 +18,12 @@ export const DELETE_AGGREGATION_FAIL = '[Aggregations] Delete Aggregation Fail';
 export const DELETE_AGGREGATION_SUCCESS =
   '[Aggregations] Delete Aggregation Success';
 
-// Update Aggregation to in MVP-2
+// UPDATE Agrgegation 
+export const UPDATE_AGGREGATION = '[Aggregations] UPDATE Aggregation';
+export const UPDATE_AGGREGATION_FAIL = '[Aggregations] UPDATE Aggregation Fail';
+export const UPDATE_AGGREGATION_SUCCESS =
+  '[Aggregations] UPDATE Aggregation Success';
+
 
 /*
  *
@@ -62,6 +67,23 @@ export type AggregationSaveAction =
   | SaveAggregationFail
   | SaveAggregationSuccess;
 
+// Update Aggregation
+export class UpdateAggregation implements Action {
+  readonly type = UPDATE_AGGREGATION;
+  constructor(public payload: Aggregation) { }
+}
+export class UpdateAggregationSuccess implements Action {
+  readonly type = UPDATE_AGGREGATION_SUCCESS;
+  constructor(public payload: Aggregation) { }
+}
+export class UpdateAggregationFail implements Action {
+  readonly type = UPDATE_AGGREGATION_FAIL;
+}
+export type AggregationUpdateAction =
+  | UpdateAggregation
+  | UpdateAggregationFail
+  | UpdateAggregationSuccess;
+
 // Delete Aggregation
 export class DeleteAggregation implements Action {
   readonly type = DELETE_AGGREGATION;
@@ -81,4 +103,7 @@ export type AggregationDeleteAction =
   | DeleteAggregationSuccess;
 
 // Final Type Export
-export type AggregationAction = AggregationLoadAction | AggregationSaveAction | AggregationDeleteAction;
+export type AggregationAction = AggregationLoadAction
+  | AggregationSaveAction
+  | AggregationDeleteAction
+  | AggregationUpdateAction;

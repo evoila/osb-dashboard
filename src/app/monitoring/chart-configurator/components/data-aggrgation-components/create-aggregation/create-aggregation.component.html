@@ -1,3 +1,4 @@
 <div class="aggeWrapper">
-<aggregation-editor [fields]="fields$" [type]="type" (result)="getResults($event)"></aggregation-editor> 
+    <aggregation-editor [aggregations]="aggregationOnEdit" [fields]="fields$" [type]="type"
+        (result)="getResults($event)"></aggregation-editor>
 </div>

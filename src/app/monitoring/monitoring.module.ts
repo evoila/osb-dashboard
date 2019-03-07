@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { MonitoringComponent } from 'app/monitoring/monitoring.component';
 import { MonitoringRoutingModule } from './monitoring-routing.module';
 import { NouisliderModule } from 'ng2-nouislider';
-import { DlDateTimePickerDateModule } from 'angular-bootstrap-datetimepicker';
 import { MonacoEditorModule, NgxMonacoEditorConfig } from 'ngx-monaco-editor';
 
 import {
@@ -61,7 +60,9 @@ export const bootstrapDeps = [
   fromBootstrap.NgbPaginationModule.forRoot(),
   fromBootstrap.NgbButtonsModule.forRoot(),
   fromBootstrap.NgbAccordionModule.forRoot(),
-  fromBootstrap.NgbAlertModule.forRoot()
+  fromBootstrap.NgbAlertModule.forRoot(),
+  fromBootstrap.NgbDatepickerModule.forRoot(),
+  fromBootstrap.NgbTimepickerModule.forRoot()
 ];
 
 @NgModule({
@@ -71,7 +72,6 @@ export const bootstrapDeps = [
     NouisliderModule,
     FormsModule,
     ...bootstrapDeps,
-    DlDateTimePickerDateModule,
     AngularFontAwesomeModule,
     MonacoEditorModule.forRoot(monacoEditorConfig),
     CoreModule,
@@ -99,4 +99,4 @@ export const bootstrapDeps = [
     { provide: RouterStateSerializer, useClass: CustomSerializer }
   ]
 })
-export class MonitoringModule {}
+export class MonitoringModule { }

@@ -12,6 +12,7 @@ import { AggregationTemplateService } from '../aggregation-template.service';
 import { Observable } from 'rxjs';
 import { ChartingUtilsService } from '../charting-utils.service';
 import { Field } from 'app/monitoring/aggregation-editor/model/field';
+import { Aggregation } from '../../chart-configurator/model/aggregation';
 
 @Component({
   selector: 'aggregation-editor',
@@ -30,9 +31,13 @@ export class AggregationEditorComponent implements OnInit, OnChanges {
   public name: string;
   public description: string;
 
-  @Input() set aggregations(aggregations: any) {
-    this.aggsAsText = aggregations[0].command;
-    this.aggs = JSON.parse(aggregations[0].command) || {};
+  @Input('aggregations') set aggregations(aggregations: Aggregation) {
+    if (aggregations) {
+      this.name = aggregations.name;
+      this.description = aggregations.description ? aggregations.description : "";
+      this.aggs = { ...aggregations.actualAggregation };
+      this.dataStructure = aggregations.index!!;
+    }
   }
 
   public aggregationTypes: Array<any> = new Array<any>();
@@ -71,6 +76,10 @@ export class AggregationEditorComponent implements OnInit, OnChanges {
     this.setDisplayType(this.emittedType);
     this.fields$.subscribe((fields: Map<string, Array<Field>>) => {
       this.fields = fields;
+
+      if (this.dataStructure) {
+        this.setDataStructure(this.dataStructure);
+      }
     });
 
     if (!this.data.searchObjectName) {
@@ -149,7 +158,8 @@ export class AggregationEditorComponent implements OnInit, OnChanges {
       fieldToCount: this.data.fieldToCount,
       applicableOn,
       name: this.name,
-      description: this.description
+      description: this.description,
+      index: this.dataStructure
     };
     this.result.emit(returnVal);
     return true;
@@ -169,6 +179,10 @@ export class AggregationEditorComponent implements OnInit, OnChanges {
 
   public cancel(): void {
     this.result.emit('cancel');
+  }
+
+  public updateAggregations($event: any) {
+    this.aggs = { ...$event };
   }
 
   debug(o: any): string {

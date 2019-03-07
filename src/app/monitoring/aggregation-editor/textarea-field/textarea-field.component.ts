@@ -1,4 +1,4 @@
-import { Component, OnChanges, Input } from '@angular/core';
+import { Component, OnChanges, Input, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'textarea-field',
@@ -8,6 +8,7 @@ export class TextareaFieldComponent implements OnChanges {
   @Input() field: any;
   @Input() aggs: any;
   @Input() aggregationType: any;
+  @Output('result') resultEmitter = new EventEmitter();
 
   public textarea = {
     value: ''
@@ -47,6 +48,7 @@ export class TextareaFieldComponent implements OnChanges {
     const aggrType = this.aggregationType.type;
     if (!$event && this.aggs[aggrType][fieldName]) {
       delete this.aggs[aggrType][fieldName];
+      this.resultEmitter.next(this.aggs);
       return true;
     }
 
@@ -57,5 +59,6 @@ export class TextareaFieldComponent implements OnChanges {
     } else {
       this.aggs[aggrType][fieldName] = $event;
     }
+    this.resultEmitter.next(this.aggs);
   }
 }

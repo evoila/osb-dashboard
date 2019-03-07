@@ -60,14 +60,16 @@ export class ChartComponent implements OnInit, OnDestroy {
       .pipe(
         filter(k => k != undefined && Object.keys(k.results).length > 0),
         map(result => {
-          return result!!.results.map(k => {
-            return this.chartingService.unwrapForPlotBucket(
-              new ChartModel(),
-              k.query.aggregation.actualAggregation,
-              k.query.aggregation.name,
-              k.response.aggregations
-            );
-          });
+          return result!!.results.
+            filter(k => k && k.response && k.response.hits.total > 0)
+            .map(k => {
+              return this.chartingService.unwrapForPlotBucket(
+                new ChartModel(),
+                k.query.aggregation.actualAggregation,
+                k.query.aggregation.name,
+                k.response.aggregations
+              );
+            });
         }),
         filter(charts => charts.length > 0),
         map(charts => {

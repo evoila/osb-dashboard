@@ -1,71 +1,95 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import * as moment from 'moment/moment';
+import { NgbTimeStruct, NgbTimepickerConfig } from '@ng-bootstrap/ng-bootstrap';
+import { SafeMethodCall } from '@angular/compiler';
 
 @Component({
   selector: 'sb-timefilter',
   templateUrl: './timefilter.component.html',
-  styleUrls: ['./timefilter.component.scss']
+  styleUrls: ['./timefilter.component.scss'],
+  providers: [NgbTimepickerConfig]
 })
-export class TimefilterComponent implements OnInit {
+export class TimefilterComponent {
   @Input('toDate')
-  toDate: any;
+  set toDate(date: any) {
+    this.initializeDate(date, 'to');
+  }
+
   @Input('fromDate')
-  fromDate: any;
-  @Input('stepVal')
-  stepVal: [string, string];
-  @Input('activateStep')
-  activateStep: boolean;
+  set fromDate(date: any) {
+    this.initializeDate(date, 'from');
+  }
+
   @Output('fromDateChange')
   fromDateChange = new EventEmitter<number>();
   @Output('toDateChange')
   toDateChange = new EventEmitter<number>();
-  @Output('stepChange')
-  stepChange = new EventEmitter<[string, string]>();
 
   public isCollapsedFrom: boolean;
   public isCollapsedTo: boolean;
+  // Stores the Date only
+  public fromDateModel: { year: number, month: number, day: number };
+  public toDateModel: { year: number, month: number, day: number };
 
-  public fromDateString;
-  public toDateString;
+  // Stores the Time only couldn't be merged together cause two different component inputs
+  public fromTimeModel: NgbTimeStruct = { hour: 13, minute: 30, second: 0 };
+  public toTimeModel: NgbTimeStruct = { hour: 13, minute: 30, second: 0 };
+
+  // Restricts the timepickers step to this speciefied value
+  public readonly minuteStep = 10;
   public step: string;
   public stepUnit: string;
-  public toDateView: any;
-  public fromDateView: any;
+
+
 
   stepUnits = ['s', 'm', 'h'];
 
-  constructor() { }
-
-  ngOnInit() {
-    this.toDateString = moment.unix(this.toDate).format('DD:MM:YY, hh:mm:ss a');
-    this.fromDateString = moment.unix(this.fromDate).format('DD:MM:YY, hh:mm:ss a');
-    if (this.stepVal) {
-      this.step = this.stepVal[0];
-      this.stepUnit = this.stepVal[1];
-    }
+  constructor(config: NgbTimepickerConfig) {
+    config.size = "small";
   }
 
-  setFromDate() {
-    if (this.isCollapsedFrom) {
-      this.isCollapsedFrom = !this.isCollapsedFrom;
-      this.fromDateString = this.getDateAsString(moment(this.fromDateView));
-      this.fromDateChange.emit(moment(this.fromDateView).unix());
-    }
-  }
-  setToDate() {
-    if (this.isCollapsedTo) {
-      this.isCollapsedTo = !this.isCollapsedTo;
-      this.toDateString = this.getDateAsString(moment(this.toDateView));
-      this.toDateChange.emit(moment(this.toDateView).unix());
-    }
-  }
-  setSteps() {
-    if (this.step && this.stepUnit) {
-      this.stepChange.emit([this.step, this.stepUnit]);
-    }
+  private initializeDate(date: any, fieldToBeSet: string) {
+    const intermediate = moment.unix(date).format('DD:MM:YYYY:HH:MM');
+    const resultObj = intermediate.split(':').reduce((prev: any, curr: string, index: number, ar: string[]) => {
+      switch (index) {
+        case (0): {
+          return { date: { 'day': +curr } };
+        }
+        case (1): {
+          return { date: { ...prev.date, 'month': +curr } };
+        }
+        case (2): {
+          return { date: { ...prev.date, 'year': +curr } };
+        }
+        case (3): {
+          return { ...prev, time: { 'hour': +curr } }
+        }
+        case (4): {
+          return { ...prev, time: { ...prev.time, 'minute': +curr } }
+        }
+      }
+    }, {});
+    this[fieldToBeSet + 'DateModel'] = resultObj.date;
+    this[fieldToBeSet + 'TimeModel'] = resultObj.time;
   }
 
-  private getDateAsString(date: any): string {
-    return moment(date).format('DD:MM:YY, hh:mm:ss a');
+  toggleTimeChange(event: NgbTimeStruct, source: 'To' | 'From') {
+    const variableHandle = `${source.toLowerCase()}`;
+    this[variableHandle + 'TimeModel'] = event;
+    this[`set${source}DateChange`](this[variableHandle + 'DateModel']);
+  }
+
+  setToDateChange(event: { year: number, month: number, day: number }) {
+    this.toDateModel = event;
+    const { hour, minute } = this.toTimeModel;
+    const formatedDate = moment(`${event.day}:${event.month}:${event.year}:${hour}:${minute}`, 'DD:MM:YYYY:HH:MM');
+    this.toDateChange.next(formatedDate.unix());
+  }
+
+  setFromDateChange(event: { year: number, month: number, day: number }) {
+    this.fromDateModel = event;
+    const { hour, minute } = this.fromTimeModel;
+    const formatedDate = moment(`${event.day}:${event.month}:${event.year}:${hour}:${minute}`, 'DD:MM:YYYY:HH:MM');
+    this.fromDateChange.next(formatedDate.unix());
   }
 }

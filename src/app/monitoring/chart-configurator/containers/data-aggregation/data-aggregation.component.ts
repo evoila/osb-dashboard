@@ -5,7 +5,8 @@ import { Store } from '@ngrx/store';
 import { tap, take, filter, debounceTime } from 'rxjs/operators';
 import {
   LoadAggregations,
-  SaveAggregation
+  SaveAggregation,
+  UpdateAggregation
 } from '../../store/actions/aggregation.action';
 import { getAllAggregationEntities } from '../../store/selectors/aggregation.selector';
 import { ChartIncreationState } from '../../store/reducers/chart.increation.reducer';
@@ -28,12 +29,13 @@ import {
 } from '../../store/selectors/chart.increation.selector';
 import { ChartModelState } from 'app/monitoring/shared/store/reducers/chart.reducer';
 import { SaveChart } from '../../../shared/store/actions/chart.actions';
-import { getChartIncreationOptions } from '../../store/selectors/chart.increation.selector';
+import { getChartIncreationOptions, getAggregationOnEdit } from '../../store/selectors/chart.increation.selector';
 import { ChartOptionsEntity } from '../../model/chart-options-entity';
 import { Chart } from '../../../shared/model/chart';
 import { Router } from '@angular/router';
 import { BindingsState } from '../../../shared/store/reducers/binding.reducer';
 import { getChartSaved } from '../../../shared/store/selectors/chart.selector';
+import { EditAggregationSuccess, EditAggregationCanceled } from '../../store/actions/chart.increation.action';
 import {
   FlushState,
   SetChartName
@@ -49,6 +51,8 @@ export class DataAggregationComponent implements OnInit {
   public aggregations$: Observable<Array<Aggregation>>;
   public aggregationEditorPresent = false;
   public aggregationState: { [id: string]: string } = {};
+  public aggregationOnEdit?: Aggregation;
+
   private options: ChartOptionsEntity;
   private chartIncAgg: { [id: string]: AggregationRequestObject };
   private name: string;
@@ -70,20 +74,31 @@ export class DataAggregationComponent implements OnInit {
   public getAggregationResult(aggregation: any) {
     if (aggregation === 'cancel') {
       this.aggregationEditorPresent = false;
+      this.chartStore.dispatch(new EditAggregationCanceled());
       return;
     }
+
     this.authParamService
       .createCfAuthScope()
       .pipe(take(1))
       .subscribe(authScope => {
-        const scopedAggregation = {
+        let scopedAggregation = {
           actualAggregation: aggregation.aggregations,
           authScope,
           chartTypes: aggregation.applicableOn,
           name: aggregation.name,
           description: aggregation.description,
-          public: false
+          public: false,
+          index: aggregation.index
         } as Aggregation;
+
+        if (this.aggregationOnEdit) {
+          scopedAggregation.id = this.aggregationOnEdit.id;
+          this.chartStore.dispatch(new EditAggregationSuccess(scopedAggregation));
+          this.aggregationStore.dispatch(new UpdateAggregation(scopedAggregation));
+        } else {
+          this.aggregationStore.dispatch(new SaveAggregation(scopedAggregation));
+        }
 
         const aggregationRqo = {
           aggregation: scopedAggregation,
@@ -91,7 +106,6 @@ export class DataAggregationComponent implements OnInit {
         } as AggregationRequestObject;
 
         this.chartStore.dispatch(new SetChartAggregations(aggregationRqo));
-        this.aggregationStore.dispatch(new SaveAggregation(scopedAggregation));
         this.aggregationEditorPresent = false;
       });
   }
@@ -126,12 +140,21 @@ export class DataAggregationComponent implements OnInit {
       .subscribe(chaAgs => (this.chartIncAgg = chaAgs));
 
     this.chartStore
+      .select(getAggregationOnEdit)
+      .subscribe(chaAgs => {
+        this.aggregationOnEdit = chaAgs;
+        if (chaAgs) {
+          this.aggregationEditorPresent = true;
+        }
+      });
+
+    this.chartStore
       .select(getReadyForRequestAggregations)
       .pipe(
         filter(aggregationRqs => {
           const returnValue =
             Object.keys(aggregationRqs).length !=
-              Object.keys(this.previousFinishedAggs).length ||
+            Object.keys(this.previousFinishedAggs).length ||
             checkNotEquals(aggregationRqs, this.previousFinishedAggs);
           this.previousFinishedAggs = aggregationRqs;
           return returnValue;
@@ -155,7 +178,7 @@ export class DataAggregationComponent implements OnInit {
       this.options &&
       Object.keys(this.chartIncAgg).length > 0 &&
       Object.keys(this.aggregationState).length ==
-        Object.keys(this.chartIncAgg).length &&
+      Object.keys(this.chartIncAgg).length &&
       !hasError(this.aggregationState)
     ) {
       this.authParamService

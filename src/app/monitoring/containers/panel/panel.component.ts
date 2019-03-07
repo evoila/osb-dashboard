@@ -15,6 +15,9 @@ import { getPanelViewModelById } from '../../shared/store/selectors/panel.select
 import { State } from 'app/monitoring/store';
 import { getParams } from '../../store/reducers/index';
 import { Observable } from 'rxjs';
+import { Panel } from '../../shared/model/panel';
+import { ChartInPanel } from '../../model/chart-in-panel';
+import { SetStateForUpdate } from '../../panel-configurator/store/actions/panel-increation.action';
 
 @Component({
   selector: 'sb-panel',
@@ -24,8 +27,8 @@ import { Observable } from 'rxjs';
 export class PanelComponent implements OnInit {
   public panel: PanelVm;
   public menu: { [k: string]: any } = {};
-  public fromDateView: any;
-  public toDateView: any;
+  public toDateView: any = moment().unix();
+  public fromDateView: any = moment().subtract(1, "days").unix();
   public steps: [string, string];
   public changed = false;
   private timeRangeEmitter$: any;
@@ -43,6 +46,20 @@ export class PanelComponent implements OnInit {
   }
   ngOnInit() {
     this.registerRouterEvents();
+  }
+  editPanel() {
+    const charts = this.panel.charts.reduce(
+      (prev: ChartInPanel[], curr: ChartInPanel[], index, arr) => {
+        if (index == 0) {
+          return curr;
+        } else {
+          return [...prev, ...curr];
+        }
+      }
+    )
+    const newPanel = { ...this.panel, charts } as Panel;
+    this.store.dispatch(new SetStateForUpdate(newPanel));
+    this.router.navigate(['/monitoring/panelconfigurator']);
   }
 
   registerRouterEvents() {
@@ -66,7 +83,6 @@ export class PanelComponent implements OnInit {
       )
       .subscribe(k => {
         this.panel = { ...k };
-        console.log(this.panel);
       });
   }
 

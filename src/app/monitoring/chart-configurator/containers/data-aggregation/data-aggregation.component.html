@@ -1,16 +1,17 @@
 <div class="sb-container">
-  <ng-container
-    *ngIf="aggregationEditorPresent; then aggregationEditorActive; else datAggregationActive ">
+  <ng-container *ngIf="aggregationEditorPresent; then aggregationEditorActive; else datAggregationActive ">
   </ng-container>
   <ng-template #datAggregationActive>
-      <div class="row sb-textfields">
-          
-        </div>
-    
-    <sb-aggregation-list class="sb-main" [aggregations]="aggregations$" (aggregationEditor)="aggregationEditorPresent = !aggregationEditorPresent"> </sb-aggregation-list>
+    <div class="row sb-textfields">
+
+    </div>
+
+    <sb-aggregation-list class="sb-main" [aggregations]="aggregations$"
+      (aggregationEditor)="aggregationEditorPresent = !aggregationEditorPresent"> </sb-aggregation-list>
     <sb-scope-aggregations class="sb-right"></sb-scope-aggregations>
   </ng-template>
   <ng-template #aggregationEditorActive>
-      <sb-create-aggregation (result)="getAggregationResult($event)" [type]="chartType" (close)="aggregationEditorPresent = !aggregationEditorPresent"></sb-create-aggregation>
+    <sb-create-aggregation (result)="getAggregationResult($event)" [aggregationOnEdit]="aggregationOnEdit"
+      [type]="chartType" (close)="aggregationEditorPresent = !aggregationEditorPresent"></sb-create-aggregation>
   </ng-template>
 </div>

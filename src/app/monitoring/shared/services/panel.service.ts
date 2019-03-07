@@ -33,4 +33,12 @@ export class PanelService {
   public createChart(chart: Panel): Observable<Panel> {
     return this.http.put<Panel>(this.url, chart);
   }
+  public updatePanel(panel: Panel): Observable<Panel> {
+    const url = this.url + `/${panel.id}`;
+    return this.http.post<Panel>(url, panel);
+  }
+  public deletePanel(panel: Panel): Observable<Panel> {
+    const url = this.url + `/${panel.id}`;
+    return this.http.delete<Panel>(url);
+  }
 }

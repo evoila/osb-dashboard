@@ -4,7 +4,7 @@ div.sb-container {
     grid-template-areas:
     'textfields textfields textfields textfields textfields textfields'
     'main main main right right right'
-    'buttons buttons buttons buttons buttons buttons';
+    'buttons buttons buttons buttons buttons buttons-right';
   grid-gap: 10px;
 }
 .sb-right {
@@ -18,6 +18,9 @@ div.sb-container {
 }
 .sb-buttons {
     grid-area: buttons;
+}
+.sb-button-right {
+    grid-area: buttons-right;
 }
 .sb-textfields {
     grid-area: textfields;

@@ -33,6 +33,18 @@ export class AggregationEffect {
   );
 
   @Effect()
+  updateAggregation$ = this.actions.ofType(aggregations.UPDATE_AGGREGATION).pipe(
+    switchMap((value: aggregations.UpdateAggregation, index) => {
+      return this.aggregationService.createAggregation(value.payload).pipe(
+        map(
+          aggregation => new aggregations.UpdateAggregationSuccess(aggregation)
+        ),
+        catchError(error => of(new aggregations.UpdateAggregationFail()))
+      );
+    })
+  );
+
+  @Effect()
   deleteAggregation$ = this.actions.ofType(aggregations.DELETE_AGGREGATION).pipe(
     switchMap((value: aggregations.DeleteAggregation) => {
       return this.aggregationService.deleteAggregation(value.payload.id!!).pipe(

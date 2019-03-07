@@ -18,7 +18,7 @@ if (!injectedEnv) {
     },
     production: false,
     customEndpoints: [
-      { url: 'https://osb-log-metric-dashboard-backend.cf.dev.eu-de-central.msh.host', identifier: 'log-metric-backend' },
+      { url: 'http://localhost:8080', identifier: 'log-metric-backend' },
       { url: 'http://localhost:8081', identifier: 'osb-backup-manager' }
     ],
     ui: {

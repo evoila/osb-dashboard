@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'input-field',
@@ -8,16 +8,19 @@ export class InputFieldComponent {
   @Input() field: any;
   @Input() aggs: any;
   @Input() aggregationType: any;
+  @Output('result') resultEmitter = new EventEmitter();
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit() {
     if (this.aggs[this.aggregationType.type] == null)
       this.aggs[this.aggregationType.type] = {};
   }
 
-  updateField($event : any) : void {
+  updateField($event: any): void {
+    this.aggs = { ...this.aggs, [this.aggregationType.type]: { ...this.aggs[this.aggregationType.type], [this.field.name]: $event } }
     if (this.aggs[this.aggregationType.type][this.field.name].length == 0)
       delete this.aggs[this.aggregationType.type][this.field.name];
+    this.resultEmitter.next(this.aggs);
   }
 }
