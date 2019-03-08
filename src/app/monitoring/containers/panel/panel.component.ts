@@ -14,7 +14,7 @@ import { Store, select } from '@ngrx/store';
 import { getPanelViewModelById } from '../../shared/store/selectors/panel.selector';
 import { State } from 'app/monitoring/store';
 import { getParams } from '../../store/reducers/index';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Panel } from '../../shared/model/panel';
 import { ChartInPanel } from '../../model/chart-in-panel';
 import { SetStateForUpdate } from '../../panel-configurator/store/actions/panel-increation.action';
@@ -31,8 +31,8 @@ export class PanelComponent implements OnInit {
   public fromDateView: any = moment().subtract(1, "days").unix();
   public steps: [string, string];
   public changed = false;
-  private timeRangeEmitter$: any;
-  public timeRange$: Observable<{ [key: string]: any }> = new Observable(k => this.timeRangeEmitter$ = k);
+  private timeRangeEmitter$: Subject<any> = new Subject();
+  public timeRange$: Observable<{ [key: string]: any }> = new Observable(k => this.timeRangeEmitter$.subscribe(k));
   edit: boolean;
   constructor(
     private timeRangeService: EsTimerangeService,
@@ -46,6 +46,7 @@ export class PanelComponent implements OnInit {
   }
   ngOnInit() {
     this.registerRouterEvents();
+    this.setDateRange();
   }
   editPanel() {
     const charts = this.panel.charts.reduce(
