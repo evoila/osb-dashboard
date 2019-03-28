@@ -1,0 +1,68 @@
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { CfAuthParameterService } from 'app/monitoring/shared/services/cfauth-param.service';
+import { ChartIncreationState } from 'app/monitoring/chart-configurator/store/reducers/chart.increation.reducer';
+import { Store } from '@ngrx/store';
+import { BindingsState } from 'app/monitoring/shared/store/reducers/binding.reducer';
+import { ServiceBinding } from 'app/monitoring/model/service-binding';
+import { AggregationRequestObject } from 'app/monitoring/chart-configurator/model/aggregationRequestObject';
+import { Observable, of } from 'rxjs';
+
+
+@Component({
+  selector: 'sb-scoping',
+  templateUrl: './scoping.component.html',
+  styleUrls: ['./scoping.component.scss']
+})
+export class ScopingComponent implements OnInit {
+  @Input('aggregation')
+  aggregation$: Observable<AggregationRequestObject>;
+
+  @Output('aggRequObj')
+  aggReqEmitter = new EventEmitter<AggregationRequestObject>();
+
+  private serviceBinding: ServiceBinding;
+  private name: string = 'preview';
+
+  aggRequObj: AggregationRequestObject;
+
+  private authParamService: CfAuthParameterService;
+  constructor(
+    private store: Store<ChartIncreationState>,
+    storeBindings: Store<BindingsState>,
+    authParamService: CfAuthParameterService
+  ) {
+    this.authParamService = authParamService.construct(storeBindings);
+  }
+
+  ngOnInit() {
+    this.aggregation$.subscribe(k => {
+      this.aggRequObj = k;
+      this.update(k);
+    });
+    this.aggregation$.subscribe(k => console.log(k));
+  }
+  public updateName(name: string) {
+    this.name = name;
+    this.updateWithLast();
+  }
+  public updateId(binding: ServiceBinding) {
+    this.serviceBinding = binding;
+    this.updateWithLast();
+  }
+  updateWithLast() {
+    this.update(this.aggRequObj);
+  }
+  public update(aggregation: AggregationRequestObject) {
+    if (this.serviceBinding) {
+      const { name } = this;
+      const { appId } = this.serviceBinding;
+      const updatedAgg = {
+        ...aggregation,
+        name,
+        appId
+      } as AggregationRequestObject;
+      this.aggReqEmitter.emit(updatedAgg);
+    }
+  }
+
+}

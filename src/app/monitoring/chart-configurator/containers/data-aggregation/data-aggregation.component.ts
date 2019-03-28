@@ -199,7 +199,7 @@ export class DataAggregationComponent implements OnInit {
             .subscribe(getChartSaved => {
               if (getChartSaved) {
                 this.chartStore.dispatch(new FlushState());
-                this.router.navigate(['monitoring']);
+                this.router.navigate(['monitoring/panelconfigurator']);
               }
             });
         });
@@ -211,7 +211,7 @@ export class DataAggregationComponent implements OnInit {
   }
   public cancel() {
     this.chartStore.dispatch(new FlushState());
-    this.router.navigate(['monitoring']);
+    this.router.navigate(['monitoring/panelconfigurator']);
   }
 }
 

@@ -130,7 +130,7 @@ export class SingleViewEditorComponent implements OnInit {
                 map(getChartSaved => {
                   if (getChartSaved) {
                     this.store.dispatch(new FlushState());
-                    this.router.navigate(['monitoring']);
+                    this.router.navigate(['monitoring/panelconfigurator']);
                   }
                 })
               );
@@ -142,6 +142,6 @@ export class SingleViewEditorComponent implements OnInit {
   }
   public cancel() {
     this.store.dispatch(new FlushState());
-    this.router.navigate(['monitoring']);
+    this.router.navigate(['monitoring/panelconfigurator']);
   }
 }

@@ -6,11 +6,13 @@ import {
   AggregationListComponent,
   BottomSheetAggregationSheet
 } from './aggregation-list/aggregation-list.component';
+import { ScopingComponent } from './scoping/scoping.component';
 
 export const aggregationComponents = [
   AggregationListComponent,
   BottomSheetAggregationSheet,
   CreateAggregationComponent,
   ScopeAggregationsComponent,
-  ChartPreviewComponent
+  ChartPreviewComponent,
+  ScopingComponent
 ];

@@ -1,4 +1,12 @@
-<div class="aggeWrapper">
-    <aggregation-editor [aggregations]="aggregationOnEdit" [fields]="fields$" [type]="type"
-        (result)="getResults($event)"></aggregation-editor>
+<div class="container" *ngIf="fields$">
+    <div id="previewWrapper" *ngIf="scopedAggregation$">
+        <sb-chart-preview [aggregation]="scopedAggregation$"></sb-chart-preview>
+    </div>
+    <div id="aggeWrapper">
+        <aggregation-editor [aggregations]="aggregationOnEdit" [fields]="fields$" [type]="type"
+            (result)="getResults($event)" (preview)="triggerPreview($event)"></aggregation-editor>
+    </div>
+    <div id="scopeWrapper" *ngIf="aggregation$">
+        <sb-scoping [aggregation]="aggregation$" (aggRequObj)="setRequestObject($event)"></sb-scoping>
+    </div>
 </div>

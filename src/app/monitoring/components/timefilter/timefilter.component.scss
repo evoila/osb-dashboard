@@ -29,3 +29,10 @@
 .input-group label {
     padding: 0 0.5em 0 0.5em;
 }
+button.calendar, button.calendar:active {
+    width: 2.75rem;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAcCAYAAAAEN20fAAAABHNCS…nlUDaO1vpZRO5NS0x48sIwfPc87xg4B04MCzQi8hIEwe4bl1DnFMCN2zsAAAAASUVORK5CYII=)!important;
+    background-repeat: no-repeat;
+    background-size: 23px;
+    background-position: center;
+}

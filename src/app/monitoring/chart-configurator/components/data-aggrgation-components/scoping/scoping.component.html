@@ -1,0 +1,15 @@
+<ng-template *ngIf="aggregation$ | async as aggregation">
+
+</ng-template>
+<div class="row">
+  <div class="form-group">
+    <label>Name</label>
+    <input class="form-control" type="text" name="name" [ngModel]="name" (ngModelChange)="updateName($event)">
+  </div>
+  <div class="form-group">
+    <sb-appid [selected]="appId" (app)="updateId($event)"></sb-appid>
+  </div>
+</div>
+<div class="row">
+  <button type="button" class="btn btn-primary" (click)="updateWithLast()">save</button>
+</div>

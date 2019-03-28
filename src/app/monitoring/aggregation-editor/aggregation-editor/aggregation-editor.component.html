@@ -57,7 +57,9 @@
       <div calss="col-md-12">
         <button type="button" class="btn btn-danger" (click)="cancel()">Cancel</button>
         <button *ngIf="displayType && displayType.type" type="submit" class="btn btn-primary"
-          (click)="runAggregation()">Save</button>
+          (click)="saveAggregation()">Save</button>
+        <button *ngIf="displayType && displayType.type" type="submit" class="btn btn-primary"
+          (click)="runAggregation()">Test</button>
       </div>
     </div>
   </form>

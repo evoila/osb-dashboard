@@ -42,4 +42,4 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
   ],
   providers: [...services]
 })
-export class ChartConfiguratorModule {}
+export class ChartConfiguratorModule { }

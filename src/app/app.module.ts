@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import * as monShared from './monitoring/shared/shared.module';
@@ -31,6 +31,7 @@ import { SharedModule } from './shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthenticationInterceptor } from './core/services/authentication.interceptor';
+import { CustomDatepickerI18n, I18n } from './datepicker-i18n';
 
 export function buildBuildTargetService(): BuildTargetService {
   return new BuildTargetService(buildTarget);
@@ -73,4 +74,4 @@ export function buildBuildTargetService(): BuildTargetService {
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

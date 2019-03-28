@@ -21,6 +21,7 @@ import { Aggregation } from '../../chart-configurator/model/aggregation';
 })
 export class AggregationEditorComponent implements OnInit, OnChanges {
   @Output() result = new EventEmitter();
+  @Output('preview') run = new EventEmitter();
   @Input('fields')
   public fields$: Observable<Map<string, Array<Field>>>;
   public fields: Map<string, Array<Field>>;
@@ -144,7 +145,16 @@ export class AggregationEditorComponent implements OnInit, OnChanges {
     return true;
   }
 
-  public runAggregation(): boolean {
+  public saveAggregation() {
+    const returnVal = this.buildAggregation();
+    this.result.emit(returnVal);
+  }
+  public runAggregation() {
+    const returnVal = this.buildAggregation();
+    this.run.emit(returnVal);
+  }
+
+  private buildAggregation() {
     if (this.useTextEditor) {
       this.aggs = this.parseAggs(this.aggs);
     }
@@ -161,8 +171,7 @@ export class AggregationEditorComponent implements OnInit, OnChanges {
       description: this.description,
       index: this.dataStructure
     };
-    this.result.emit(returnVal);
-    return true;
+    return returnVal;
   }
 
   private parseAggs(aggs: any) {

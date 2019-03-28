@@ -3,6 +3,7 @@ import { ChartOptionsEntity } from '../../model/chart-options-entity';
 import { AggregationRequestObject } from '../../model/aggregationRequestObject';
 import { SearchResponse } from '../../../model/search-response';
 import { Aggregation } from '../../model/aggregation';
+
 export const SET_CHART_TYPE = '[Increation] Set Chart Type';
 export const SET_CHART_OPTIONS = '[Increation] Set Chart Options';
 

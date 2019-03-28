@@ -6,7 +6,7 @@
 
   <div *ngIf="panel">
     <div class="row" *ngFor="let chartRequests of panel.charts" style="margin: 50px 0 0 0">
-      <div class="col-{{chartRequest.size}} charts" *ngFor="let chartRequest of chartRequests" cdkDrag>
+      <div class="col-{{chartRequest.size}} charts" *ngFor="let chartRequest of chartRequests">
         <div *ngIf="chartRequest.onEdit">
           <!--TODO Invoke Chart Editor from here later on-->
         </div>
