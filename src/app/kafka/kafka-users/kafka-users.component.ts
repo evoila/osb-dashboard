@@ -19,10 +19,6 @@ export class KafkaUsersComponent implements OnInit {
           "flex-direction": "row",
           "items": [
             {
-              "key": "users[].admin",
-              "flex": "1 1 50px"
-            },
-            {
               "key": "users[].username",
               "flex": "4 4 200px",
               "notitle": true,

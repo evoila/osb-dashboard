@@ -8,7 +8,7 @@ import { SidebarEntry } from 'app/core/sidebar';
 })
 export class KafkaComponent implements OnInit {
   menu: SidebarEntry[] = [{
-    name: 'Kafka',
+    name: 'Configuration',
     isCollapsible: false,
     links: [{
         name: 'Settings',
