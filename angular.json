@@ -303,7 +303,7 @@
             "browserTarget": "elasticsearch:build"
           },
           "configurations": {
-            "mysql": {
+            "elasticsearch": {
               "browserTarget": "elasticsearch:build:elasticsearch"
             },
             "production": {
