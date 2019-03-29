@@ -10,6 +10,7 @@
     "start:monitoring": "ts-node ./scripts/start.ts -t monitoring",
     "start:postgresql": "ts-node ./scripts/start.ts -t postgresql",
     "start:lbaas": "ts-node ./scripts/start.ts -t lbaas",
+    "start:elasticsearch": "ts-node ./scripts/start.ts -t elasticsearch",
     "start:auto-scaler": "ts-node ./scripts/start.ts -t auto-scaler",
     "start:rabbitmq": "ts-node ./scripts/start.ts -t rabbitmq",
     "start:example": "ts-node ./scripts/start.ts -t example",
