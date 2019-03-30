@@ -64,16 +64,16 @@ export class ScopeAggregationsComponent implements OnInit {
     };
   }
   public drop(event: CdkDragDrop<Aggregation>) {
-    this.authParamService
-      .createCfAuthScope()
-      .pipe(take(1))
-      .subscribe(authScope => {
-        const aggregationRq = {
-          aggregation: event.item.data,
-          authScope
-        } as AggregationRequestObject;
-        this.store.dispatch(new SetChartAggregations(aggregationRq));
-      });
+    /*     this.authParamService
+          .createCfAuthScope()
+          .pipe(take(1))
+          .subscribe(authScope => {
+            const aggregationRq = {
+              aggregation: event.item.data,
+              authScope
+            } as AggregationRequestObject;
+            this.store.dispatch(new SetChartAggregations(aggregationRq));
+          }); */
   }
   public update(key: string, aggregation: AggregationRequestObject) {
     const { name, appId } = this.aggScopes[key];

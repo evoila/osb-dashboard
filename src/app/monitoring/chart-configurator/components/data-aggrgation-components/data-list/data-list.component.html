@@ -1,0 +1,18 @@
+<div class="container">
+  <ul class="list-group">
+    <li class="list-group-item data-item" *ngFor="let entry of entries | keyvalue">
+      <sb-aggregation-list class="data-area" [aggregations]="aggregations$" [id]="entry.key"
+        [aggregationRequestObject]="entry.value" (aggregationEditor)="aggregationEditorOnFor = entry.key"
+        (picked)="pushAggregation($event, entry.key)">
+      </sb-aggregation-list>
+      <div class="control-area">
+        <button type="button" class="btn btn-danger" (click)="delete(entry.key)">delete</button>
+      </div>
+    </li>
+    <li class="list-group-item">
+      <div class="row sb-buttons">
+        <button type="button" class="btn btn-primary" (click)="add()">Add Data</button>
+      </div>
+    </li>
+  </ul>
+</div>

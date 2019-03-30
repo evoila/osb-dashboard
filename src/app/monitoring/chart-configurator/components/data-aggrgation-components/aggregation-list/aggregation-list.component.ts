@@ -16,6 +16,7 @@ import {
 import { Store } from '@ngrx/store';
 import { DeleteAggregation, EditAggregation } from 'app/monitoring/chart-configurator/store';
 import { AggregationState } from '../../../store/reducers/aggregation.reducer';
+import { AggregationRequestObject } from 'app/monitoring/chart-configurator/model/aggregationRequestObject';
 
 @Component({
   selector: 'sb-aggregation-list',
@@ -26,9 +27,23 @@ export class AggregationListComponent implements OnInit {
   @Input('aggregations')
   public aggregations$: Observable<Array<Aggregation>>;
 
+  @Input('id')
+  componentId: string;
+
+
+  @Input()
+  aggregationRequestObject: AggregationRequestObject;
+
+  showDetails: boolean = false;
+
+
   // Output Emitter is just a toggle for the Component above to render AggregationEditor
   @Output('aggregationEditor')
   public openAggregationEditor$ = new EventEmitter<Boolean>();
+
+  @Output('picked')
+  picked = new EventEmitter<Aggregation>();
+
 
   public aggregations: Array<Aggregation>;
   constructor(private bottomSheet: MatBottomSheet) { }
@@ -41,8 +56,17 @@ export class AggregationListComponent implements OnInit {
   public showAggregation(aggregation: Aggregation): void {
     this.bottomSheet.open(BottomSheetAggregationSheet, { data: aggregation });
   }
+  public aggregationEmpty() {
+    return Object.keys(this.aggregationRequestObject).length == 0;
+  }
   openAggregationEditor(): void {
     this.openAggregationEditor$.next(true);
+  }
+  pick(aggregation: Aggregation) {
+    this.picked.emit(aggregation);
+  }
+  edit() {
+    /* this.store.dispatch(new EditAggregation(this.data)); */
   }
 }
 

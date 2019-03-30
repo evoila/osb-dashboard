@@ -41,10 +41,6 @@ export class ScopingComponent implements OnInit {
     });
     this.aggregation$.subscribe(k => console.log(k));
   }
-  public updateName(name: string) {
-    this.name = name;
-    this.updateWithLast();
-  }
   public updateId(binding: ServiceBinding) {
     this.serviceBinding = binding;
     this.updateWithLast();

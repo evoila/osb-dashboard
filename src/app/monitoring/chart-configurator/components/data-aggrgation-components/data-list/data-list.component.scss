@@ -1,0 +1,13 @@
+.data-item {
+    display: grid;
+    grid-template-columns: 80% 20%;
+    grid-template-areas: "data-area control-area";
+    grid-column-gap: 1em;
+}
+.data-area {
+    grid-area: data-area;
+}
+.control-area {
+    grid-area: control-area;
+    align-self: end;
+}

@@ -1,7 +1,31 @@
-<div class="aggregationList">
-  <ul cdkDropList id="list-1" class="list-group" cdkDropListConnectedTo="list-2"> 
-    <li class="list-group-item" *ngFor="let aggregation of aggregations" cdkDrag matTooltip="pull to aggregation Area
-     to use aggregation or click to view aggregation" [cdkDragData]="aggregation" (click)="showAggregation(aggregation)"><a>{{aggregation.name}}</a></li>
-     <li class="list-group-item" (click)="openAggregationEditor()">Create Aggregation</li>
-  </ul>
+<div class="aggregationList container">
+
+  <div class="form-left">
+    <button type="button" *ngIf="aggregationEmpty()" class="btn btn-success" (click)="openAggregationEditor()"> Create
+      Aggregation</button>
+  </div>
+  <div class="form">
+    <label for="aggregationList">pick aggregation</label>
+    <select id="aggregationList" class="form-control" [ngModel]="aggregationRequestObject.aggregation"
+      (ngModelChange)="pick($event)">
+      <option [value]="{}">---- Choose ----</option>
+      <option *ngFor="let aggregation of aggregations" [ngValue]="aggregation"> {{aggregation.name}} </option>
+    </select>
+  </div>
+  <div class="form-right">
+    <button *ngIf="!aggregationEmpty()" class="btn btn-primary" (click)="showDetails = !showDetails">
+      Aggregation Details
+    </button>
+  </div>
+
+  <div class="details" id="collapseExample"
+    *ngIf="aggregationRequestObject && aggregationRequestObject.aggregation && showDetails">
+    <h2>{{aggregationRequestObject.aggregation.name}}</h2>
+    <h5>{{aggregationRequestObject.aggregation.description}}</h5>
+    <pre>{{aggregationRequestObject.aggregation.actualAggregation | json}}</pre>
+    <div class="row sb-buttons">
+      <button type="button" class="btn btn-danger" (click)="delete()">delete</button>
+      <button type="button" class="btn btn-primary" (click)="edit()">edit</button>
+    </div>
+  </div>
 </div>

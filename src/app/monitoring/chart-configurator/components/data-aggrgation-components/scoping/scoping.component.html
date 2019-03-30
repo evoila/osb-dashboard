@@ -1,15 +1,11 @@
 <ng-template *ngIf="aggregation$ | async as aggregation">
-
 </ng-template>
 <div class="row">
-  <div class="form-group">
-    <label>Name</label>
-    <input class="form-control" type="text" name="name" [ngModel]="name" (ngModelChange)="updateName($event)">
-  </div>
+  <h6>Select an App you want to test your aggregation with</h6>
+  <p>This is for the Test only. You can scope it to other apps later on!</p>
+</div>
+<div class="row">
   <div class="form-group">
     <sb-appid [selected]="appId" (app)="updateId($event)"></sb-appid>
   </div>
-</div>
-<div class="row">
-  <button type="button" class="btn btn-primary" (click)="updateWithLast()">save</button>
 </div>
