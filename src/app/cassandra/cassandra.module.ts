@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { CoreModule } from '../core/core.module';
 
 import { Bootstrap4FrameworkModule } from 'angular6-json-schema-form';
+import { CassandraRoutingModule } from './cassandra-routing.module';
 import { CassandraComponent } from './cassandra.component';
 import { CassandraSettingsComponent } from './cassandra-settings/cassandra-settings.component';
 
@@ -12,11 +13,10 @@ import { CassandraSettingsComponent } from './cassandra-settings/cassandra-setti
     CommonModule,
     FormsModule,
     CoreModule,
+    CassandraRoutingModule,
     Bootstrap4FrameworkModule
   ],
-  declarations: [CassandraComponent, CassandraSettingsComponent],
-  providers: [
-  ]
+  declarations: [CassandraComponent, CassandraSettingsComponent] 
 })
 
 export class CassandraModule { }

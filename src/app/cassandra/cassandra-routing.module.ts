@@ -12,7 +12,7 @@ export const ROUTES = [
     component: CassandraSettingsComponent,
     pathMatch: 'full'
   }]
-  }];
+}];
 
 @NgModule({
   imports: [RouterModule.forChild(ROUTES)],

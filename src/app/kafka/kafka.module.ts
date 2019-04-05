@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CoreModule } from 'app/core/core.module';
 
+import { Bootstrap4FrameworkModule } from 'angular6-json-schema-form';
 import { KafkaComponent } from './kafka.component';
 import { KafkaRoutingModule } from './kafka-routing.module';
 import { KafkaUsersComponent } from './kafka-users/kafka-users.component';
@@ -14,7 +15,8 @@ import { ZookeeperSettingsComponent } from './zookeeper-settings/zookeeper-setti
     CommonModule,
     FormsModule,
     CoreModule,
-    KafkaRoutingModule
+    KafkaRoutingModule,
+    Bootstrap4FrameworkModule
   ],
   declarations: [KafkaComponent, KafkaUsersComponent, KafkaSettingsComponent, ZookeeperSettingsComponent]
 })
