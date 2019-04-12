@@ -1,14 +1,17 @@
-<div class="aggregationList container">
+<div [ngClass]="{'error': aggregationRequestResults && aggregationRequestResults == 'error'}"
+  class="aggregationList container">
 
   <div class="form-left">
-    <button type="button" *ngIf="aggregationEmpty()" class="btn btn-success" (click)="openAggregationEditor()"> Create
+    <button type="button" class="btn btn-success" (click)="openAggregationEditor()"> new
       Aggregation</button>
+    <span>or</span>
   </div>
+
   <div class="form">
-    <label for="aggregationList">pick aggregation</label>
+    <!--<label for="aggregationList">pick aggregation</label>-->
     <select id="aggregationList" class="form-control" [ngModel]="aggregationRequestObject.aggregation"
       (ngModelChange)="pick($event)">
-      <option [value]="{}">---- Choose ----</option>
+      <option [ngValue]="{}">---- Choose Aggregation ----</option>
       <option *ngFor="let aggregation of aggregations" [ngValue]="aggregation"> {{aggregation.name}} </option>
     </select>
   </div>
@@ -17,12 +20,16 @@
       Aggregation Details
     </button>
   </div>
+  <sb-appid *ngIf="!aggregationEmpty()" class="scope" [selected]="aggregationRequestObject.appId"
+    (app)="updateId($event)">
+  </sb-appid>
 
+  <ng-content></ng-content>
   <div class="details" id="collapseExample"
     *ngIf="aggregationRequestObject && aggregationRequestObject.aggregation && showDetails">
     <h2>{{aggregationRequestObject.aggregation.name}}</h2>
     <h5>{{aggregationRequestObject.aggregation.description}}</h5>
-    <pre>{{aggregationRequestObject.aggregation.actualAggregation | json}}</pre>
+    <code>{{aggregationRequestObject.aggregation.actualAggregation | json}}</code>
     <div class="row sb-buttons">
       <button type="button" class="btn btn-danger" (click)="delete()">delete</button>
       <button type="button" class="btn btn-primary" (click)="edit()">edit</button>

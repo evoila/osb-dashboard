@@ -19,6 +19,7 @@ import {
 } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { DataListComponent } from './components/data-aggrgation-components/data-list/data-list.component';
 
 @NgModule({
   imports: [
@@ -38,7 +39,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
   declarations: [
     ChartDirective,
     ...componentsDeclarations,
-    ...containerComponents
+    ...containerComponents,
+    DataListComponent
   ],
   providers: [...services]
 })

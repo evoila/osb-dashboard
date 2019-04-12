@@ -2,12 +2,13 @@
   <ul class="list-group">
     <li class="list-group-item data-item" *ngFor="let entry of entries | keyvalue">
       <sb-aggregation-list class="data-area" [aggregations]="aggregations$" [id]="entry.key"
-        [aggregationRequestObject]="entry.value" (aggregationEditor)="aggregationEditorOnFor = entry.key"
+        [aggregationRequestObject]="entry.value" (aggregationEditor)="setAggregationEditor(entry.key)"
         (picked)="pushAggregation($event, entry.key)">
+        <div class="control-area">
+          <button type="button" class="btn btn-danger" (click)="delete(entry.key)">delete</button>
+        </div>
       </sb-aggregation-list>
-      <div class="control-area">
-        <button type="button" class="btn btn-danger" (click)="delete(entry.key)">delete</button>
-      </div>
+
     </li>
     <li class="list-group-item">
       <div class="row sb-buttons">
@@ -15,4 +16,5 @@
       </div>
     </li>
   </ul>
+
 </div>

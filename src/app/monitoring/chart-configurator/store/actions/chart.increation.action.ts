@@ -42,7 +42,7 @@ export class SetChartOptions implements Action {
 }
 export class SetChartAggregations implements Action {
   readonly type = SET_CHART_AGGREGATIONS;
-  constructor(public payload: AggregationRequestObject) { }
+  constructor(public payload: AggregationRequestObject, public id: string) { }
 }
 export class UpdateChartAggregations implements Action {
   readonly type = UPDATE_CHART_AGGREGATIONS;
@@ -91,7 +91,7 @@ export class SetChartName implements Action {
 
 export class EditAggregation implements Action {
   readonly type = EDIT_AGGREGATION;
-  constructor(public payload: Aggregation) { }
+  constructor(public payload: Aggregation, public id: string) { }
 }
 
 export class EditAggregationSuccess implements Action {

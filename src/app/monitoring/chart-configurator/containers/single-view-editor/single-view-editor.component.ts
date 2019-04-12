@@ -38,6 +38,7 @@ export class SingleViewEditorComponent implements OnInit {
   chartType: string;
   name: string;
   options: Array<ChartOptionsEntity>;
+  editorPresent: boolean = false;
 
   authParamService: CfAuthParameterService;
   constructor(
@@ -96,6 +97,10 @@ export class SingleViewEditorComponent implements OnInit {
   }
   public setChartOption(option: ChartOptionsEntity) {
     this.store.dispatch(new SetChartOptions(option))
+  }
+
+  setOnEdit(value: boolean) {
+    this.editorPresent = value;
   }
 
   public save() {

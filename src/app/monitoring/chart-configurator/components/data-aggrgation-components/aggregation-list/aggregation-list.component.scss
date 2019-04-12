@@ -12,12 +12,15 @@ ul {
     padding: 0 2em 0 0;
 } */
 
+.error {
+    background-color: rgba(214, 69, 65,.1)
+}
 .container {
     display: grid;
-    grid-template-columns: auto auto  auto;
+    grid-template-columns: auto auto auto;
     grid-template-areas: 
-    'form-left form form-right'
-    'details details details';
+    'form-left form form-right scope form-buttons'
+    'details details details details details';
     grid-column-gap: 1em;
 }
 .form-right {
@@ -34,4 +37,16 @@ ul {
 .details {
     grid-area: details;
     justify-self: center;
+}
+span {
+    border-right: 1px solid black;
+    padding: 0 1em 0 1em;
+}
+
+:host ::ng-deep .control-area {
+    grid-area: form-buttons;
+
+}
+.scope {
+    grid-area: scope;
 }

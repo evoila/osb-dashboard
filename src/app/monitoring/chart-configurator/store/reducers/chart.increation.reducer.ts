@@ -1,3 +1,4 @@
+
 import { ChartOptionsEntity } from '../../model/chart-options-entity';
 import * as fromChartIncreation from '../actions/chart.increation.action';
 import { AggregationRequestObject } from '../../model/aggregationRequestObject';
@@ -17,7 +18,7 @@ export interface ChartIncreationState {
   // tells which aggregations are working and which not
   aggregationsState: { [id: string]: string };
   chartName: string;
-  aggregationOnEdit?: Aggregation;
+  aggregationOnEdit?: { [id: string]: Aggregation };
 }
 
 export const initialState: ChartIncreationState = {
@@ -64,9 +65,10 @@ export function reducer(
     }
     case fromChartIncreation.SET_CHART_AGGREGATIONS: {
       const aggregations = action.payload;
+      const { id } = action
       return {
         ...state,
-        aggregations: { ...state.aggregations, [uuid.v4()]: aggregations }
+        aggregations: { ...state.aggregations, [id]: aggregations }
       };
     }
     case fromChartIncreation.UPDATE_CHART_AGGREGATIONS: {
@@ -121,7 +123,7 @@ export function reducer(
     case fromChartIncreation.EDIT_AGGREGATION: {
       return {
         ...state,
-        aggregationOnEdit: action.payload
+        aggregationOnEdit: { [action.id]: action.payload }
       }
     }
     case fromChartIncreation.EDIT_AGGREGATION_SUCCESS: {

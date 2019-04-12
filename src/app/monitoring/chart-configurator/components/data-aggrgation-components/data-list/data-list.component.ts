@@ -19,15 +19,10 @@ export class DataListComponent implements OnInit {
   @Input()
   aggregations$: Observable<Array<Aggregation>>;
 
-  /* indicates wether the aggregation editor is on or not 
-    if it's on it's initialized with the data-row id so the newly create aggregation can be assigned to a row
-    if not it must be undefined
-  */
-  aggregationEditorOnFor: string;
 
   // Output Emitter is just a toggle for the Component above to render AggregationEditor
   @Output('aggregationEditor')
-  public openAggregationEditor$ = new EventEmitter<Boolean>();
+  public openAggregationEditor$ = new EventEmitter<string>();
 
   entries: { [id: string]: AggregationRequestObject };
 
@@ -43,7 +38,7 @@ export class DataListComponent implements OnInit {
 
   ngOnInit() {
     this.store.select(getChartIncreationAggregations).subscribe(
-      k => this.entries = k
+      k => this.entries = { ...k }
     )
   }
 
@@ -61,8 +56,14 @@ export class DataListComponent implements OnInit {
           aggregation,
           authScope
         } as AggregationRequestObject;
-        this.store.dispatch(new SetChartAggregations(aggregationRq, id));
+        if (Object.keys(aggregation).length > 0) {
+          this.store.dispatch(new SetChartAggregations(aggregationRq, id));
+        }
       });
+  }
+
+  setAggregationEditor(id: string) {
+    this.openAggregationEditor$.emit(id);
   }
   delete(id: string) {
     this.store.dispatch(new DeleteChartAggregations(id));

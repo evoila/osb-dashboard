@@ -1,6 +1,6 @@
 .data-item {
     display: grid;
-    grid-template-columns: 80% 20%;
+    grid-template-columns: 100% 0%;
     grid-template-areas: "data-area control-area";
     grid-column-gap: 1em;
 }

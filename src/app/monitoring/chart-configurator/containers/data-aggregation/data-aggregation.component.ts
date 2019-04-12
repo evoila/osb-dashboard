@@ -1,5 +1,5 @@
 // TODO: Optimize imports
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { AggregationState } from '../../store/reducers/aggregation.reducer';
 import { Store } from '@ngrx/store';
 import { tap, take, filter, debounceTime } from 'rxjs/operators';
@@ -47,9 +47,14 @@ import {
   styleUrls: ['./data-aggregation.component.scss']
 })
 export class DataAggregationComponent implements OnInit {
+  // This Output is to hide the Buttons when in aggregation editor
+  @Output()
+  onEdit = new EventEmitter<Boolean>();
+
   public chartType: string;
   public aggregations$: Observable<Array<Aggregation>>;
-  public aggregationEditorPresent = false;
+  public aggregationEditorPresent: string;
+  // represents the id of the datafield that the editor was toggled from  
   public aggregationState: { [id: string]: string } = {};
   public aggregationOnEdit?: Aggregation;
 
@@ -70,10 +75,14 @@ export class DataAggregationComponent implements OnInit {
   ) {
     this.authParamService = authParamService.construct(storeBindings);
   }
+  private setAggregationEditorPresent(value: string) {
+    this.aggregationEditorPresent = value;
+    this.onEdit.emit(!!value);
+  }
 
   public getAggregationResult(aggregation: any) {
     if (aggregation === 'cancel') {
-      this.aggregationEditorPresent = false;
+      this.setAggregationEditorPresent('');
       this.chartStore.dispatch(new EditAggregationCanceled());
       return;
     }
@@ -105,8 +114,8 @@ export class DataAggregationComponent implements OnInit {
           authScope
         } as AggregationRequestObject;
 
-        this.chartStore.dispatch(new SetChartAggregations(aggregationRqo));
-        this.aggregationEditorPresent = false;
+        this.chartStore.dispatch(new SetChartAggregations(aggregationRqo, this.aggregationEditorPresent));
+        this.setAggregationEditorPresent('');
       });
   }
 
@@ -142,9 +151,12 @@ export class DataAggregationComponent implements OnInit {
     this.chartStore
       .select(getAggregationOnEdit)
       .subscribe(chaAgs => {
-        this.aggregationOnEdit = chaAgs;
+
         if (chaAgs) {
-          this.aggregationEditorPresent = true;
+          this.aggregationOnEdit = Object.values(chaAgs)[0];
+          this.setAggregationEditorPresent(Object.keys(chaAgs)[0]);
+        } else {
+          this.aggregationOnEdit = undefined;
         }
       });
 

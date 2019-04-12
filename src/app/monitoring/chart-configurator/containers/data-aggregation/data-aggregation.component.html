@@ -5,10 +5,12 @@
     <div class="row sb-textfields">
 
     </div>
-
-    <sb-aggregation-list class="sb-main" [aggregations]="aggregations$"
-      (aggregationEditor)="aggregationEditorPresent = !aggregationEditorPresent"> </sb-aggregation-list>
-    <sb-scope-aggregations class="sb-right"></sb-scope-aggregations>
+    <sb-data-list class="sb-main" [aggregations$]="aggregations$"
+      (aggregationEditor)="setAggregationEditorPresent($event)">
+    </sb-data-list>
+    <!-- <sb-aggregation-list class="sb-main" [aggregations]="aggregations$"
+      (aggregationEditor)="setAggregationEditorPresent(true)"> </sb-aggregation-list> -->
+    <!-- <sb-scope-aggregations class="sb-right"></sb-scope-aggregations> -->
   </ng-template>
   <ng-template #aggregationEditorActive>
     <sb-create-aggregation (result)="getAggregationResult($event)" [aggregationOnEdit]="aggregationOnEdit"

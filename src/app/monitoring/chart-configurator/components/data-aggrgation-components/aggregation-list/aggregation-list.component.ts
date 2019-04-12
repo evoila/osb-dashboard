@@ -14,9 +14,11 @@ import {
   MAT_BOTTOM_SHEET_DATA
 } from '@angular/material';
 import { Store } from '@ngrx/store';
-import { DeleteAggregation, EditAggregation } from 'app/monitoring/chart-configurator/store';
+import { DeleteAggregation, EditAggregation, SetChartAggregations, getChartIncreationAggregationState } from 'app/monitoring/chart-configurator/store';
 import { AggregationState } from '../../../store/reducers/aggregation.reducer';
 import { AggregationRequestObject } from 'app/monitoring/chart-configurator/model/aggregationRequestObject';
+import { ChartIncreationState } from 'app/monitoring/chart-configurator/store/reducers/chart.increation.reducer';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'sb-aggregation-list',
@@ -36,6 +38,8 @@ export class AggregationListComponent implements OnInit {
 
   showDetails: boolean = false;
 
+  // Result holds information if Aggregation + Scope dows generate any data
+  private aggregationRequestResults: string;
 
   // Output Emitter is just a toggle for the Component above to render AggregationEditor
   @Output('aggregationEditor')
@@ -46,27 +50,41 @@ export class AggregationListComponent implements OnInit {
 
 
   public aggregations: Array<Aggregation>;
-  constructor(private bottomSheet: MatBottomSheet) { }
+  constructor(
+    private bottomSheet: MatBottomSheet,
+    private store: Store<ChartIncreationState>
+  ) { }
 
   ngOnInit() {
     this.aggregations$.subscribe(
       (aggregations: Array<Aggregation>) => (this.aggregations = aggregations)
     );
-  }
-  public showAggregation(aggregation: Aggregation): void {
-    this.bottomSheet.open(BottomSheetAggregationSheet, { data: aggregation });
+    this.store
+      .select(getChartIncreationAggregationState).pipe(filter(k => !!k[this.componentId]))
+      .subscribe(aggs => (this.aggregationRequestResults = aggs[this.componentId]));
   }
   public aggregationEmpty() {
     return Object.keys(this.aggregationRequestObject).length == 0;
   }
   openAggregationEditor(): void {
-    this.openAggregationEditor$.next(true);
+    this.openAggregationEditor$.emit(true);
   }
   pick(aggregation: Aggregation) {
     this.picked.emit(aggregation);
   }
+  updateId(scope: any) {
+    const { appId } = scope;
+    let { name } = this.aggregationRequestObject.aggregation;
+    name = `${name} - ${scope.appName}`;
+    this.aggregationRequestObject = { ...this.aggregationRequestObject, appId, name };
+    this.store.dispatch(new SetChartAggregations(this.aggregationRequestObject, this.componentId))
+  }
+  delete() {
+    this.showDetails = !this.showDetails;
+    this.store.dispatch(new DeleteAggregation(this.aggregationRequestObject.aggregation));
+  }
   edit() {
-    /* this.store.dispatch(new EditAggregation(this.data)); */
+    this.store.dispatch(new EditAggregation(this.aggregationRequestObject.aggregation, this.componentId));
   }
 }
 
@@ -86,8 +104,5 @@ export class BottomSheetAggregationSheet {
   }
   dismiss(): void {
     this.bottomSheetRef.dismiss();
-  }
-  edit() {
-    this.store.dispatch(new EditAggregation(this.data));
   }
 }
