@@ -1,0 +1,16 @@
+<div class="container">
+  <div class="head">
+    <sb-appid class="appId" [selected]="appId" (app)="setScope($event)"></sb-appid>
+    <button (click)="showFilter = !showFilter" class="btn btn-light"><i class="fas fa-calendar-alt"></i></button>
+    <sb-log-filter (update)="updateFilters($event)"></sb-log-filter>
+    <button (click)="fireSearchRequest()" class="btn btn-primary">Search</button>
+    <sb-timefilter *ngIf="showFilter" class="time-filter" [toDate]="toDate" [fromDate]="fromDate"
+      (fromDateChange)="setFromDate($event)" (toDateChange)="setToDate($event)"></sb-timefilter>
+  </div>
+  <main>
+    <sb-log-list *ngIf="scope && hits$" [searchResponse]="hits$">
+      <div *ngIf="hits" class="loadmore" (click)="appendLogs()"> Load More Logs... {{hits.hits.length}}/{{hits.total}}
+      </div>
+    </sb-log-list>
+  </main>
+</div>

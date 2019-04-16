@@ -1,0 +1,14 @@
+.container {
+    margin-top: 1%; 
+}
+.nav-container {
+    display: grid;
+    grid-template-columns: 13% 20% 11%;
+    grid-gap: 1em;
+}
+label {
+    align-self: end;
+}
+main{
+    margin-top: 1%;
+}
