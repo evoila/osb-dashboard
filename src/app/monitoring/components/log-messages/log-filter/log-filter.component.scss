@@ -5,15 +5,19 @@
     margin-bottom: 1em;
 }
 .btn{
-    background-color:#3fb0ac;
-    color: white;
+    //background-color:#3fb0ac;
+    //color: white;
 }
 .btn:hover{
-    background-color: #b3c2bf;
+    //background-color: #b3c2bf;
 }
 label{
-    color: white;
     text-align: center;
     padding-right: 1em;
     width: 8em;
+}
+.modal-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr; 
+    grid-gap: 1%;
 }

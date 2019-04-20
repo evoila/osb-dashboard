@@ -1,4 +1,4 @@
-import { throwError as observableThrowError, Observable } from 'rxjs';
+import { throwError as observableThrowError, Observable, of } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { EndpointService } from './endpoint.service';
 import { HttpClient } from '@angular/common/http';
@@ -18,7 +18,7 @@ export class SearchService {
     private endpoint: EndpointService,
     private http: HttpClient,
     private notification: NotificationService
-  ) {}
+  ) { }
   public getSearchResults(
     request: SearchRequest
   ): Observable<SearchResponse | Response> {
@@ -39,7 +39,14 @@ export class SearchService {
     request: Array<AggregationRequestObject>
   ): Observable<Array<SearchResponse>> {
     const endpoint = this.endpoint.getUri() + '/aggregation';
-    return this.http.post<Array<SearchResponse>>(endpoint, request);
+    return this.http.post<Array<SearchResponse>>(endpoint, request).pipe(
+      catchError((error: any) => {
+        console.log(error);
+        this.notification.addSelfClosing(
+          new Notification(NotificationType.Error, 'aggregation failed!')
+        );
+        return observableThrowError(error);
+      }));
   }
 
   public getMappings(): Observable<Map<string, Array<string> | Response>> {
@@ -48,7 +55,7 @@ export class SearchService {
       map((dataAsObject: any) => {
         const datas = new Map<string, any>(Object.entries(dataAsObject));
         const returnVal = new Map<string, Array<string>>();
-        Object.keys(datas).forEach((data, index) => {
+        datas.forEach((data, index) => {
           Object.keys(data['mappings']['_doc']['properties']).forEach(item => {
             const property = data['mappings']['_doc']['properties'][item];
             returnVal[index] = returnVal[index]

@@ -1,6 +1,7 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, AfterViewInit, AfterViewChecked } from '@angular/core';
 import { Hits } from 'app/monitoring/model/search-response';
 import { Observable } from 'rxjs';
+import { CodegenComponentFactoryResolver } from '@angular/core/src/linker/component_factory_resolver';
 
 
 @Component({
@@ -18,23 +19,28 @@ export class LogListComponent implements OnInit {
   hits: Hits;
   @Output('more')
   public more = new EventEmitter<[number, boolean]>();
-  editorOptions = {readOnly: true, language: 'javascript'};
-  code = '';
+  editorOptions = { readOnly: true, language: 'javascript' };
+  code: string;
   logs: Array<String> = [];
-  constructor() { }
+  constructor() {
+
+  }
 
   ngOnInit() {
     if (this.searchResponse) {
       this.searchResponse.subscribe(data => {
         this.code = '';
-        this.hits = data;
-        data.hits.forEach(hit => {
+        this.hits = { ...data };
+        this.hits.hits.forEach(hit => {
           this.code += hit._source.logMessage + '\n';
         });
       })
     } else {
       //TODO: Error-Message
     }
+  }
+  debug() {
+    console.log(this.code);
   }
   public loadMore() {
     this.more.emit([100, true]);

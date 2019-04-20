@@ -4,6 +4,9 @@ import { MonitoringComponent } from './monitoring.component';
 
 import { PanelComponent } from './containers/panel/panel.component';
 import { LogPanelComponent } from './containers/log-panel/log-panel.component';
+import { LiveLogsComponent } from './containers/live-logs/live-logs.component';
+import { ExploreLogsComponent } from './containers/explore-logs/explore-logs.component';
+import { SearchLogsComponent } from './containers/search-logs/search-logs.component';
 
 export const ROUTES: Routes = [
   {
@@ -27,6 +30,18 @@ export const ROUTES: Routes = [
       {
         path: 'panel/:id',
         component: PanelComponent
+      },
+      {
+        path: 'stream',
+        component: LiveLogsComponent
+      },
+      {
+        path: 'explore',
+        component: ExploreLogsComponent
+      },
+      {
+        path: 'search',
+        component: SearchLogsComponent
       }
     ]
   }
@@ -36,4 +51,4 @@ export const ROUTES: Routes = [
   imports: [RouterModule.forChild(ROUTES)],
   exports: [RouterModule]
 })
-export class MonitoringRoutingModule {}
+export class MonitoringRoutingModule { }

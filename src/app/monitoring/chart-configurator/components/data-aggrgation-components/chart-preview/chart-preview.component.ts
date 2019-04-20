@@ -5,9 +5,9 @@ import {
   getChartIncreationAggregationResponse,
   getReadyForRequestAggregationsArray
 } from '../../../store/selectors/chart.increation.selector';
-import { filter, map, switchMap } from 'rxjs/operators';
+import { filter, map, switchMap, catchError } from 'rxjs/operators';
 import { AggregationRequestObject } from '../../../model/aggregationRequestObject';
-import { Observable } from 'rxjs';
+import { Observable, of, throwError as observableThrowError, throwError } from 'rxjs';
 import { SearchResponse } from '../../../../model/search-response';
 import { ChartingService } from '../../../../services/charting.service';
 import { Chart } from '../../../../model/chart';
@@ -67,9 +67,11 @@ export class ChartPreviewComponent implements OnInit {
             filter(m => !!m && m.length > 0),
             map(m => {
               return [{ aggregation: k, response: m[0] }];
-            })
+            }),
+            catchError(err => of([]))
           )
-        })
+        }),
+        catchError(err => throwError(err))
       )
       this.transformDataForChart();
     }

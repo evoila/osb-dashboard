@@ -1,0 +1,24 @@
+.container {
+    margin-top: 1%;
+    min-height: 60vh;
+}
+.head {
+    display: grid;
+    grid-template-columns: [first]  15% [calendar] 10% [search] 60% [third] 10% [third-end];
+    grid-gap: 1%;
+    
+}
+
+.appId{
+    justify-self: end;
+    align-self: start;
+}
+button { 
+    height: 2.4em;
+    align-self: start;
+}
+.time-filter {
+    grid-column-start: first;
+    grid-column-end: third-end;
+    justify-self: start;
+}

@@ -17,7 +17,7 @@ ul {
 }
 .container {
     display: grid;
-    grid-template-columns: auto auto auto;
+    grid-template-columns: auto auto 1fr 1fr auto;
     grid-template-areas: 
     'form-left form form-right scope form-buttons'
     'details details details details details';

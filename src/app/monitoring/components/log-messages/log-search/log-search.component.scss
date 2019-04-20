@@ -2,6 +2,12 @@
     margin-top: 3em;
     width: 100%;
 }
+.resultView {
+    height: 80vh;
+    overflow: scroll;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+}
 .resultView table {
     display: inline-block;
     width:100%;
@@ -12,23 +18,9 @@
     margin-bottom: 1em;
 
 }
-.pagination-left, .pagination-right{
-    text-align: center;
-    margin-bottom: 1em;
-    width: 18%;
-    display: inline-block;
-}
-.pagination-left {
-    text-align:left;
-}
-.pagination-right {
-    text-align: right;
-    float: right;
-}
-.pagination-info {
-    width: 15%;
-    display: inline-block;
-    margin: 0 18% 0 18%;
+.disabled {
+    pointer-events:none; //This makes it not clickable
+    opacity:0.6;         //This grays it out to look disabled
 }
 .key {
     display: inline-block;
@@ -37,6 +29,10 @@
     font-style: italic;
     width: 20%;
     float: left;
+}
+nav {
+    margin: auto;
+    width: fit-content;
 }
 .value {
     color: #aa863a;

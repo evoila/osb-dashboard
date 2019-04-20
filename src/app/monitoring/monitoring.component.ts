@@ -7,6 +7,7 @@ import { Store } from '@ngrx/store';
 import { LoadPanels } from './shared/store/actions/panel.action';
 import { getAllPanels } from './shared/store/selectors/panel.selector';
 import { map, take, filter } from 'rxjs/operators';
+import { LoadBindings } from './shared/store/actions/binding.action';
 
 @Component({
   selector: 'sb-monitoring',
@@ -32,8 +33,16 @@ export class MonitoringComponent implements OnInit {
       isCollapsible: false,
       links: [
         {
-          name: 'logs',
-          href: 'logs'
+          name: 'explore',
+          href: 'explore'
+        },
+        {
+          name: 'stream',
+          href: 'stream'
+        },
+        {
+          name: 'search',
+          href: 'search'
         }
       ]
     },
@@ -49,9 +58,11 @@ export class MonitoringComponent implements OnInit {
     }
   ];
 
-  constructor(private store: Store<PanelState>, private router: Router) {}
+  constructor(private store: Store<PanelState>, private router: Router) { }
 
   ngOnInit() {
+    // nearly every container uses the bindings in some way or the other so we load them right away
+    this.store.dispatch(new LoadBindings);
     this.store.dispatch(new LoadPanels());
     this.loadPanels();
   }

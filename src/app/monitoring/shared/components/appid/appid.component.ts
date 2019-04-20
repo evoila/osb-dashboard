@@ -3,6 +3,9 @@ import { BindingService } from '../../services/binding.service';
 import { ServiceBinding } from '../../../model/service-binding';
 import { NotificationType } from 'app/core';
 import { Observable } from 'rxjs/internal/Observable';
+import { BindingsState } from '../../store/reducers/binding.reducer';
+import { Store } from '@ngrx/store';
+import { getAllBindingsEntities } from '../../store/selectors/bindings.selector';
 import {
   NotificationService,
   Notification
@@ -31,10 +34,11 @@ export class AppidComponent implements OnInit {
   choosen: number;
   constructor(
     public bindingService: BindingService,
-    private notification: NotificationService
-  ) {}
+    private notification: NotificationService,
+    private store: Store<BindingsState>
+  ) { }
   ngOnInit() {
-    this.serviceBindings$ = this.bindingService.getBindings();
+    this.serviceBindings$ = this.store.select(getAllBindingsEntities);
     this.serviceBindings$.subscribe((data: Array<ServiceBinding>) => {
       if (data.length === 0) {
         this.notification.addSelfClosing(

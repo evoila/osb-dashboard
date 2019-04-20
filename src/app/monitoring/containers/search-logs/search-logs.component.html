@@ -1,3 +1,17 @@
-<p>
-  search-logs works!
-</p>
+<div class="container">
+  <div class="head">
+    <sb-appid class="appId" [selected]="appId" (app)="setScope($event)" id="appid"></sb-appid>
+    <button (click)="showFilter = !showFilter" class="btn btn-light"><i class="fas fa-calendar-alt"></i></button>
+    <div>
+      <input type="text" class="form-control" [(ngModel)]="query" id="search">
+      <small for="search" class="form-text text-muted"> Search Request: MUST be a Lucene Query</small>
+    </div>
+    <button (click)="search()" class="btn btn-primary" [disabled]="!(scope && query)">Search</button>
+    <sb-timefilter *ngIf="showFilter" class="time-filter" [toDate]="toDate" [fromDate]="fromDate"
+      (fromDateChange)="setFromDate($event)" (toDateChange)="setToDate($event)"></sb-timefilter>
+  </div>
+  <main>
+    <sb-log-search *ngIf="scope && query" [pagination]="page" [steps]="size" [hits]="hits$" (more)="flick($event)">
+    </sb-log-search>
+  </main>
+</div>

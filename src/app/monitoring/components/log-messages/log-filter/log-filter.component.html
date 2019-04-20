@@ -1,11 +1,11 @@
 <div class="input-group">
   <div class="input-group-prepend">
-      <span *ngFor="let filter of filters" (click)="delete(filter)" class="btn btn-danger">{{filter[0]}}:{{filter[1]}}</span>
+    <span *ngFor="let filter of filters" (click)="delete(filter)"
+      class="btn btn-danger">{{filter[0]}}:{{filter[1]}}</span>
   </div>
-  <label for="form-">Add Filter</label>
-  <input type="text" name="filter" class="form-control" aria-label="Amount (to the nearest dollar)">
+  <input type="text" name="filter" class="form-control" readonly>
   <div class="input-group-append">
-    <span class="btn btn-outline-secondary" (click)="addFilter(addModal)">Add Filter</span>
+    <span class="btn btn-outline-secondary btn-light" (click)="addFilter(addModal)">Add Filter</span>
   </div>
 </div>
 
@@ -18,12 +18,16 @@
     </button>
   </div>
   <div class="modal-body">
-    <label for="topic">Select Topic</label>
-    <select class="form-control" [(ngModel)]="topic" id="topic">
-      <option *ngFor="let aTopic of topics">{{aTopic}}</option>
-    </select>
-    <label for="value">Select Topic</label>
-    <input [(ngModel)]="value" type="text" id="value" name="value" required>
+    <div>
+      <label for="topicsel">Select Topic</label>
+      <select class="form-control" [(ngModel)]="topic" id="topicsel">
+        <option *ngFor="let aTopic of topics">{{aTopic}}</option>
+      </select>
+    </div>
+    <div>
+      <label for="valuetxt">Value</label>
+      <input class="form-control" [(ngModel)]="value" type="text" id="valuetxt" name="value" required>
+    </div>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn " (click)="save()">Save</button>
