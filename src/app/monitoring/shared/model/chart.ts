@@ -8,4 +8,5 @@ export class Chart {
   type: string;
   option: ChartOptionsEntity;
   aggregations: Array<AggregationRequestObject>;
+  encodedImage: string;
 }

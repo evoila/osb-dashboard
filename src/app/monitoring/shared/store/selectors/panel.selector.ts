@@ -2,6 +2,7 @@ import { createSelector } from '@ngrx/store';
 import { getSharedModuleState, SharedModuleState } from '../reducers/index';
 import { getPanels } from '../reducers/panel.reducer';
 import { PanelVm } from '../../model/panel.vm';
+import { Panel } from '../../model/panel';
 
 export const getPanelState = createSelector(
   getSharedModuleState,
@@ -15,6 +16,12 @@ export const getAllPanels = createSelector(
   getPanels
 );
 
+export const getPanelById = createSelector(
+  getAllPanels,
+  (panels: Array<Panel>, id: string) => {
+    return panels.filter(k => k.id == id)[0];
+  }
+);
 export const getPanelViewModelById = createSelector(
   getAllPanels,
   (panels, id: string) => {

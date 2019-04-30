@@ -10,7 +10,7 @@ export const SAVE_PANEL_SUCCESS = '[Shared Module] Save Panel Succes';
 export const SAVE_PANEL_FAILED = '[Shared Module] Save Panel Failed';
 
 export const UPDATE_PANEL = '[Shared Module] Update Panel';
-export const DELETE_PANEL = '[Shared Module] Update Panel';
+export const DELETE_PANEL = '[Shared Module] Delete Panel';
 
 export class LoadPanels implements Action {
   readonly type = LOAD_PANELS;

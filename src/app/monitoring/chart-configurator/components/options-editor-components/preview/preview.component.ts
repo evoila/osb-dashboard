@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as fromStore from '../../../store';
 import { ChartOptionsEntity } from '../../../model/chart-options-entity';
@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./preview.component.scss']
 })
 export class PreviewComponent implements OnInit {
+  
   private chartEmitter: any;
   public chart$: Observable<any>;
   public options: ChartOptionsEntity;

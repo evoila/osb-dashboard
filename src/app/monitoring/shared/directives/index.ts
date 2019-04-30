@@ -1,2 +1,3 @@
 import { ChartDirective } from './chart.directive';
-export const directives = [ChartDirective];
+import { SpinnerDirective } from './spinner.directive';
+export const directives = [ChartDirective, SpinnerDirective];

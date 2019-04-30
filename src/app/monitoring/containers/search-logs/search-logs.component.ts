@@ -5,7 +5,7 @@ import { ServiceBinding } from '../../model/service-binding';
 import { Hits, SearchResponse } from '../../model/search-response';
 import * as moment from 'moment/moment';
 import { Subject, Observable } from 'rxjs';
-import { tap, filter } from 'rxjs/operators';
+import { tap, filter, catchError } from 'rxjs/operators';
 import { NotificationService, NotificationType, Notification } from '../../../core/notification.service';
 
 @Component({
@@ -23,6 +23,11 @@ export class SearchLogsComponent implements OnInit {
   fromDate: any = moment().subtract(30, "days").unix();
   toDate: any = moment().unix();
   hits: Hits;
+
+  // Boolean Subject that emits wether there is an ongoing request
+  loadingSubject = new Subject<boolean>();
+  loading = new Observable<boolean>(k => this.loadingSubject.subscribe(k));
+
 
   /* Timestamp of the last request Important for pagination cause search results might 
   grow continuesly which would lead to broken indeces
@@ -62,9 +67,14 @@ export class SearchLogsComponent implements OnInit {
 
   private tooglePageNavigation() {
     const request = this.buildSearchRequest(this.page * this.size);
-    this.fireRequest(request).subscribe((data: SearchResponse) => {
+    this.loadingSubject.next(true);
+    this.fireRequest(request).pipe(catchError(err => {
+      this.loadingSubject.next(false);
+      return Observable.throw(err);
+    })).subscribe((data: SearchResponse) => {
       this.hits = data.hits
       this.hitsSubject.next(this.hits);
+      this.loadingSubject.next(false);
     });
   }
 

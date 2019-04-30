@@ -2,7 +2,7 @@ import { createSelector } from '@ngrx/store';
 import { getChartState, ChartState } from '../reducers/index';
 import * as fromChartIncreation from '../reducers/chart.increation.reducer';
 import { AggregationRequestObject } from '../../model/aggregationRequestObject';
-import { ChartIncreationState } from '../reducers/chart.increation.reducer';
+import { ChartIncreationState, getAggregationResponse } from '../reducers/chart.increation.reducer';
 import { Chart } from '../../../shared/model/chart';
 import { CfAuthScope } from '../../model/cfAuthScope';
 import { ChartOptionsEntity } from '../../model/chart-options-entity';
@@ -31,27 +31,25 @@ export const getChartIncreationAggregations = createSelector(
 
 export const getReadyForRequestAggregations = createSelector(
   getAllChartIncreationState,
-  chartIncreationState => {
-    const chartIncreation = chartIncreationState.aggregations;
-    return Object.keys(chartIncreation)
-      .filter(id => chartIncreation[id].appId)
-      .reduce<{ [id: string]: AggregationRequestObject }>(
-        (prev: any, curr, i, arr) => {
-          if (i == 0) {
-            return { [curr]: chartIncreation[curr] } as {
-              [id: string]: AggregationRequestObject;
-            };
-          } else {
-            return { ...prev, [curr]: chartIncreation[curr] } as {
-              [id: string]: AggregationRequestObject;
-            };
-          }
-        },
-        {}
-      );
-  }
+  fromChartIncreation.getChartsReadyForRequest
 );
 
+export const getAggregationAndResponse = createSelector(
+  getAllChartIncreationState,
+  (state: ChartIncreationState) => {
+    const aggregation = Array.from(
+      new Map<string, any>(Object.entries(fromChartIncreation.getChartsReadyForRequest(state)))[Symbol.iterator]()
+    ).map(k => k[1]);
+    const { aggregationResponse } = state;
+    if (aggregation.length == aggregationResponse.length) {
+      const returnVal = aggregation.map((k, i) => {
+        return { aggregation: k as AggregationRequestObject, response: aggregationResponse[i] }
+      })
+      return returnVal;
+    }
+    return [];
+  }
+);
 export const getReadyForRequestAggregationsArray = createSelector(
   getReadyForRequestAggregations,
   readyObjects => {
@@ -109,7 +107,8 @@ export const buildChart = createSelector(
         type: state.type,
         option: state.option,
         aggregations,
-        authScope: {} as CfAuthScope
+        authScope: {} as CfAuthScope,
+        encodedImage: state.encodedImage
       } as Chart;
     }
     return {};

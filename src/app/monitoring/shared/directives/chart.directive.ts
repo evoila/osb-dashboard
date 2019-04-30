@@ -63,6 +63,9 @@ export class ChartDirective implements OnInit, OnChanges, OnDestroy {
   @Output() public chartClick: EventEmitter<any> = new EventEmitter<any>();
   @Output() public chartHover: EventEmitter<any> = new EventEmitter<any>();
 
+  // fires every time the chart rendered
+  @Output() public chartRendered: EventEmitter<boolean> = new EventEmitter<boolean>();
+
   private backgroundColors: Array<string> = [
     'rgba(151,187,205,1)',
     'rgba(220,220,220,1)',
@@ -325,6 +328,7 @@ export class ChartDirective implements OnInit, OnChanges, OnDestroy {
 
     if (isComplete && !this.initFlag) {
       this.chart = this.getChartBuilder(this.ctx, data, this.options);
+      this.chartRendered.emit(true);
     } else if (isComplete && this.initFlag) {
       this.chart.config.data = data;
       this.chart.update();

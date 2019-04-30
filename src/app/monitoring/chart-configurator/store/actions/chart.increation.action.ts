@@ -31,6 +31,8 @@ export const FLUSH_STATE = '[Increation] Flush State';
 
 export const SET_CHART_NAME = '[Increation] Set Appname';
 
+export const SET_CHART_IMAGE = '[Increation] Set ChartImage';
+
 
 export class SetChartType implements Action {
   readonly type = SET_CHART_TYPE;
@@ -102,6 +104,10 @@ export class EditAggregationSuccess implements Action {
 export class EditAggregationCanceled implements Action {
   readonly type = EDIT_AGGREGATION_CANCELED;
 }
+export class SetChartImage implements Action {
+  readonly type = SET_CHART_IMAGE;
+  constructor(public encodedImage: string) { }
+}
 
 export type FireTypes =
   | FireAggregations
@@ -121,4 +127,5 @@ export type ChartIncreationAction =
   | FireTypes
   | EditAggregation
   | EditAggregationSuccess
-  | EditAggregationCanceled;
+  | EditAggregationCanceled
+  | SetChartImage;

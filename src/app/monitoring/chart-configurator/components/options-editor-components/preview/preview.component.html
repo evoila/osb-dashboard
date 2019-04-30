@@ -4,6 +4,6 @@
     you.
   </h2>
   <div *ngIf="chart$">
-   <div> <canvas sbSimpleChart [observableInput]="chart$"></canvas> </div>
+    <div> <canvas #canvas sbSimpleChart [observableInput]="chart$"></canvas> </div>
   </div>
 </div>

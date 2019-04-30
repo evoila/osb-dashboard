@@ -66,9 +66,9 @@ export function reducer(
       const newCharts = charts.map(k => k.chart).reduce<{ [id: string]: Chart }>(
         (prev, curr, index, arr) => {
           if (index == 0) {
-            return { [curr.id!!]: curr }
+            return { [uuid.v4()]: curr }
           }
-          return { ...prev, [curr.id!!]: curr }
+          return { ...prev, [uuid.v4()]: curr }
         }, {}
       )
       return {

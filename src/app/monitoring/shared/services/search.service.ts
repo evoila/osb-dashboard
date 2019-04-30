@@ -28,7 +28,7 @@ export class SearchService {
       catchError((error: any) => {
         console.log(error);
         this.notification.addSelfClosing(
-          new Notification(NotificationType.Error, error.error.message)
+          new Notification(NotificationType.Error, error.message)
         );
         return observableThrowError(error.error.message);
       })

@@ -22,6 +22,9 @@ export class ExploreLogsComponent implements OnInit {
   scope: ServiceBinding;
   hits: Hits;
 
+  loadingSubject = new Subject<boolean>();
+  loading$ = new Observable<boolean>(k => this.loadingSubject.subscribe(k));
+
   showFilter = false;
 
   hitsSubject = new Subject<Hits>();
@@ -52,6 +55,7 @@ export class ExploreLogsComponent implements OnInit {
     this.lastRequestTimeStamp = moment().unix();
     this.requestPointer = 0;
     this.fireRequest(request).subscribe((data: SearchResponse) => {
+      this.loadingSubject.next(false);
       this.hits = data.hits
       this.hitsSubject.next(this.hits);
     });
@@ -62,6 +66,7 @@ export class ExploreLogsComponent implements OnInit {
     this.requestPointer += 300;
     const request = this.buildSearchRequest(this.requestPointer);
     this.fireRequest(request).subscribe((data: SearchResponse) => {
+      this.loadingSubject.next(false);
       this.hits.hits = [...this.hits.hits, ...data.hits.hits];
       this.hitsSubject.next(this.hits);
     })
@@ -102,9 +107,11 @@ export class ExploreLogsComponent implements OnInit {
     return searchRequest;
   }
   private fireRequest(request: SearchRequest): Observable<SearchResponse> {
+    this.loadingSubject.next(true);
     return this.searchService.getSearchResults(request).pipe(
       tap((data: SearchResponse) => {
         if (!data.timed_out && data.hits.total !== 0) {
+          this.loadingSubject.next(false);
           this.notification.addSelfClosing(
             new Notification(
               NotificationType.Info,

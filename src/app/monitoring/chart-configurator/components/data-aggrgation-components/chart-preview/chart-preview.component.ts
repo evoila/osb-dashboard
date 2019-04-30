@@ -1,11 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { ChartIncreationState } from '../../../store/reducers/chart.increation.reducer';
 import { Store } from '@ngrx/store';
-import {
-  getChartIncreationAggregationResponse,
-  getReadyForRequestAggregationsArray
-} from '../../../store/selectors/chart.increation.selector';
-import { filter, map, switchMap, catchError } from 'rxjs/operators';
+import { filter, map, switchMap, catchError, take, debounceTime, distinctUntilChanged, delay } from 'rxjs/operators';
 import { AggregationRequestObject } from '../../../model/aggregationRequestObject';
 import { Observable, of, throwError as observableThrowError, throwError } from 'rxjs';
 import { SearchResponse } from '../../../../model/search-response';
@@ -16,15 +12,29 @@ import {
   getChartIncreationType
 } from '../../../store/selectors/chart.increation.selector';
 import { SearchService } from 'app/monitoring/shared/services/search.service';
+import { SetChartImage } from 'app/monitoring/chart-configurator/store';
+import { getAggregationAndResponse } from '../../../store/selectors/chart.increation.selector';
+import { formGroupNameProvider } from '@angular/forms/src/directives/reactive_directives/form_group_name';
 
 @Component({
   selector: 'sb-chart-preview',
   templateUrl: './chart-preview.component.html',
   styleUrls: ['./chart-preview.component.scss']
 })
-export class ChartPreviewComponent implements OnInit {
+export class ChartPreviewComponent implements OnInit, AfterViewInit {
+  @ViewChild('canvas')
+  set canvas(content: ElementRef) {
+    if (content) {
+      this.myCanvas = content;
+    }
+  }
+  myCanvas: ElementRef;
+  public context: CanvasRenderingContext2D;
+
+
   @Input('aggregation')
   aggregation$: Observable<AggregationRequestObject>;
+
   private queryAndResponse$: Observable<
     Array<{
       aggregation: AggregationRequestObject;
@@ -38,25 +48,28 @@ export class ChartPreviewComponent implements OnInit {
     private searchService: SearchService
   ) { }
 
+  ngAfterViewInit() {
+    this.context = (<HTMLCanvasElement>this.myCanvas.nativeElement).getContext('2d')!!;
+  }
   ngOnInit() {
     // get the Aggregation Matching the Result cause the Charting Utils Service
     // needs it to be displayed correctly
     if (!this.aggregation$) {
-      this.queryAndResponse$ = this.store
-        .select(getChartIncreationAggregationResponse)
-        .pipe(
-          filter(k => k && k.length > 0),
-          switchMap(response => {
-            return this.store.select(getReadyForRequestAggregationsArray).pipe(
-              filter(aggregations => aggregations.length == response.length),
-              map(aggregations => {
-                return aggregations.map((agg, i) => {
-                  return { aggregation: agg, response: response[i] };
-                });
-              })
-            );
-          })
-        );
+      this.queryAndResponse$ = this.store.select(getAggregationAndResponse).pipe(
+        distinctUntilChanged((prev, curr) => {
+          let returnVal = true;
+          if (prev.length == 0 || prev.length != curr.length) {
+            return false;
+          }
+          prev.forEach((k, i) => {
+            if (k.aggregation.appId !== curr[i].aggregation.appId || k.aggregation.aggregation.id !== curr[i].aggregation.aggregation.id) {
+              returnVal = false;
+              return false;
+            }
+          });
+          return returnVal;
+        }),
+        filter(k => !!k.length));
       this.transformDataForChart();
     } else {
       // the input is used in the Aggregation Preview. Since store Handling of the aggregation doesn't
@@ -77,12 +90,23 @@ export class ChartPreviewComponent implements OnInit {
     }
   }
 
+  renderImage() {
+    if (!this.aggregation$) {
+      //little delay needed to have canvas fully rendered
+      of(true).pipe(delay(700)).subscribe(k => {
+        const dataUrlImg = this.myCanvas.nativeElement.toDataURL("image/png", 0.1);
+        this.store.dispatch(new SetChartImage(dataUrlImg));
+      })
+    }
+  }
+
   private transformDataForChart() {
     // TODO: minimize code to be one store call and handle more complex calls in Selectors as
     // they have access to all Objects
     this.store
       .select(getChartIncreationOptions)
       .pipe(
+        debounceTime(1000),
         switchMap(options => {
           return this.queryAndResponse$.pipe(
             map(queRey =>
@@ -131,6 +155,7 @@ export class ChartPreviewComponent implements OnInit {
         }),
         switchMap(chart => {
           return this.store.select(getChartIncreationType).pipe(
+            debounceTime(1000),
             map(type => {
               return { ...chart, type };
             })

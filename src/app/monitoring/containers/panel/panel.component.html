@@ -1,21 +1,20 @@
-<div class="section-content">
+<div class="grid-container" #container>
   <sb-timefilter [toDate]="toDateView" [fromDate]="fromDateView" (fromDateChange)="setFromDate($event)"
-    (toDateChange)="setToDate($event)">
+    (toDateChange)="setToDate($event)" class="timefilter">
   </sb-timefilter>
 
-
-  <div *ngIf="panel">
-    <div class="row" *ngFor="let chartRequests of panel.charts" style="margin: 50px 0 0 0">
-      <div class="col-{{chartRequest.size}} charts" *ngFor="let chartRequest of chartRequests">
-        <div *ngIf="chartRequest.onEdit">
-          <!--TODO Invoke Chart Editor from here later on-->
-        </div>
+  <div #chartcontainer *ngIf="panel" cdkDropList id="list-two" [cdkDropListConnectedTo]="['list-one']"
+    (cdkDropListDropped)="drop($event)">
+    <ng-container *ngFor="let chartRequests of panel.charts">
+      <ng-container class="charts" *ngFor="let chartRequest of chartRequests">
         <sb-chart [chart]="chartRequest" [daterange]="timeRange$"></sb-chart>
-      </div>
-    </div>
+      </ng-container>
+    </ng-container>
   </div>
-  <div class="input-group edit-buttons">
-    <button type="button" *ngIf="changed" (click)="saveChanges()" class="btn btn-info">Save Changes made on the
-      Panel</button>
-    <button type="button" (click)="editPanel()" class="btn btn-info">Edit Panel Settings</button>
-  </div>
+
+  <aside *ngIf="!sidePanelHidden">
+    <sb-add-chart-sidepanel></sb-add-chart-sidepanel>
+  </aside>
+  <span class="draghandle" (click)="toogleSidePanel()">
+    <span>
+      <</span> </span> </div>

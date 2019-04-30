@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" sbSpinner [condition$]="loading">
   <div class="head">
     <sb-appid class="appId" [selected]="appId" (app)="setScope($event)" id="appid"></sb-appid>
     <button (click)="showFilter = !showFilter" class="btn btn-light"><i class="fas fa-calendar-alt"></i></button>

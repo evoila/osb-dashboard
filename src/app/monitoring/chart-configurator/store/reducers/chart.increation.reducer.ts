@@ -19,6 +19,7 @@ export interface ChartIncreationState {
   aggregationsState: { [id: string]: string };
   chartName: string;
   aggregationOnEdit?: { [id: string]: Aggregation };
+  encodedImage?: string;
 }
 
 export const initialState: ChartIncreationState = {
@@ -40,7 +41,7 @@ export const initialState: ChartIncreationState = {
   aggregationLoaded: false,
   aggregationsState: {},
   chartName: '',
-
+  encodedImage: ''
 };
 
 export function reducer(
@@ -138,6 +139,12 @@ export function reducer(
         aggregationOnEdit: undefined
       }
     }
+    case fromChartIncreation.SET_CHART_IMAGE: {
+      return {
+        ...state,
+        encodedImage: action.encodedImage
+      }
+    }
   }
   return state;
 }
@@ -168,3 +175,24 @@ export const getAggregationsFiredLoading = (state: ChartIncreationState) =>
 
 export const getAggregationsState = (state: ChartIncreationState) =>
   state.aggregationsState;
+
+
+export const getChartsReadyForRequest = (chartIncreationState: ChartIncreationState) => {
+  const chartIncreation = chartIncreationState.aggregations;
+  return Object.keys(chartIncreation)
+    .filter(id => chartIncreation[id].appId)
+    .reduce<{ [id: string]: AggregationRequestObject }>(
+      (prev: any, curr, i, arr) => {
+        if (i == 0) {
+          return { [curr]: chartIncreation[curr] } as {
+            [id: string]: AggregationRequestObject;
+          };
+        } else {
+          return { ...prev, [curr]: chartIncreation[curr] } as {
+            [id: string]: AggregationRequestObject;
+          };
+        }
+      },
+      {}
+    );
+}

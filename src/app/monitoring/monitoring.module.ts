@@ -42,6 +42,7 @@ import { containerComponents } from './containers';
 import { LiveLogsComponent } from './containers/live-logs/live-logs.component';
 import { ExploreLogsComponent } from './containers/explore-logs/explore-logs.component';
 import { SearchLogsComponent } from './containers/search-logs/search-logs.component';
+import { AddChartSidepanelComponent } from './containers/add-chart-sidepanel/add-chart-sidepanel.component';
 // Store Freeze restricts every mutation on the Store itself. But we want this to be a dev only thing
 
 export const metaReducers: MetaReducer<any>[] = !environment.production
@@ -94,8 +95,7 @@ export const bootstrapDeps = [
     ChartComponent,
     ...components,
     ...containerComponents,
-    ExploreLogsComponent,
-    SearchLogsComponent
+    AddChartSidepanelComponent,
   ],
   providers: [
     ...services,

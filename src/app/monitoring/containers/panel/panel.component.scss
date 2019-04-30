@@ -5,15 +5,58 @@
     margin: 0.1em 0.3em 0 0.3em;
 }
 .edit-buttons {
+    grid-area: buttons;
     display: inline-block;
     margin-top: 0.3em;
     padding-right: 1.8em;
     text-align: right;
 }
-.section-content {
-    margin-top: 2.5em;
+.grid-container {
+
+    display: grid;
+    grid-template-areas: 
+    'timefilter timefilter'
+    'charts editor'
+    '. buttons'; 
+    grid-template-columns: 1fr 0px;
 }
 .charts {
     margin: 0.2em 0 0.2em 0;
+    max-width: 86vw;
+}
+.chart-container {
+    grid-area: charts;
+    max-width: 86vw;
+}
 
+aside {
+    grid-area: editor;
+    width: 16vw;
+    height: 100%;
+}
+.timefilter {
+    grid-area: timefilter;
+    max-width: 86vw;
+}
+.draghandle {
+    display: inline-block;
+    font-size: 15pt;
+    position: fixed;
+    bottom: 50vh;
+    text-align: center;
+    right: 0;
+    height: 60px;
+    width: 27px;
+    color: white;
+    background-color: #111;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    cursor: pointer;
+}
+.draghandle > span {
+    display: inline-block;
+    width:fit-content;
+    height: fit-content;
+    margin: auto;
+    margin-top: 0.65em;
 }
