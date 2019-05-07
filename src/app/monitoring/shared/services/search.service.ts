@@ -10,6 +10,8 @@ import { NotificationType, NotificationService, Notification } from 'app/core';
 import { catchError, map } from 'rxjs/operators';
 import { Field } from 'app/monitoring/aggregation-editor/model/field';
 import { AggregationRequestObject } from 'app/monitoring/chart-configurator/model/aggregationRequestObject';
+import { Panel } from '../model/panel';
+import { QueryAndResponse } from '../model/query-and-response';
 
 @Injectable()
 export class SearchService {
@@ -34,6 +36,24 @@ export class SearchService {
       })
     );
   }
+
+  public firePanelAggregation(
+    request: Panel,
+    range?: { [id: string]: any }
+  ): Observable<{ [id: string]: Array<QueryAndResponse> }> {
+    const endpoint = this.endpoint.getUri() + '/panel/aggregation';
+    const requestObject = { first: request, second: range };
+    return this.http.post<{ [id: string]: Array<QueryAndResponse> }>(endpoint, requestObject).pipe(
+      catchError((error: any) => {
+        console.log(error);
+        this.notification.addSelfClosing(
+          new Notification(NotificationType.Error, 'aggregation failed!')
+        );
+        return observableThrowError(error);
+      })
+    );
+  }
+
 
   public fireAggregation(
     request: Array<AggregationRequestObject>

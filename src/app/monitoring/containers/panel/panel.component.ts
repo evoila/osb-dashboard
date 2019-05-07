@@ -22,6 +22,7 @@ import { PanelIncreationState } from 'app/monitoring/panel-configurator/store/re
 import { Chart } from '../../shared/model/chart';
 import { buildFunctionalPanel } from '../../panel-configurator/store/selectors/panel-increation.selector';
 import { UpdatePanel, LoadPanels, SavePanelSuccess } from '../../shared/store/actions/panel.action';
+import { FirePanelAggregationRequest } from '../../shared/store/actions/chart.actions';
 
 
 @Component({
@@ -39,7 +40,7 @@ export class PanelComponent implements OnInit {
 
   sidePanelHidden = true;
 
-  public panel: PanelVm;
+  public panel: Panel;
   public menu: { [k: string]: any } = {};
   public toDateView: any = moment().unix();
   public fromDateView: any = moment().subtract(1, "days").unix();
@@ -62,36 +63,32 @@ export class PanelComponent implements OnInit {
   }
   ngOnInit() {
     this.registerRouterEvents();
+
+
+    this.timeRange$.subscribe(k => {
+      if (this.panel) {
+        this.store.dispatch(new FirePanelAggregationRequest(this.panel, k));
+      }
+    })
+
     this.setDateRange();
   }
   toogleSidePanel() {
     if (this.sidePanelHidden) {
       this.sidePanelHidden = false;
-      // toogle this rerender. Without this rerender works unreliable. Couldn't fix it any other way
-      this.renderer.setStyle(this.chartcontainer.nativeElement, 'display', 'none');
       this.renderer.setStyle(this.container.nativeElement, 'grid-template-columns', '7fr 1fr');
-      of(true).pipe(delay(100)).subscribe(k => {
-        this.renderer.setStyle(this.chartcontainer.nativeElement, 'display', 'block');
-      })
-
     } else {
       this.sidePanelHidden = true;
       this.renderer.setStyle(this.container.nativeElement, 'grid-template-columns', '1fr 0px');
     }
   }
   editPanel() {
-    const charts = this.panel.charts.reduce(
-      (prev: ChartInPanel[], curr: ChartInPanel[], index, arr) => {
-        if (index == 0) {
-          return curr;
-        } else {
-          return [...prev, ...curr];
-        }
-      }
-    )
-    const newPanel = { ...this.panel, charts } as Panel;
-    this.store.dispatch(new SetStateForUpdate(newPanel));
+    this.store.dispatch(new SetStateForUpdate(this.panel));
     this.router.navigate(['/monitoring/panelconfigurator']);
+  }
+
+  trackByFn(index, item) {
+    return item.id;
   }
 
   drop(event: CdkDragDrop<Chart>) {
@@ -110,11 +107,11 @@ export class PanelComponent implements OnInit {
               filter(k => k.panelsLoaded),
               take(1),
               switchMap(k => {
-                return this.store.pipe(select(getPanelViewModelById, this.panel.id));
+                return this.store.pipe(select(getPanelById, this.panel.id));
               })
             )
           })
-        ).subscribe((k: PanelVm) => this.panel = k);
+        ).subscribe((k: Panel) => this.panel = k);
       });
     });
 
@@ -125,7 +122,7 @@ export class PanelComponent implements OnInit {
       .pipe(
         switchMap((params: Params) =>
           this.store
-            .pipe(select(getPanelViewModelById, params['id']))
+            .pipe(select(getPanelById, params['id']))
             .pipe(take(1))
         ),
         filter(
@@ -138,7 +135,7 @@ export class PanelComponent implements OnInit {
           return { ...k };
         })
       )
-      .subscribe(k => {
+      .subscribe((k: Panel) => {
         this.panel = { ...k };
       });
   }

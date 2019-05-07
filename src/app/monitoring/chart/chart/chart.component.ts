@@ -6,7 +6,7 @@ import { ChartInPanel } from '../../model/chart-in-panel';
 import { ChartModelState } from '../../shared/store/reducers/chart.reducer';
 import { Store, select } from '@ngrx/store';
 import { FireAggregationRequest } from '../../shared/store/actions/chart.actions';
-import { filter, map } from 'rxjs/operators';
+import { filter, map, distinctUntilChanged } from 'rxjs/operators';
 import { getAggregationResponseAndLoadedById } from '../../shared/store/selectors/chart.selector';
 import { AggregationRequestObject } from '../../chart-configurator/model/aggregationRequestObject';
 import { Observable } from 'rxjs';
@@ -31,23 +31,7 @@ export class ChartComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
-    this.store.dispatch(
-      new FireAggregationRequest(this.chart.chart.aggregations, this.chart.id!!)
-    );
-
     this.updateEsChart();
-
-    this.range$.subscribe(range => {
-      if (range) {
-        const updatedArray = this.chart.chart.aggregations.map(k => {
-          return { ...k, range: range };
-        });
-        this.store.dispatch(
-          new FireAggregationRequest(updatedArray, this.chart.id!!)
-        );
-        this.updateEsChart();
-      }
-    })
   }
 
   public ngOnDestroy() { }
@@ -58,6 +42,19 @@ export class ChartComponent implements OnInit, OnDestroy {
     this.store
       .pipe(select(getAggregationResponseAndLoadedById, this.chart.id))
       .pipe(
+        distinctUntilChanged((prev, curr) => {
+          const loaded = !!prev && !!curr && prev!!.loaded == curr!!.loaded && prev!!.loading == curr!!.loading;
+          let data = loaded && prev!!.results.length == curr!!.results.length;
+          if (data) {
+            prev!!.results.forEach((element, index) => {
+              if (!(element.id === curr!!.results[index].id)) {
+                data = false;
+                return false;
+              }
+            });
+          }
+          return data;
+        }),
         filter(k => k != undefined && Object.keys(k.results).length > 0),
         map(result => {
           return result!!.results.
@@ -65,8 +62,8 @@ export class ChartComponent implements OnInit, OnDestroy {
             .map(k => {
               return this.chartingService.unwrapForPlotBucket(
                 new ChartModel(),
-                k.query.aggregation.actualAggregation,
-                k.query.aggregation.name,
+                k.request.aggregation.actualAggregation,
+                k.request.aggregation.name,
                 k.response.aggregations
               );
             });

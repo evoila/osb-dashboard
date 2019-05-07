@@ -2,6 +2,7 @@ import * as fromChartActions from '../actions/chart.actions';
 import { Chart } from '../../model/chart';
 import { SearchResponse } from '../../../model/search-response';
 import { AggregationRequestObject } from '../../../chart-configurator/model/aggregationRequestObject';
+import { QueryAndResponse } from '../../model/query-and-response';
 
 export interface ChartModelState {
   charts: Array<Chart>;
@@ -10,10 +11,7 @@ export interface ChartModelState {
   chartSaved: boolean;
   chartSaveing: boolean;
   aggregationResponse: {
-    [id: string]: Array<{
-      response: SearchResponse;
-      query: AggregationRequestObject;
-    }>;
+    [id: string]: Array<QueryAndResponse>;
   };
   aggregationLoading: boolean;
   aggregationLoaded: boolean;
@@ -80,7 +78,14 @@ export function reducer(
     case fromChartActions.FIRE_AGGREGATION_REQUEST: {
       return {
         ...state,
-        aggregationLoading: false,
+        aggregationLoading: true,
+        aggregationLoaded: false
+      };
+    }
+    case fromChartActions.FIRE_PANEL_AGGREGATION_REQUEST: {
+      return {
+        ...state,
+        aggregationLoading: true,
         aggregationLoaded: false
       };
     }

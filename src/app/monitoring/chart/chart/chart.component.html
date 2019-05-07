@@ -1,21 +1,16 @@
 <div class="card">
   <div class="card-body">
-    <h5 *ngIf="chart" class="card-title">{{chart.chart.option.name}}</h5>
-    <div *ngIf="options">
-      <fa name="cog" (click)="edit()"></fa>
-      <fa name="refresh" (click)="update()"></fa>
-    </div>
-    <div class="row justify-content-center">
-      <div *ngIf="chartView && chartView.data" class="col-md-12" style="height: 600px; width: 100%">
+    <div>
+      <div *ngIf="chartView && chartView.data" style="height: 400px; max-width: 100%;">
         <canvas sb-chart-dir height="100" class="chart" [data]="chartView.data" [labelsArray]="chartView.labels"
           [seriesArray]="chartView.series" [type]="chartView.type" [options]="chartView.options"></canvas>
       </div>
-      <div class="col-md-12" style="height: 300px; width: 100%" *ngIf="!chartView">
+      <div style="height: 300px; width: 100%" *ngIf="!chartView">
         <div style="width: 10%; margin: 95px auto;">
           <span>Bitte warten...</span>
         </div>
       </div>
-      <div class="col-md-12" style="height: 300px; width: 100%; padding-top: 50px;"
+      <div style="height: 300px; width: 100%; padding-top: 50px;"
         *ngIf="chartView && (!chartView.data || !chartView.data.length)">
         <div style="width: 50%; margin: 95px auto;">
           <span>Keine Daten verfügbar</span>

@@ -3,13 +3,11 @@
     (toDateChange)="setToDate($event)" class="timefilter">
   </sb-timefilter>
 
-  <div #chartcontainer *ngIf="panel" cdkDropList id="list-two" [cdkDropListConnectedTo]="['list-one']"
-    (cdkDropListDropped)="drop($event)">
-    <ng-container *ngFor="let chartRequests of panel.charts">
-      <ng-container class="charts" *ngFor="let chartRequest of chartRequests">
-        <sb-chart [chart]="chartRequest" [daterange]="timeRange$"></sb-chart>
-      </ng-container>
-    </ng-container>
+  <div #chartcontainer class="chartcontainer" *ngIf="panel" cdkDropList id="list-two"
+    [cdkDropListConnectedTo]="['list-one']" (cdkDropListDropped)="drop($event)">
+    <sb-chart
+      [ngClass]="{'chart-size-12': chart.size > 6, 'chart-size-6': chart.size <= 6 && chart.size >= 4, 'chart-size-4': chart.size <= 4}"
+      *ngFor="let chart of panel.charts trackBy: trackByFn" [chart]="chart"></sb-chart>
   </div>
 
   <aside *ngIf="!sidePanelHidden">
