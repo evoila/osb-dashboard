@@ -6,22 +6,21 @@ import { EsTimerangeService } from 'app/monitoring/services/es-timerange.service
 
 import { ChartRequest } from 'app/monitoring/model/chart-request';
 
-import { filter, map, switchMap, take, delay } from 'rxjs/operators';
+import { filter, map, switchMap, take } from 'rxjs/operators';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import { PanelVm } from 'app/monitoring/shared/model/panel.vm';
+
 import { PanelState } from 'app/monitoring/shared/store/reducers/panel.reducer';
 import { Store, select } from '@ngrx/store';
-import { getPanelViewModelById, getPanelById, getPanelState } from '../../shared/store/selectors/panel.selector';
+import { getPanelById, getPanelState } from '../../shared/store/selectors/panel.selector';
 import { State } from 'app/monitoring/store';
 import { getParams } from '../../store/reducers/index';
-import { Observable, Subject, of } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Panel } from '../../shared/model/panel';
-import { ChartInPanel } from '../../model/chart-in-panel';
 import { SetStateForUpdate, AddChartToPanel, FlushState } from '../../panel-configurator/store/actions/panel-increation.action';
 import { PanelIncreationState } from 'app/monitoring/panel-configurator/store/reducers/panel-increation.reducer';
 import { Chart } from '../../shared/model/chart';
 import { buildFunctionalPanel } from '../../panel-configurator/store/selectors/panel-increation.selector';
-import { UpdatePanel, LoadPanels, SavePanelSuccess } from '../../shared/store/actions/panel.action';
+import { UpdatePanel, LoadPanels } from '../../shared/store/actions/panel.action';
 import { FirePanelAggregationRequest } from '../../shared/store/actions/chart.actions';
 
 
@@ -39,7 +38,7 @@ export class PanelComponent implements OnInit {
   chartcontainer: ElementRef;
 
   sidePanelHidden = true;
-
+  // some useless comment
   public panel: Panel;
   public menu: { [k: string]: any } = {};
   public toDateView: any = moment().unix();
