@@ -1,6 +1,7 @@
 import { createSelector } from '@ngrx/store';
 import { SharedModuleState, getSharedModuleState } from '../reducers/index';
 import * as fromChartReducer from '../reducers/chart.reducer';
+import { Chart as ChartModel } from '../../../model/chart';
 
 export const getChartModelState = createSelector(
   getSharedModuleState,
@@ -34,6 +35,7 @@ export const getAggregationResponseAndLoaded = createSelector(
   getChartModelState,
   fromChartReducer.getAggregationResponseAndLoaded
 );
+
 export const getAggregationResponseAndLoadedById = createSelector(
   getAggregationResponseAndLoaded,
   (state, id) => {

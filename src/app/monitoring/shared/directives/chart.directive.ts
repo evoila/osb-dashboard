@@ -15,6 +15,8 @@ import { DateFormatPipe } from '../../pipes/date-format.pipe';
 declare var Chart: any;
 import { Chart as ChartJS, Chart as ChartJs, ChartData } from 'chart.js';
 import * as moment from 'moment/moment';
+import { Observable, Subscription } from 'rxjs';
+import { UpdateType } from '../../chart/chart/chart.component';
 
 @Directive({
   // tslint:disable-next-line
@@ -32,22 +34,25 @@ export class ChartDirective implements OnInit, OnChanges, OnDestroy {
   public labels: Array<any> = [];
   public series: Array<any>;
 
+  private subscriptions: Subscription[] = [];
+  private convertDate = label => {
+    if (typeof label === 'string' && Number.isNaN(Number(label))) {
+      if (moment(label, 'DD.MM.YYYY hh:mm:ss').isValid()) {
+        return label;
+      } else {
+        return this.dateFormat.transformDateFormat(label);
+      }
+    } else {
+      return this.dateFormat.transform(label);
+    }
+  };
+
   @Input() set labelsArray(labelsArr: Array<any>) {
     if (!labelsArr || labelsArr.length === 0) {
       this.labels = [];
     } else {
       // Check wether Timestamps are already formated
-      this.labels = labelsArr.map(label => {
-        if (typeof label === 'string' && Number.isNaN(Number(label))) {
-          if (moment(label, 'DD.MM.YYYY hh:mm:ss').isValid()) {
-            return label;
-          } else {
-            return this.dateFormat.transformDateFormat(label);
-          }
-        } else {
-          return this.dateFormat.transform(label);
-        }
-      });
+      this.labels = labelsArr.map(this.convertDate);
     }
   }
 
@@ -59,6 +64,8 @@ export class ChartDirective implements OnInit, OnChanges, OnDestroy {
   @Input() public colours: Array<any> = [];
   @Input() options: any = { responsive: true };
   @Input() public type: string;
+
+  @Input() updateData$: Observable<UpdateType>;
 
   @Output() public chartClick: EventEmitter<any> = new EventEmitter<any>();
   @Output() public chartHover: EventEmitter<any> = new EventEmitter<any>();
@@ -137,6 +144,15 @@ export class ChartDirective implements OnInit, OnChanges, OnDestroy {
     this.ctx = this.element.nativeElement.getContext('2d');
     this.cvs = this.element.nativeElement;
     this.parent = this.element.nativeElement;
+
+    // Update Chart for faster performance
+    this.subscriptions[0] = this.updateData$.subscribe(freshData => {
+      freshData.labels = freshData.labels.map(this.convertDate);
+      this.chart.data.labels = freshData.labels;
+      this.chart.data.datasets.data = freshData.data;
+      this.chart.update();
+    });
+
     this.refresh();
   }
 
@@ -145,6 +161,7 @@ export class ChartDirective implements OnInit, OnChanges, OnDestroy {
       this.chart.destroy();
       this.chart = null;
     }
+    this.subscriptions.forEach(k => k.unsubscribe())
   }
 
   ngOnChanges(changes: SimpleChanges): any {

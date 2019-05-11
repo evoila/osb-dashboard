@@ -5,12 +5,11 @@ import { ChartingService } from '../../services/charting.service';
 import { ChartInPanel } from '../../model/chart-in-panel';
 import { ChartModelState } from '../../shared/store/reducers/chart.reducer';
 import { Store, select } from '@ngrx/store';
-import { FireAggregationRequest } from '../../shared/store/actions/chart.actions';
 import { filter, map, distinctUntilChanged } from 'rxjs/operators';
 import { getAggregationResponseAndLoadedById } from '../../shared/store/selectors/chart.selector';
-import { AggregationRequestObject } from '../../chart-configurator/model/aggregationRequestObject';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
+export type UpdateType = { labels: any[], data: any[], series: any[] };
 @Component({
   selector: 'sb-chart',
   templateUrl: './chart.component.html',
@@ -19,8 +18,10 @@ import { Observable } from 'rxjs';
 export class ChartComponent implements OnInit, OnDestroy {
   @Input('chart')
   chart: ChartInPanel;
-  @Input('daterange')
-  range$: Observable<{ [key: string]: any }>;
+
+
+  updateSubject = new Subject<UpdateType>();
+  updateData$: Observable<UpdateType> = new Observable(k => this.updateSubject.subscribe(k));
 
   chartView: ChartModel;
   options: boolean;
@@ -95,6 +96,13 @@ export class ChartComponent implements OnInit, OnDestroy {
           };
         })
       )
-      .subscribe(k => (this.chartView = k));
+      .subscribe(k => {
+        if (this.chartView) {
+          const { labels, data, series } = k;
+          this.updateSubject.next({ labels, data, series });
+        } else {
+          this.chartView = k;
+        }
+      });
   }
 }

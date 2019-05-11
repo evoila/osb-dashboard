@@ -15,16 +15,18 @@
     display: grid;
     grid-template-areas: 
     'timefilter timefilter'
-    'charts editor'
+    'mainview mainview'
     '. buttons'; 
     grid-template-columns: 1fr 0px;
+}
+#mainview {
+    grid-area: mainview;
 }
 .charts {
     margin: 0.2em 0 0.2em 0;
     max-width: 86vw;
 }
 .chartcontainer {
-    grid-area: charts;
     max-width: 86vw;
     display: flex;
     flex-direction: row; 
@@ -32,6 +34,10 @@
     justify-content: space-around;
 }
 
+.chartcontainer.active {
+    padding-right: 20vw;
+    width: 80vw;
+}
 %chart-shared {
     flex-shrink: 1;
 }
@@ -48,14 +54,19 @@
     flex-basis: 33%; 
 }
 aside {
-    grid-area: editor;
-    width: 16vw;
-    overflow: visible;
+    width: 21.2vw;
+    position: fixed;
+    top: 9em;
+    right: 0;
+    height: 100vh;
+    overflow: scroll;
+
 }
 aside > * {
 /*     position: sticky;
     top: 0; */
 }
+
 .timefilter {
     grid-area: timefilter;
     max-width: 86vw;
@@ -74,6 +85,9 @@ aside > * {
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
     cursor: pointer;
+}
+.draghandle.active {
+    right: 20vw;
 }
 .draghandle > span {
     display: inline-block;

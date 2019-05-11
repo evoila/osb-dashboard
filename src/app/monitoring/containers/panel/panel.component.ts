@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild, Renderer2 } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, Renderer2, OnDestroy, AfterViewInit, OnChanges } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import * as moment from 'moment/moment';
@@ -14,7 +14,7 @@ import { Store, select } from '@ngrx/store';
 import { getPanelById, getPanelState } from '../../shared/store/selectors/panel.selector';
 import { State } from 'app/monitoring/store';
 import { getParams } from '../../store/reducers/index';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, Subscription, timer } from 'rxjs';
 import { Panel } from '../../shared/model/panel';
 import { SetStateForUpdate, AddChartToPanel, FlushState } from '../../panel-configurator/store/actions/panel-increation.action';
 import { PanelIncreationState } from 'app/monitoring/panel-configurator/store/reducers/panel-increation.reducer';
@@ -29,7 +29,7 @@ import { FirePanelAggregationRequest } from '../../shared/store/actions/chart.ac
   templateUrl: './panel.component.html',
   styleUrls: ['./panel.component.scss']
 })
-export class PanelComponent implements OnInit {
+export class PanelComponent implements OnInit, OnDestroy {
 
   @ViewChild('container')
   container: ElementRef;
@@ -38,7 +38,7 @@ export class PanelComponent implements OnInit {
   chartcontainer: ElementRef;
 
   sidePanelHidden = true;
-  // some useless comment
+
   public panel: Panel;
   public menu: { [k: string]: any } = {};
   public toDateView: any = moment().unix();
@@ -48,6 +48,12 @@ export class PanelComponent implements OnInit {
   private timeRangeEmitter$: Subject<any> = new Subject();
   public timeRange$: Observable<{ [key: string]: any }> = new Observable(k => this.timeRangeEmitter$.subscribe(k));
   edit: boolean;
+
+  // handles all subscriptions to unsubscribe on destroy
+  private subscriptions: Subscription[] = [];
+  // just an Object that is to save a subscription till its pushed to the array
+  private subscription: Subscription;
+
   constructor(
     private timeRangeService: EsTimerangeService,
     private router: Router,
@@ -62,16 +68,30 @@ export class PanelComponent implements OnInit {
   }
   ngOnInit() {
     this.registerRouterEvents();
-
-
-    this.timeRange$.subscribe(k => {
+    this.subscription = this.timeRange$.subscribe(k => {
       if (this.panel) {
         this.store.dispatch(new FirePanelAggregationRequest(this.panel, k));
       }
-    })
+    });
+    this.subscriptions.push(this.subscription)
+
+    /*     //Autorefresh every 10 Seconds
+        this.subscription = timer(10000, 10000).subscribe(i => {
+          const now = moment().unix();
+          const diff = this.toDateView - now;
+          this.fromDateView = moment.unix(this.fromDateView + diff).unix();
+          this.toDateView = now;
+          this.setDateRange();
+        })
+        this.subscriptions.push(this.subscription); */
 
     this.setDateRange();
   }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach(k => k.unsubscribe());
+  }
+
   toogleSidePanel() {
     if (this.sidePanelHidden) {
       this.sidePanelHidden = false;
@@ -113,16 +133,14 @@ export class PanelComponent implements OnInit {
         ).subscribe((k: Panel) => this.panel = k);
       });
     });
-
   }
   registerRouterEvents() {
-    this.routerStore
+    this.subscription = this.routerStore
       .select(getParams)
       .pipe(
         switchMap((params: Params) =>
           this.store
             .pipe(select(getPanelById, params['id']))
-            .pipe(take(1))
         ),
         filter(
           (k: any) =>
@@ -136,7 +154,9 @@ export class PanelComponent implements OnInit {
       )
       .subscribe((k: Panel) => {
         this.panel = { ...k };
+        this.setDateRange();
       });
+    this.subscriptions.push(this.subscription);
   }
 
   setFromDate(date: any) {

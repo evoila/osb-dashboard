@@ -2,17 +2,18 @@
   <sb-timefilter [toDate]="toDateView" [fromDate]="fromDateView" (fromDateChange)="setFromDate($event)"
     (toDateChange)="setToDate($event)" class="timefilter">
   </sb-timefilter>
+  <div id="mainview">
+    <div #chartcontainer [ngClass]="{'active': !sidePanelHidden, 'chartcontainer': true}" *ngIf="panel" cdkDropList
+      id="list-two" [cdkDropListConnectedTo]="['list-one']" (cdkDropListDropped)="drop($event)">
+      <sb-chart
+        [ngClass]="{'chart-size-12': chart.size > 6, 'chart-size-6': chart.size <= 6 && chart.size >= 4, 'chart-size-4': chart.size <= 4}"
+        *ngFor="let chart of panel.charts trackBy: trackByFn" [chart]="chart"></sb-chart>
+    </div>
 
-  <div #chartcontainer class="chartcontainer" *ngIf="panel" cdkDropList id="list-two"
-    [cdkDropListConnectedTo]="['list-one']" (cdkDropListDropped)="drop($event)">
-    <sb-chart
-      [ngClass]="{'chart-size-12': chart.size > 6, 'chart-size-6': chart.size <= 6 && chart.size >= 4, 'chart-size-4': chart.size <= 4}"
-      *ngFor="let chart of panel.charts trackBy: trackByFn" [chart]="chart"></sb-chart>
+    <aside [ngClass]="{'active': !sidePanelHidden}" *ngIf="!sidePanelHidden">
+      <sb-add-chart-sidepanel></sb-add-chart-sidepanel>
+    </aside>
   </div>
-
-  <aside *ngIf="!sidePanelHidden">
-    <sb-add-chart-sidepanel></sb-add-chart-sidepanel>
-  </aside>
-  <span class="draghandle" (click)="toogleSidePanel()">
+  <span [ngClass]="{'draghandle': true, 'active': !sidePanelHidden}" (click)="toogleSidePanel()">
     <span>
-      <</span> </span> </div>
+      < </span> </span> </div>

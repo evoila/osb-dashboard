@@ -3,7 +3,8 @@
     <div>
       <div *ngIf="chartView && chartView.data" style="height: 400px; max-width: 100%;">
         <canvas sb-chart-dir height="100" class="chart" [data]="chartView.data" [labelsArray]="chartView.labels"
-          [seriesArray]="chartView.series" [type]="chartView.type" [options]="chartView.options"></canvas>
+          [seriesArray]="chartView.series" [updateData$]="updateData$" [type]="chartView.type"
+          [options]="chartView.options"></canvas>
       </div>
       <div style="height: 300px; width: 100%" *ngIf="!chartView">
         <div style="width: 10%; margin: 95px auto;">

@@ -18,7 +18,7 @@ if (!injectedEnv) {
     },
     production: false,
     customEndpoints: [
-      { url: 'http://localhost:8080', identifier: 'log-metric-backend' },
+      { url: 'http://127.0.0.1:8080', identifier: 'log-metric-backend' },
       { url: 'http://localhost:8081', identifier: 'osb-backup-manager' }
     ],
     ui: {
