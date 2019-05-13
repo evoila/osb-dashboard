@@ -26,6 +26,7 @@ export class ChartPreviewComponent implements OnInit, AfterViewInit {
   set canvas(content: ElementRef) {
     if (content) {
       this.myCanvas = content;
+      this.context = (<HTMLCanvasElement>this.myCanvas.nativeElement).getContext('2d')!!;
     }
   }
   myCanvas: ElementRef;
@@ -49,7 +50,6 @@ export class ChartPreviewComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngAfterViewInit() {
-    this.context = (<HTMLCanvasElement>this.myCanvas.nativeElement).getContext('2d')!!;
   }
   ngOnInit() {
     // get the Aggregation Matching the Result cause the Charting Utils Service

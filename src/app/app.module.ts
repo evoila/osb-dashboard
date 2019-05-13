@@ -31,7 +31,6 @@ import { SharedModule } from './shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthenticationInterceptor } from './core/services/authentication.interceptor';
-import { CustomDatepickerI18n, I18n } from './datepicker-i18n';
 
 export function buildBuildTargetService(): BuildTargetService {
   return new BuildTargetService(buildTarget);

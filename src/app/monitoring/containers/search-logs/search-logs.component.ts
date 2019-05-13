@@ -14,6 +14,7 @@ import { NotificationService, NotificationType, Notification } from '../../../co
   styleUrls: ['./search-logs.component.scss']
 })
 export class SearchLogsComponent implements OnInit {
+  showFilter = false;
   scope: ServiceBinding;
   query: string;
 

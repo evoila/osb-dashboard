@@ -39,7 +39,7 @@ export class AggregationListComponent implements OnInit {
   showDetails: boolean = false;
 
   // Result holds information if Aggregation + Scope dows generate any data
-  private aggregationRequestResults: string;
+  aggregationRequestResults: string;
 
   // Output Emitter is just a toggle for the Component above to render AggregationEditor
   @Output('aggregationEditor')
@@ -102,6 +102,7 @@ export class BottomSheetAggregationSheet {
   delete() {
     this.store.dispatch(new DeleteAggregation(this.data));
   }
+  edit() { }
   dismiss(): void {
     this.bottomSheetRef.dismiss();
   }

@@ -145,13 +145,15 @@ export class ChartDirective implements OnInit, OnChanges, OnDestroy {
     this.cvs = this.element.nativeElement;
     this.parent = this.element.nativeElement;
 
-    // Update Chart for faster performance
-    this.subscriptions[0] = this.updateData$.subscribe(freshData => {
-      freshData.labels = freshData.labels.map(this.convertDate);
-      this.chart.data.labels = freshData.labels;
-      this.chart.data.datasets.data = freshData.data;
-      this.chart.update();
-    });
+    // Update Chart for faster performance.
+    if (this.updateData$) {
+      this.subscriptions[0] = this.updateData$.subscribe(freshData => {
+        freshData.labels = freshData.labels.map(this.convertDate);
+        this.chart.data.labels = freshData.labels;
+        this.chart.data.datasets.data = freshData.data;
+        this.chart.update();
+      });
+    }
 
     this.refresh();
   }
