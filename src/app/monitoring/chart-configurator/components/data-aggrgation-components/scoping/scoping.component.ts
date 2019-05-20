@@ -20,7 +20,7 @@ export class ScopingComponent implements OnInit {
   @Output('aggRequObj')
   aggReqEmitter = new EventEmitter<AggregationRequestObject>();
 
-  serviceBinding: ServiceBinding;
+  serviceBinding: ServiceBinding = {} as ServiceBinding;
   private name: string = 'preview';
 
   aggRequObj: AggregationRequestObject;
