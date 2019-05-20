@@ -8,7 +8,6 @@ import { getChartIncreationAggregations } from 'app/monitoring/chart-configurato
 import { Aggregation } from '../../../model/aggregation';
 import { CfAuthParameterService } from '../../../../shared/services/cfauth-param.service';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import { SetChartAggregations } from 'app/monitoring/chart-configurator/store';
 import { ServiceBinding } from '../../../../model/service-binding';
 import {
   UpdateChartAggregations,
@@ -16,7 +15,6 @@ import {
 } from '../../../store/actions/chart.increation.action';
 import { getChartIncreationAggregationState } from '../../../store/selectors/chart.increation.selector';
 import { BindingsState } from '../../../../shared/store/reducers/binding.reducer';
-import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'sb-scope-aggregations',

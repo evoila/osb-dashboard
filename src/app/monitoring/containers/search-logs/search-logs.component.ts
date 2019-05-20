@@ -15,7 +15,7 @@ import { NotificationService, NotificationType, Notification } from '../../../co
 })
 export class SearchLogsComponent implements OnInit {
   showFilter = false;
-  scope: ServiceBinding;
+  scope: ServiceBinding = {} as ServiceBinding;
   query: string;
 
   //number of elements per request

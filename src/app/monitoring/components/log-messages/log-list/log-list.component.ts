@@ -31,9 +31,11 @@ export class LogListComponent implements OnInit {
       this.searchResponse.subscribe(data => {
         this.code = '';
         this.hits = { ...data };
-        this.hits.hits.forEach(hit => {
-          this.code += hit._source.logMessage + '\n';
-        });
+        if (this.hits.hits) {
+          this.hits.hits.forEach(hit => {
+            this.code += hit._source.logMessage + '\n';
+          });
+        }
       })
     } else {
       //TODO: Error-Message
