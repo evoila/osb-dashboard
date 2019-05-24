@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { RouterModule } from '@angular/router';
 
 import {
   NgbDropdownModule, NgbCollapseModule, NgbTypeaheadModule,
@@ -27,6 +28,7 @@ export function buildBuildTargetService(): BuildTargetService {
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    RouterModule,
     FormsModule,
     HttpModule,
 
