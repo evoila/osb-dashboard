@@ -50,8 +50,7 @@ export const panelReadyForBuild = createSelector(
   state =>
     state.authScope.orgId &&
     state.authScope.spaceId &&
-    state.name &&
-    Object.keys(state.charts).length > 0
+    !!state.name
 );
 
 export const getPanelOnEdit = createSelector(

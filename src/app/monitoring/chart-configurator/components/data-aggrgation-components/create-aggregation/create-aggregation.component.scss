@@ -15,8 +15,17 @@
 #scopeWrapper {
     grid-area: scope;
 }
+.button-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+.button-row *{
+    margin: 0 0.2rem 0 0;
+}
 @media (min-width: 768px) {
     div.aggeWrapper{
         padding-left: 30px;
     }
 }
+

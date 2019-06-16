@@ -2,6 +2,10 @@
   <div class="card-body">
     <div>
       <div *ngIf="chartView && chartView.data" style="height: 400px; max-width: 100%;">
+        <aside>
+          <ng-content></ng-content>
+
+        </aside>
         <canvas sb-chart-dir height="100" class="chart" [data]="chartView.data" [labelsArray]="chartView.labels"
           [seriesArray]="chartView.series" [updateData$]="updateData$" [type]="chartView.type"
           [options]="chartView.options"></canvas>

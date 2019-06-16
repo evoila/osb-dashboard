@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import * as uuid from 'uuid';
+import { ulid } from 'ulid'
 import { Observable, Subject } from 'rxjs';
 import { Aggregation } from 'app/monitoring/chart-configurator/model/aggregation';
 import { AggregationRequestObject } from 'app/monitoring/chart-configurator/model/aggregationRequestObject';
@@ -43,7 +43,7 @@ export class DataListComponent implements OnInit {
   }
 
   add() {
-    this.store.dispatch(new SetChartAggregations({} as AggregationRequestObject, uuid.v4()));
+    this.store.dispatch(new SetChartAggregations({} as AggregationRequestObject, ulid()));
   }
 
   pushAggregation(aggregation: Aggregation, id: string) {

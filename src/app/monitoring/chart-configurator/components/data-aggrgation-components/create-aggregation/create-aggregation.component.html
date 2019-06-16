@@ -4,9 +4,16 @@
     </div>
     <div id="aggeWrapper">
         <aggregation-editor [aggregations]="aggregationOnEdit" [fields]="fields$" [type]="type"
-            (result)="getResults($event)" (preview)="triggerPreview($event)"></aggregation-editor>
+            [buttonInput]="buttonInput$" (result)="getResults($event)" (preview)="triggerPreview($event)">
+        </aggregation-editor>
     </div>
     <div id="scopeWrapper" *ngIf="aggregation$">
         <sb-scoping [aggregation]="aggregation$" (aggRequObj)="setRequestObject($event)"></sb-scoping>
     </div>
+
+</div>
+<div class="button-row">
+    <button type="button" class="btn btn-danger" (click)="buttonListener('cancel')">Cancel</button>
+    <button type="button" class="btn btn-primary" (click)="buttonListener('save')">Save</button>
+    <button type="button" class="btn btn-primary" (click)="buttonListener('test')">Test</button>
 </div>

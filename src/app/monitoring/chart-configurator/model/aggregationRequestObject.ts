@@ -7,4 +7,6 @@ export interface AggregationRequestObject {
   name?: string;
   size?: number;
   range?: { [id: string]: any };
+  // just useful in frontend has to be removed later on
+  index?: number;
 }

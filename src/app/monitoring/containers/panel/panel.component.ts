@@ -22,6 +22,7 @@ import { Chart } from '../../shared/model/chart';
 import { buildFunctionalPanel } from '../../panel-configurator/store/selectors/panel-increation.selector';
 import { UpdatePanel, LoadPanels } from '../../shared/store/actions/panel.action';
 import { FirePanelAggregationRequest } from '../../shared/store/actions/chart.actions';
+import { ChartInPanel } from '../../model/chart-in-panel';
 
 
 @Component({
@@ -53,7 +54,8 @@ export class PanelComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
   // just an Object that is to save a subscription till its pushed to the array
   private subscription: Subscription;
-
+  // redo object holds old references of the panel object
+  private redoObject = {} as Panel;
   constructor(
     private timeRangeService: EsTimerangeService,
     private router: Router,
@@ -144,13 +146,8 @@ export class PanelComponent implements OnInit, OnDestroy {
         ),
         filter(
           (k: any) =>
-            k != undefined &&
-            k != {} &&
-            (k.charts != null && k.charts != undefined)
-        ),
-        map(k => {
-          return { ...k };
-        })
+            k != undefined && k.charts
+        )
       )
       .subscribe((k: Panel) => {
         this.panel = { ...k };
@@ -167,10 +164,34 @@ export class PanelComponent implements OnInit, OnDestroy {
     this.toDateView = date;
     this.setDateRange();
   }
-  setStep(step: [string, string]) {
-    this.steps = step;
-    this.setDateRange();
+  deleteChart(chart: ChartInPanel) {
+    const charts = this.panel.charts.filter(chartIter => chartIter.id != chart.id);
+    this.panel = { ...this.panel, charts };
   }
+  switchCharts(event: CdkDragDrop<ChartInPanel>) {
+    const chart = this.panel.charts[event.previousIndex];
+    const oldChart = this.panel.charts[event.currentIndex];
+    const charts = [...this.panel.charts];
+    charts[event.currentIndex] = chart;
+    charts[event.previousIndex] = oldChart;
+    this.panel = { ...this.panel, charts };
+  }
+
+  toggleEditmode() {
+    this.redoObject = this.panel;
+    this.edit = true;
+  }
+  cancelEdit() {
+    this.panel = this.redoObject;
+    this.edit = false;
+    this.redoObject = {} as Panel;
+  }
+  saveEdit() {
+    this.edit = false;
+    this.panelStore.dispatch(new UpdatePanel(this.panel));
+    this.redoObject = {} as Panel;
+  }
+
   private setDateRange() {
     if (this.toDateView && this.fromDateView) {
       this.timeRangeEmitter$.next(this.timeRangeService.setTimeRange(
@@ -180,17 +201,4 @@ export class PanelComponent implements OnInit, OnDestroy {
     }
   }
 
-  private getDateAsString(date: any): string {
-    return moment(date).format('DD:MM:YY, hh:mm:ss a');
-  }
-
-  private onDrop(dragData: CdkDragDrop<String[]>, target: ChartRequest) { }
-
-  private editChart(chart: Chart, chartRequest: ChartRequest) {
-    chartRequest['onEdit'] = true;
-    chartRequest['choosenChart'] = chart;
-  }
-
-  private saveChartQuery(newRequest: ChartRequest, oldRequest: ChartRequest) { }
-  private saveChanges() { }
 }

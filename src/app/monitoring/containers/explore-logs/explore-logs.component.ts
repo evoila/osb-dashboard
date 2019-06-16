@@ -4,7 +4,7 @@ import { ServiceBinding } from '../../model/service-binding';
 import { SearchRequest, TimeRange } from '../../model/search-request';
 import { SearchService } from '../../shared/services/search.service';
 import { Hits, SearchResponse } from '../../model/search-response';
-import { ObservedValueOf, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
 import { tap, filter, timestamp } from 'rxjs/operators';
 import { NotificationService, Notification, NotificationType } from '../../../core/notification.service';

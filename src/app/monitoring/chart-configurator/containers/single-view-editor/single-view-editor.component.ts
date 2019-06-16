@@ -109,7 +109,7 @@ export class SingleViewEditorComponent implements OnInit {
       .pipe(
         take(2),
         map((k: any) => {
-          if (k === {} || !k.name || !k.type) {
+          if (!Object.keys(k).length || !k.name || !k.type) {
             alert(
               'Your chart is missing something. Better check the sate of your aggregations and remove the broke ones'
             );
@@ -117,7 +117,7 @@ export class SingleViewEditorComponent implements OnInit {
           return k;
         }),
         filter((k: any) => {
-          return k != {} && k.name && k.type;
+          return Object.keys(k).length > 0 && k.name && k.type;
         }),
         map(k => k as Chart),
         switchMap((chart: Chart) => {

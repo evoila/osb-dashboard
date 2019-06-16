@@ -1,6 +1,5 @@
 // TODO: Optimize imports
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { AggregationState } from '../../store/reducers/aggregation.reducer';
 import { Store } from '@ngrx/store';
 import { tap, take, filter, debounceTime } from 'rxjs/operators';
 import {
@@ -36,17 +35,18 @@ import { Router } from '@angular/router';
 import { BindingsState } from '../../../shared/store/reducers/binding.reducer';
 import { getChartSaved } from '../../../shared/store/selectors/chart.selector';
 import { EditAggregationSuccess, EditAggregationCanceled } from '../../store/actions/chart.increation.action';
+import { AggregationState } from '../../store/reducers/aggregation.reducer';
 import {
   FlushState,
   SetChartName
 } from '../../store/actions/chart.increation.action';
 
 @Component({
-  selector: 'sb-data-aggregation',
-  templateUrl: './data-aggregation.component.html',
-  styleUrls: ['./data-aggregation.component.scss']
+  selector: 'sb-add-data',
+  templateUrl: './add-data.component.html',
+  styleUrls: ['./add-data.component.scss']
 })
-export class DataAggregationComponent implements OnInit {
+export class AddDataComponent implements OnInit {
   // This Output is to hide the Buttons when in aggregation editor
   @Output()
   onEdit = new EventEmitter<Boolean>();

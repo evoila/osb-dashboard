@@ -5,15 +5,34 @@
   <div id="mainview">
     <div #chartcontainer [ngClass]="{'active': !sidePanelHidden, 'chartcontainer': true}" *ngIf="panel" cdkDropList
       id="list-two" [cdkDropListConnectedTo]="['list-one']" (cdkDropListDropped)="drop($event)">
-      <sb-chart
-        [ngClass]="{'chart-size-12': chart.size > 6, 'chart-size-6': chart.size <= 6 && chart.size >= 4, 'chart-size-4': chart.size <= 4}"
-        *ngFor="let chart of panel.charts trackBy: trackByFn" [chart]="chart"></sb-chart>
+      <section *ngIf="panel.charts.length == 0">
+        <h2>There are no Charts in your Panel :-(</h2>
+        <h6>But we can fix this for you. Just press the handle on the left and drag them onto this text</h6>
+      </section>
+      <div class="inner-chart-container" cdkDropList (cdkDropListDropped)="switchCharts($event)">
+        <sb-chart
+          [ngClass]="{'chart-onedit': edit, 'chart-size-12': chart.size > 6, 'chart-size-6': chart.size <= 6 && chart.size >= 4, 'chart-size-4': chart.size <= 4}"
+          *ngFor="let chart of panel.charts trackBy: trackByFn" [chart]="chart" cdkDrag [cdkDragDisabled]="!edit">
+          <i class="fas fa-trash" *ngIf="edit" (click)="deleteChart(chart)"></i>
+          <i class="fas fa-edit" (click)="toggleEditmode()"></i>
+        </sb-chart>
+      </div>
     </div>
 
-    <aside [ngClass]="{'active': !sidePanelHidden}" *ngIf="!sidePanelHidden">
+    <aside id="sidePanel" [ngClass]="{'active': !sidePanelHidden}" *ngIf="!sidePanelHidden">
       <sb-add-chart-sidepanel></sb-add-chart-sidepanel>
     </aside>
   </div>
   <span [ngClass]="{'draghandle': true, 'active': !sidePanelHidden}" (click)="toogleSidePanel()">
     <span>
-      < </span> </span> </div>
+      <i class="fas fa-chevron-left"></i>
+    </span>
+  </span>
+</div>
+<aside id="edit-controls" *ngIf="edit">
+  <div class="button-box">
+    <h6>Edit Controls</h6>
+    <button class="btn btn-danger" (click)="cancelEdit()">cancel</button>
+    <button class="btn btn-primary" (click)="saveEdit()">save</button>
+  </div>
+</aside>

@@ -4,3 +4,13 @@ canvas {
 canvas {
     max-width:100%;
 }
+:host ::ng-deep aside i {
+    cursor: pointer;
+}
+:host ::ng-deep aside i:hover{
+    /* background-color: rgb(201, 209, 219); */
+    font-size: 110%;
+}
+:host ::ng-deep aside * {
+    margin: 0 0.25rem 0 0;
+}

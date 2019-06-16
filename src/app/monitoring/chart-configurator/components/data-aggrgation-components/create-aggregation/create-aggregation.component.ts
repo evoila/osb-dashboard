@@ -39,6 +39,10 @@ export class CreateAggregationComponent implements OnInit {
     this.subject.subscribe(k);
   });
 
+  // observables to inject button events into aggregation-editor
+  buttonSubject = new Subject<string>();
+  buttonInput$ = new Observable<string>(k => this.buttonSubject.subscribe(k));
+
   private authParamService: CfAuthParameterService;
   constructor(
     private readonly searchService: SearchService,
@@ -63,6 +67,10 @@ export class CreateAggregationComponent implements OnInit {
     } else {
       this.aggregation$.pipe(take(1)).subscribe(k => this.store.dispatch(new CreateAggregationCancel(k.aggregation)));
     }
+  }
+
+  buttonListener(type: string) {
+    this.buttonSubject.next(type);
   }
 
   setRequestObject(aggRequObj: any) {

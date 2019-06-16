@@ -14,7 +14,7 @@ import {
 import { SearchService } from 'app/monitoring/shared/services/search.service';
 import { SetChartImage } from 'app/monitoring/chart-configurator/store';
 import { getAggregationAndResponse } from '../../../store/selectors/chart.increation.selector';
-import { formGroupNameProvider } from '@angular/forms/src/directives/reactive_directives/form_group_name';
+
 
 @Component({
   selector: 'sb-chart-preview',

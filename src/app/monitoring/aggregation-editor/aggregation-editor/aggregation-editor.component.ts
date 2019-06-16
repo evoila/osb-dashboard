@@ -40,6 +40,24 @@ export class AggregationEditorComponent implements OnInit, OnChanges {
       this.dataStructure = aggregations.index!!;
     }
   }
+  @Input('buttonInput') set buttomInput(input: Observable<string>) {
+    input.subscribe(k => {
+      switch (k) {
+        case 'cancel': {
+          this.cancel();
+          break;
+        }
+        case 'save': {
+          this.saveAggregation();
+          break;
+        }
+        case 'test': {
+          this.runAggregation();
+          break;
+        }
+      }
+    })
+  }
 
   public aggregationTypes: Array<any> = new Array<any>();
   public displayTypes: Array<any>;
@@ -135,7 +153,7 @@ export class AggregationEditorComponent implements OnInit, OnChanges {
     this.type = $event;
 
     if (this.type) {
-      if (this.data.fields.length !== 0) {
+      if (this.data && this.data.fields && this.data.fields.length !== 0) {
         this.getAggregationTypes();
       }
       this.displayType = this.chartingUtils

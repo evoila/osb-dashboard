@@ -1,28 +1,34 @@
-<div [ngClass]="{'error': aggregationRequestResults && aggregationRequestResults == 'error'}"
-  class="aggregationList container">
+<div class="aggregationList container">
 
   <div class="form-left">
-    <button type="button" class="btn btn-success" (click)="openAggregationEditor()"> new
-      Aggregation</button>
-    <span>or</span>
+    <span class="label">Aggregation:</span>
+    <div>
+      <button type="button" class="btn btn-success" (click)="openAggregationEditor()">
+        Create <i class="fas fa-file-alt"></i></button>
+      <span class="or">or</span>
+    </div>
+
+    <div class="aggSelector">
+      <!--<label for="aggregationList">pick aggregation</label>-->
+      <select id="aggregationList" class="form-control" [ngModel]="aggregationRequestObject.aggregation"
+        (ngModelChange)="pick($event)">
+        <option [ngValue]="{}">---- Choose Aggregation ----</option>
+        <option *ngFor="let aggregation of aggregations" [ngValue]="aggregation"> {{aggregation.name}} </option>
+      </select>
+      <span *ngIf="!aggregationEmpty()" class="btn" (click)="showDetails = !showDetails" style=""><i
+          class="fas fa-info-circle"></i></span>
+    </div>
   </div>
 
-  <div class="form">
-    <!--<label for="aggregationList">pick aggregation</label>-->
-    <select id="aggregationList" class="form-control" [ngModel]="aggregationRequestObject.aggregation"
-      (ngModelChange)="pick($event)">
-      <option [ngValue]="{}">---- Choose Aggregation ----</option>
-      <option *ngFor="let aggregation of aggregations" [ngValue]="aggregation"> {{aggregation.name}} </option>
-    </select>
+  <div class="scope" *ngIf="!aggregationEmpty()">
+    <span class="label">Application:</span>
+    <sb-appid [selected]="aggregationRequestObject.appId" (app)="updateId($event)">
+    </sb-appid>
   </div>
-  <div class="form-right">
-    <button *ngIf="!aggregationEmpty()" class="btn btn-primary" (click)="showDetails = !showDetails">
-      Aggregation Details
-    </button>
+
+  <div id="status">
+    <span class="{{aggregationRequestResults}}">{{aggregationRequestResults}}</span>
   </div>
-  <sb-appid *ngIf="!aggregationEmpty()" class="scope" [selected]="aggregationRequestObject.appId"
-    (app)="updateId($event)">
-  </sb-appid>
 
   <ng-content></ng-content>
   <div class="details" id="collapseExample"

@@ -2,7 +2,6 @@
 import { ChartOptionsEntity } from '../../model/chart-options-entity';
 import * as fromChartIncreation from '../actions/chart.increation.action';
 import { AggregationRequestObject } from '../../model/aggregationRequestObject';
-import * as uuid from 'uuid';
 import { SearchResponse } from '../../../model/search-response';
 import { Aggregation } from '../../model/aggregation';
 
@@ -65,8 +64,8 @@ export function reducer(
       };
     }
     case fromChartIncreation.SET_CHART_AGGREGATIONS: {
-      const aggregations = action.payload;
-      const { id } = action
+      let aggregations = action.payload;
+      const { id } = action;
       return {
         ...state,
         aggregations: { ...state.aggregations, [id]: aggregations }
