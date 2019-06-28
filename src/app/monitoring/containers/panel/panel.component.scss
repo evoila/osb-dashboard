@@ -113,10 +113,11 @@ aside > * {
     justify-content: flex-end;
     align-self: center; 
     z-index: 99;
-    padding-top: 10px
+    padding-top: 10px;
+    height: fit-content;
 
 }
-//Shaky View on edit for the charts
+/* //Shaky View on edit for the charts
  .chart-onedit:nth-child(even){
     animation: shake 0.5s;
     animation-iteration-count: infinite; 
@@ -131,7 +132,7 @@ aside > * {
 .chart-onedit:hover {
     animation: none
 }
-@keyframes shake {
+/* @keyframes shake {
     0% { transform: translate(1px, 1px);}
     10% { transform: translate(-1px, -2px);}
     20% { transform: translate(-3px, 0px);}
@@ -157,7 +158,8 @@ aside > * {
     80% { transform: translate(1px, 2px);}
     90% { transform: translate(-1px, -1px);}
     100% { transform: translate(1px, -2px);}
-}
-.cdk-drag-preview, .cdk-drag-dragging {
+} */
+/*.cdk-drag-preview, .cdk-drag-dragging {
     animation: none !important;
 }
+ */

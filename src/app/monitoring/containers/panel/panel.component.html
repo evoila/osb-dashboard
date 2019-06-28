@@ -3,18 +3,27 @@
     (toDateChange)="setToDate($event)" class="timefilter">
   </sb-timefilter>
   <div id="mainview">
-    <div #chartcontainer [ngClass]="{'active': !sidePanelHidden, 'chartcontainer': true}" *ngIf="panel" cdkDropList
-      id="list-two" [cdkDropListConnectedTo]="['list-one']" (cdkDropListDropped)="drop($event)">
+    <div #chartcontainer id="chartcontainer" [ngClass]="{'active': !sidePanelHidden, 'chartcontainer': true}"
+      *ngIf="panel" cdkDropList id="list-two" [cdkDropListConnectedTo]="['list-one']"
+      (cdkDropListDropped)="drop($event)">
       <section *ngIf="panel.charts.length == 0">
         <h2>There are no Charts in your Panel :-(</h2>
         <h6>But we can fix this for you. Just press the handle on the left and drag them onto this text</h6>
       </section>
       <div class="inner-chart-container" cdkDropList (cdkDropListDropped)="switchCharts($event)">
-        <sb-chart
+        <sb-chart sbResizer [containerId]="'chartcontainer'" [resizeChart]="chart" [onEdit]="edit"
           [ngClass]="{'chart-onedit': edit, 'chart-size-12': chart.size > 6, 'chart-size-6': chart.size <= 6 && chart.size >= 4, 'chart-size-4': chart.size <= 4}"
           *ngFor="let chart of panel.charts trackBy: trackByFn" [chart]="chart" cdkDrag [cdkDragDisabled]="!edit">
           <i class="fas fa-trash" *ngIf="edit" (click)="deleteChart(chart)"></i>
           <i class="fas fa-edit" (click)="toggleEditmode()"></i>
+          <div class="drag-handle" *ngIf="edit" cdkDragHandle>
+            <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
+              <path
+                d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z">
+              </path>
+              <path d="M0 0h24v24H0z" fill="none"></path>
+            </svg>
+          </div>
         </sb-chart>
       </div>
     </div>
