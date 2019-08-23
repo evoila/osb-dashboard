@@ -48,13 +48,25 @@ export class PanelComponent implements OnInit, OnDestroy {
   public changed = false;
   private timeRangeEmitter$: Subject<any> = new Subject();
   public timeRange$: Observable<{ [key: string]: any }> = new Observable(k => this.timeRangeEmitter$.subscribe(k));
-  edit: boolean;
+  public edit: boolean;
+  /*--------------Subjects & Observables -------------*/
+  public editModeSubject = new Subject<boolean>();
+  public editMode$ = new Observable(k => this.editModeSubject.subscribe(k));
+
+  public editControlSubject = new Subject<string>();
+  public editControl$ = new Observable(k => this.editControlSubject.subscribe(k));
 
   // handles all subscriptions to unsubscribe on destroy
   private subscriptions: Subscription[] = [];
   // just an Object that is to save a subscription till its pushed to the array
   private subscription: Subscription;
   // redo object holds old references of the panel object
+
+  // every chart emits an size update 
+  // we need this counter to be certain when a chart
+  // can be persisted see --> persistPanel
+  private saveCounter = 0;
+
   private redoObject = {} as Panel;
   constructor(
     private timeRangeService: EsTimerangeService,
@@ -75,7 +87,7 @@ export class PanelComponent implements OnInit, OnDestroy {
         this.store.dispatch(new FirePanelAggregationRequest(this.panel, k));
       }
     });
-    this.subscriptions.push(this.subscription)
+    this.subscriptions.push(this.subscription);
 
     /*     //Autorefresh every 10 Seconds
         this.subscription = timer(10000, 10000).subscribe(i => {
@@ -178,18 +190,36 @@ export class PanelComponent implements OnInit, OnDestroy {
   }
 
   toggleEditmode() {
-    this.redoObject = this.panel;
+    this.redoObject = { ...this.panel };
     this.edit = true;
+    this.editModeSubject.next(true);
   }
   cancelEdit() {
     this.panel = this.redoObject;
     this.edit = false;
     this.redoObject = {} as Panel;
+    this.editModeSubject.next(false);
+    this.editControlSubject.next('cancel');
   }
   saveEdit() {
     this.edit = false;
-    this.panelStore.dispatch(new UpdatePanel(this.panel));
-    this.redoObject = {} as Panel;
+    this.editModeSubject.next(false);
+    this.editControlSubject.next('save');
+  }
+  saveSize(size: number, chart: ChartInPanel) {
+    const charts = this.panel.charts.map(k => chart.id == k.id ? { ...chart, size: size } : k);
+    this.panel = { ...this.panel, charts };
+    this.persistPanel();
+  }
+  persistPanel() {
+    // wait until every chart has been updated
+    this.saveCounter++;
+    if (this.saveCounter === this.panel.charts.length &&
+      JSON.stringify(this.panel) !== JSON.stringify(this.redoObject)) {
+      this.panelStore.dispatch(new UpdatePanel(this.panel));
+      this.redoObject = {} as Panel;
+      this.saveCounter = 0;
+    }
   }
 
   private setDateRange() {

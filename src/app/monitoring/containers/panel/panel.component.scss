@@ -115,7 +115,10 @@ aside > * {
     z-index: 99;
     padding-top: 10px;
     height: fit-content;
-
+}
+.button-box button{
+    margin-left: 2px; 
+    margin-right: 1px;
 }
 /* //Shaky View on edit for the charts
  .chart-onedit:nth-child(even){
