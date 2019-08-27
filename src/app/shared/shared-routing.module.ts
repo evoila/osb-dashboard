@@ -14,6 +14,7 @@ import { BackupJobListComponent } from './backup/backup-job-list/backup-job-list
 import { RestoreListComponent } from './backup/restore-list/restore-list.component';
 import { BackupJobComponent } from './backup/backup-job/backup-job.component';
 import { RestorePointListComponent } from './backup/restore-point-list/restore-point-list.component';
+import { ServiceKeyListComponent } from './service-keys/service-key-list/service-key-list.component';
 
 
 export const ROUTES = [{
@@ -70,6 +71,10 @@ export const ROUTES = [{
   path: 'service-keys',
   component: ServiceKeysComponent,
   children: [
+    {
+      path: '',
+      component: ServiceKeyListComponent
+    },
     {
       path: ':serviceKeyId',
       component: ServiceKeysDetailComponent

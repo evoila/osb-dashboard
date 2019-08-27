@@ -3,31 +3,4 @@
     <h3 class="sidebar-header">Service Keys</h3>
   </sb-sidebar-nav>
   <router-outlet></router-outlet>
-  <div class="section-content">
-    <div class="row">
-      <div class="col-lg-12">
-        <p>Below you can find the currently existing service keys you have configured for your Instance.</p>
-        <p>IMPORTANT: We do not expose service credentials with an external IP. You need to SSH in to an app (see: https://docs.cloudfoundry.org/devguide/deploy-apps/ssh-apps.html) to use
-           the credentials. 
-        </p>
-        <p><a class="btn btn-secondary" (click)="create()" role="button" [mstInlineLoader]="isLoading" style="color: #fff">Create Service Key »</a></p>
-          <table class="table table-hover">
-            <thead class="thead-dark">
-            <tr>
-              <th>#</th>
-              <th>Id</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let key of serviceKeys; let i = index">
-              <td>{{i+1}}</td>
-              <td>{{key.id}}</td>
-              <td><a href="#" routerLink="/service-keys/{{key.id}}">Details</a></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
 </sb-sidebar-layout>

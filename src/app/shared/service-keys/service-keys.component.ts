@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ServiceKeysService } from './service-keys.service';
-import { NotificationService, Notification, NotificationType } from '../../core/notification.service';
 import { SidebarEntry } from 'app/core/sidebar';
 
 @Component({
@@ -8,10 +6,7 @@ import { SidebarEntry } from 'app/core/sidebar';
   templateUrl: './service-keys.component.html',
   styleUrls: ['./service-keys.component.scss']
 })
-export class ServiceKeysComponent implements OnInit {
-  readonly ENTITY = 'servicekeys';
-  serviceKeys: [any];
-  isLoading = false;
+export class ServiceKeysComponent implements OnInit { 
   menu: SidebarEntry[] = [
     {
       name: 'Overview',
@@ -24,32 +19,8 @@ export class ServiceKeysComponent implements OnInit {
     }
   ];
 
-  constructor(protected readonly service: ServiceKeysService,
-              protected readonly nService: NotificationService) { }
+  constructor() {}
 
-  ngOnInit() {
-    this.loadKeys();
-  }
+  ngOnInit() {}
 
-  loadKeys(): void {
-    this.service.loadAll(this.ENTITY)
-    .subscribe((keys_page: any) => {
-      this.serviceKeys = keys_page.content;
-    });
-  }
-
-  create(): void {
-    this.isLoading = true;
-    this.service.saveOne({}, this.ENTITY)
-      .subscribe({
-        next: (d) => {
-          this.isLoading = false;
-          this.loadKeys();
-          this.nService.add(new Notification(NotificationType.Warning, 'Created new Service Key.'));
-        },
-        error: (e) => {
-          this.nService.add(new Notification(NotificationType.Warning, 'Could not generate new Service Key'));
-        }
-      });
-  }
 }
