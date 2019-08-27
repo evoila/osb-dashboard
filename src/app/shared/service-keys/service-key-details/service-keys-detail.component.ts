@@ -9,7 +9,7 @@ import {ServiceKeysService} from "../service-keys.service";
 })
 export class ServiceKeysDetailComponent implements OnInit {
   readonly ENTITY: string = 'servicekeys';
-  serviceKey: any;
+  serviceKey: any = {};
   credentials_keys: any;
 
   constructor(protected readonly service: ServiceKeysService,

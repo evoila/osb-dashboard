@@ -32,6 +32,7 @@ export class ServiceKeyListComponent implements OnInit {
         next: (d) => {
           this.isLoading = false;          
           this.nService.add(new Notification(NotificationType.Warning, 'Created new Service Key.'));
+          this.loadKeys();
         },
         error: (e) => {
           this.nService.add(new Notification(NotificationType.Warning, 'Could not generate new Service Key'));
