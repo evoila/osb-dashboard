@@ -1,5 +1,0 @@
-<div cdkDropList id="panel-list-1" cdkDropListConnectedTo="panel-list-2">
-    <ul *ngIf="charts$ | async as charts">
-      <li cdkDrag [cdkDragData]="chart" *ngFor="let chart of charts">{{chart.name}}</li>
-    </ul>
-</div>

@@ -183,7 +183,7 @@ export class AddDataComponent implements OnInit {
     this.chartStore.dispatch(new SetChartName(name));
     this.name = name;
   }
-  public save() {
+  /*public save() {
     if (
       this.chartType &&
       this.name &&
@@ -217,7 +217,7 @@ export class AddDataComponent implements OnInit {
         });
     } else {
       alert(
-        'Your chart is missing something. Better check the sate of your aggregations and remove the broke ones'
+        'Your chart is missing something. Better check the sate of your aggregations and remove the broken ones'
       );
     }
   }
@@ -225,6 +225,7 @@ export class AddDataComponent implements OnInit {
     this.chartStore.dispatch(new FlushState());
     this.router.navigate(['monitoring/panelconfigurator']);
   }
+  */
 }
 
 export function checkNotEquals(

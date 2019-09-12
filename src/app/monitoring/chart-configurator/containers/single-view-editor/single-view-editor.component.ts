@@ -5,7 +5,7 @@ import {
   getChartIncreationType,
   buildChart
 } from '../../store/selectors/chart.increation.selector';
-import { filter, switchMap, map, take } from 'rxjs/operators';
+import { filter, switchMap, map, take, tap } from 'rxjs/operators';
 import { LoadAggregations } from '../../store/actions/aggregation.action';
 import { NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 import { LoadOptions } from '../../store/actions/options.action';
@@ -107,8 +107,8 @@ export class SingleViewEditorComponent implements OnInit {
     this.store
       .select(buildChart)
       .pipe(
-        take(2),
-        map((k: any) => {
+        take(1),
+        tap((k: any) => {
           if (!Object.keys(k).length || !k.name || !k.type) {
             alert(
               'Your chart is missing something. Better check the sate of your aggregations and remove the broke ones'
@@ -119,7 +119,6 @@ export class SingleViewEditorComponent implements OnInit {
         filter((k: any) => {
           return Object.keys(k).length > 0 && k.name && k.type;
         }),
-        map(k => k as Chart),
         switchMap((chart: Chart) => {
           return this.authParamService.createCfAuthScope().pipe(
             take(1),

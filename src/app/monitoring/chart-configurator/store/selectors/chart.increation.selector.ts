@@ -99,7 +99,8 @@ export const buildChart = createSelector(
       state.aggregations &&
       state.chartName != '' &&
       Object.keys(state.aggregations).length > 0 &&
-      !hasError(state.aggregationsState)
+      !hasError(state.aggregationsState) &&
+      state.encodedImage
     ) {
       const aggregations = extractArray(state.aggregations);
       return {
