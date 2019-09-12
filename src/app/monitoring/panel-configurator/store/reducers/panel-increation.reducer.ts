@@ -1,12 +1,12 @@
-import { Chart } from '../../../shared/model/chart';
 import { CfAuthScope } from '../../../chart-configurator/model/cfAuthScope';
 import * as fromPanelIncreation from '../actions/panel-increation.action';
 import * as uuid from 'uuid';
+import { ChartInPanel } from '../../../model/chart-in-panel';
 
 
 export interface PanelIncreationState {
   id?: string;
-  charts: { [id: string]: Chart };
+  charts: { [id: string]: ChartInPanel };
   name: string;
   description: string;
   authScope: CfAuthScope;
@@ -28,7 +28,7 @@ export function reducer(
     case fromPanelIncreation.ADD_CHART_TO_PANEL: {
       return {
         ...state,
-        charts: { ...state.charts, [uuid.v4()]: action.payload }
+        charts: { ...state.charts, [uuid.v4()]: { oreder: undefined, chart: action.payload, size: undefined } }
       };
     }
     case fromPanelIncreation.DELETE_CHART_IN_PANEL: {
@@ -63,7 +63,7 @@ export function reducer(
     case fromPanelIncreation.SET_STATE_FOR_UPDATE: {
       const { id, authScope, charts, name, description } = action.payload
       // deconstruct from ChartsInPanel Datatype to normal Chart Datatype
-      const newCharts = charts.map(k => k.chart).reduce<{ [id: string]: Chart }>(
+      const newCharts = charts.reduce<{ [id: string]: ChartInPanel }>(
         (prev, curr, index, arr) => {
           if (index == 0) {
             return { [uuid.v4()]: curr }

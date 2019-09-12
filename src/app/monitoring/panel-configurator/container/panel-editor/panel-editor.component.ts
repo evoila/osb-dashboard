@@ -20,6 +20,7 @@ import { getPanelState } from '../../../shared/store/selectors/panel.selector';
 import { take } from 'rxjs/internal/operators';
 import { Router } from '@angular/router';
 import { LoadPanels, UpdatePanel, DeletePanel } from '../../../shared/store/actions/panel.action';
+import { ChartInPanel } from '../../../model/chart-in-panel';
 
 @Component({
   selector: 'sb-panel-editor',
@@ -28,7 +29,7 @@ import { LoadPanels, UpdatePanel, DeletePanel } from '../../../shared/store/acti
 })
 export class PanelEditorComponent implements OnInit {
   public charts$: Observable<Array<Chart>>;
-  public chartsInPanel$: Observable<{ [id: string]: Chart }>;
+  public chartsInPanel$: Observable<{ [id: string]: ChartInPanel }>;
   public name: string;
   public description: string;
   public onEdit: boolean;

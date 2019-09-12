@@ -1,5 +1,6 @@
 import { Panel } from '../../model/panel';
 import * as fromPanelAction from '../actions/panel.action';
+import { UPDATE_PANEL } from '../actions/panel.action';
 
 export interface PanelState {
   panels: Array<Panel>;
@@ -26,6 +27,16 @@ export function reducer(
         ...state,
         panelsLoading: true,
         panelsLoaded: false
+      };
+    }
+    case fromPanelAction.UPDATE_PANEL: {
+      // replace panel in array with it's updated version
+      const panels = state.panels.map(k => k.id === action.payload.id ? action.payload : k);
+      return {
+        ...state,
+        panelSaveing: true,
+        panelSaved: false,
+        panels
       };
     }
     case fromPanelAction.LOAD_PANELS_SUCCESS: {
