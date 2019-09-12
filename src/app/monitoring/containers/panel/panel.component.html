@@ -33,7 +33,7 @@
       <sb-add-chart-sidepanel></sb-add-chart-sidepanel>
     </aside>
   </div>
-  <span [ngClass]="{'draghandle': true, 'active': !sidePanelHidden}" (click)="toogleSidePanel()">
+  <span #toggleSidePanelEle [ngClass]="{'draghandle': true, 'active': !sidePanelHidden}" (click)="toggleSidePanel()">
     <span>
       <i class="fas fa-chevron-left"></i>
     </span>

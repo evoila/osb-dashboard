@@ -4,7 +4,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import * as moment from 'moment/moment';
 import { EsTimerangeService } from 'app/monitoring/services/es-timerange.service';
 
-import { ChartRequest } from 'app/monitoring/model/chart-request';
+
 
 import { filter, map, switchMap, take } from 'rxjs/operators';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
@@ -38,7 +38,12 @@ export class PanelComponent implements OnInit, OnDestroy {
   @ViewChild('chartcontainer')
   chartcontainer: ElementRef;
 
+  @ViewChild('toggleSidePanelEle')
+  toggleSidePanelEle: ElementRef;
+
+  // Side Panel that contains Charts that can be dragged and dropped into the Panel
   sidePanelHidden = true;
+
 
   public panel: Panel;
   public menu: { [k: string]: any } = {};
@@ -106,14 +111,26 @@ export class PanelComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach(k => k.unsubscribe());
   }
 
-  toogleSidePanel() {
+  public toggleSidePanel() {
+    this.sidePanelHidden = !this.sidePanelHidden;
+    this.rerenderSidePanel();
+  }
+
+  rerenderSidePanel() {
     if (this.sidePanelHidden) {
-      this.sidePanelHidden = false;
       this.renderer.setStyle(this.container.nativeElement, 'grid-template-columns', '7fr 1fr');
     } else {
-      this.sidePanelHidden = true;
       this.renderer.setStyle(this.container.nativeElement, 'grid-template-columns', '1fr 0px');
     }
+  }
+  // Side Panel to add charts has a Toggle to hide and seek which should be deactivated on edit mode
+  hideToggleSidePanel(hide: boolean) {
+    if (hide) {
+      this.renderer.setStyle(this.toggleSidePanelEle.nativeElement, 'display', 'none');
+    } else {
+      this.renderer.setStyle(this.toggleSidePanelEle.nativeElement, 'display', 'inline-block');
+    }
+
   }
   editPanel() {
     this.store.dispatch(new SetStateForUpdate(this.panel));
@@ -193,6 +210,10 @@ export class PanelComponent implements OnInit, OnDestroy {
     this.redoObject = { ...this.panel };
     this.edit = true;
     this.editModeSubject.next(true);
+    this.sidePanelHidden = true;
+    this.rerenderSidePanel();
+    this.hideToggleSidePanel(true);
+
   }
   cancelEdit() {
     this.panel = this.redoObject;
@@ -200,11 +221,13 @@ export class PanelComponent implements OnInit, OnDestroy {
     this.redoObject = {} as Panel;
     this.editModeSubject.next(false);
     this.editControlSubject.next('cancel');
+    this.hideToggleSidePanel(false);
   }
   saveEdit() {
     this.edit = false;
     this.editModeSubject.next(false);
     this.editControlSubject.next('save');
+    this.hideToggleSidePanel(false);
   }
   saveSize(size: number, chart: ChartInPanel) {
     const charts = this.panel.charts.map(k => chart.id == k.id ? { ...chart, size: size } : k);
