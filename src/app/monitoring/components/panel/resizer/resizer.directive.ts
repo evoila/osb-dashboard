@@ -98,14 +98,20 @@ export class ResizerDirective implements AfterViewInit, OnDestroy {
     this.subscriptions.forEach(k => k.unsubscribe());
   }
   ngAfterViewInit() {
-
-    document.addEventListener('mouseup', e => {
+    const cancelEditing = e => {
       if (this.resizing) {
         this.resizing = false;
         this.enableChart();
       }
-    });
-    document.addEventListener('mousemove', (e: MouseEvent) => {
+    }
+
+    window.addEventListener('mouseup', cancelEditing);
+    window.addEventListener('mouseleave', cancelEditing);
+
+    window.addEventListener('mousemove', (e: MouseEvent) => {
+      if (e.buttons === 0) {
+        cancelEditing(e);
+      }
       if (this.resizing && !this.debounceLock) {
         this.debounceLock = true;
         const widthPercentage = (this.el.nativeElement.offsetWidth / this.el.nativeElement.parentNode.offsetWidth) * 100;
@@ -118,7 +124,7 @@ export class ResizerDirective implements AfterViewInit, OnDestroy {
             if (widthPercentage < 50) {
               diffPercent = 50;
             }
-            else if (widthPercentage > 50) {
+            else if (widthPercentage >= 50) {
               diffPercent = 100;
             }
           } else if (diffPercent > 0) {
