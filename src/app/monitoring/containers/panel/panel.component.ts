@@ -88,7 +88,7 @@ export class PanelComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.registerRouterEvents();
     this.subscription = this.timeRange$.subscribe(k => {
-      if (this.panel) {
+      if (this.panel && this.panel.charts.length) {
         this.store.dispatch(new FirePanelAggregationRequest(this.panel, k));
       }
     });

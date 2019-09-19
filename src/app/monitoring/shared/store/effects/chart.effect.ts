@@ -37,10 +37,10 @@ export class ChartEffect {
       // use concatMap to maintain order
       concatMap((action: fromChart.FirePanelAggregationRequest) => {
         return this.searchService.firePanelAggregation(action.payload, action.range).pipe(
+          map((k: { [id: string]: Array<QueryAndResponse> }) => new fromChart.FireAggregationRequestSuccess(k)),
           catchError(error => of(new fromChart.FireAggregationRequestFail()))
         )
-      }),
-      map((k: { [id: string]: Array<QueryAndResponse> }) => new fromChart.FireAggregationRequestSuccess(k))
+      })
     );
   @Effect()
   fireAggregationRequest$ = this.actions
@@ -57,17 +57,17 @@ export class ChartEffect {
             });
             return { [k.id]: reQue };
           }),
+          map(
+            (k: {
+              [id: string]: Array<{
+                response: SearchResponse;
+                query: AggregationRequestObject;
+              }>;
+            }) => new fromChart.FireAggregationRequestSuccess(k)
+          ),
           catchError(error => of(new fromChart.FireAggregationRequestFail()))
         );
-      }),
-      map(
-        (k: {
-          [id: string]: Array<{
-            response: SearchResponse;
-            query: AggregationRequestObject;
-          }>;
-        }) => new fromChart.FireAggregationRequestSuccess(k)
-      )
+      })
     );
 
   constructor(

@@ -37,7 +37,7 @@ export const ROUTES: Route[] = [
   }
 ];
 @NgModule({
-  imports: [RouterModule.forRoot(ROUTES, { useHash: true })],
+  imports: [RouterModule.forRoot(ROUTES, { useHash: true, scrollPositionRestoration: 'enabled' })],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

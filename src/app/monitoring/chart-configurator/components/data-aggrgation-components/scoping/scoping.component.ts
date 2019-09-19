@@ -21,7 +21,7 @@ export class ScopingComponent implements OnInit {
   aggReqEmitter = new EventEmitter<AggregationRequestObject>();
 
   serviceBinding: ServiceBinding = {} as ServiceBinding;
-  private name: string = 'preview';
+  private name: string = 'preview'
 
   aggRequObj: AggregationRequestObject;
 
@@ -49,7 +49,7 @@ export class ScopingComponent implements OnInit {
     this.update(this.aggRequObj);
   }
   public update(aggregation: AggregationRequestObject) {
-    if (this.serviceBinding) {
+    if (this.serviceBinding && aggregation && Object.keys(aggregation).length) {
       const { name } = this;
       const { appId } = this.serviceBinding;
       const updatedAgg = {

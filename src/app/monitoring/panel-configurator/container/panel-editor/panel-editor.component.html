@@ -15,20 +15,6 @@
             </div>
         </div>
     </div>
-
-    <!-- <div class="sb-main">
-        <ng-container *ngIf="charts$ | async as charts; then displayCharts; else error"></ng-container>
-        <ng-template #displayCharts>
-            <sb-chart-list [charts]="charts$"></sb-chart-list>
-        </ng-template>
-        <ng-template #error>
-            <h6 #error>Upss... It seems like there are no Charts in the DB.</h6>
-            <h6 #error> You may want to Check out the Editor and create one! </h6>
-        </ng-template>
-    </div>
-    <div class="sb-right">
-        <sb-charts-in-panel [charts]="chartsInPanel$"></sb-charts-in-panel>
-    </div> -->
     <div class="sb-buttons">
         <button type="button" class="btn btn-danger" (click)="cancel()">cancel</button>
         <button type="button" class="btn btn-primary" (click)="save(false)">save</button>

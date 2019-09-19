@@ -169,7 +169,7 @@ export class AddDataComponent implements OnInit {
             Object.keys(this.previousFinishedAggs).length ||
             checkNotEquals(aggregationRqs, this.previousFinishedAggs);
           this.previousFinishedAggs = aggregationRqs;
-          return returnValue;
+          return returnValue && Object.keys(aggregationRqs).length > 0;
         }),
         debounceTime(300)
       )

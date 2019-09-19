@@ -1,4 +1,4 @@
-<div class="form-group" [hidden]="displayType == null">
+<div class="form-group" [hidden]="!displayType">
   <label>Aggregation Type</label>
   <select class="form-control" [(ngModel)]="aggType" (change)="initAggregationTree($event)">
     <option>-- Please select --</option>
