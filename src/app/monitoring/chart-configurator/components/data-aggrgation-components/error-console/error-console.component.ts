@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { AggregationPreviewState } from '../../../store/reducers/aggregation.preview.reducer';
+
 import { Store } from '@ngrx/store';
 import { filter } from 'rxjs/operators';
 import { getFailedAggregation } from '../../../store/selectors/chart.increation.selector';
+import { ChartIncreationAction } from '../../../store/actions/chart.increation.action';
 
 @Component({
   selector: 'sb-error-console',
@@ -11,7 +12,7 @@ import { getFailedAggregation } from '../../../store/selectors/chart.increation.
 })
 export class ErrorConsoleComponent implements OnInit {
   public errorMessage: any;
-  constructor(private store: Store<AggregationPreviewState>) { }
+  constructor(private store: Store<ChartIncreationAction>) { }
 
   ngOnInit() {
     this.store.select(getFailedAggregation).pipe(

@@ -3,7 +3,7 @@ import { RouterEffect } from 'app/monitoring/chart-configurator/store/effects/ro
 import { OptionsToolboxEffect } from './options.toolbox.effect';
 import { AggregationEffect } from './aggregation.effect';
 import { ChartIncreationEffect } from './chart.increation.effect';
-import { AggregationPreviewEffect } from './aggregation.preview.effect';
+
 
 export const effects: Array<any> = [
   OptionsEffects,
@@ -11,5 +11,4 @@ export const effects: Array<any> = [
   OptionsToolboxEffect,
   AggregationEffect,
   ChartIncreationEffect,
-  AggregationPreviewEffect
 ];

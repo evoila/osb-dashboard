@@ -8,10 +8,8 @@ import { BindingsState } from 'app/monitoring/shared/store/reducers/binding.redu
 import { CfAuthParameterService } from 'app/monitoring/shared/services/cfauth-param.service';
 import { take, last, map, filter } from 'rxjs/operators';
 import { AggregationRequestObject } from 'app/monitoring/chart-configurator/model/aggregationRequestObject';
-import { AggregationPreviewEffect } from 'app/monitoring/chart-configurator/store/effects/aggregation.preview.effect';
-import { SetAggregationForPreview, AggregationPreviewFlush, CreateAggregationCancel } from 'app/monitoring/chart-configurator/store/actions/aggregation.preview.action';
-import { getPreviewAggregation } from '../../../store/selectors/';
 import { Subscriber, Subject } from 'rxjs';
+import { ChartIncreationAction } from '../../../store/actions/chart.increation.action';
 
 @Component({
   selector: 'sb-create-aggregation',
@@ -48,7 +46,7 @@ export class CreateAggregationComponent implements OnInit {
     private readonly searchService: SearchService,
     storeBindings: Store<BindingsState>,
     authParamService: CfAuthParameterService,
-    public store: Store<AggregationPreviewEffect>
+    public store: Store<ChartIncreationAction>
   ) {
     this.authParamService = authParamService.construct(storeBindings);
   }
@@ -62,11 +60,7 @@ export class CreateAggregationComponent implements OnInit {
       this.close.emit();
     }
     this.result.emit(event);
-    if (this.aggregationOnEdit) {
-      this.store.dispatch(new AggregationPreviewFlush());
-    } else {
-      this.aggregation$.pipe(take(1)).subscribe(k => this.store.dispatch(new CreateAggregationCancel(k.aggregation)));
-    }
+
   }
 
   buttonListener(type: string) {
