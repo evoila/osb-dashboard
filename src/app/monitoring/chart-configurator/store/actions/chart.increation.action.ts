@@ -3,6 +3,7 @@ import { ChartOptionsEntity } from '../../model/chart-options-entity';
 import { AggregationRequestObject } from '../../model/aggregationRequestObject';
 import { SearchResponse } from '../../../model/search-response';
 import { Aggregation } from '../../model/aggregation';
+import { DeleteAggregation } from './aggregation.action';
 
 export const SET_CHART_TYPE = '[Increation] Set Chart Type';
 export const SET_CHART_OPTIONS = '[Increation] Set Chart Options';
@@ -33,6 +34,8 @@ export const SET_CHART_NAME = '[Increation] Set Appname';
 
 export const SET_CHART_IMAGE = '[Increation] Set ChartImage';
 
+export const SET_FAILED_AGGREGATION = "[Increation] set a failed aggregation. Save it to present error to user";
+export const DELETE_FAILED_AGGREGATION = "[Increation] delete the failed aggregation when there are no more errors";
 
 export class SetChartType implements Action {
   readonly type = SET_CHART_TYPE;
@@ -108,7 +111,17 @@ export class SetChartImage implements Action {
   readonly type = SET_CHART_IMAGE;
   constructor(public encodedImage: string) { }
 }
-
+// Action that is fired in the preview component if there is an aggregation that has failed
+// Saves the error Message in the Store should be stored in the Error Message Component
+export class SetFailedAggregation implements Action {
+  readonly type = SET_FAILED_AGGREGATION;
+  // Elastic Search Error Message, that should be displayed as it is
+  constructor(public payload: any) { }
+}
+// Delete error message once the aggregation works again
+export class DeleteFailedAggregation implements Action {
+  readonly type = DELETE_FAILED_AGGREGATION;
+}
 export type FireTypes =
   | FireAggregations
   | FireAggregationSuccess
@@ -128,4 +141,6 @@ export type ChartIncreationAction =
   | EditAggregation
   | EditAggregationSuccess
   | EditAggregationCanceled
-  | SetChartImage;
+  | SetChartImage
+  | SetFailedAggregation
+  | DeleteFailedAggregation;

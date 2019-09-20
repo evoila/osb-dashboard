@@ -88,6 +88,13 @@ export const getAggregationOnEdit = createSelector(
   getAllChartIncreationState,
   state => state.aggregationOnEdit
 )
+export const getFailedAggregation = createSelector(
+  getAllChartIncreationState,
+  (state: ChartIncreationState) => {
+    return state.failedAggregation;
+  }
+)
+
 export const buildChart = createSelector(
   getAllChartIncreationState,
   (state: ChartIncreationState) => {

@@ -1,0 +1,6 @@
+<div class="container" *ngIf="hasError()">
+  <h2>Errors</h2>
+  <textarea class="form-control" readonly>
+    {{errorMessage | json}}
+  </textarea>
+</div>

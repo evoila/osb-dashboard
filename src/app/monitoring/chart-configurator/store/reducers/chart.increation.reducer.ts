@@ -11,6 +11,8 @@ export interface ChartIncreationState {
   option: ChartOptionsEntity;
   aggregations: { [id: string]: AggregationRequestObject };
   optionsSet: boolean;
+  // The Error Message of a failed Aggregation
+  failedAggregation: any;
   aggregationResponse: Array<SearchResponse>;
   aggregationLoading: boolean;
   aggregationLoaded: boolean;
@@ -33,6 +35,7 @@ export const initialState: ChartIncreationState = {
       "line"
     ]
   },
+  failedAggregation: {},
   aggregations: {},
   optionsSet: false,
   aggregationResponse: [],
@@ -142,6 +145,18 @@ export function reducer(
       return {
         ...state,
         encodedImage: action.encodedImage
+      }
+    }
+    case fromChartIncreation.SET_FAILED_AGGREGATION: {
+      return {
+        ...state,
+        failedAggregation: action.payload
+      }
+    }
+    case fromChartIncreation.DELETE_FAILED_AGGREGATION: {
+      return {
+        ...state,
+        failedAggregation: {}
       }
     }
   }

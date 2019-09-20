@@ -9,6 +9,7 @@
     </div>
     <div id="scopeWrapper" *ngIf="aggregation$">
         <sb-scoping [aggregation]="aggregation$" (aggRequObj)="setRequestObject($event)"></sb-scoping>
+        <sb-error-console></sb-error-console>
     </div>
 
 </div>

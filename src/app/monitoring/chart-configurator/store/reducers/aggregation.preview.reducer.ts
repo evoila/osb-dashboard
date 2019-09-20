@@ -86,7 +86,8 @@ export function reducer(
         }
         case fromAggregationPreview.CREATE_AGGREGATION_CANCEL_SUCCESS: {
             return {
-                ...state,
+                // added to flush the rest of the state
+                ...initialState,
                 loaded: true,
                 loading: false,
                 success: true
@@ -99,6 +100,9 @@ export function reducer(
                 loading: false,
                 success: false
             }
+        }
+        case fromAggregationPreview.AGGREGATION_PREVIEW_FLUSH: {
+            return initialState;
         }
     }
     return state;

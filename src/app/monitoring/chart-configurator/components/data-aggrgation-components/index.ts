@@ -1,6 +1,7 @@
 import { CreateAggregationComponent } from './create-aggregation/create-aggregation.component';
 import { ScopeAggregationsComponent } from './scope-aggregations/scope-aggregations.component';
 import { ChartPreviewComponent } from './chart-preview/chart-preview.component';
+import { ErrorConsoleComponent } from './error-console/error-console.component';
 
 import {
   AggregationListComponent,
@@ -14,5 +15,6 @@ export const aggregationComponents = [
   CreateAggregationComponent,
   ScopeAggregationsComponent,
   ChartPreviewComponent,
-  ScopingComponent
+  ScopingComponent,
+  ErrorConsoleComponent
 ];

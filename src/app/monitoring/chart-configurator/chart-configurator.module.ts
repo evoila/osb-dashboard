@@ -40,7 +40,8 @@ import { DataListComponent } from './components/data-aggrgation-components/data-
     ChartDirective,
     ...componentsDeclarations,
     ...containerComponents,
-    DataListComponent
+    DataListComponent,
+
   ],
   providers: [...services]
 })

@@ -1,7 +1,7 @@
-import { Component, OnInit, Input, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
 import { ChartIncreationState } from '../../../store/reducers/chart.increation.reducer';
 import { Store } from '@ngrx/store';
-import { filter, map, switchMap, catchError, take, debounceTime, distinctUntilChanged, delay } from 'rxjs/operators';
+import { filter, map, switchMap, catchError, take, debounceTime, distinctUntilChanged, delay, tap } from 'rxjs/operators';
 import { AggregationRequestObject } from '../../../model/aggregationRequestObject';
 import { Observable, of, throwError as observableThrowError, throwError } from 'rxjs';
 import { SearchResponse } from '../../../../model/search-response';
@@ -14,6 +14,8 @@ import {
 import { SearchService } from 'app/monitoring/shared/services/search.service';
 import { SetChartImage } from 'app/monitoring/chart-configurator/store';
 import { getAggregationAndResponse } from '../../../store/selectors/chart.increation.selector';
+import { DeleteFailedAggregation, SetFailedAggregation } from '../../../store/actions/chart.increation.action';
+
 
 
 @Component({
@@ -21,7 +23,7 @@ import { getAggregationAndResponse } from '../../../store/selectors/chart.increa
   templateUrl: './chart-preview.component.html',
   styleUrls: ['./chart-preview.component.scss']
 })
-export class ChartPreviewComponent implements OnInit, AfterViewInit {
+export class ChartPreviewComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('canvas')
   set canvas(content: ElementRef) {
     if (content) {
@@ -50,6 +52,9 @@ export class ChartPreviewComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngAfterViewInit() {
+  }
+  ngOnDestroy() {
+    this.store.dispatch(new DeleteFailedAggregation());
   }
   ngOnInit() {
     // get the Aggregation Matching the Result cause the Charting Utils Service
@@ -109,6 +114,15 @@ export class ChartPreviewComponent implements OnInit, AfterViewInit {
         debounceTime(1000),
         switchMap(options => {
           return this.queryAndResponse$.pipe(
+            // Wirte out Errors on Aggregations
+            tap(k => {
+              const errors = k.filter(a => a.response['error']);
+              // Write out
+              errors.forEach(a => this.store.dispatch(new SetFailedAggregation(a)));
+              if (!errors.length) {
+                this.store.dispatch(new DeleteFailedAggregation());
+              }
+            }),
             map(queRey =>
               // Filter error Responses and Empty responses
               queRey.filter(

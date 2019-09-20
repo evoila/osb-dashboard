@@ -14,6 +14,7 @@ export const CREATE_AGGREGATION_CANCEL = '[agg_preview] creation of aggregation 
 export const CREATE_AGGREGATION_CANCEL_SUCCESS = '[agg_preview] creation of aggregation is being canceld. Delete every database entry success';
 export const CREATE_AGGREGATION_CANCEL_FAILED = '[agg_preview] creation of aggregation is being canceld. Delete every database entry failed';
 
+export const SET_FAILED_AGGREGATION = "[agg_preview] set a failed aggregation. Save it to present error to user";
 export const AGGREGATION_PREVIEW_FLUSH = '[agg_preview] flush the state of the aggregation preview';
 
 export class SetAggregationForPreview implements Action {
@@ -55,6 +56,7 @@ export class CreateAggregationCancelFailed implements Action {
 export class AggregationPreviewFlush implements Action {
     readonly type = AGGREGATION_PREVIEW_FLUSH;
 }
+
 
 export type AggregationPreview =
     SetAggregationForPreview
