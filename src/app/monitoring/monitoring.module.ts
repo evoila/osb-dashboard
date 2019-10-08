@@ -39,7 +39,6 @@ import { effects as sharedEffects } from './shared/store/effects/index';
 import { ChartService } from './shared/services/chart.service';
 import { PanelService as NewPanelService } from './shared/services/panel.service';
 import { containerComponents } from './containers';
-import { AddChartSidepanelComponent } from './containers/add-chart-sidepanel/add-chart-sidepanel.component';
 
 // Store Freeze restricts every mutation on the Store itself. But we want this to be a dev only thing
 
@@ -93,7 +92,6 @@ export const bootstrapDeps = [
     ChartComponent,
     ...components,
     ...containerComponents,
-    AddChartSidepanelComponent,
   ],
   providers: [
     ...services,

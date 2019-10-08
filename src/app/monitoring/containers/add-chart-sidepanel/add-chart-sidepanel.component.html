@@ -1,9 +1,0 @@
-<div class="container" *ngIf="charts$ | async as charts">
-    <ul class="list-group" cdkDropList id="list-one" [cdkDropListConnectedTo]="['list-two']">
-        <li class="list-group-item grid-container" *ngFor="let chart of charts" cdkDrag [cdkDragData]="chart">
-            <div class="img-container"><img src="{{chart.encodedImage}}" alt="image of rendered Chart"></div>
-            <h5>{{chart.name}}</h5>
-            <h6>type: {{chart.type}}</h6>
-        </li>
-    </ul>
-</div>

@@ -1,5 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { ChartingUtilsService } from '../charting-utils.service';
+import { Observable } from 'rxjs';
 
 
 
@@ -10,23 +11,30 @@ const expertMode = true;
   templateUrl: './aggregation-selector.component.html',
   styleUrls: ['./aggregation-selector.component.css']
 })
-export class AggregationSelectorComponent implements OnInit {
+export class AggregationSelectorComponent implements OnInit, OnDestroy {
   @Input() index: number;
-  @Input() aggs: any;
+  @Input('aggs') set setAggs(aggs: any) {
+    this.aggs = aggs;
+  }
   @Input() displayType: string;
   @Input() aggregationTypes: any;
   @Input() additionalData: any;
 
+  aggs: any;
   // Emits updated data on every Change
   @Output('aggs') aggregationEventEmitter = new EventEmitter();
 
   private AGGS_KEY = 'aggs';
+
   public aggregationType: any = {};
   public aggType: string;
   public idx: string;
 
   constructor(readonly chartingUtils: ChartingUtilsService) { }
-
+  ngOnDestroy() {
+    this.aggs = {};
+    this.aggregationEventEmitter.next(this.aggs);
+  }
   ngOnInit() {
     this.idx = this.index.toString();
     if (this.aggs && this.aggs[this.AGGS_KEY] && this.aggs[this.AGGS_KEY][this.idx]) {
@@ -77,11 +85,21 @@ export class AggregationSelectorComponent implements OnInit {
 
   public prepareSubAggregation(): void {
     this.idx = this.index.toString();
+    if (this.aggs)
+      delete this.aggs[this.AGGS_KEY];
     this.aggs[this.AGGS_KEY] = {};
     this.aggs[this.AGGS_KEY][this.idx] = {};
   }
-
+  // When the User selects a new AggregatiinType the old one should be delete
+  // since this would lead to a faulty aggregation
+  /* private resetAggregationKey() {
+    delete this.aggs[this.AGGS_KEY];
+  } */
   public initAggregationTree($event: any): void {
+    /*if (Object.keys(this.aggregationType).length) {
+      this.resetAggregationKey();
+    }*/
+    this.aggType = $event.target.value;
     this.aggregationType = this.aggregationTypes
       .filter((el: any) => { return el.type === $event.target.value; })[0];
     this.prepareSubAggregation();
