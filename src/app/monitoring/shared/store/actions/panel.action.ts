@@ -39,7 +39,8 @@ export class UpdatePanel implements Action {
 }
 export class DeletePanel implements Action {
   readonly type = DELETE_PANEL;
-  constructor(public payload: Panel) { }
+  // Param Panel ID
+  constructor(public payload: string) { }
 }
 export type PanelAction =
   | LoadPanels

@@ -39,6 +39,13 @@ export function reducer(
         panels
       };
     }
+    case fromPanelAction.DELETE_PANEL: {
+      return {
+        ...state,
+        panelSaveing: true,
+        panelSaved: false,
+      };
+    }
     case fromPanelAction.LOAD_PANELS_SUCCESS: {
       return {
         ...state,

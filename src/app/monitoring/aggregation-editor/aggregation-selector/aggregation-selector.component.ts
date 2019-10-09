@@ -14,6 +14,7 @@ const expertMode = true;
 export class AggregationSelectorComponent implements OnInit, OnDestroy {
   @Input() index: number;
   @Input('aggs') set setAggs(aggs: any) {
+
     this.aggs = aggs;
   }
   @Input() displayType: string;

@@ -8,7 +8,7 @@ import {
   LoadPanelsFailed
 } from '../actions/panel.action';
 import { of } from 'rxjs';
-import { UPDATE_PANEL, UpdatePanel, DELETE_PANEL } from '../actions/panel.action';
+import { UPDATE_PANEL, UpdatePanel, DELETE_PANEL, DeletePanel } from '../actions/panel.action';
 import {
   SAVE_PANEL,
   SavePanel,
@@ -50,7 +50,7 @@ export class PanelEffect {
 
   @Effect()
   deletePanel$ = this.actions.ofType(DELETE_PANEL).pipe(
-    switchMap((action: UpdatePanel) =>
+    switchMap((action: DeletePanel) =>
       this.panelService.deletePanel(action.payload).pipe(
         map(k => new SavePanelSuccess()),
         catchError(error => of(new SavePanelFailed()))

@@ -2,12 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { Chart } from './model/chart';
 import { Router } from '@angular/router';
 import { SidebarEntry } from 'app/core/sidebar/sidebar-entry';
-import { PanelState } from './shared/store/reducers/panel.reducer';
+import { PanelState, getPanelsLoading } from './shared/store/reducers/panel.reducer';
 import { Store } from '@ngrx/store';
-import { LoadPanels } from './shared/store/actions/panel.action';
-import { getAllPanels } from './shared/store/selectors/panel.selector';
+import { LoadPanels, DeletePanel } from './shared/store/actions/panel.action';
+import { getAllPanels, getPanelState } from './shared/store/selectors/panel.selector';
 import { map, take, filter } from 'rxjs/operators';
 import { LoadBindings } from './shared/store/actions/binding.action';
+import { Panel } from './shared/model/panel';
+
 
 @Component({
   selector: 'sb-monitoring',
@@ -17,10 +19,61 @@ import { LoadBindings } from './shared/store/actions/binding.action';
 export class MonitoringComponent implements OnInit {
   public chart: Chart;
   private notYetNavigate = true;
+  panelEditMode = false;
+
+  // The Panels are getting an Edit Mode
+  // This Listener is called when the corresponding Button within
+  // The Navigation Bar is pressed.
+  // Rerenders Navigation so that the panels are getting a delete Button
+  editModeListener: Function = () => {
+    this.panelEditMode = !this.panelEditMode;
+    if (this.panelEditMode) {
+      this.menu[0].links = this.menu[0].links.map((k, i, arr) => {
+        // Last entry of this list is the Add Panel Interface which is not deletable
+        if (i < arr.length - 1) {
+          return {
+            ...k, button: true,
+            buttonFavicon: "fa-trash",
+            buttonActionListener: this.deletePanel,
+          }
+        } else {
+          return k;
+        }
+      });
+    } else {
+      this.menu[0].links = this.menu[0].links.map(k => {
+        return {
+          ...k, button: false,
+          buttonFavicon: undefined,
+          buttonActionListener: undefined,
+        }
+      });
+    }
+    this.menu = [...this.menu]
+  }
+
+  public deletePanel = (panel: any) => {
+
+    // href contains the id of the panel and has this format "panel/{}"
+    const panelId = panel.href.replace(/panel\//, "");
+    const panelName = panel.name;
+    if (confirm(`Should the Panel ${panelName} be deleted`)) {
+      this.store.dispatch(new DeletePanel(panelId));
+      const tempSubscription = this.store.select(getPanelState).pipe(filter(k => !k.panelSaveing && k.panelSaved)).subscribe(k => {
+        this.store.dispatch(new LoadPanels());
+        tempSubscription.unsubscribe();
+      })
+
+    }
+  }
+
   public menu: SidebarEntry[] = [
     {
       name: 'Panels',
       isCollapsible: false,
+      button: true,
+      buttonFavicon: "fa-edit",
+      buttonActionListener: this.editModeListener,
       links: [
         {
           name: 'Panel Configurator',
@@ -35,6 +88,7 @@ export class MonitoringComponent implements OnInit {
         {
           name: 'explore',
           href: 'explore'
+
         },
         {
           name: 'stream',
@@ -103,3 +157,4 @@ export class MonitoringComponent implements OnInit {
       });
   }
 }
+

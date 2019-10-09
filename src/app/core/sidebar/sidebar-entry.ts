@@ -5,6 +5,9 @@ export interface SidebarLinkProperties {
   iconClass?: string;
   class?: string;
   isActiveLink?: boolean;
+  button?: boolean;
+  buttonFavicon?: string,
+  buttonActionListener?: Function
 }
 
 export interface SidebarLinkWithHref extends SidebarLinkProperties {
@@ -21,4 +24,8 @@ export interface SidebarEntry {
   isCollapsible: boolean;
   isDisabled?: boolean;
   links: SidebarLink[];
+  button?: boolean;
+  buttonFavicon?: string,
+  buttonActionListener?: Function
 }
+

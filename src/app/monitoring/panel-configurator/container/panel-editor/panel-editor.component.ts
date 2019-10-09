@@ -82,7 +82,7 @@ export class PanelEditorComponent implements OnInit {
             if (!deleteFlag) {
               this.panelModelStore.dispatch(new UpdatePanel(panel));
             } else {
-              this.panelModelStore.dispatch(new DeletePanel(panel));
+              this.panelModelStore.dispatch(new DeletePanel(panel.id));
             }
           } else {
             this.panelModelStore.dispatch(new SavePanel(panel));

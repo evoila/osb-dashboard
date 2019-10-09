@@ -37,8 +37,8 @@ export class PanelService {
     const url = this.url + `/${panel.id}`;
     return this.http.post<Panel>(url, panel);
   }
-  public deletePanel(panel: Panel): Observable<Panel> {
-    const url = this.url + `/${panel.id}`;
+  public deletePanel(panelId: string): Observable<Panel> {
+    const url = this.url + `/${panelId}`;
     return this.http.delete<Panel>(url);
   }
 }
