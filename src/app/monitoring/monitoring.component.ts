@@ -21,6 +21,7 @@ export class MonitoringComponent implements OnInit {
   private notYetNavigate = true;
   panelEditMode = false;
 
+
   // The Panels are getting an Edit Mode
   // This Listener is called when the corresponding Button within
   // The Navigation Bar is pressed.
@@ -62,6 +63,7 @@ export class MonitoringComponent implements OnInit {
       const tempSubscription = this.store.select(getPanelState).pipe(filter(k => !k.panelSaveing && k.panelSaved)).subscribe(k => {
         this.store.dispatch(new LoadPanels());
         tempSubscription.unsubscribe();
+        this.editModeListener();
       })
 
     }
@@ -76,8 +78,9 @@ export class MonitoringComponent implements OnInit {
       buttonActionListener: this.editModeListener,
       links: [
         {
-          name: 'Panel Configurator',
-          href: 'panelconfigurator'
+          name: 'Add Panel',
+          href: 'panelconfigurator',
+          iconClass: 'fa fa-plus'
         }
       ]
     },
@@ -116,7 +119,7 @@ export class MonitoringComponent implements OnInit {
 
   ngOnInit() {
     // nearly every container uses the bindings in some way or the other so we load them right away
-    this.store.dispatch(new LoadBindings);
+    this.store.dispatch(new LoadBindings());
     this.store.dispatch(new LoadPanels());
     this.loadPanels();
   }

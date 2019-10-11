@@ -22,6 +22,7 @@ export const getPanelById = createSelector(
     return panels.filter(k => k.id == id)[0];
   }
 );
+
 export const getPanelViewModelById = createSelector(
   getAllPanels,
   (panels, id: string) => {

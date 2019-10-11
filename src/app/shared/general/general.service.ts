@@ -13,7 +13,7 @@ const endpoint = environment.baseUrls.serviceBrokerUrl;
 export class GeneralService extends EntityService {
   GENERAL_BASEURL: string;
 
-  constructor(protected readonly httpService: CoreHttpService) {    
+  constructor(protected readonly httpService: CoreHttpService) {
     super(httpService);
     this.GENERAL_BASEURL = endpoint + '/custom/v2/manage/';
   }
@@ -23,7 +23,7 @@ export class GeneralService extends EntityService {
   }
 
   public loadAll(): Observable<{} | any> {
-    return this.all(this.GENERAL_BASEURL + serviceInstanceId);
+    return this.all(this.GENERAL_BASEURL + 'service_instances/' + serviceInstanceId);
   }
 
   public customLoadAll(path: String): Observable<{} | any> {
