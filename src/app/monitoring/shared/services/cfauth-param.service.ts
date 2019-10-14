@@ -16,11 +16,13 @@ import { Observable } from 'rxjs/internal/Observable';
 
 import { ChartConfiguratorModule } from '../../chart-configurator/chart-configurator.module';
 import { getBindingsLoadingState } from '../store/selectors/bindings.selector';
+import { timer } from 'rxjs';
 
 @Injectable({ providedIn: ChartConfiguratorModule })
 export class CfAuthParameterService {
   private orgAndSpace$: Observable<SpaceAndOrg>;
   private store: Store<BindingsState>;
+
 
   public createCfAuthParameters(): Observable<HttpParams> {
     return this.createCfAuthScope().pipe(
@@ -53,7 +55,7 @@ export class CfAuthParameterService {
           // dispatch Event if
           !state.loaded &&
             !state.loading &&
-            this.store.dispatch(new LoadBindings());
+            timer(8000).subscribe(k => this.store.dispatch(new LoadBindings()));
 
           return state.loaded == true;
         }),
@@ -63,5 +65,5 @@ export class CfAuthParameterService {
     return this;
   }
 
-  constructor(private paramService: HttpGetParamsService) {}
+  constructor(private paramService: HttpGetParamsService) { }
 }
