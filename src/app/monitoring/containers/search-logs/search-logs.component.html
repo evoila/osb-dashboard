@@ -6,7 +6,7 @@
       <input type="text" class="form-control" [(ngModel)]="query" id="search">
       <small for="search" class="form-text text-muted"> Search Request: MUST be a Lucene Query</small>
     </div>
-    <button (click)="search()" class="btn btn-primary" [disabled]="!(scope && query)">Search</button>
+    <button (click)="search()" class="btn btn-primary" [disabled]="buttonDisabled()">Search</button>
     <sb-timefilter *ngIf="showFilter" class="time-filter" [toDate]="toDate" [fromDate]="fromDate"
       (fromDateChange)="setFromDate($event)" (toDateChange)="setToDate($event)"></sb-timefilter>
   </div>

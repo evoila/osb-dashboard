@@ -56,18 +56,32 @@ export class SearchLogsComponent implements OnInit {
     this.tooglePageNavigation();
   }
 
+  setToDate(event: any) {
+    this.toDate = event;
+  }
+
+  setFromDate(event: any) {
+    this.fromDate = event;
+  }
+
+  buttonDisabled() {
+    // Function that determins wether the button 
+    // should be disabled due to missing user input
+    return !(Object.keys(this.scope).length && this.query)
+  }
   search() {
-    const request = this.buildSearchRequest();
+    const request = this.buildSearchRequest(0, true);
     this.lastRequestTimeStamp = moment().unix();
     this.page = 0;
+
     this.fireRequest(request).subscribe((data: SearchResponse) => {
-      this.hits = data.hits
+      this.hits = data.hits;
       this.hitsSubject.next(this.hits);
     });
   }
 
   private tooglePageNavigation() {
-    const request = this.buildSearchRequest(this.page * this.size);
+    const request = this.buildSearchRequest(this.page * this.size, false);
     this.loadingSubject.next(true);
     this.fireRequest(request).pipe(catchError(err => {
       this.loadingSubject.next(false);
@@ -79,7 +93,7 @@ export class SearchLogsComponent implements OnInit {
     });
   }
 
-  private buildSearchRequest(from = 0): SearchRequest {
+  private buildSearchRequest(from = 0, initialRequest: boolean): SearchRequest {
 
     let searchRequest = {
       appName: this.scope.appName,
@@ -94,7 +108,18 @@ export class SearchLogsComponent implements OnInit {
 
 
     searchRequest.range = new TimeRange();
-    searchRequest.range.to = this.toDate ? moment.unix(this.toDate).valueOf() : undefined;
+
+    /* Whenever a user chooses a date in the future his intention is to get the 
+    newest possible entries. However when navigating through the pagination a date 
+    in the future is harmfull because it destroys the pagination. Therefore we fix the
+    initial request timestamp as newest possible log */
+
+    if(!initialRequest && this.toDate > moment().unix()){
+      searchRequest.range.to = moment.unix(this.lastRequestTimeStamp).valueOf();
+    } else {
+      searchRequest.range.to = this.toDate ? moment.unix(this.toDate).valueOf() : undefined;
+    }
+    
     searchRequest.range.from = this.fromDate ? moment.unix(this.fromDate).valueOf() : undefined;
 
     return searchRequest;
@@ -102,7 +127,7 @@ export class SearchLogsComponent implements OnInit {
   private fireRequest(request: SearchRequest): Observable<SearchResponse> {
     return this.searchService.getSearchResults(request).pipe(
       tap((data: SearchResponse) => {
-        if (!data.timed_out && data.hits.total !== 0) {
+        if (!data.timed_out && data.hits.total == 0) {
           this.notification.addSelfClosing(
             new Notification(
               NotificationType.Info,
