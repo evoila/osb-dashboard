@@ -32,9 +32,7 @@ export class SearchService {
         this.notification.addSelfClosing(
           new Notification(NotificationType.Error, error.message)
         );
-        if (error && error.error && error.error.message) {
-          return observableThrowError(error.error.message);
-        }
+        return observableThrowError(error);
       })
     );
   }
