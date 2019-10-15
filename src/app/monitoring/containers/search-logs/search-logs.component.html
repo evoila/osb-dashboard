@@ -6,12 +6,16 @@
       <input type="text" class="form-control" [(ngModel)]="query" id="search">
       <small for="search" class="form-text text-muted"> Search Request: MUST be a Lucene Query</small>
     </div>
-    <button (click)="search()" class="btn btn-primary" [disabled]="!(scope && query)">Search</button>
+    <button (click)="search()" class="btn btn-primary" [disabled]="buttonDisabled()">Search</button>
     <sb-timefilter *ngIf="showFilter" class="time-filter" [toDate]="toDate" [fromDate]="fromDate"
       (fromDateChange)="setFromDate($event)" (toDateChange)="setToDate($event)"></sb-timefilter>
   </div>
   <main>
-    <sb-log-search *ngIf="scope && query" [pagination]="page" [steps]="size" [hits]="hits$" (more)="flick($event)">
+    <sb-log-search *ngIf="buttonDisabled() && !error" [pagination]="page" [steps]="size" [hits]="hits$" (more)="flick($event)">
     </sb-log-search>
+    <div *ngIf="error" id="error">
+        <i [ngClass]="{'far fa-eye': true}" class="fas"></i>
+        <p id="noresultmsg"> No Data found. Please check your requests. </p>
+    </div>
   </main>
 </div>
