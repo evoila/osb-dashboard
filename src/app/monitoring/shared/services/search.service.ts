@@ -28,7 +28,6 @@ export class SearchService {
     return this.http.post(endpoint, request, this.httpOptions).pipe(
       map((data: Response) => data),
       catchError((error: any) => {
-        console.log(error);
         this.notification.addSelfClosing(
           new Notification(NotificationType.Error, error.message)
         );
@@ -45,7 +44,6 @@ export class SearchService {
     const requestObject = { first: request, second: range };
     return this.http.post<{ [id: string]: Array<QueryAndResponse> }>(endpoint, requestObject).pipe(
       catchError((error: any) => {
-        console.log(error);
         this.notification.addSelfClosing(
           new Notification(NotificationType.Error, 'aggregation failed!')
         );
@@ -61,7 +59,6 @@ export class SearchService {
     const endpoint = this.endpoint.getUri() + '/aggregation';
     return this.http.post<Array<SearchResponse>>(endpoint, request).pipe(
       catchError((error: any) => {
-        console.log(error);
         this.notification.addSelfClosing(
           new Notification(NotificationType.Error, 'aggregation failed!')
         );
@@ -95,7 +92,6 @@ export class SearchService {
         return returnVal;
       }),
       catchError((error: any) => {
-        console.log(error);
         this.notification.addSelfClosing(
           new Notification(NotificationType.Error, error.error.message)
         );
