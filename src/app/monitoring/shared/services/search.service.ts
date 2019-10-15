@@ -28,11 +28,13 @@ export class SearchService {
     return this.http.post(endpoint, request, this.httpOptions).pipe(
       map((data: Response) => data),
       catchError((error: any) => {
+        console.log("BIER");
         console.log(error);
         this.notification.addSelfClosing(
           new Notification(NotificationType.Error, error.message)
         );
         if (error && error.error && error.error.message) {
+          console.log("TIER");
           return observableThrowError(error.error.message);
         }
       })
