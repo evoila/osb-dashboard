@@ -17,6 +17,8 @@ export class SearchLogsComponent implements OnInit {
   showFilter = false;
   scope: ServiceBinding = {} as ServiceBinding;
   query: string;
+  public error: boolean = false;
+  
 
   //number of elements per request
   size = 100;
@@ -73,6 +75,7 @@ export class SearchLogsComponent implements OnInit {
     const request = this.buildSearchRequest(0, true);
     this.lastRequestTimeStamp = moment().unix();
     this.page = 0;
+    this.error = false;
 
     this.fireRequest(request).subscribe((data: SearchResponse) => {
       this.hits = data.hits;
@@ -133,7 +136,8 @@ export class SearchLogsComponent implements OnInit {
               NotificationType.Info,
               'No Data. Check your request.'
             )
-          )
+          );
+          this.error = true;
         }
       }),
       filter((data: SearchResponse) => !data.timed_out && data.hits.total !== 0)

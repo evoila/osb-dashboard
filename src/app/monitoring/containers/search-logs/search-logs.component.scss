@@ -1,3 +1,8 @@
+
+
+$text-color: gray;
+$text-color-light: darkgray;
+
 .container {
     margin-top: 1%;
     min-height: 60vh;
@@ -8,6 +13,25 @@
     grid-gap: 1%;
     
 }
+
+#error {
+    width: fit-content;
+    margin: auto;
+    margin-top: 10rem;
+    text-align: center;
+}
+
+.fas{
+    font-size: 38px;
+    color: $text-color;
+}
+#noresultmsg {
+    width: fit-content;
+    margin: auto;
+    color: $text-color;
+    margin-top: 3rem;
+}
+
 
 .appId{
     justify-self: end;
