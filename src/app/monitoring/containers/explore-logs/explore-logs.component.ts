@@ -39,6 +39,7 @@ export class ExploreLogsComponent implements OnInit {
   size = 5000
 
   lastRequestTimeStamp: number;
+
   // in a request where not all the data is fetched you need a pointer to the index
   // of the last request you made
   requestPointer: number = 0;
@@ -110,7 +111,7 @@ export class ExploreLogsComponent implements OnInit {
     this.loadingSubject.next(true);
     return this.searchService.getSearchResults(request).pipe(
       tap((data: SearchResponse) => {
-        if (!data.timed_out && data.hits.total !== 0) {
+        if (!data.timed_out && data.hits.total === 0) {
           this.loadingSubject.next(false);
           this.notification.addSelfClosing(
             new Notification(

@@ -26,6 +26,11 @@ export class AppComponent implements OnInit {
 
   public notification: Notification | null = null;
   ngOnInit() {
+    this.notifications.notifications.subscribe(x => {
+      setTimeout(() => {
+        this.notification = x;
+      })
+    });
   }
   constructor(
     private readonly router: Router,
@@ -36,12 +41,6 @@ export class AppComponent implements OnInit {
     this.dynamicModuleSupport = buildTarget.dynamicModuleSupport;
     this.sharedModuleSupport = buildTarget.sharedModuleSupport;
     this.moduleSupport = buildTarget.moduleSupport;
-
-    console.log('This is our starting point');
-    this.notifications.notifications.subscribe(x => {
-      console.log(x)
-      this.notification = x
-    });
 
     //this.router.navigateByUrl("/" + environment.serviceInstanceId, { skipLocationChange: true });
     //this.router.navigate(["/home/" + environment.serviceInstanceId ], {replaceUrl:true});

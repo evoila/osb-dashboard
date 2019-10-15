@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { MonitoringComponent } from './monitoring.component';
 
 import { PanelComponent } from './containers/panel/panel.component';
-import { LogPanelComponent } from './containers/log-panel/log-panel.component';
 import { LiveLogsComponent } from './containers/live-logs/live-logs.component';
 import { ExploreLogsComponent } from './containers/explore-logs/explore-logs.component';
 import { SearchLogsComponent } from './containers/search-logs/search-logs.component';
@@ -22,10 +21,6 @@ export const ROUTES: Routes = [
         path: 'configurator',
         loadChildren:
           'app/monitoring/chart-configurator/chart-configurator.module#ChartConfiguratorModule'
-      },
-      {
-        path: 'logs',
-        component: LogPanelComponent
       },
       {
         path: 'panel/:id',
