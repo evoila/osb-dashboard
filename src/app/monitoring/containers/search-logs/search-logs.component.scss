@@ -1,7 +1,7 @@
+@import '../../../core/core';
 
-
-$text-color: gray;
-$text-color-light: darkgray;
+$text-color: $gray-700;
+$text-color-light: $gray-600;
 
 .container {
     margin-top: 1%;
@@ -46,3 +46,4 @@ button {
     grid-column-end: third-end;
     justify-self: start;
 }
+
