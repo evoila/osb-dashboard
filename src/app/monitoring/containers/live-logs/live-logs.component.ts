@@ -6,6 +6,7 @@ import { switchMap, filter } from 'rxjs/operators';
 import { SearchRequest, TimeRange } from '../../model/search-request';
 import { SearchResponse, Hits } from '../../model/search-response';
 import * as moment from 'moment/moment';
+import { TimeService } from '../../shared/services/time.service';
 
 @Component({
   selector: 'sb-live-logs',
@@ -36,7 +37,8 @@ export class LiveLogsComponent implements OnInit, OnDestroy {
   // maximal Number of Log-Messages displayed
   maxElements = 5000;
 
-  constructor(private searchService: SearchService) { }
+  constructor(private searchService: SearchService,
+    private timeService: TimeService) { }
 
   ngOnInit() {
   }
@@ -110,7 +112,7 @@ export class LiveLogsComponent implements OnInit, OnDestroy {
 
     searchRequest.range = new TimeRange();
     // save current Date to have a well defined Timestamp of the last included element --> avoid dups
-    this.toDate = moment().valueOf();
+    this.toDate = this.timeService.getNumericalTimestamp(moment());
     searchRequest.range.to = this.toDate;
     // Subsequential Request have a from Date to not have duplicates
     if (this.fromDate) {

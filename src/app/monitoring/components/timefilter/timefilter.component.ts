@@ -3,6 +3,10 @@ import * as moment from 'moment/moment';
 import { NgbTimeStruct, NgbTimepickerConfig } from '@ng-bootstrap/ng-bootstrap';
 import { SafeMethodCall } from '@angular/compiler';
 
+/* This Component is a Datepicker it returns Unix Timestamps (in Seconds)
+  via it's outputs be aware that you MUST use the TimeService to 
+  convert it to an ES compatible Timestamp*/
+
 @Component({
   selector: 'sb-timefilter',
   templateUrl: './timefilter.component.html',
