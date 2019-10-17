@@ -7,6 +7,7 @@ import * as moment from 'moment/moment';
 import { Subject, Observable } from 'rxjs';
 import { tap, filter, catchError } from 'rxjs/operators';
 import { NotificationService, NotificationType, Notification } from '../../../core/notification.service';
+import { TimeService } from '../../shared/services/time.service';
 
 @Component({
   selector: 'sb-search-logs',
@@ -18,7 +19,7 @@ export class SearchLogsComponent implements OnInit {
   scope: ServiceBinding = {} as ServiceBinding;
   query: string;
   public error: boolean = false;
-  
+
 
   //number of elements per request
   size = 100;
@@ -45,7 +46,8 @@ export class SearchLogsComponent implements OnInit {
 
   constructor(
     private searchService: SearchService,
-    private notification: NotificationService) { }
+    private notification: NotificationService,
+    private timeService: TimeService) { }
 
   ngOnInit() {
   }
@@ -66,7 +68,7 @@ export class SearchLogsComponent implements OnInit {
     this.fromDate = event;
   }
 
-  buttonDisabled() {
+  buttonDisabled() {
     // Function that determins wether the button 
     // should be disabled due to missing user input
     return !(Object.keys(this.scope).length && this.query)
@@ -117,13 +119,13 @@ export class SearchLogsComponent implements OnInit {
     in the future is harmfull because it destroys the pagination. Therefore we fix the
     initial request timestamp as newest possible log */
 
-    if(!initialRequest && this.toDate > moment().unix()){
-      searchRequest.range.to = moment.unix(this.lastRequestTimeStamp).valueOf();
+    if (!initialRequest && this.toDate > moment().unix()) {
+      searchRequest.range.to = this.timeService.convertUnixToNumerical(this.lastRequestTimeStamp);
     } else {
-      searchRequest.range.to = this.toDate ? moment.unix(this.toDate).valueOf() : undefined;
+      searchRequest.range.to = this.toDate ? this.timeService.convertUnixToNumerical(this.toDate) : undefined;
     }
-    
-    searchRequest.range.from = this.fromDate ? moment.unix(this.fromDate).valueOf() : undefined;
+
+    searchRequest.range.from = this.fromDate ? this.timeService.convertUnixToNumerical(this.fromDate) : undefined;
 
     return searchRequest;
   }
