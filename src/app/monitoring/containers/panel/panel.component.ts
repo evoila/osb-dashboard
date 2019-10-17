@@ -23,6 +23,7 @@ import { buildFunctionalPanel } from '../../panel-configurator/store/selectors/p
 import { UpdatePanel, LoadPanels } from '../../shared/store/actions/panel.action';
 import { FirePanelAggregationRequest } from '../../shared/store/actions/chart.actions';
 import { ChartInPanel } from '../../model/chart-in-panel';
+import { TimeService } from '../../shared/services/time.service';
 
 
 @Component({
@@ -80,7 +81,8 @@ export class PanelComponent implements OnInit, OnDestroy {
     private store: Store<PanelState>,
     private panelStore: Store<PanelIncreationState>,
     private routerStore: Store<State>,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private timeService: TimeService
   ) {
     this.menu['view'] = 'Views:';
     this.menu['viewSettings'] = ['1', '2', '3'];
