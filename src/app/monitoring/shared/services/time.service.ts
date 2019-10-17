@@ -9,7 +9,7 @@ import { timestamp } from 'rxjs/operators';
 @Injectable()
 export class TimeService {
 
-    private readonly timeFormat = TimestampFormat.millis;
+    public readonly timeFormat = TimestampFormat.millis;
     /* 
      Methode to convert Moment JS Object to the Numeric Timestamp of choice 
       @param timestamp Moment JS Object
@@ -63,7 +63,7 @@ export class TimeService {
 }
 
 // Specifies the format of the timestamp wanted by ES 
-enum TimestampFormat {
+export enum TimestampFormat {
     millis,
     nanos
 }
