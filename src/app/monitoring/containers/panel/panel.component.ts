@@ -24,6 +24,7 @@ import { UpdatePanel, LoadPanels } from '../../shared/store/actions/panel.action
 import { FirePanelAggregationRequest } from '../../shared/store/actions/chart.actions';
 import { ChartInPanel } from '../../model/chart-in-panel';
 import { TimeService } from '../../shared/services/time.service';
+import { ShortcutService } from '../../../core/services/shortcut.service';
 
 
 @Component({
@@ -82,7 +83,8 @@ export class PanelComponent implements OnInit, OnDestroy {
     private panelStore: Store<PanelIncreationState>,
     private routerStore: Store<State>,
     private renderer: Renderer2,
-    private timeService: TimeService
+    private timeService: TimeService,
+    private shortcut: ShortcutService
   ) {
     this.menu['view'] = 'Views:';
     this.menu['viewSettings'] = ['1', '2', '3'];
@@ -96,6 +98,13 @@ export class PanelComponent implements OnInit, OnDestroy {
     });
     this.subscriptions.push(this.subscription);
 
+    this.shortcut.bindShortcut({
+      key: "Escape",
+      description: "Cancel the Panel Edit Mode and reverting changes",
+      view: "Panel View"
+    }).subscribe(k => {
+      this.cancelEdit();
+    })
     /*     //Autorefresh every 10 Seconds
         this.subscription = timer(10000, 10000).subscribe(i => {
           const now = moment().unix();

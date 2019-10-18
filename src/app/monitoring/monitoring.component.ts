@@ -8,7 +8,6 @@ import { LoadPanels, DeletePanel } from './shared/store/actions/panel.action';
 import { getAllPanels, getPanelState } from './shared/store/selectors/panel.selector';
 import { map, take, filter } from 'rxjs/operators';
 import { LoadBindings } from './shared/store/actions/binding.action';
-import { Panel } from './shared/model/panel';
 
 
 @Component({
