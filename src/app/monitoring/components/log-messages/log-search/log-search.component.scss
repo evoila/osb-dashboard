@@ -9,8 +9,7 @@
 
 }
 .resultView table {
-    display: inline-block;
-    width:100%;
+    width: 100%;
     overflow: scroll;
 }
 #log-search h5 {
@@ -28,7 +27,6 @@
     color: #283018;
     font-style: italic;
     width: 20%;
-    float: left;
 }
 nav {
     margin: auto;
@@ -37,7 +35,6 @@ nav {
 .value {
     color: #aa863a;
     width: 70%;
-    float: right;
 }
 .clearfix{
     padding-left: 1em;

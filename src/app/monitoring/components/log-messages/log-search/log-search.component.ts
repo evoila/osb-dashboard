@@ -1,6 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { Hits } from '../../../model/search-response';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 import {
   trigger,
@@ -34,7 +34,7 @@ import {
   ],
   styleUrls: ['./log-search.component.scss']
 })
-export class LogSearchComponent implements OnInit {
+export class LogSearchComponent implements OnInit, OnDestroy {
   @Input('hits')
   hits$: Observable<Hits>;
   @Input('pagination')
@@ -44,7 +44,7 @@ export class LogSearchComponent implements OnInit {
   public steps: number;
 
   public pages: number;
-
+  private hits$Subscription: Subscription;
 
   public direction: reversed = 'notReversed';
 
@@ -62,21 +62,25 @@ export class LogSearchComponent implements OnInit {
   collapse(index: number) {
     this.isCollapsed[index] = !this.isCollapsed[index];
   }
-  setInterval() {
-    this.pageInterval = [];
-    const intervalStart = this.page - 5 >= 0 ? this.page - 5 : 0;
-    for (let i = intervalStart; i < this.page + 5 && i < this.pages; i++) {
-      this.pageInterval[i - intervalStart] = i;
-    }
+
+  ngOnDestroy() {
+    this.hits$Subscription.unsubscribe();
   }
   ngOnInit() {
-    this.hits$.subscribe(data => {
+    this.hits$Subscription = this.hits$.subscribe(data => {
       this.results = data;
       if (this.steps) {
         this.pages = Math.floor(data.total / this.steps);
         this.setInterval();
       }
     });
+  }
+  setInterval() {
+    this.pageInterval = [];
+    const intervalStart = this.page - 5 >= 0 ? this.page - 5 : 0;
+    for (let i = intervalStart; i < this.page + 5 && i < this.pages; i++) {
+      this.pageInterval[i - intervalStart] = i;
+    }
   }
   loadMore(page: number, goForward: boolean) {
     this.direction = goForward ? 'notReversed' : 'reversed';
