@@ -304,6 +304,7 @@ export class ChartingService {
   private sortByDate(objToSort: any, dateFormats: Array<any>): Array<any> {
     // when ES6 use object values
     const arrayToSort = Object.keys(objToSort).map(key => objToSort[key]);
+
     arrayToSort.sort((objA, objB) => {
       const dateA: any = moment(objA.date, dateFormats).format('X');
       const dateB: any = moment(objB.date, dateFormats).format('X');

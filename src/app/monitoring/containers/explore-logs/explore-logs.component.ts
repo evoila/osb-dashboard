@@ -9,6 +9,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { tap, filter, timestamp } from 'rxjs/operators';
 import { NotificationService, Notification, NotificationType } from '../../../core/notification.service';
 import * as moment from 'moment/moment';
+import { TimeService } from '../../shared/services/time.service';
 
 @Component({
   selector: 'sb-explore-logs',
@@ -46,7 +47,8 @@ export class ExploreLogsComponent implements OnInit {
 
   constructor(
     private searchService: SearchService,
-    private notification: NotificationService) { }
+    private notification: NotificationService,
+    private timeService: TimeService) { }
 
   ngOnInit() {
   }
@@ -102,8 +104,8 @@ export class ExploreLogsComponent implements OnInit {
 
 
     searchRequest.range = new TimeRange();
-    searchRequest.range.to = this.toDate ? moment.unix(this.toDate).valueOf() : undefined;
-    searchRequest.range.from = this.fromDate ? moment.unix(this.fromDate).valueOf() : undefined;
+    searchRequest.range.to = this.toDate ? this.timeService.convertUnixToNumerical(this.toDate) : undefined;
+    searchRequest.range.from = this.fromDate ? this.timeService.convertUnixToNumerical(this.fromDate) : undefined;
 
     return searchRequest;
   }

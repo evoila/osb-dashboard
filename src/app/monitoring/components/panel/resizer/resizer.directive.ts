@@ -23,8 +23,13 @@ export class ResizerDirective implements AfterViewInit, OnDestroy {
       if (k && this.draghandleLeft && this.draghandleRight && this.el) {
         this.initialSize = (this.el.nativeElement.offsetWidth / this.el.nativeElement.parentNode.offsetWidth) * 100;
         this.size = this.initialSize;
+        const height = (this.el.nativeElement.offsetHeight * 0.9) / 2;
+
         this.draghandleRight.style.display = "inline";
         this.draghandleLeft.style.display = "inline";
+        this.draghandleRight.style.margin = `${height}px 0 0 0`;
+        this.draghandleLeft.style.margin = `${height}px 0 0 0`;
+
       } else {
         this.draghandleRight.style.display = "none";
         this.draghandleLeft.style.display = "none";
@@ -60,11 +65,11 @@ export class ResizerDirective implements AfterViewInit, OnDestroy {
 
   constructor(private el: ElementRef, @Inject(DOCUMENT) private document) {
     this.draghandleLeft = document.createElement('i');
-    this.draghandleLeft.style.cssText = `cursor: col-resize; width: 2px; background-color: black; height: 100%; float: left;`;
+    this.draghandleLeft.style.cssText = `cursor: col-resize; width: 6px; background-color: grey; height: 10%; float: left;`;
 
 
     this.draghandleRight = document.createElement('i');
-    this.draghandleRight.style.cssText = `cursor: col-resize; width: 2px; background-color: black; height: 100%; float: right;`;
+    this.draghandleRight.style.cssText = `cursor: col-resize; width: 6px; background-color: grey; height: 10%; float: right;`;
 
     this.draghandleLeft.style.display = "none";
     this.draghandleRight.style.display = "none";
