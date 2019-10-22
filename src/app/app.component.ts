@@ -9,7 +9,6 @@ import {
 } from 'app/shared';
 import { Router, ActivatedRoute } from '@angular/router';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
-import { ExtensionUrl, Server } from './core/extension-url';
 
 
 @Component({

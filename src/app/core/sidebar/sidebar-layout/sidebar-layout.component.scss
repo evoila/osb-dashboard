@@ -42,5 +42,12 @@
   @include media-breakpoint-up(md) {
     padding-left: $sidebar-width;
   }
+  
 }
 
+@media(max-width: 768px){
+  .content {
+    // make sure that no content is hidden behind the responsive navbar which is 50px high
+    margin-top: 55px; 
+  } 
+}
