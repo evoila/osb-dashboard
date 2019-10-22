@@ -1,6 +1,7 @@
 .timefilter-toolbar {
     display: grid;
-    grid-template-columns: 2fr 1fr 2fr 1fr;
+    grid-template-columns:  1fr 1fr;
+    grid-column-gap: 10vw;
     border: 1px solid #dee2e6;
     border-bottom: 2px solid #dee2e6 !important;
 }
@@ -9,6 +10,12 @@
 }
 .input-group label {
     padding: 0 0.5em 0 0.5em;
+}
+.date-picker-group {
+    display: flex;
+    .form-inline {
+        padding-right: 0.3em;
+    }
 }
 button.calendar, button.calendar:active {
     width: 2.75rem;

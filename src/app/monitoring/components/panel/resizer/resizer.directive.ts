@@ -114,6 +114,7 @@ export class ResizerDirective implements AfterViewInit, OnDestroy {
     window.addEventListener('mouseleave', cancelEditing);
 
     window.addEventListener('mousemove', (e: MouseEvent) => {
+      e.preventDefault();
       if (e.buttons === 0) {
         cancelEditing(e);
       }
