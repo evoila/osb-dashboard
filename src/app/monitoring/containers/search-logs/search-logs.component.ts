@@ -80,11 +80,29 @@ export class SearchLogsComponent implements OnInit {
     this.error = false;
 
     this.fireRequest(request).subscribe((data: SearchResponse) => {
+
       this.hits = data.hits;
       this.hitsSubject.next(this.hits);
+    }, (error) => {
+      // get forwarded elastic search error
+      var ese = error.error.error;
+      if (ese){
+        // this line makes an no-result hint show up on gui, telling the user to check his search input
+        this.error = true;
+        /* // detailled error information is not shown to the user, but it could easily be done
+        const errorType :String = ese.failed_shards[0].reason.caused_by.caused_by.type;  
+        const errorReason :String = ese.failed_shards[0].reason.reason;
+        const errorReasonDetail :String = ese.failed_shards[0].reason.caused_by.caused_by.reason;
+        */
+      }
+      else{
+        // unknown problem
+        // error thrown because of network- or infrastructure problems
+      }
+      
     });
   }
-
+  
   private tooglePageNavigation() {
     const request = this.buildSearchRequest(this.page * this.size, false);
     this.loadingSubject.next(true);
