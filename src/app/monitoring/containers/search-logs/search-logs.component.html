@@ -11,11 +11,12 @@
       (fromDateChange)="setFromDate($event)" (toDateChange)="setToDate($event)"></sb-timefilter>
   </div>
   <main>
-    <sb-log-search *ngIf="buttonDisabled() && !error" [pagination]="page" [steps]="size" [hits]="hits$" (more)="flick($event)">
+    <sb-log-search *ngIf="!buttonDisabled() && !error" [pagination]="page" [steps]="size" [hits]="hits$" (more)="flick($event)">
     </sb-log-search>
     <div *ngIf="error" id="error">
         <i [ngClass]="{'far fa-eye': true}" class="noresulticon"></i>
         <p id="noresultmsg"> No Data found. Please check your requests. </p>
     </div>
+    
   </main>
 </div>
