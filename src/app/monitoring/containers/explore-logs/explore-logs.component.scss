@@ -1,23 +1,41 @@
+@import '../../../core/core';
+
+$text-color: $gray-700;
+$text-color-light: $gray-600;
+
 .container {
-    margin-top: 1%;
-    min-height: 60vh;
+    margin-top: 3vh;
     max-width: 100vw;
 }
 .head {
     display: grid;
-    grid-template-columns: [first]  15% [calendar] 10% [second] 60% [third] 10% [third-end];
-    grid-gap: 1%;
-    
+    grid-template-columns: [first] 40px 25% [calendar] 40px [search] 40% [third] 80px [third-end];
+    grid-gap: 1em;
+    margin-bottom: 1%;
 }
 
 .appId{
-    justify-self: end;
+    justify-self: stretch;
+    align-self: start;
 }
 button { 
     height: 2.4em;
+    align-self: start;
 }
 .time-filter {
     grid-column-start: first;
     grid-column-end: third-end;
     justify-self: center;
+}
+#logfilter {
+    height: 2.4em;
+}
+
+#applabel {
+    grid-row: 1;
+    color: $text-color-light;
+    font-size: 1.2em;
+    margin: 0rem;
+    display: flex;
+    align-items: center;
 }

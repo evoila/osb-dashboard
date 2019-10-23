@@ -41,6 +41,7 @@ export class LiveLogsComponent implements OnInit, OnDestroy {
     private timeService: TimeService) { }
 
   ngOnInit() {
+
   }
   ngOnDestroy() {
     if (this.streamSub) {
