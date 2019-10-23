@@ -8,6 +8,7 @@ import { Subject, Observable } from 'rxjs';
 import { tap, filter, catchError } from 'rxjs/operators';
 import { NotificationService, NotificationType, Notification } from '../../../core/notification.service';
 import { TimeService } from '../../shared/services/time.service';
+import { ShortcutService } from '../../../core/services/shortcut.service';
 
 @Component({
   selector: 'sb-search-logs',
@@ -21,6 +22,7 @@ export class SearchLogsComponent implements OnInit {
   public error: boolean = false;
 
 
+
   //number of elements per request
   size = 100;
 
@@ -30,7 +32,7 @@ export class SearchLogsComponent implements OnInit {
 
   // Boolean Subject that emits wether there is an ongoing request
   loadingSubject = new Subject<boolean>();
-  loading = new Observable<boolean>(k => this.loadingSubject.subscribe(k));
+  loading$ = new Observable<boolean>(k => this.loadingSubject.subscribe(k));
 
 
   /* Timestamp of the last request Important for pagination cause search results might 
@@ -47,9 +49,19 @@ export class SearchLogsComponent implements OnInit {
   constructor(
     private searchService: SearchService,
     private notification: NotificationService,
-    private timeService: TimeService) { }
+    private timeService: TimeService,
+    private shortcut: ShortcutService) { }
 
   ngOnInit() {
+    this.shortcut.bindShortcut({
+      key: "Enter",
+      description: "Trigger Search Request",
+      view: "Search Logs View"
+    }).subscribe(k => {
+      if (!this.buttonDisabled()) {
+        this.search();
+      }
+    });
   }
 
   setScope(event: ServiceBinding) {
@@ -84,25 +96,26 @@ export class SearchLogsComponent implements OnInit {
       this.hits = data.hits;
       this.hitsSubject.next(this.hits);
     }, (error) => {
-      // get forwarded elastic search error
-      var ese = error.error.error;
-      if (ese){
-        // this line makes an no-result hint show up on gui, telling the user to check his search input
-        this.error = true;
-        /* // detailled error information is not shown to the user, but it could easily be done
-        const errorType :String = ese.failed_shards[0].reason.caused_by.caused_by.type;  
-        const errorReason :String = ese.failed_shards[0].reason.reason;
-        const errorReasonDetail :String = ese.failed_shards[0].reason.caused_by.caused_by.reason;
-        */
+      if (error && error.error && error.error.error) {
+        // get forwarded elastic search error
+        var ese = error.error.error;
+        if (ese) {
+          // this line makes an no-result hint show up on gui, telling the user to check his search input
+          this.error = true;
+          /* // detailled error information is not shown to the user, but it could easily be done
+          const errorType :String = ese.failed_shards[0].reason.caused_by.caused_by.type;  
+          const errorReason :String = ese.failed_shards[0].reason.reason;
+          const errorReasonDetail :String = ese.failed_shards[0].reason.caused_by.caused_by.reason;
+          */
+        }
+        else {
+          // unknown problem
+          // error thrown because of network- or infrastructure problems
+        }
       }
-      else{
-        // unknown problem
-        // error thrown because of network- or infrastructure problems
-      }
-      
     });
   }
-  
+
   private tooglePageNavigation() {
     const request = this.buildSearchRequest(this.page * this.size, false);
     this.loadingSubject.next(true);
@@ -150,7 +163,7 @@ export class SearchLogsComponent implements OnInit {
   private fireRequest(request: SearchRequest): Observable<SearchResponse> {
     return this.searchService.getSearchResults(request).pipe(
       tap((data: SearchResponse) => {
-        if (!data.timed_out && data.hits.total == 0) {
+        if (!data.timed_out && data.hits.total === 0) {
           this.notification.addSelfClosing(
             new Notification(
               NotificationType.Info,

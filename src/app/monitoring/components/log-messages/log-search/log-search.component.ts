@@ -1,7 +1,7 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Hits } from '../../../model/search-response';
-import { Observable, Subscription } from 'rxjs';
-
+import { Observable, Subscription, Subject } from 'rxjs';
+import { ShortcutService } from '../../../../core/services/shortcut.service';
 import {
   trigger,
   state,
@@ -9,6 +9,7 @@ import {
   animate,
   transition
 } from '@angular/animations';
+import { tap, debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'sb-log-search',
@@ -58,7 +59,7 @@ export class LogSearchComponent implements OnInit, OnDestroy {
   results: Hits;
   isCollapsed: Array<boolean> = [];
 
-  constructor() { }
+  constructor(private shortcut: ShortcutService, private cd: ChangeDetectorRef) { }
   collapse(index: number) {
     this.isCollapsed[index] = !this.isCollapsed[index];
   }
@@ -74,6 +75,38 @@ export class LogSearchComponent implements OnInit, OnDestroy {
         this.setInterval();
       }
     });
+
+
+    // This needs more refinment because this is a more complex topic because keydown is a blocking the ui
+    // Whe a user stays on the arrow key we want to count up the pages but do just one request every 300 ms
+    const leftSubject = new Subject<any>();
+    this.shortcut.bindShortcut({
+      key: "ArrowLeft",
+      description: "Navigate to previous page",
+      view: "Search Logs View"
+    }).subscribe(k => {
+      if (this.page - 1 >= 0) {
+        this.page -= 1;
+        this.loadMore(this.page, false);
+      }
+    });
+
+
+
+
+    this.shortcut.bindShortcut({
+      key: "ArrowRight",
+      description: "Navigate to next page",
+      view: "Search Logs View"
+    }).pipe(tap(k => {
+      // Whe a user stays on the arrow key we want to count up the pages but do just one request every 300 ms
+      if (this.page + 1 <= this.pages) {
+        this.page += 1;
+        this.cd.detectChanges();
+      }
+    }), debounceTime(300)).subscribe(k => {
+      this.loadMore(this.page, true);
+    });
   }
   setInterval() {
     this.pageInterval = [];
@@ -84,7 +117,9 @@ export class LogSearchComponent implements OnInit, OnDestroy {
   }
   loadMore(page: number, goForward: boolean) {
     this.direction = goForward ? 'notReversed' : 'reversed';
-    this.results.hits = [];
+    if (this.results) {
+      this.results.hits = [];
+    }
     goForward ? this.more.emit(page) : this.more.emit(page);
     this.isCollapsed = [];
   }

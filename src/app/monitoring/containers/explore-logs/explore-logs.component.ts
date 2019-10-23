@@ -10,6 +10,7 @@ import { tap, filter, timestamp } from 'rxjs/operators';
 import { NotificationService, Notification, NotificationType } from '../../../core/notification.service';
 import * as moment from 'moment/moment';
 import { TimeService } from '../../shared/services/time.service';
+import { ShortcutService } from '../../../core/services/shortcut.service';
 
 @Component({
   selector: 'sb-explore-logs',
@@ -48,9 +49,19 @@ export class ExploreLogsComponent implements OnInit {
   constructor(
     private searchService: SearchService,
     private notification: NotificationService,
-    private timeService: TimeService) { }
+    private timeService: TimeService,
+    private shortcut: ShortcutService) { }
 
   ngOnInit() {
+    this.shortcut.bindShortcut({
+      key: "Enter",
+      description: "Trigger Search Request",
+      view: "Search Logs View"
+    }).subscribe(k => {
+      if (Object.keys(this.scope).length) {
+        this.fireSearchRequest();
+      }
+    });
   }
 
   fireSearchRequest() {

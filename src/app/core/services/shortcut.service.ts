@@ -1,6 +1,8 @@
 import { Injectable, Inject } from '@angular/core';
 import { DOCUMENT, EventManager } from '@angular/platform-browser';
-import { Observable } from 'rxjs';
+import { Observable, timer } from 'rxjs';
+import { take } from 'rxjs/operators';
+
 
 
 export type KeyboardBinding = {
@@ -50,10 +52,8 @@ export class ShortcutService {
 
         return new Observable(observer => {
             const callback = (e) => {
-                //if (e.code == mBinding.key) {
-                e.preventDefault();
+                // e.preventDefault();
                 observer.next(e);
-                //}
             };
             const listenReference = this.eventManager.addEventListener(mBinding.element, event, callback);
             return () => {

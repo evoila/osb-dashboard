@@ -20,7 +20,6 @@
     <table class="table">
       <tbody>
         <tr (click)="collapse(i)" *ngFor="let result of results.hits; let i = index" [@flyInOut]="direction">
-
           <td>
             <code>{{result._source.logMessage}}</code>
             <div [ngbCollapse]="!isCollapsed[i]">
