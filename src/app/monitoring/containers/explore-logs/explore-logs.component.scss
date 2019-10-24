@@ -11,7 +11,7 @@ $text-color-light: $gray-600;
     display: grid;
     grid-template-columns: [first] 40px 25% [calendar] 40px [search] 40% [third] 80px [third-end];
     grid-gap: 1em;
-    margin-bottom: 1%;
+    margin-bottom: 2vh;
 }
 
 .appId{
@@ -36,6 +36,4 @@ button {
     color: $text-color-light;
     font-size: 1.2em;
     margin: 0rem;
-    display: flex;
-    align-items: center;
 }
