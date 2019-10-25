@@ -37,7 +37,7 @@ export class ChartDirective implements OnInit, OnChanges, OnDestroy {
   private subscriptions: Subscription[] = [];
   private convertDate = label => {
     if (typeof label === 'string' && Number.isNaN(Number(label))) {
-      if (moment(label, 'DD.MM.YYYY hh:mm:ss').isValid()) {
+      if (moment(label, 'DD.MM hh:mm:ss').isValid()) {
         return label;
       } else {
         return this.dateFormat.transformDateFormat(label);

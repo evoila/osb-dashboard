@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, Inject } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { Field } from '../../../../aggregation-editor/model/field';
 import { SearchService } from '../../../../shared/services/search.service';
@@ -6,10 +6,12 @@ import { Aggregation } from '../../../model/aggregation';
 import { Store } from '@ngrx/store';
 import { BindingsState } from 'app/monitoring/shared/store/reducers/binding.reducer';
 import { CfAuthParameterService } from 'app/monitoring/shared/services/cfauth-param.service';
-import { take, last, map, filter } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 import { AggregationRequestObject } from 'app/monitoring/chart-configurator/model/aggregationRequestObject';
-import { Subscriber, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { ChartIncreationAction } from '../../../store/actions/chart.increation.action';
+
+import { WindowService } from '../../../../services/window.service';
 
 @Component({
   selector: 'sb-create-aggregation',
@@ -46,7 +48,8 @@ export class CreateAggregationComponent implements OnInit {
     private readonly searchService: SearchService,
     storeBindings: Store<BindingsState>,
     authParamService: CfAuthParameterService,
-    public store: Store<ChartIncreationAction>
+    public store: Store<ChartIncreationAction>,
+    private ws: WindowService
   ) {
     this.authParamService = authParamService.construct(storeBindings);
   }
@@ -64,6 +67,9 @@ export class CreateAggregationComponent implements OnInit {
   }
 
   buttonListener(type: string) {
+    if (type === "test") {
+      this.ws.nativeWindow.scrollTo(0, 0);
+    }
     this.buttonSubject.next(type);
   }
 

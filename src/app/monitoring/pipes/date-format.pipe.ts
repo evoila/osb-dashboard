@@ -7,7 +7,7 @@ import { TimeService } from '../shared/services/time.service';
   name: 'dateFormat'
 })
 export class DateFormatPipe implements PipeTransform {
-  private validFormats: Array<any> = ['DD/MM/YYYY', 'DD-MM-YYYY', 'DD.MM.YYYY', moment.ISO_8601];
+  private validFormats: Array<any> = ['DD/MM', 'DD-MM', 'DD.MM', moment.ISO_8601];
 
   public constructor(private timeService: TimeService) {
 
@@ -19,7 +19,7 @@ export class DateFormatPipe implements PipeTransform {
     }
     const momentTs = moment.unix(value);
     if (momentTs.isValid()) {
-      const ts = momentTs.format('DD.MM.YYYY hh:mm:ss');
+      const ts = momentTs.format('DD.MM hh:mm:ss');
 
       return ts;
     }
@@ -28,15 +28,15 @@ export class DateFormatPipe implements PipeTransform {
 
     if (!parsed || !parsed.isValid()) { return value; }
 
-    return parsed.format('DD.MM.YYYY');
+    return parsed.format('DD.MM');
   }
   public transformDateFormat(value: any) {
-    return moment(value).format('DD.MM.YYYY hh:mm:ss');
+    return moment(value).format('DD.MM hh:mm:ss');
   }
   public transformMillis(value: any) {
     const momentTs = this.timeService.getMomentJsObject(value);
     if (momentTs.isValid()) {
-      const ts = momentTs.format('DD.MM.YYYY hh:mm:ss');
+      const ts = momentTs.format('DD.MM hh:mm:ss');
 
       return ts;
     } else {
