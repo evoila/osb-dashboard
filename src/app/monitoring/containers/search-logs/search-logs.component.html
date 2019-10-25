@@ -1,4 +1,4 @@
-<div class="container" sbSpinner [condition$]="loading">
+<div class="container" sbSpinner [condition$]="loading$">
   <div class="head">
     <label id="applabel"> App:</label>
     <sb-appid class="appId" [selected]="scope.appId" (app)="setScope($event)" id="appid"></sb-appid>
@@ -17,6 +17,6 @@
       <i [ngClass]="{'far fa-eye': true}" class="noresulticon"></i>
       <p id="noresultmsg"> No Data found. Please check your requests. </p>
     </div>
-    
+
   </main>
 </div>

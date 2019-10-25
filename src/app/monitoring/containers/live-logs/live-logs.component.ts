@@ -7,6 +7,7 @@ import { SearchRequest, TimeRange } from '../../model/search-request';
 import { SearchResponse, Hits } from '../../model/search-response';
 import * as moment from 'moment/moment';
 import { TimeService } from '../../shared/services/time.service';
+import { ShortcutService } from '../../../core/services/shortcut.service';
 
 @Component({
   selector: 'sb-live-logs',
@@ -14,7 +15,7 @@ import { TimeService } from '../../shared/services/time.service';
   styleUrls: ['./live-logs.component.scss']
 })
 export class LiveLogsComponent implements OnInit, OnDestroy {
-  scope: ServiceBinding;
+  scope: ServiceBinding = {} as ServiceBinding;
   streaming: boolean = false;
   private fromDate: any;
   private toDate: any;
@@ -38,9 +39,21 @@ export class LiveLogsComponent implements OnInit, OnDestroy {
   maxElements = 5000;
 
   constructor(private searchService: SearchService,
-    private timeService: TimeService) { }
+    private timeService: TimeService,
+    private shortcut: ShortcutService
+  ) { }
 
   ngOnInit() {
+
+    this.shortcut.bindShortcut({
+      key: "Enter",
+      description: "Trigger Search Request",
+      view: "Search Logs View"
+    }).subscribe(k => {
+      if (Object.keys(this.scope).length) {
+        this.toggleStream();
+      }
+    });
 
   }
   ngOnDestroy() {
@@ -49,8 +62,9 @@ export class LiveLogsComponent implements OnInit, OnDestroy {
     }
   }
   setScope(scope: ServiceBinding) {
-    this.scope = scope;
-    this.appId = this.scope.appId;
+    if (Object.keys(scope).length) {
+      this.scope = scope;
+    }
   }
 
   toggleStream() {

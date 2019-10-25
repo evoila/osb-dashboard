@@ -1,6 +1,8 @@
 import { Injectable, Inject } from '@angular/core';
 import { DOCUMENT, EventManager } from '@angular/platform-browser';
-import { Observable } from 'rxjs';
+import { Observable, timer } from 'rxjs';
+import { take } from 'rxjs/operators';
+
 
 
 
