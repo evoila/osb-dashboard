@@ -1,11 +1,9 @@
 <div class="container" sbSpinner [condition$]="loading$">
   <div class="head">
+    <label id="applabel"> App:</label>
     <sb-appid class="appId" [selected]="scope.appId" (app)="setScope($event)" id="appid"></sb-appid>
     <button (click)="showFilter = !showFilter" class="btn btn-light"><i class="fas fa-calendar-alt"></i></button>
-    <div>
-      <input type="text" class="form-control" [(ngModel)]="query" id="search">
-      <small for="search" class="form-text text-muted"> Search Request: MUST be a Lucene Query</small>
-    </div>
+    <input type="text" class="form-control" [(ngModel)]="query" id="search" placeholder="input Lucene Query here">
     <button (click)="search()" class="btn btn-primary" [disabled]="buttonDisabled()">Search</button>
     <sb-timefilter *ngIf="showFilter" class="time-filter" [toDate]="toDate" [fromDate]="fromDate"
       (fromDateChange)="setFromDate($event)" (toDateChange)="setToDate($event)"></sb-timefilter>

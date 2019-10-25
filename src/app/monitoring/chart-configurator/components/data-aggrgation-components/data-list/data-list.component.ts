@@ -8,7 +8,7 @@ import { ChartIncreationState } from 'app/monitoring/chart-configurator/store/re
 import { getChartIncreationAggregations, DeleteChartAggregations, SetChartAggregations, EditAggregation } from 'app/monitoring/chart-configurator/store';
 import { CfAuthParameterService } from 'app/monitoring/shared/services/cfauth-param.service';
 import { BindingsState } from 'app/monitoring/shared/store/reducers/binding.reducer';
-import { take } from 'rxjs/operators';
+import { take, filter } from 'rxjs/operators';
 
 @Component({
   selector: 'sb-data-list',
@@ -37,7 +37,7 @@ export class DataListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.store.select(getChartIncreationAggregations).subscribe(
+    this.store.select(getChartIncreationAggregations).pipe(filter(k => JSON.stringify(this.entries) != JSON.stringify(k))).subscribe(
       k => this.entries = { ...k }
     )
   }

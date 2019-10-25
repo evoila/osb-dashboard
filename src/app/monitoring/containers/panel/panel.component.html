@@ -2,19 +2,33 @@
   <sb-timefilter [toDate]="toDateView" [fromDate]="fromDateView" (fromDateChange)="setFromDate($event)"
     (toDateChange)="setToDate($event)" class="timefilter">
   </sb-timefilter>
+  <span #toggleSidePanelEle [ngClass]="{'draghandle': true, 'active': !sidePanelHidden}" (click)="toggleSidePanel()">
+    <span>
+      <i class="fas fa-chevron-left"></i>
+    </span>
+  </span>
   <div id="mainview">
+    <aside id="sidePanel" [ngClass]="{'active': !sidePanelHidden}" *ngIf="!sidePanelHidden">
+      <sb-add-chart-sidepanel (ended)="ended($event)" (started)="started($event)"></sb-add-chart-sidepanel>
+    </aside>
     <div #chartcontainer id="chartcontainer" [ngClass]="{'active': !sidePanelHidden, 'chartcontainer': true}"
       *ngIf="panel" cdkDropList id="list-two" [cdkDropListConnectedTo]="['list-one']"
       (cdkDropListDropped)="drop($event)">
-      <section *ngIf="panel.charts.length == 0">
-        <h2>There are no Charts in your Panel :-(</h2>
-        <h6>But we can fix this for you. Just press the handle on the left and drag them onto this text</h6>
-      </section>
       <div class="inner-chart-container" cdkDropList (cdkDropListDropped)="switchCharts($event)">
+        <section *ngIf="panel.charts.length == 0" id="nodata">
+          <i [ngClass]="{'far fa-eye': true}" class="noresulticon"></i>
+          <p class="noresultmsg">
+            There are no Charts in your Panel <br />
+            But we can fix this for you. Just press the handle on the left and drag them onto this
+            text
+          </p>
+
+        </section>
         <sb-chart sbResizer [containerId]="'chartcontainer'" [onEdit]="editMode$" [editControls]="editControl$"
           (sizeEmitter)="saveSize($event, chart)" [ngClass]="{'chart-onedit': edit}"
           [ngStyle]="{'flex-basis': chart.size + '%'}" *ngFor="let chart of panel.charts trackBy: trackByFn"
-          [chart]="chart" cdkDrag [cdkDragDisabled]="!edit">
+          [chart]="chart" cdkDrag [cdkDragDisabled]="!edit" (cdkDragStarted)="started($event)"
+          (cdkDragEnded)="ended($event)">
           <i class="fas fa-trash" *ngIf="edit" (click)="deleteChart(chart)"></i>
           <i class="fas fa-edit" (click)="toggleEditmode()" *ngIf="!edit"></i>
           <div class="drag-handle" *ngIf="edit" cdkDragHandle>
@@ -28,16 +42,8 @@
         </sb-chart>
       </div>
     </div>
-
-    <aside id="sidePanel" [ngClass]="{'active': !sidePanelHidden}" *ngIf="!sidePanelHidden">
-      <sb-add-chart-sidepanel></sb-add-chart-sidepanel>
-    </aside>
   </div>
-  <span #toggleSidePanelEle [ngClass]="{'draghandle': true, 'active': !sidePanelHidden}" (click)="toggleSidePanel()">
-    <span>
-      <i class="fas fa-chevron-left"></i>
-    </span>
-  </span>
+
 </div>
 <aside id="edit-controls" *ngIf="edit">
   <div class="button-box">
@@ -46,3 +52,5 @@
     <button class="btn btn-primary" (click)="saveEdit()">save</button>
   </div>
 </aside>
+
+<sb-notification-icon *ngIf="addingChart" [classes]="addingChartClasses"></sb-notification-icon>

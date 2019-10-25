@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, AfterViewInit } from '@angular/core';
 import { BindingService } from '../../services/binding.service';
 import { ServiceBinding } from '../../../model/service-binding';
 import { NotificationType } from 'app/core';
@@ -10,6 +10,8 @@ import {
   NotificationService,
   Notification
 } from '../../../../core/notification.service';
+import { take } from 'rxjs/operators';
+import { timer } from 'rxjs';
 
 /*
  * Fallback Textfield offers the possibility to Type-In AppID
@@ -31,7 +33,7 @@ export class AppidComponent implements OnInit {
   serviceBindings$: Observable<Array<ServiceBinding> | null>;
   fallBackAppName: string;
   fallBackSpace: string;
-  choosen: number;
+  choosen: number = -1;
   constructor(
     public bindingService: BindingService,
     private notification: NotificationService,
@@ -49,18 +51,24 @@ export class AppidComponent implements OnInit {
         );
       }
       this.serviceBindings = [...data];
+
       this.choosen = data!!
         .map((binding, index) => {
           return { binding, index };
         })
         .filter(binding => binding.binding.appId == this.appId)
         .map(k => k.index)[0];
-    });
+
+      this.choosen = this.choosen == -1 || !this.choosen ? 0 : this.choosen;
+
+
+      timer(0, 100).pipe(take(1)).subscribe( k => this.setChoosen());
+
+    })
+
   }
   public setChoosen() {
-    if (this.choosen) {
-      this.app.next(this.serviceBindings!![this.choosen]);
-    }
+    this.app.next(this.serviceBindings!![this.choosen]);
   }
   public fallBackTextFieldUpdate() {
     if (this.fallBackAppName && this.fallBackSpace) {

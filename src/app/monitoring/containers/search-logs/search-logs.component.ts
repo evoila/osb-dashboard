@@ -65,7 +65,9 @@ export class SearchLogsComponent implements OnInit {
   }
 
   setScope(event: ServiceBinding) {
-    this.scope = event;
+    if (event) {
+      this.scope = event;
+    }
   }
   flick(page: number) {
     this.page = page;
@@ -96,6 +98,7 @@ export class SearchLogsComponent implements OnInit {
       this.hits = data.hits;
       this.hitsSubject.next(this.hits);
     }, (error) => {
+
       if (error && error.error && error.error.error) {
         // get forwarded elastic search error
         var ese = error.error.error;
@@ -113,6 +116,7 @@ export class SearchLogsComponent implements OnInit {
           // error thrown because of network- or infrastructure problems
         }
       }
+
     });
   }
 

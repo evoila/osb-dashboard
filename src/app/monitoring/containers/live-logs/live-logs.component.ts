@@ -44,6 +44,7 @@ export class LiveLogsComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+
     this.shortcut.bindShortcut({
       key: "Enter",
       description: "Trigger Search Request",
@@ -53,6 +54,7 @@ export class LiveLogsComponent implements OnInit, OnDestroy {
         this.toggleStream();
       }
     });
+
   }
   ngOnDestroy() {
     if (this.streamSub) {
