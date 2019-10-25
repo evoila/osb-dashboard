@@ -1,3 +1,8 @@
+@import '../../../core/core';
+
+$text-color: $gray-700;
+$text-color-light: $gray-600;
+
 .input-group {
     margin: 0 1em 0 1em;
 }
@@ -59,9 +64,9 @@
 #sidePanel {
     width: 21.2vw;
     position: fixed;
-    top: 9em;
+    top: 9.6em;
     right: 0;
-    height: 100vh;
+    height: 89vh;
     overflow: scroll;
 
 }
@@ -78,7 +83,8 @@ aside > * {
     display: inline-block;
     font-size: 15pt;
     position: fixed;
-    bottom: 50vh;
+    top: 50vh;
+    z-index: 400;
     text-align: center;
     right: 0;
     height: 60px;
@@ -119,6 +125,23 @@ aside > * {
 .button-box button{
     margin-right: 15px;
     margin-bottom: 5px;
+}
+
+#nodata {
+    width: fit-content;
+    margin: auto;
+    margin-top: 10rem;
+    text-align: center;
+}
+.noresulticon{
+    font-size: 38px;
+    color: $text-color-light;
+}
+.noresultmsg {
+    width: fit-content;
+    margin: auto;
+    color: $text-color;
+    margin-top: 3rem;
 }
 /* //Shaky View on edit for the charts
  .chart-onedit:nth-child(even){

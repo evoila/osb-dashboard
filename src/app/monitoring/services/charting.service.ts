@@ -246,7 +246,6 @@ export class ChartingService {
         this.insertIntoSubIndex(chart['data'], subIndex, valueToUse);
       }
     });
-    console.log(chart);
   }
 
   private sortData(chart: Chart): Chart {

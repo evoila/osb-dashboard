@@ -1,8 +1,9 @@
 <div class="container" sbSpinner [condition$]="loading$">
   <div class="head">
+    <label id="applabel"> App:</label>
     <sb-appid class="appId" [selected]="appId" (app)="setScope($event)"></sb-appid>
     <button (click)="showFilter = !showFilter" class="btn btn-light"><i class="fas fa-calendar-alt"></i></button>
-    <sb-log-filter (update)="updateFilters($event)"></sb-log-filter>
+    <sb-log-filter (update)="updateFilters($event)" id="logfilter"></sb-log-filter>
     <button (click)="fireSearchRequest()" class="btn btn-primary" [disabled]="!scope">Search</button>
     <sb-timefilter *ngIf="showFilter" class="time-filter" [toDate]="toDate" [fromDate]="fromDate"
       (fromDateChange)="setFromDate($event)" (toDateChange)="setToDate($event)"></sb-timefilter>

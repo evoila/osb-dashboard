@@ -20,7 +20,7 @@ export class ExploreLogsComponent implements OnInit {
   fromDate: any = moment().subtract(2, "days").unix();
   toDate: any = moment().unix();
   filter: Filter;
-  scope: ServiceBinding;
+  scope: Partial<ServiceBinding> = {};
   hits: Hits;
 
   loadingSubject = new Subject<boolean>();
