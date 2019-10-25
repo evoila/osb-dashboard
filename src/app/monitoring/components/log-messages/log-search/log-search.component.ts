@@ -1,6 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { Hits } from '../../../model/search-response';
-import { Observable, Subscription, Subject } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { ShortcutService } from '../../../../core/services/shortcut.service';
 import {
   trigger,
@@ -59,7 +59,7 @@ export class LogSearchComponent implements OnInit, OnDestroy {
   results: Hits;
   isCollapsed: Array<boolean> = [];
 
-  constructor(private shortcut: ShortcutService, private cd: ChangeDetectorRef) { }
+  constructor(private shortcut: ShortcutService) { }
   collapse(index: number) {
     this.isCollapsed[index] = !this.isCollapsed[index];
   }
@@ -79,16 +79,16 @@ export class LogSearchComponent implements OnInit, OnDestroy {
 
     // This needs more refinment because this is a more complex topic because keydown is a blocking the ui
     // Whe a user stays on the arrow key we want to count up the pages but do just one request every 300 ms
-    const leftSubject = new Subject<any>();
     this.shortcut.bindShortcut({
       key: "ArrowLeft",
       description: "Navigate to previous page",
       view: "Search Logs View"
-    }).subscribe(k => {
+    }).pipe(tap(k => {
       if (this.page - 1 >= 0) {
         this.page -= 1;
-        this.loadMore(this.page, false);
       }
+    }), debounceTime(300)).subscribe(k => {
+      this.loadMore(this.page, false);
     });
 
 
@@ -102,7 +102,6 @@ export class LogSearchComponent implements OnInit, OnDestroy {
       // Whe a user stays on the arrow key we want to count up the pages but do just one request every 300 ms
       if (this.page + 1 <= this.pages) {
         this.page += 1;
-        this.cd.detectChanges();
       }
     }), debounceTime(300)).subscribe(k => {
       this.loadMore(this.page, true);
