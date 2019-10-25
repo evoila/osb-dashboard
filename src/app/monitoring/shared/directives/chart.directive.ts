@@ -225,7 +225,7 @@ export class ChartDirective implements OnInit, OnChanges, OnDestroy {
     return new ChartJs(ctx, {
       type: this.type,
       data: data as ChartData,
-      options: options
+      options
     });
   }
 

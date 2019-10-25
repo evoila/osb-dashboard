@@ -15,6 +15,53 @@ export class ResizerDirective implements AfterViewInit, OnDestroy {
   // state before editing
   initialSize: number;
 
+  private cancelEditing = e => {
+    if (this.resizing) {
+      this.resizing = false;
+      this.enableChart();
+    }
+  }
+  private mousemoveFunc = (e: MouseEvent) => {
+    e.preventDefault();
+    if (e.buttons === 0) {
+      this.cancelEditing(e);
+    }
+    if (this.resizing && !this.debounceLock) {
+      this.debounceLock = true;
+      const widthPercentage = (this.el.nativeElement.offsetWidth / this.el.nativeElement.parentNode.offsetWidth) * 100;
+      let diff = this.resizingLeft ? (e.clientX - this.x) : (this.x - e.clientX);
+      //diff *= 1.3; // multiplier for faster resize
+      this.x = e.clientX;
+      let diffPercent = (diff / this.el.nativeElement.parentNode.offsetWidth) * 100;
+      if (diffPercent != 0) {
+        if (diffPercent < 0) {
+          if (widthPercentage < 50) {
+            diffPercent = 50;
+          }
+          else if (widthPercentage >= 50) {
+            diffPercent = 100;
+          }
+        } else if (diffPercent > 0) {
+          if (widthPercentage == 100) {
+            diffPercent = 50;
+          } else {
+            diffPercent = 33;
+          }
+        } else {
+          diffPercent = widthPercentage;
+        }
+        this.size = diffPercent;
+        this.setChartSize(diffPercent);
+
+        timer(350, 351).pipe(take(1)).subscribe(k => {
+          this.debounceLock = false;
+        });
+      } else {
+        this.debounceLock = false;
+      }
+
+    }
+  };
   private subscriptions: Subscription[] = [];
   @Input()
   set onEdit(onEdit: Observable<boolean>) {
@@ -30,7 +77,16 @@ export class ResizerDirective implements AfterViewInit, OnDestroy {
         this.draghandleRight.style.margin = `${height}px 0 0 0`;
         this.draghandleLeft.style.margin = `${height}px 0 0 0`;
 
+        window.addEventListener('mouseup', this.cancelEditing);
+        window.addEventListener('mouseleave', this.cancelEditing);
+        window.addEventListener('mousemove', this.mousemoveFunc);
+
       } else {
+        // remove the eventListeners as soon as the editing has ended
+        window.removeEventListener('mousemove', this.mousemoveFunc);
+        window.removeEventListener('mouseup', this.cancelEditing);
+        window.removeEventListener('mouseleave', this.cancelEditing);
+        // disable drag handles
         this.draghandleRight.style.display = "none";
         this.draghandleLeft.style.display = "none";
       }
@@ -103,58 +159,7 @@ export class ResizerDirective implements AfterViewInit, OnDestroy {
     this.subscriptions.forEach(k => k.unsubscribe());
   }
   ngAfterViewInit() {
-    const cancelEditing = e => {
-      if (this.resizing) {
-        this.resizing = false;
-        this.enableChart();
-      }
-    }
 
-    window.addEventListener('mouseup', cancelEditing);
-    window.addEventListener('mouseleave', cancelEditing);
-
-    window.addEventListener('mousemove', (e: MouseEvent) => {
-      e.preventDefault();
-      if (e.buttons === 0) {
-        cancelEditing(e);
-      }
-      if (this.resizing && !this.debounceLock) {
-        this.debounceLock = true;
-        const widthPercentage = (this.el.nativeElement.offsetWidth / this.el.nativeElement.parentNode.offsetWidth) * 100;
-        let diff = this.resizingLeft ? (e.clientX - this.x) : (this.x - e.clientX);
-        //diff *= 1.3; // multiplier for faster resize
-        this.x = e.clientX;
-        let diffPercent = (diff / this.el.nativeElement.parentNode.offsetWidth) * 100;
-        if (diffPercent != 0) {
-          if (diffPercent < 0) {
-            if (widthPercentage < 50) {
-              diffPercent = 50;
-            }
-            else if (widthPercentage >= 50) {
-              diffPercent = 100;
-            }
-          } else if (diffPercent > 0) {
-            if (widthPercentage == 100) {
-              diffPercent = 50;
-            } else {
-              diffPercent = 33;
-            }
-          } else {
-            diffPercent = widthPercentage;
-          }
-          this.size = diffPercent;
-          this.setChartSize(diffPercent);
-
-          timer(350, 351).pipe(take(1)).subscribe(k => {
-            this.debounceLock = false;
-          });
-        } else {
-          this.debounceLock = false;
-        }
-
-      }
-    }
-    );
   }
   /* Methode that disables the Chart Rendering
   This is necessary for resizing because the performance impact

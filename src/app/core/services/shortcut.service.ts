@@ -3,6 +3,7 @@ import { DOCUMENT, EventManager } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
 
 
+
 export type KeyboardBinding = {
     element: any,
     key: string,
@@ -50,10 +51,8 @@ export class ShortcutService {
 
         return new Observable(observer => {
             const callback = (e) => {
-                //if (e.code == mBinding.key) {
-                e.preventDefault();
+                // e.preventDefault();
                 observer.next(e);
-                //}
             };
             const listenReference = this.eventManager.addEventListener(mBinding.element, event, callback);
             return () => {

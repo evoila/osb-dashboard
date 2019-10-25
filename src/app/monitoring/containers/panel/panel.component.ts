@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild, Renderer2, OnDestroy, AfterViewInit, OnChanges } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, Renderer2, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import * as moment from 'moment/moment';
@@ -6,8 +6,8 @@ import { EsTimerangeService } from 'app/monitoring/services/es-timerange.service
 
 
 
-import { filter, map, switchMap, take } from 'rxjs/operators';
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { filter, switchMap, take } from 'rxjs/operators';
+import { CdkDragDrop, CdkDragStart, CdkDragEnd } from '@angular/cdk/drag-drop';
 
 import { PanelState } from 'app/monitoring/shared/store/reducers/panel.reducer';
 import { Store, select } from '@ngrx/store';
@@ -27,10 +27,12 @@ import { TimeService } from '../../shared/services/time.service';
 import { ShortcutService } from '../../../core/services/shortcut.service';
 
 
+
+
 @Component({
   selector: 'sb-panel',
   templateUrl: './panel.component.html',
-  styleUrls: ['./panel.component.scss']
+  styleUrls: ['./panel.component.scss'],
 })
 export class PanelComponent implements OnInit, OnDestroy {
 
@@ -74,6 +76,12 @@ export class PanelComponent implements OnInit, OnDestroy {
   // can be persisted see --> persistPanel
   private saveCounter = 0;
 
+
+  // Flag that is set to true when a User has added a panel
+  // to display a Notification Icon
+  public addingChart = false;
+  // CSS Classes for Notification Icon 
+  public addingChartClasses = ["far", "fa-check-square"];
   private redoObject = {} as Panel;
   constructor(
     private timeRangeService: EsTimerangeService,
@@ -84,7 +92,8 @@ export class PanelComponent implements OnInit, OnDestroy {
     private routerStore: Store<State>,
     private renderer: Renderer2,
     private timeService: TimeService,
-    private shortcut: ShortcutService
+    private shortcut: ShortcutService,
+    private cdr: ChangeDetectorRef
   ) {
     this.menu['view'] = 'Views:';
     this.menu['viewSettings'] = ['1', '2', '3'];
@@ -152,11 +161,26 @@ export class PanelComponent implements OnInit, OnDestroy {
     return item.id;
   }
 
+  started(event: CdkDragStart) {
+    // Disable Change detection here since this fires
+    // about every 10's millisecond here and destroys performance
+    console.log("detatching");
+    this.cdr.detach();
+  }
+  ended(event: CdkDragEnd) {
+    // attach to Change detection again
+    this.cdr.reattach();
+    console.log("reattatching");
+  }
   drop(event: CdkDragDrop<Chart>) {
+    // attach to Change detection again
+    this.cdr.reattach();
+    this.addingChart = true;
     this.store.pipe(select(getPanelById, this.panel.id)).pipe(take(1)).subscribe(k => {
       this.panelStore.dispatch(new SetStateForUpdate(k));
       this.panelStore.dispatch(new AddChartToPanel(event.item.data));
       this.panelStore.pipe(select(buildFunctionalPanel)).pipe(take(1)).subscribe(k => {
+        timer(4000, 0).pipe(take(1)).subscribe(k => this.addingChart = false);
         this.store.dispatch(new UpdatePanel(k));
         this.panelStore.dispatch(new FlushState());
         this.store.pipe(select(getPanelState),
@@ -168,6 +192,7 @@ export class PanelComponent implements OnInit, OnDestroy {
               filter(k => k.panelsLoaded),
               take(1),
               switchMap(k => {
+
                 return this.store.pipe(select(getPanelById, this.panel.id));
               })
             )
@@ -176,6 +201,7 @@ export class PanelComponent implements OnInit, OnDestroy {
       });
     });
   }
+
   registerRouterEvents() {
     this.subscription = this.routerStore
       .select(getParams)
@@ -227,29 +253,39 @@ export class PanelComponent implements OnInit, OnDestroy {
 
   }
   cancelEdit() {
-    this.panel = this.redoObject;
-    this.edit = false;
-    this.redoObject = {} as Panel;
-    this.editModeSubject.next(false);
-    this.editControlSubject.next('cancel');
-    this.hideToggleSidePanel(false);
+    if (this.edit) {
+      this.edit = false;
+      this.panel = this.redoObject;
+      this.edit = false;
+      this.redoObject = {} as Panel;
+      this.editModeSubject.next(false);
+      this.editControlSubject.next('cancel');
+      this.hideToggleSidePanel(false);
+    }
   }
   saveEdit() {
-    this.edit = false;
-    this.editModeSubject.next(false);
-    this.editControlSubject.next('save');
-    this.hideToggleSidePanel(false);
+    if (this.edit) {
+      this.edit = false;
+      this.editModeSubject.next(false);
+      this.editControlSubject.next('save');
+      this.hideToggleSidePanel(false);
+      if (!this.panel.charts.length) {
+        // If there is no chart left there will be no callback from the 
+        // resizing directive --> persist Panel will never be called
+        this.persistPanel(true);
+      }
+    }
   }
   saveSize(size: number, chart: ChartInPanel) {
     const charts = this.panel.charts.map(k => chart.id == k.id ? { ...chart, size: size } : k);
     this.panel = { ...this.panel, charts };
     this.persistPanel();
   }
-  persistPanel() {
+  persistPanel(override: boolean = false) {
     // wait until every chart has been updated
     this.saveCounter++;
-    if (this.saveCounter === this.panel.charts.length &&
-      JSON.stringify(this.panel) !== JSON.stringify(this.redoObject)) {
+    if (override || (this.saveCounter === this.panel.charts.length &&
+      JSON.stringify(this.panel) !== JSON.stringify(this.redoObject))) {
       this.panelStore.dispatch(new UpdatePanel(this.panel));
       this.redoObject = {} as Panel;
       this.saveCounter = 0;

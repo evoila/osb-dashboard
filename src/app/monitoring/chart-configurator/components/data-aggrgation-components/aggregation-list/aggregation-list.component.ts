@@ -41,6 +41,7 @@ export class AggregationListComponent implements OnInit {
   // Result holds information if Aggregation + Scope dows generate any data
   aggregationRequestResults: string;
 
+
   // Output Emitter is just a toggle for the Component above to render AggregationEditor
   @Output('aggregationEditor')
   public openAggregationEditor$ = new EventEmitter<Boolean>();
@@ -61,7 +62,10 @@ export class AggregationListComponent implements OnInit {
     );
     this.store
       .select(getChartIncreationAggregationState).pipe(filter(k => !!k[this.componentId]))
-      .subscribe(aggs => (this.aggregationRequestResults = aggs[this.componentId]));
+      .pipe(filter(k => k[this.componentId] !== this.aggregationRequestResults))
+      .subscribe(aggs => {
+        this.aggregationRequestResults = aggs[this.componentId];
+      });
   }
   public aggregationEmpty() {
     return Object.keys(this.aggregationRequestObject).length == 0;
