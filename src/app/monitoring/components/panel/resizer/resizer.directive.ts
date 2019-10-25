@@ -15,10 +15,16 @@ export class ResizerDirective implements AfterViewInit, OnDestroy {
   // state before editing
   initialSize: number;
 
+  private eventlistenerSet = false;
+
   private cancelEditing = e => {
     if (this.resizing) {
       this.resizing = false;
       this.enableChart();
+      if (this.eventlistenerSet) {
+        window.removeEventListener('mousemove', this.mousemoveFunc);
+        this.eventlistenerSet = false;
+      }
     }
   }
   private mousemoveFunc = (e: MouseEvent) => {
@@ -79,7 +85,7 @@ export class ResizerDirective implements AfterViewInit, OnDestroy {
 
         window.addEventListener('mouseup', this.cancelEditing);
         window.addEventListener('mouseleave', this.cancelEditing);
-        window.addEventListener('mousemove', this.mousemoveFunc);
+
 
       } else {
         // remove the eventListeners as soon as the editing has ended
@@ -143,6 +149,10 @@ export class ResizerDirective implements AfterViewInit, OnDestroy {
         this.resizingLeft = true;
         this.x = e.clientX;
         this.disableChart();
+        if (!this.eventlistenerSet) {
+          window.addEventListener('mousemove', this.mousemoveFunc);
+          this.eventlistenerSet = true;
+        }
       }
     });
 
@@ -152,6 +162,10 @@ export class ResizerDirective implements AfterViewInit, OnDestroy {
         this.resizingLeft = false;
         this.x = e.clientX;
         this.disableChart();
+        if (!this.eventlistenerSet) {
+          window.addEventListener('mousemove', this.mousemoveFunc);
+          this.eventlistenerSet = true;
+        }
       }
     });
   }
