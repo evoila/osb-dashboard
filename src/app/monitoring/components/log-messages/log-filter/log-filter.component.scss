@@ -1,9 +1,105 @@
-.input-group {
+@import '../../../../core/core';
 
+.h4{
+    color: $gray-0;
+}
+.modal-header{
+    border-bottom: 2px solid $gray-4;
+}
+.modal-footer{
+    border-top: 0px;
+}
+.input-group {
     text-align: center; 
     margin: auto;
-    margin-bottom: 1em;
+    margin-bottom: 0.5em;
 }
+
+
+#filterbrick{
+    height: 1.78em;
+    padding: 2px 8px 2px 16px;
+    margin: 0em 0.5em;
+    border-radius: $basic-border-radius;
+    line-height: 1.4em;
+    font-size: 0.7em;
+    border: 0px;
+    box-sizing: border-box;
+    background-color: $special-accent-color-light;
+    cursor: pointer;
+    position: relative;
+}
+#filterbrick:hover{
+    background-color: $special-accent-color;
+}
+
+#filterbrick:after{
+    height: 1em;
+    width: 0.5em;
+    padding: 0px;
+    margin-left: 3px;
+    border-radius: $basic-border-radius;
+    line-height: 1.4em;
+    font-size: 1em;
+   
+    box-sizing: border-box;
+    background-color: $transparent;
+    color: $special-accent-color-light;
+    content: 'x'; 
+}
+
+#filterbrick:hover:after{
+    height: 1em;
+    width: 0.5em;
+    padding: 0px;
+    margin-left: 3px;
+    border-radius: $basic-border-radius;
+    line-height: 1.4em;
+    font-size: 1em;
+    
+    box-sizing: border-box;
+    background-color: $transparent;
+    color: $white;
+    content: 'x';
+}
+/*.btn.btn-seconday.filterbrick::hover:before{
+    content: '';
+}*/
+
+#valuetxt{
+    border-radius: $basic-border-radius;
+}
+
+.form-control.ng-invalid {
+    border-left: $basic-border-radius solid $gray-5;
+}
+
+.form-control {
+    // at least not working in chrome
+    border: 2px solid $gray-4;
+    border-radius: $basic-border-radius;
+    cursor: pointer;
+}
+
+#btn-cancel{
+    border-radius: $basic-border-radius;
+    background-color: $attention-red;
+    border: 0px;
+}
+
+#btn-cancel:hover{
+    background-color: $attention-red-light;
+}
+#btn-save{
+    background-color: $primary-color;
+    border-radius: $basic-border-radius;
+    color: $white;
+    border: 0px;
+}
+#btn-save:hover{
+    background-color: $primary-color-light;
+}
+
 .btn{
     //background-color:#3fb0ac;
     //color: white;
@@ -12,12 +108,22 @@
     //background-color: #b3c2bf;
 }
 label{
-    text-align: center;
+    text-align: left;
     padding-right: 1em;
     width: 8em;
+    color: $gray-2;
 }
 .modal-body {
     display: grid;
-    grid-template-columns: 1fr 1fr; 
-    grid-gap: 1%;
+    grid-template-columns: 1fr 1.2fr; 
+    grid-gap: 3%;
+}
+#filter-div{
+   margin-bottom: 0.5em;
+}
+.filter-list{
+margin-top: 1em;
+}
+#filterinput{
+   
 }

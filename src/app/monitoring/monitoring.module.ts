@@ -4,6 +4,7 @@ import { MonitoringComponent } from 'app/monitoring/monitoring.component';
 import { MonitoringRoutingModule } from './monitoring-routing.module';
 import { NouisliderModule } from 'ng2-nouislider';
 import { MonacoEditorModule, NgxMonacoEditorConfig } from 'ngx-monaco-editor';
+import { NgbTimepickerModule } from './components/timepicker/timepicker.module';
 
 import {
   StoreRouterConnectingModule,
@@ -84,7 +85,8 @@ export const bootstrapDeps = [
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     StoreRouterConnectingModule,
     StoreModule.forFeature('sharedmodule', sharedReducer),
-    EffectsModule.forFeature(sharedEffects)
+    EffectsModule.forFeature(sharedEffects),
+    NgbTimepickerModule
   ],
   declarations: [
     MonitoringComponent,

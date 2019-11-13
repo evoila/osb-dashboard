@@ -21,7 +21,7 @@ export class TimefilterComponent {
 
   @Input('fromDate')
   set fromDate(date: any) {
-    this.initializeDate(date, 'from');
+      this.initializeDate(date, 'from');
   }
 
   @Output('fromDateChange')
@@ -35,7 +35,7 @@ export class TimefilterComponent {
   public fromDateModel: { year: number, month: number, day: number };
   public toDateModel: { year: number, month: number, day: number };
 
-  // Stores the Time only couldn't be merged together cause two different component inputs
+  // Stores the Time only, couldn't be merged together cause two different component inputs
   public fromTimeModel: NgbTimeStruct = { hour: 13, minute: 30, second: 0 };
   public toTimeModel: NgbTimeStruct = { hour: 13, minute: 30, second: 0 };
 
@@ -53,7 +53,7 @@ export class TimefilterComponent {
   }
 
   private initializeDate(date: any, fieldToBeSet: string) {
-    const intermediate = moment.unix(date).format('DD:MM:YYYY:HH:MM');
+    const intermediate = moment.unix(date).format('DD:MM:YYYY:HH:mm');
     const resultObj = intermediate.split(':').reduce((prev: any, curr: string, index: number, ar: string[]) => {
       switch (index) {
         case (0): {
@@ -83,17 +83,24 @@ export class TimefilterComponent {
     this[`set${source}DateChange`](this[variableHandle + 'DateModel']);
   }
 
+  /*gets triggered after each character change in date text input field and after datepick selection*/ 
   setToDateChange(event: { year: number, month: number, day: number }) {
-    this.toDateModel = event;
+    if (event === null){return}; // security check 1, change event fired, but input is empty
     const { hour, minute } = this.toTimeModel;
-    const formatedDate = moment(`${event.day}:${event.month}:${event.year}:${hour}:${minute}`, 'DD:MM:YYYY:HH:MM');
+    const formatedDate = moment(`${event.day}:${event.month}:${event.year}:${hour}:${minute}`, 'DD:MM:YYYY:HH:mm');
+    if (Number.isNaN(formatedDate.unix())){return;} ; // security check 2, broken date string in date input
+    this.toDateModel = event;
     this.toDateChange.next(formatedDate.unix());
   }
 
+  /*gets triggered after each character change in date text input field and after datepick selection*/ 
   setFromDateChange(event: { year: number, month: number, day: number }) {
-    this.fromDateModel = event;
+    if (event === null){return};  // security check 1, change event fired, but input is empty
     const { hour, minute } = this.fromTimeModel;
-    const formatedDate = moment(`${event.day}:${event.month}:${event.year}:${hour}:${minute}`, 'DD:MM:YYYY:HH:MM');
+    const formatedDate = moment(`${event.day}:${event.month}:${event.year}:${hour}:${minute}`, 'DD:MM:YYYY:HH:mm');
+    if (Number.isNaN(formatedDate.unix())){return;} // security check 2, broken date string in date input
+    this.fromDateModel = event;
     this.fromDateChange.next(formatedDate.unix());
   }
+
 }

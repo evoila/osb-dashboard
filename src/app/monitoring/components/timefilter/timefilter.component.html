@@ -1,37 +1,42 @@
 <div class="timefilter-layout-top-row timefilter-toolbar">
+
   <div class="date-picker-group">
-    <form class="form-inline">
-      <div class="form-group">
-        <div class="input-group">
+    <div class="none">
+      <div class="form-group-x">
+        <div class="input-group-x">
           <label>From</label>
-          <input class="form-control" placeholder="dd-mm-yyyy" name="fromdp" [ngModel]="fromDateModel"
-            (ngModelChange)="setFromDateChange($event)" ngbDatepicker #c="ngbDatepicker">
-          <div class="input-group-append">
-            <button class="btn btn-outline-secondary calendar" (click)="c.toggle()" type="button"></button>
+          <div class="datepick-div">
+              
+              <input class="form-control dateinput" placeholder="yyyy-mm-dd" name="fromdp" [ngModel]="fromDateModel"
+           (ngModelChange)="setFromDateChange($event)" ngbDatepicker #c="ngbDatepicker"> 
+           <button class="btn btn-outline-secondary calendar" (click)="c.toggle()" type="button"></button>
           </div>
-
+           <div class="timepickerbox">
+              <ngb-timepicker-perso [ngModel]="fromTimeModel" [minuteStep]="minuteStep" (ngModelChange)="toggleTimeChange($event, 'From')" class="timepicker">
+              </ngb-timepicker-perso>
+          </div>
         </div>
-      </div>
-    </form>
-
-    <ngb-timepicker [ngModel]="fromTimeModel" [minuteStep]="minuteStep"
-      (ngModelChange)="toggleTimeChange($event, 'From')">
-    </ngb-timepicker>
+      </div>    
+    </div>
   </div>
+
   <div class="date-picker-group">
-    <form class="form-inline">
-      <div class="form-group">
-        <div class="input-group">
+    <div class="none">
+      <div class="form-group-x">
+        <div class="input-group-x">
           <label>To</label>
-          <input class="form-control" placeholder="dd-mm-yyyy" name="todp" [ngModel]="toDateModel"
-            (ngModelChange)="setToDateChange($event)" ngbDatepicker #d="ngbDatepicker">
-          <div class="input-group-append">
-            <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+          <div class="datepick-div">
+              <input class="form-control dateinput" placeholder="yyyy-mm-dd" name="todp" [ngModel]="toDateModel"
+              (ngModelChange)="setToDateChange($event)" ngbDatepicker #d="ngbDatepicker">
+              <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
           </div>
+          <div class="timepickerbox">
+                <ngb-timepicker-perso [ngModel]="toTimeModel" (ngModelChange)="toggleTimeChange($event, 'To')" [minuteStep]="minuteStep" class="timepicker">
+                </ngb-timepicker-perso>
+         </div> 
         </div>
       </div>
-    </form>
-    <ngb-timepicker [ngModel]="toTimeModel" (ngModelChange)="toggleTimeChange($event, 'To')" [minuteStep]="minuteStep">
-    </ngb-timepicker>
+    </div>
   </div>
+
 </div>

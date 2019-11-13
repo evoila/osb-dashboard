@@ -1,26 +1,92 @@
+@import '../../../core/core';
+
 .timefilter-toolbar {
     display: grid;
-    grid-template-columns:  1fr 1fr;
-    grid-column-gap: 10vw;
-    border: 1px solid #dee2e6;
-    border-bottom: 2px solid #dee2e6 !important;
+    grid-template-columns: 45% 45%;
+    grid-template-rows: 60px;
+    grid-column-gap: 10%;
+    grid-auto-flow: column;
+    align-items: start;
+    padding: 1px;
+    margin: 2vh 0vw;
+    border: 2px solid $gray-5;
+    border-radius: $basic-border-radius;
 }
-.form-group{
-    padding: 0 0.5em 0 0.5em;
+.form-group-x{
+    padding: 0em;
 }
-.input-group label {
-    padding: 0 0.5em 0 0.5em;
+.input-group-x label {
+    padding: 0px;
+    margin-bottom: 0rem;
+    margin-right: 6px;
+    display: block;
+    text-align: right;
+    color: $gray-2;
 }
+
+
+.datepick-div{
+    display: grid;
+    grid-template-rows: 60px;
+    grid-template-columns: 0px 40px;
+    align-items: center;
+    margin-left: 5px;
+}
+
+.input-group-x{
+    display: grid; 
+    align-items: center;
+    grid-template-rows: 60px;
+    grid-template-columns: 55px 140px 80px; 
+}
+ 
+.input-group-x .dateinput { // date input
+    width: 132px;
+    font-size: 0.85em;
+    border-color: $gray-4;
+    border-width: 2px;
+    border-radius: $basic-border-radius;
+    height: 0.6em;
+    padding: 13.5px 12px 12px 32px;
+    text-align: right;
+    color: $timefilter-datestring-color;
+}
+.input-group-x .dateinput:focus { // date input focus
+    color: $special-accent-color;
+}
+.input-group-x .dateinput:hover { // date input hover
+    border-color: $gray-3;
+    color: $special-accent-color;
+}
+
 .date-picker-group {
-    display: flex;
     .form-inline {
         padding-right: 0.3em;
     }
 }
-button.calendar, button.calendar:active {
-    width: 2.75rem;
+ 
+.timepicker{
+    width: fit-content;
+    margin: 3px;
+}
+.timepickerbox{
+    display: flex; 
+    align-items: center;
+}
+
+button.btn-outline-secondary.calendar, button.btn-outline-secondary.calendar:active {
+    width: 1.95em;
+    height: 37%;
+    margin: 3.5px;
     background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAcCAYAAAAEN20fAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAEUSURBVEiJ7ZQxToVAEIY/YCHGxN6XGOIpnpaEsBSeQC9ArZbm9TZ6ADyBNzAhQGGl8Riv4BLAWAgmkpBYkH1b8FWT2WK/zJ8ZJ4qiI6XUI3ANnGKWBnht2/ZBDRK3hgVGNsCd7/ui+JkEIrKtqurLpEWaphd933+IyI3LEIdpCYCiKD6HcuOa/nwOa0ScJEnk0BJg0UTUWJRl6RxCYEzEmomsIlPU3IPW+grIAbquy+q6fluy/28RIBeRMwDXdXMgXLj/B2uimRXpui4D9sBeRLKl+1N+L+t6RwbWrZliTTTr1oxYtzVWiTQAcRxvTX+eJMnlUDaO1vpZRO5NS0x48sIwfPc87xg4B04MCzQi8hIEwe4bl1DnFMCN2zsAAAAASUVORK5CYII=)!important;
     background-repeat: no-repeat;
-    background-size: 23px;
+    background-size: 14px;
     background-position: center;
+    border-width: 0px;
+    border-radius: $basic-border-radius;
+    opacity: 0.6;
+}
+
+button.btn-outline-secondary.calendar:hover {
+    background-color: $gray-4;
 }
