@@ -12,7 +12,7 @@
         <button (click)="fireSearchRequest()" class="btn btn-primary" [disabled]="!scope">search</button>
     </div>
   </div>
-  <div *ngIf="!showFilter" class="subhead">
+  <div *ngIf="!showFilter && timeErrorInfo.length > 0" class="subhead">
       <div id="dateinfo-div">
           <label id="date-error-info">{{timeErrorInfo}}</label>
       </div>

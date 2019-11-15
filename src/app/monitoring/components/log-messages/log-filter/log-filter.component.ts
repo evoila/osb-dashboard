@@ -61,6 +61,7 @@ export class LogFilterComponent implements OnInit {
   getTopics() {
 
     
+    /*
     this.searchService.getMappings().subscribe(
       data => {
         // since this is a Log-Specific Feature we alwys want the definition of the log-Type
@@ -70,5 +71,7 @@ export class LogFilterComponent implements OnInit {
         // TODO: Error-Handling here
       }
     );
+    */
+      this.topics = ["bananas", "mangos", "oranges", "pineapples"];
   }
 }
