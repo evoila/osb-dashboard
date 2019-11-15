@@ -21,6 +21,7 @@ import { take } from 'rxjs/internal/operators';
 import { Router } from '@angular/router';
 import { LoadPanels, UpdatePanel, DeletePanel } from '../../../shared/store/actions/panel.action';
 import { ChartInPanel } from '../../../model/chart-in-panel';
+import { ShortcutService } from '../../../../core/services/shortcut.service';
 
 @Component({
   selector: 'sb-panel-editor',
@@ -43,7 +44,8 @@ export class PanelEditorComponent implements OnInit {
     private panelModelStore: Store<PanelState>,
     private router: Router,
     bindingStore: Store<BindingsState>,
-    cfAuthParams: CfAuthParameterService
+    cfAuthParams: CfAuthParameterService, 
+    private shortcut: ShortcutService
   ) {
     this.cfAuthParams = cfAuthParams.construct(bindingStore);
   }
@@ -63,9 +65,18 @@ export class PanelEditorComponent implements OnInit {
     });
     this.charts$.subscribe(k => console.log(k));
     this.cfAuthParams.createCfAuthScope().subscribe(k => (this.authScope = k));
+
+    this.shortcut.bindShortcut({
+      key: "Enter",
+      description: "Trigger Save Button",
+      view: "Panel Editor View"
+    }).subscribe(k => {
+        this.save(false);
+    });
   }
 
   save(deleteFlag: boolean) {
+    console.log("wfsdc");
     this.panelStore.dispatch(new panelAction.SetName(this.name));
     this.panelStore.dispatch(new panelAction.SetDescription(this.description));
     this.panelStore.dispatch(new panelAction.SetAuthScope(this.authScope));
