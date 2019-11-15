@@ -1,12 +1,16 @@
 <div class="container" sbSpinner [condition$]="loading$">
   <div class="head">
-      <sb-appid class="appId" [selected]="scope.appId" (app)="setScope($event)" id="appid"></sb-appid>
-      <button (click)="showFilter = !showFilter" class="btn btn-light calendar-button">
-        <i class="fas fa-history"></i>
-        <span><label id="dateinfo">{{timeInfo}}</label></span>
-      </button>
-      <input type="text" class="form-control" [(ngModel)]="query" id="search" placeholder="type in Lucene Query">
-      <button (click)="search()" class="btn btn-primary" [disabled]="buttonDisabled()">search</button>
+    <div class="head-group head-group-1">
+        <sb-appid class="appId" [selected]="scope.appId" (app)="setScope($event)" id="appid"></sb-appid>
+        <button (click)="showFilter = !showFilter" class="btn btn-light calendar-button">
+          <i class="fas fa-history"></i>
+          <span><label id="dateinfo">{{timeInfo}}</label></span>
+        </button>
+    </div>
+    <div class="head-group head-group-2">
+        <input type="text" class="form-control" [(ngModel)]="query" id="search" placeholder="type in Lucene Query">
+        <button (click)="search()" class="btn btn-primary" [disabled]="buttonDisabled()">search</button>
+    </div>
   </div>
   <div *ngIf="!showFilter" class="subhead">
       <div id="dateinfo-div">

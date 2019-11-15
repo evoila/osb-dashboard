@@ -4,12 +4,31 @@
     margin-top: 3vh;
     max-width: 100vw;
 }
+
+
 .head {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.head-group{
     display: grid;
-    grid-template-columns: 240px 175px 40px 15%;
     grid-gap: 0.6em;
     margin-right: 3vw;
     margin-bottom: 0.5vh;
+    width: fit-content; 
+    margin-bottom: 0.6em;
+    margin-right: 0.2em;
+}
+
+.head-group.head-group-1{ // appSelect & dateSelect
+    grid-template-columns: calc(100% - 12.2em) 11em;
+    //width: calc(100% - 180px);
+}
+
+.head-group.head-group-2{ // searchInput & startButton
+    grid-template-columns: 40px 100px;
+    //width: 150px;
 }
 
 .subhead {
@@ -22,9 +41,11 @@
 }
 
 .appId{
+    //width: calc(100% - 11.6em);
     justify-self: stretch;
     align-self: start;
     cursor: pointer;
+    
 }
 
 .btn.btn-primary {  //start button
