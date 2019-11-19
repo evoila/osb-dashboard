@@ -32,4 +32,9 @@ export class ChartService {
   public createChart(chart: Chart): Observable<Chart> {
     return this.http.put<Chart>(this.url, chart);
   }
+
+  public deleteChart(chartId: string): Observable<Chart> {
+    const customUri = `${this.url}/${chartId}`;
+    return this.http.delete<Chart>(customUri);
+  }
 }

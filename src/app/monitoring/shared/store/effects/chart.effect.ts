@@ -32,6 +32,15 @@ export class ChartEffect {
   );
 
   @Effect()
+  deleteChart$ = this.actions.ofType(fromChart.DELETE_CHART).pipe(
+    switchMap((action: fromChart.DeleteChart) => {
+      return this.chartService.deleteChart(action.payload).pipe(
+        map(result => new fromChart.DeleteChartSuccess),
+        catchError(error => of(new fromChart.SaveChartFail()))
+      );
+    })
+  )
+  @Effect()
   firePanelAggregationRequest$ = this.actions.ofType(fromChart.FIRE_PANEL_AGGREGATION_REQUEST).
     pipe(
       // use concatMap to maintain order

@@ -3,6 +3,7 @@ import { SharedModuleState, getSharedModuleState } from '../reducers/index';
 import * as fromChartReducer from '../reducers/chart.reducer';
 import { Chart as ChartModel } from '../../../model/chart';
 
+
 export const getChartModelState = createSelector(
   getSharedModuleState,
   (state: SharedModuleState) => state.charts
@@ -11,7 +12,6 @@ export const getCharts = createSelector(
   getChartModelState,
   fromChartReducer.getCharts
 );
-
 export const getChartsLoaded = createSelector(
   getChartModelState,
   fromChartReducer.getChartsLoaded
@@ -31,6 +31,17 @@ export const getChartSaved = createSelector(
   getChartModelState,
   fromChartReducer.getChartSaved
 );
+
+export const getChartDeleted = createSelector(
+  getChartModelState,
+  fromChartReducer.getChartDeleted
+);
+
+export const getChartDeleting = createSelector(
+  getChartModelState,
+  fromChartReducer.getChartDeleting
+);
+
 export const getAggregationResponseAndLoaded = createSelector(
   getChartModelState,
   fromChartReducer.getAggregationResponseAndLoaded

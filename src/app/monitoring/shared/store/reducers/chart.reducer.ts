@@ -3,6 +3,7 @@ import { Chart } from '../../model/chart';
 import { SearchResponse } from '../../../model/search-response';
 import { AggregationRequestObject } from '../../../chart-configurator/model/aggregationRequestObject';
 import { QueryAndResponse } from '../../model/query-and-response';
+import { DELETE_CHART_FAIL } from '../actions/chart.actions';
 
 export interface ChartModelState {
   charts: Array<Chart>;
@@ -10,6 +11,8 @@ export interface ChartModelState {
   chartsLoading: boolean;
   chartSaved: boolean;
   chartSaveing: boolean;
+  chartDeleted: boolean;
+  chartDeleting: boolean;
   aggregationResponse: {
     [id: string]: Array<QueryAndResponse>;
   };
@@ -24,7 +27,9 @@ export const initialState: ChartModelState = {
   chartSaveing: false,
   aggregationResponse: {},
   aggregationLoading: false,
-  aggregationLoaded: false
+  aggregationLoaded: false,
+  chartDeleted: false,
+  chartDeleting: false
 };
 
 export function reducer(
@@ -75,6 +80,27 @@ export function reducer(
         chartSaved: false
       };
     }
+    case fromChartActions.DELETE_CHART_SUCCESS: {
+      return {
+        ...state,
+        chartDeleted: true,
+        chartDeleting: false
+      }
+    }
+    case fromChartActions.DELETE_CHART_FAIL: {
+      return {
+        ...state,
+        chartDeleted: false,
+        chartDeleting: false
+      }
+    }
+    case fromChartActions.DELETE_CHART: {
+      return {
+        ...state,
+        chartDeleted: false,
+        chartDeleting: true
+      }
+    }
     case fromChartActions.FIRE_AGGREGATION_REQUEST: {
       return {
         ...state,
@@ -111,6 +137,10 @@ export function reducer(
 export const getCharts = (state: ChartModelState) => state.charts;
 export const getChartsLoaded = (state: ChartModelState) => state.chartsLoaded;
 export const getChartsLoading = (state: ChartModelState) => state.chartsLoading;
+
+export const getChartDeleted = (state: ChartModelState) => state.chartDeleted;
+export const getChartDeleting = (state: ChartModelState) => state.chartDeleting;
+
 
 export const getChartSaveing = (state: ChartModelState) => state.chartSaveing;
 export const getChartSaved = (state: ChartModelState) => state.chartSaved;
