@@ -8,6 +8,7 @@ import { LoadPanels, DeletePanel } from './shared/store/actions/panel.action';
 import { getAllPanels, getPanelState } from './shared/store/selectors/panel.selector';
 import { map, take, filter } from 'rxjs/operators';
 import { LoadBindings } from './shared/store/actions/binding.action';
+import { getState } from './store';
 
 
 @Component({
@@ -121,6 +122,15 @@ export class MonitoringComponent implements OnInit {
     this.store.dispatch(new LoadBindings());
     this.store.dispatch(new LoadPanels());
     this.loadPanels();
+    // end panel edit mode when other sidebar section gets clicked
+    this.store.select(getState).pipe(filter(k => this.panelEditMode)).subscribe((state: any) => {
+      const domain = state.url.slice(state.url.lastIndexOf( "/" ) + 1);
+      // click on links (Panels) in the Panel section doesn't end the panel edit mode, except from the last link "Add Panel"
+      const panelnames = this.menu[0].links.slice(0, this.menu[0].links.length - 1);
+      if (!panelnames.some((x) => x === domain)){
+        this.editModeListener(); // turning off panel edit mode
+      }
+    })
   }
 
   loadPanels() {

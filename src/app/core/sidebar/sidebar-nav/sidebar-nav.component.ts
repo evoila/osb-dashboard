@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit, Input, Pipe, PipeTransform, Injectable, HostBinding } from '@angular/core';
+import { Component, HostListener, OnInit, Input, Pipe, PipeTransform, Injectable, HostBinding} from '@angular/core';
 import { SidebarEntry, SidebarLink, SidebarLinkWithClick } from '../sidebar-entry';
 import { WindowService } from '../../window.service';
 
@@ -22,6 +22,7 @@ export class SidebarLinkNotActiveFilterPipe implements PipeTransform {
 export class SidebarNavComponent implements OnInit {
   @Input() public menu: SidebarEntry[];
   @Input() public title: string;
+
 
   @HostBinding('class.sidebar-nav-flex') public readonly flex = true;
 
@@ -49,7 +50,6 @@ export class SidebarNavComponent implements OnInit {
 
   public onNavigate(link: SidebarLink) {
     this.tryCollapse(this._window.innerWidth);
-
     const clickable = <SidebarLinkWithClick>link;
     if (clickable.onClicked) {
       clickable.onClicked();
