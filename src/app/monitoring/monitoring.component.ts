@@ -123,15 +123,25 @@ export class MonitoringComponent implements OnInit {
     this.store.dispatch(new LoadPanels());
     this.loadPanels();
     // end panel edit mode when other sidebar section gets clicked
-    this.store.select(getState).pipe(filter(k => this.panelEditMode)).subscribe((state: any) => {
-      const domain = state.url.slice(state.url.lastIndexOf( "/" ) + 1);
-      // click on links (Panels) in the Panel section doesn't end the panel edit mode, except from the last link "Add Panel"
-      const panelnames = this.menu[0].links.slice(0, this.menu[0].links.length - 1);
-      if (!panelnames.some((x) => x === domain)){
+    this.store.select(getState).pipe(filter(k => this.shouldEndPanelEditMode(k))).subscribe((state: any) => {
         this.editModeListener(); // turning off panel edit mode
-      }
     })
   }
+
+  // this method expects 'Panels' section to be the first section in the sideBar and 'add Panel' to be the last item in the Panels section
+  shouldEndPanelEditMode(state: any): boolean {
+    if (!this.panelEditMode){ return false }
+    const domain = state.url.slice(state.url.lastIndexOf( "/" ) + 1);
+    // clicking on links (Panels) in the Panel section doesn't end the panel edit mode, except from the last link "Add Panel"
+    const panellinks = this.menu[0].links.slice(0, this.menu[0].links.length - 1);
+    const panelHrefs = Array.from(panellinks, x => x['href'].slice(x['href'].lastIndexOf( "/" ) + 1));
+    if (!panelHrefs.some((link) => link === domain)){
+      return true
+    }
+    return false
+  }
+
+
 
   loadPanels() {
     this.store
