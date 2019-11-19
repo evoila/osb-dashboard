@@ -109,6 +109,12 @@
     cursor: pointer;
     
 }
+
+.btn.btn-primary:hover{
+    color: $success-green;
+    border: 3px solid $primary-color;
+}
+
 .btn.btn-primary { //start button
     height: 2.4em;
     align-self: start;
@@ -117,11 +123,18 @@
     background-color: $transparent;
     color: $primary-color;
     font-size: 1em;
-    padding: 4px 2px
+    padding: 4px 2px;
 }
-.btn.btn-primary:hover:active{
-    color: $success-green;
-    border: 3px solid $primary-color;
+
+.btn.btn-primary:disabled {
+    
+    color: $gray-4;
+    border: 3px solid $gray-3;
+
+    &:hover{
+        border: 3px solid $gray-3;
+    }
+    
 }
 
 
