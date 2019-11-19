@@ -35,6 +35,10 @@ export class ChartService {
 
   public deleteChart(chartId: string): Observable<Chart> {
     const customUri = `${this.url}/${chartId}`;
-    return this.http.delete<Chart>(customUri);
+    return this.cfAuthParams.createCfAuthParameters().pipe(
+      flatMap(params => {
+        return this.http.delete<Chart>(customUri, {params});
+      })
+    );
   }
 }

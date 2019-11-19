@@ -2,9 +2,12 @@
     <ul class="list-group" cdkDropList id="list-one" [cdkDropListConnectedTo]="['list-two']">
         <li class="list-group-item grid-container" *ngFor="let chart of charts" cdkDrag [cdkDragData]="chart"
             (cdkDragStarted)="start($event)" (cdkDragEnded)="end($event)">
-            <div class="img-container"><img src="{{chart.encodedImage}}" alt="image of rendered Chart"></div>
-            <h5>{{chart.name}}</h5>
+            <div class="top-row">
+                <h5>{{chart.name}}</h5>
+                <button (click)="deleteChart(chart)"><i class="fa fa-times" aria-hidden="true"></i></button>
+            </div>
             <h6>type: {{chart.type}}</h6>
+            <div class="img-container"><img src="{{chart.encodedImage}}" alt="image of rendered Chart"></div>
         </li>
     </ul>
 </div>

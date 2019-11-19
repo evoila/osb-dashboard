@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ChartModelState } from '../../../shared/store/reducers/chart.reducer';
-import { LoadCharts } from '../../../shared/store/actions/chart.actions';
+import { LoadCharts, DeleteChart } from '../../../shared/store/actions/chart.actions';
 import { Observable } from 'rxjs';
 import { getCharts } from '../../../shared/store/selectors/chart.selector';
 import { Chart } from '../../../shared/model/chart';
@@ -37,4 +37,8 @@ export class AddChartSidepanelComponent implements OnInit {
     this.started.next(event);
   }
 
+  deleteChart(chart: Chart) {
+    console.log("delete chart here");
+    this.chartStore.dispatch(new DeleteChart(chart.id!!));
+  }
 }
