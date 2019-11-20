@@ -22,6 +22,7 @@ export class LiveLogsComponent implements OnInit, OnDestroy {
   hits: Hits;
   private streamSub: Subscription;
   appId: string;
+  buttonDisabled: boolean = false;
 
   //Observable to pass data to subcomponent
   hitSubject = new Subject<Hits>();
@@ -64,7 +65,12 @@ export class LiveLogsComponent implements OnInit, OnDestroy {
   setScope(scope: ServiceBinding) {
     if (Object.keys(scope).length) {
       this.scope = scope;
+      this.buttonDisabled = false;
     }
+    else{
+      this.buttonDisabled = true;
+    }
+
   }
 
   toggleStream() {
