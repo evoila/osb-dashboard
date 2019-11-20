@@ -76,7 +76,6 @@ export class PanelEditorComponent implements OnInit {
   }
 
   save(deleteFlag: boolean) {
-    console.log("wfsdc");
     this.panelStore.dispatch(new panelAction.SetName(this.name));
     this.panelStore.dispatch(new panelAction.SetDescription(this.description));
     this.panelStore.dispatch(new panelAction.SetAuthScope(this.authScope));
