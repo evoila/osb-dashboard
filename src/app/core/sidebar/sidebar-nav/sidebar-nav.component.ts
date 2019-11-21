@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit, Input, Pipe, PipeTransform, Injectable, HostBinding } from '@angular/core';
+import { Component, HostListener, OnInit, Input, Pipe, PipeTransform, Injectable, HostBinding} from '@angular/core';
 import { SidebarEntry, SidebarLink, SidebarLinkWithClick } from '../sidebar-entry';
 import { WindowService } from '../../window.service';
 
@@ -23,6 +23,7 @@ export class SidebarNavComponent implements OnInit {
   @Input() public menu: SidebarEntry[];
   @Input() public title: string;
 
+
   @HostBinding('class.sidebar-nav-flex') public readonly flex = true;
 
   public isCollapsed = false;
@@ -36,6 +37,8 @@ export class SidebarNavComponent implements OnInit {
 
   ngOnInit() {
     this.tryCollapse(this._window.innerWidth);
+
+    this.checkPanelSection();
   }
 
   @HostListener('window:resize', ['$event'])
@@ -49,7 +52,6 @@ export class SidebarNavComponent implements OnInit {
 
   public onNavigate(link: SidebarLink) {
     this.tryCollapse(this._window.innerWidth);
-
     const clickable = <SidebarLinkWithClick>link;
     if (clickable.onClicked) {
       clickable.onClicked();
@@ -67,5 +69,13 @@ export class SidebarNavComponent implements OnInit {
 
     // that's not nice
     section['isCollapsed'] = (!section['isCollapsed']);
+  }
+
+  private checkPanelSection(){
+    // if  first item in menu array only contains one link, it must be the "Add Panel" navItem 
+    //so there are no defined Panels, so we don't need no edit-panel-button next to the sectin header
+    if ((this.menu[0]["links"]).length == 1){
+      this.menu[0]["button"] = false;
+    }
   }
 }

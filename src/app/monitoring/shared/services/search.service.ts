@@ -78,14 +78,15 @@ export class SearchService {
             returnVal[index] = returnVal[index]
               ? returnVal[index]
               : new Array<string>();
+
             // Some Fields have a Subfield. For more information see Ticket MONF-56
             if (!property['fields']) {
               returnVal[index] = [...returnVal[index], item];
             } else {
               returnVal[index] = [
-                ...returnVal[index],
-                item + '.' + Object.keys(property['fields'])[0]
-              ];
+                ...returnVal[index], item];
+              returnVal[index] = [
+                ...returnVal[index], ...Object.keys(property.fields).map(k => `${item}.${k}`)];
             }
           });
         });

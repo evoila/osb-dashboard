@@ -1,8 +1,11 @@
 <div class="container">
   <div class="nav-container">
     <sb-appid [selected]="scope.appId" class="appId" (app)="setScope($event)"></sb-appid>
-    <button [ngClass]="{'btn-primary': !streaming, 'btn-danger': streaming, 'btn': true}" (click)="toggleStream()">
-      {{streaming? 'stop': 'start'}}
+
+
+    <button [ngClass]="{'btn-primary': !streaming, 'btn-danger': streaming, 'btn': true}" (click)="toggleStream()" [disabled]="!buttonDisabled">
+      {{streaming? 'Stop': 'Start'}}
+
     </button>
   </div>
   <main>

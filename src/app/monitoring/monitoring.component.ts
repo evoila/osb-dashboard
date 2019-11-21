@@ -8,6 +8,7 @@ import { LoadPanels, DeletePanel } from './shared/store/actions/panel.action';
 import { getAllPanels, getPanelState } from './shared/store/selectors/panel.selector';
 import { map, take, filter } from 'rxjs/operators';
 import { LoadBindings } from './shared/store/actions/binding.action';
+import { getState } from './store';
 
 
 @Component({
@@ -125,8 +126,13 @@ export class MonitoringComponent implements OnInit {
     this.store.dispatch(new LoadBindings());
     this.store.dispatch(new LoadPanels());
     this.loadPanels();
+    // end panel edit mode when other sidebar section or panelconfigurator gets clicked
+    this.store.select(getState).pipe(filter(route => this.panelEditMode && (!route.url.includes('panel') || route.url.includes('configurator')))).subscribe((route: any) => {
+        this.editModeListener(); // turning off panel edit mode
+    })
   }
 
+  
   loadPanels() {
     this.store
       .select(getAllPanels)
