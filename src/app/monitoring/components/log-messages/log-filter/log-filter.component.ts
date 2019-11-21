@@ -1,5 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-
+import { Component, OnInit, EventEmitter, Output, ViewChild, ElementRef } from '@angular/core';
 import { SearchService } from 'app/monitoring/shared/services/search.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
@@ -9,8 +8,12 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./log-filter.component.scss']
 })
 export class LogFilterComponent implements OnInit {
+
+  @ViewChild('addModal') modalPanel: ElementRef;
+  
   @Output('update')
   update = new EventEmitter<Array<[string, string]>>();
+  
   public filters: Array<[string, string]> = [];
   public topics: Array<string> = [];
   public topic: string;
@@ -44,8 +47,8 @@ export class LogFilterComponent implements OnInit {
     this.filters = this.filters.filter(k => k !== filter);
     this.emitChanges();
   }
-  addFilter(content) {
-    this.modal = this.modalService.open(content, { size: 'lg' });
+  addFilter() {
+    this.modal = this.modalService.open(this.modalPanel, { size: 'lg' });
   }
   emitChanges() {
     this.update.emit(this.filters);
@@ -56,6 +59,7 @@ export class LogFilterComponent implements OnInit {
     this.modal!!.close();
   }
   getTopics() {
+
     this.searchService.getMappings().subscribe(
       data => {
         // since this is a Log-Specific Feature we alwys want the definition of the log-Type
@@ -65,5 +69,6 @@ export class LogFilterComponent implements OnInit {
         // TODO: Error-Handling here
       }
     );
+    
   }
 }

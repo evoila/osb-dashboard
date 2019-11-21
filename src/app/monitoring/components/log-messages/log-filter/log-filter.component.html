@@ -1,26 +1,22 @@
-<div class="input-group">
-  <div class="input-group-prepend">
+<div *ngIf="filters.length > 0" id="filter-div">
+  <div class="filter-list">
     <span *ngFor="let filter of filters" (click)="delete(filter)"
-      class="btn btn-danger">{{filter[0]}}:{{filter[1]}}</span>
-  </div>
-  <input type="text" name="filter" class="form-control" readonly>
-  <div class="input-group-append">
-    <span class="btn btn-outline-secondary btn-light" (click)="addFilter(addModal)">Add Filter</span>
+      id="filterbrick" class="btn btn-secondary">{{filter[0]}} : {{filter[1]}}</span>
   </div>
 </div>
 
 
 <ng-template #addModal let-c="close" let-d="dismiss">
   <div class="modal-header">
-    <h4 class="modal-title">Add your Filter</h4>
-    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+    <h4 class="modal-title">Create Filter</h4>
+    <!--  <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
       <span aria-hidden="true">&times;</span>
-    </button>
+      </button>  -->
   </div>
   <div class="modal-body">
     <div>
-      <label for="topicsel">Select Topic</label>
-      <select class="form-control" [(ngModel)]="topic" id="topicsel">
+      <label for="topicsel">Topic</label>
+      <select class="form-control" [(ngModel)]="topic" id="topicselect">
         <option *ngFor="let aTopic of topics">{{aTopic}}</option>
       </select>
     </div>
@@ -30,7 +26,7 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn " (click)="save()">Save</button>
-    <button type="button" class="btn btn-danger" (click)="cancel()">Cancel</button>
+    <button type="button" id="btn-save" class="btn " (click)="save()">Save</button>
+    <button type="button" id="btn-cancel" class="btn btn-danger" (click)="cancel()">Cancel</button>
   </div>
 </ng-template>

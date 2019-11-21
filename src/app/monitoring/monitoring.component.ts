@@ -42,15 +42,19 @@ export class MonitoringComponent implements OnInit {
         }
       });
     } else {
-      this.menu[0].links = this.menu[0].links.map(k => {
-        return {
-          ...k, button: false,
-          buttonFavicon: undefined,
-          buttonActionListener: undefined,
-        }
-      });
+      this.quitPanelEditmode();
     }
     this.menu = [...this.menu]
+  }
+
+  private quitPanelEditmode(){
+    this.menu[0].links = this.menu[0].links.map(k => {
+      return {
+        ...k, button: false,
+        buttonFavicon: undefined,
+        buttonActionListener: undefined,
+      }
+    });
   }
 
   public deletePanel = (panel: any) => {

@@ -1,3 +1,17 @@
+@import '../../../../core/core';
+
+h2{
+    color: $gray-0;
+    margin-bottom: 1em;
+}
+label{
+    color: $gray-1;
+    margin: 0.2em;
+}
+.form-control{
+    border-radius: $basic-border-radius;
+}
+
 div.sb-container {
     padding: 1.5em;
     display: grid;
@@ -5,11 +19,11 @@ div.sb-container {
     'textfields textfields textfields textfields textfields textfields'
     'main main main right right right'
     'buttons buttons buttons buttons buttons buttons-right';
-  grid-gap: 10px;
+    grid-gap: 10px;
+    row-gap: 20px;
 }
 .sb-right {
     grid-area: right;
-    //padding: 2em 0 0 1.37em;
     padding: 2em 0 0 0;
 }
 .sb-main {
@@ -27,4 +41,10 @@ div.sb-container {
 }
 .btn-danger {
     margin: 0 1em 0 0;
+    border-radius: $basic-border-radius;
+    width: 85px;
+}
+.btn-primary {
+    border-radius: $basic-border-radius;
+    width: 85px;
 }

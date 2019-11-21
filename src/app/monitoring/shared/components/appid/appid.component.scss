@@ -1,6 +1,37 @@
-select {
-    //max-width: 10vw;
+@import '../../../../core/core';
+
+.box{
+    display: grid;
+    grid-template-columns: 0px 240px;
+    grid-gap: 0.6em;
+    border-radius: $basic-border-radius;;
+    cursor: pointer;
 }
+
 #appName{
     cursor: pointer;
+    justify-self: stretch;
+    padding-left: 50px;
+    padding-top: 4px;
+    width: 240px;
+    border: 3px solid $gray-4;
+    border-radius: $basic-border-radius;
+    background-color: $transparent;
+}
+
+#appName:hover{
+    border: 3px solid $secondary_color;
+}
+
+div select{
+    cursor: pointer;
+}
+#applabel {
+    color: $gray-3;
+    font-size: 1em;
+    margin: 0rem;
+    margin-left: 4px;
+    margin-top: 0.44rem;
+    width: 35px;
+    height: fit-content;
 }

@@ -1,6 +1,10 @@
 <!-- <label *ngIf="serviceBindings" for="appId">
     Wählen Sie den Namen Ihrer Applikation</label> -->
-<select *ngIf="serviceBindings" class="custom-select mr-sm-2" [(ngModel)]="choosen " id="appName" name="appName"
+
+<div class="box">
+    <select *ngIf="serviceBindings" class="custom-select mr-sm-2" [(ngModel)]="choosen" id="appName" name="appName"
     (change)="setChoosen()">
-    <option selected *ngFor="let app of serviceBindings; let i = index" [value]="i">{{app.appName}}</option>
-</select>
+        <option selected *ngFor="let app of serviceBindings; let i = index" [value]="i">{{app.appName}}</option>
+    </select>
+    <label id="applabel">app:</label>
+</div>

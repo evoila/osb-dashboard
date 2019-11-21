@@ -28,6 +28,9 @@ export class SearchLogsComponent implements OnInit {
 
   fromDate: any = moment().subtract(30, "days").unix();
   toDate: any = moment().unix();
+  // formatted locale compact string to show on screen
+  timeInfo: string = "";
+  timeErrorInfo: string = "";
   hits: Hits;
 
   // Boolean Subject that emits wether there is an ongoing request
@@ -62,6 +65,7 @@ export class SearchLogsComponent implements OnInit {
         this.search();
       }
     });
+    this.setDateInfo();
   }
 
   setScope(event: ServiceBinding) {
@@ -76,10 +80,38 @@ export class SearchLogsComponent implements OnInit {
 
   setToDate(event: any) {
     this.toDate = event;
+    this.setDateInfo();
   }
 
   setFromDate(event: any) {
     this.fromDate = event;
+    this.setDateInfo();
+  }
+
+  setDateInfo(){
+    const from = new Date((this.fromDate as number) * 1000);
+    const to = new Date((this.toDate as number) * 1000);
+    const fromParts = { day: from.getUTCDate(), month: from.getUTCMonth() + 1, year: from.getUTCFullYear(), hour: from.getHours(), minute: from.getMinutes()};
+    const toParts = { day: to.getUTCDate(), month: to.getUTCMonth() + 1, year: to.getUTCFullYear(), hour: to.getHours(), minute: to.getMinutes()};
+     
+    if (fromParts.year == toParts.year && fromParts.month == toParts.month && fromParts.day == toParts.day){
+      // startdate and enddate at same day -> display only hours and minutes
+      const today :Date = new Date();
+      const todayParts = { day: today.getUTCDate(), month: today.getUTCMonth() + 1, year: today.getUTCFullYear() };
+      const isToday :boolean = (todayParts.day == fromParts.day && todayParts.month == fromParts.month && todayParts.year == fromParts.year);
+      this.timeInfo = `${isToday ? "" : `${this.simpleDate(fromParts.day, fromParts.month)}`} ${fromParts.hour > 9 ? "" : "0"}${fromParts.hour}:${fromParts.minute > 9 ? "" : "0"}${fromParts.minute}  -  ${toParts.hour > 9 ? "" : "0"}${toParts.hour}:${toParts.minute > 9 ? "" : "0"}${toParts.minute}`;
+    }
+    else{
+      // startdate and enddate NOT same day -> display only days and month
+      this.timeInfo =  `${this.simpleDate(fromParts.day, fromParts.month)}  -  ${this.simpleDate(toParts.day, toParts.month)}`;
+    }
+    //show error hint, if enddate before startdate
+    this.timeErrorInfo = from > to ? "enddate before startdate, please adjust to see logs" : "";
+  }
+
+  private simpleDate(day: number, month: number): string{
+    const s = `${day > 9 ? "" : "0"}${day}.${month > 9 ? "" : "0"}${month}.`;
+    return s;
   }
 
   buttonDisabled() {
