@@ -44,6 +44,7 @@ export class DeleteChart implements Action {
 }
 export class DeleteChartSuccess implements Action {
   readonly type = DELETE_CHART_SUCCESS;
+  constructor(public payload: Chart) {} 
 }
 export class DeleteChartFail implements Action {
   readonly type = DELETE_CHART_FAIL;

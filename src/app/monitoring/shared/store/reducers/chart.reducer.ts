@@ -81,8 +81,10 @@ export function reducer(
       };
     }
     case fromChartActions.DELETE_CHART_SUCCESS: {
+      const charts = state.charts.filter(k => k.id != action.payload.id)
       return {
         ...state,
+        charts,
         chartDeleted: true,
         chartDeleting: false
       }

@@ -1,10 +1,16 @@
 .grid-container {
+    cursor: pointer;
+    grid-template-rows: 1fr 1fr 2fr;
+    grid-template-areas:
+        'name'
+        'type'
+        'img';
+}
+
+.top-row{
+    grid-area: name;
     display: grid;
-    grid-template-rows: 2fr 1fr 1fr;
-    grid-template-areas: 'img'
-    'name'
-    'type'
-    ;
+    grid-template-columns: 9fr 1fr;
 }
 
 :host { display: block; }   
@@ -14,8 +20,18 @@
         width: 100%;
     }
 }
-h5 {
-    grid-area: name;
+button {
+    height: fit-content;
+    width: fit-content;
+    margin: 1px;
+    padding: 1px;
+    border: 0px;
+    color: #aaaaaa;
+
+    &:focus{
+        outline: none;
+        border: 0px;
+    }
 }
 h6 {
     grid-area: type;
