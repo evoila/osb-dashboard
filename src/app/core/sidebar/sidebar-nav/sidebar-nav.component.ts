@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit, Input, Pipe, PipeTransform, Injectable, HostBinding} from '@angular/core';
+import { Component, HostListener, OnInit, AfterViewInit, Input, Pipe, PipeTransform, Injectable, HostBinding} from '@angular/core';
 import { SidebarEntry, SidebarLink, SidebarLinkWithClick } from '../sidebar-entry';
 import { WindowService } from '../../window.service';
 
@@ -37,7 +37,10 @@ export class SidebarNavComponent implements OnInit {
 
   ngOnInit() {
     this.tryCollapse(this._window.innerWidth);
+  }
 
+  onAfterViewInit(){
+    // hide unneccessary UI Elements
     this.checkPanelSection();
   }
 

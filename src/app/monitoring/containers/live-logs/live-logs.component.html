@@ -3,8 +3,8 @@
     <sb-appid [selected]="scope.appId" class="appId" (app)="setScope($event)"></sb-appid>
 
 
-    <button [ngClass]="{'btn-primary': !streaming, 'btn-danger': streaming, 'btn': true}" (click)="toggleStream()" [disabled]="!buttonDisabled">
-      {{streaming? 'Stop': 'Start'}}
+    <button [ngClass]="{'btn-primary': !streaming, 'btn-danger': streaming, 'btn btn-primary': true}" class="btn btn-primary" (click)="toggleStream()" [disabled]="buttonDisabled">
+      {{streaming? 'stop': 'start'}}
 
     </button>
   </div>

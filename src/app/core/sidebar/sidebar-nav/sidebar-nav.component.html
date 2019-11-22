@@ -12,7 +12,7 @@
           <h3 class="mr-auto pr-2" [class.text-muted]="section.isDisabled">{{section.name}}</h3>
           <span> <i *ngIf="section.isCollapsible" class="fas"
               [ngClass]="{'fa-chevron-up': !section.isCollapsed, 'fa-chevron-down': section.isCollapsed}"></i></span>
-          <span> <i *ngIf="section.button" [ngClass]="{fas: true}" class="{{section.buttonFavicon}}"
+          <span class="section-header-edit-button-span"> <i *ngIf="section.button" [ngClass]="{fas: true}" class="{{section.buttonFavicon}}"
               (click)="section.buttonActionListener()"></i> </span>
         </div>
         <ul class="nav-items-stack mb-2" [ngbCollapse]="section.isCollapsed">
