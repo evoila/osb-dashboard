@@ -5,6 +5,7 @@ import { Server } from '../../../core/extension-url';
 
 @Injectable()
 export class EndpointService {
+  private readonly prefix = "/v1";
   private baseUrl =
     'https://osb-log-metric-dashboard-backend.cf.dev.eu-de-central.msh.host';
   // private baseUrl = 'http://localhost';
@@ -21,7 +22,7 @@ export class EndpointService {
       (k: Server) => k.identifier === 'log-metric-backend'
     );
     if (matchingEnvs.length > 0) {
-      return matchingEnvs[0].url;
+      return matchingEnvs[0].url + this.prefix;
     } else {
       return this.baseUrl;
     }
