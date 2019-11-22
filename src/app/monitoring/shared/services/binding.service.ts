@@ -19,8 +19,7 @@ export class BindingService {
 
   getBindings(): Observable<Array<ServiceBinding> | null> {
     if (environment.baseUrls.serviceBrokerUrl !== '/*[[${endpointUrl}]]*/') {
-      let uri = this.endpointService.getUri();  //  deprecated: environment.baseUrls.serviceBrokerUrl;
-      uri += this.endpoint;
+      let uri = this.endpointService.getUri() + this.endpoint; //  deprecated: environment.baseUrls.serviceBrokerUrl;
       return this.http.get(uri, this.endpointService.httpOptions).pipe(
         map(data => data as Array<ServiceBinding>),
         catchError(error => {
