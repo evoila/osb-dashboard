@@ -3,6 +3,8 @@ export interface ServiceBinding {
   appId: string;
   space: string;
   organization_guid: string;
+  timestamp: Number;
+  deprecated: boolean;
 }
 export interface SpaceAndOrg {
   space: string;
