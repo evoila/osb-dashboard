@@ -51,7 +51,7 @@ export class AppidComponent implements OnInit {
         );
       }
       this.serviceBindings = [...data];
-
+      
       this.choosen = data!!
         .map((binding, index) => {
           return { binding, index };

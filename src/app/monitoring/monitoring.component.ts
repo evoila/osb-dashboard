@@ -87,7 +87,7 @@ export class MonitoringComponent implements OnInit {
     {
       name: 'Panels',
       isCollapsible: false,
-      button: true,
+      button: false,
       buttonFavicon: "fa-edit",
       buttonActionListener: this.editModeListener,
       links: [
@@ -174,6 +174,9 @@ export class MonitoringComponent implements OnInit {
         })
       )
       .subscribe(k => {
+        if ((this.menu[0]["links"]).length > 1){
+          this.menu[0]["button"] = true;
+        }
         this.notYetNavigate && this.router.navigate(['monitoring/' + k]);
         this.notYetNavigate = false;
       });

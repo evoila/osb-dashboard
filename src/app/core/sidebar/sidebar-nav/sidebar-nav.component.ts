@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit, AfterViewInit, Input, Pipe, PipeTransform, Injectable, HostBinding} from '@angular/core';
+import { Component, HostListener, OnInit, Input, Pipe, PipeTransform, Injectable, HostBinding} from '@angular/core';
 import { SidebarEntry, SidebarLink, SidebarLinkWithClick } from '../sidebar-entry';
 import { WindowService } from '../../window.service';
 
@@ -39,11 +39,6 @@ export class SidebarNavComponent implements OnInit {
     this.tryCollapse(this._window.innerWidth);
   }
 
-  onAfterViewInit(){
-    // hide unneccessary UI Elements
-    this.checkPanelSection();
-  }
-
   @HostListener('window:resize', ['$event'])
   public onResize(event) {
     this.tryCollapse(event.target.innerWidth);
@@ -74,11 +69,4 @@ export class SidebarNavComponent implements OnInit {
     section['isCollapsed'] = (!section['isCollapsed']);
   }
 
-  private checkPanelSection(){
-    // if  first item in menu array only contains one link, it must be the "Add Panel" navItem 
-    //so there are no defined Panels, so we don't need no edit-panel-button next to the sectin header
-    if ((this.menu[0]["links"]).length == 1){
-      this.menu[0]["button"] = false;
-    }
-  }
 }
