@@ -3,6 +3,14 @@
         <h3 class="sidebar-header">Monitoring</h3>
     </sb-sidebar-nav>
     <div class="no-overflow">
-        <router-outlet></router-outlet>
+        <div *ngIf="!bindingsAlive" class="bindingsdead-div">
+            <div>
+                <label>{{bindingsProblemUserInfo}}</label>
+            </div>
+            <div>
+                <button (click)="tryLoadBindingsButtonTaped()" class="btn-secondary retry" [disabled]="tryLoadBindingsButtonDisabled">retry</button>
+            </div>
+        </div>
+        <router-outlet *ngIf="bindingsAlive"></router-outlet>
     </div>
 </sb-sidebar-layout>

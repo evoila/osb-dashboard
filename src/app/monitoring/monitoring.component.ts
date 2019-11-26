@@ -6,9 +6,10 @@ import { PanelState, getPanelsLoading } from './shared/store/reducers/panel.redu
 import { Store } from '@ngrx/store';
 import { LoadPanels, DeletePanel } from './shared/store/actions/panel.action';
 import { getAllPanels, getPanelState } from './shared/store/selectors/panel.selector';
+import { getBindingsLoadingState, getAllBindingsEntities } from './shared/store/selectors/bindings.selector';
 import { map, take, filter } from 'rxjs/operators';
 import { LoadBindings, LoadBindingsSuccess } from './shared/store/actions/binding.action';
-import { getState } from './store';
+import { getState} from './store';
 
 
 @Component({
@@ -20,7 +21,9 @@ export class MonitoringComponent implements OnInit {
   public chart: Chart;
   private notYetNavigate = true;
   panelEditMode = false;
-
+  bindingsAlive = false;
+  bindingsProblemUserInfo = "";
+  tryLoadBindingsButtonDisabled = true;
 
 
   // The Panels are getting an Edit Mode
@@ -123,12 +126,39 @@ export class MonitoringComponent implements OnInit {
   constructor(private store: Store<PanelState>, private router: Router) { }
 
   ngOnInit() {
-
-    /*  TO DO:   EVALUATE WEATHER BINDINGS ARE ALIVE & write into boolean bindingsAlive */ 
+ 
     // nearly every container uses the bindings in some way or the other so we load them right away
     this.store.dispatch(new LoadBindings());
     this.store.dispatch(new LoadPanels());
     this.loadPanels();
+    //subscribe to loadbindings state
+    this.store.select(getBindingsLoadingState).subscribe((state: any) => {
+          if (state.loading){ return; }
+          if (state.loaded){ // finished loading without error
+            const bindingEntitiesTempsubscription = this.store.select(getAllBindingsEntities).subscribe(binds => { // check if more than 0 bindings have been found
+              if (binds.length > 0){ // everything normal
+                this.bindingsAlive = true;
+                this.bindingsProblemUserInfo = "";
+                this.tryLoadBindingsButtonDisabled = true;
+              }
+              else{ // no bindings found, but valid http response, User has subscribed to a CF Service, but missed to bind any App  
+                this.bindingsAlive = false;
+                this.bindingsProblemUserInfo = "No Bindings found. Please make sure to bind Apps via CF.";
+                this.tryLoadBindingsButtonDisabled = false;
+              }
+              if (bindingEntitiesTempsubscription){
+                bindingEntitiesTempsubscription.unsubscribe();
+              }
+            })
+          }
+          else{ // finished loading with error 
+            this.bindingsAlive = false;
+            this.bindingsProblemUserInfo = "Technical Problem: App Bindings not available.";
+            this.tryLoadBindingsButtonDisabled = false;
+          }
+
+    })
+
     // end panel edit mode when other sidebar section or panelconfigurator gets clicked
     this.store.select(getState).pipe(filter(route => this.panelEditMode && (!route.url.includes('panel') || route.url.includes('configurator')))).subscribe((route: any) => {
         this.editModeListener(); // turning off panel edit mode
@@ -171,5 +201,12 @@ export class MonitoringComponent implements OnInit {
         this.notYetNavigate = false;
       });
   }
+
+  tryLoadBindingsButtonTaped(){
+    this.store.dispatch(new LoadBindings());
+    this.bindingsProblemUserInfo = "loading..";
+    this.tryLoadBindingsButtonDisabled = true;
+  }
+
 }
 
