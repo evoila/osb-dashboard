@@ -10,7 +10,7 @@ import { catchError, map } from 'rxjs/internal/operators';
 @Injectable({ providedIn: 'root' })
 export class BindingService {
   private instanceId = environment.serviceInstanceId;
-  private endpoint = `/custom/v2/manage/${this.instanceId}/service_bindings`;
+  private endpoint = `/serviceinstance/${this.instanceId}/bindings`; // deprecated: `/custom/v2/manage/${this.instanceId}/service_bindings`;
   constructor(
     private http: HttpClient,
     private notification: NotificationService,
@@ -19,8 +19,7 @@ export class BindingService {
 
   getBindings(): Observable<Array<ServiceBinding> | null> {
     if (environment.baseUrls.serviceBrokerUrl !== '/*[[${endpointUrl}]]*/') {
-      let uri = environment.baseUrls.serviceBrokerUrl;
-      uri += this.endpoint;
+      let uri = this.endpointService.getUri() + this.endpoint; //  deprecated: environment.baseUrls.serviceBrokerUrl;
       return this.http.get(uri, this.endpointService.httpOptions).pipe(
         map(data => data as Array<ServiceBinding>),
         catchError(error => {
