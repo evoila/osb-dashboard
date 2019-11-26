@@ -43,8 +43,25 @@ div.sb-container {
     margin: 0 1em 0 0;
     border-radius: $basic-border-radius;
     width: 85px;
+    border: 0px;
 }
 .btn-primary {
     border-radius: $basic-border-radius;
     width: 85px;
+    border: 0px;
+}
+
+.btn-primary:disabled{
+    border-radius: $basic-border-radius;
+    background-color: $gray-3;
+    width: 85px;
+    border: 0px;
+}
+
+.infohint{
+    margin-top: 1em;
+    label{
+        font-size: 1em;
+        color: $gray-1;
+    }
 }

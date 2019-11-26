@@ -1,28 +1,28 @@
 <div class="sb-container">
-    <div class="sb-textfields">
-        <h2 *ngIf="!onEdit">Create a new Panel</h2>
 
-        <h2 *ngIf="onEdit">Edit {{name}} here</h2>
+    
+        <div class="sb-textfields">
+            <h2 *ngIf="!onEdit">Create a new Panel</h2>
 
-        <div class="row">
-            <div class="col">
-                <label>Name</label>
-                <input class="form-control" type="text" name="name" [(ngModel)]="name" required>
-            </div>
-            <div class="col">
-                <label>Description</label>
-                <input class="form-control" type="text" name="description" [(ngModel)]="description" required>
+            <h2 *ngIf="onEdit">Edit {{name}} here</h2>
+
+            <div class="row">
+                <div class="col">
+                    <label>Name</label>
+                    <input class="form-control" type="text" name="name" [(ngModel)]="name" required>
+                </div>
+                <div class="col">
+                    <label>Description</label>
+                    <input class="form-control" type="text" name="description" [(ngModel)]="description" required>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="sb-buttons">
-        <button type="button" class="btn btn-danger" (click)="cancel()">cancel</button>
-        <button type="button" class="btn btn-primary" (click)="save(false)">save</button>
-    </div>
-
-
-    <div class="sb-button-right" *ngIf="onEdit">
-        <button type="button" class="btn btn-danger" (click)="save(true)">delete</button>
-    </div>
-
+        <div class="sb-buttons">
+            <button type="button" class="btn btn-danger" (click)="cancel()">cancel</button>
+            <button type="button" class="btn btn-primary" (click)="save(false)" [disabled]="!(name && description && authScope)">save</button>
+        </div>
+        <div class="sb-button-right" *ngIf="onEdit">
+            <button type="button" class="btn btn-danger" (click)="save(true)">delete</button>
+        </div>
+    
 </div>
