@@ -202,11 +202,7 @@ export class MonitoringComponent implements OnInit {
       });
   }
 
-  tryLoadBindingsButtonTaped(){
-    this.store.dispatch(new LoadBindings());
-    this.bindingsProblemUserInfo = "loading..";
-    this.tryLoadBindingsButtonDisabled = true;
-  }
+ 
 
 }
 
