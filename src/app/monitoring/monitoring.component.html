@@ -7,9 +7,7 @@
             <div>
                 <label>{{bindingsProblemUserInfo}}</label>
             </div>
-            <div>
-                <button (click)="tryLoadBindingsButtonTaped()" class="btn-secondary retry" [disabled]="tryLoadBindingsButtonDisabled">retry</button>
-            </div>
+            
         </div>
         <router-outlet *ngIf="bindingsAlive"></router-outlet>
     </div>
