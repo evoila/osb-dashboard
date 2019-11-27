@@ -7,7 +7,7 @@ import { Store } from '@ngrx/store';
 import { LoadPanels, DeletePanel } from './shared/store/actions/panel.action';
 import { getAllPanels, getPanelState } from './shared/store/selectors/panel.selector';
 import { map, take, filter } from 'rxjs/operators';
-import { LoadBindings } from './shared/store/actions/binding.action';
+import { LoadBindings, LoadBindingsSuccess } from './shared/store/actions/binding.action';
 import { getState } from './store';
 
 
@@ -20,6 +20,7 @@ export class MonitoringComponent implements OnInit {
   public chart: Chart;
   private notYetNavigate = true;
   panelEditMode = false;
+
 
 
   // The Panels are getting an Edit Mode
@@ -122,6 +123,8 @@ export class MonitoringComponent implements OnInit {
   constructor(private store: Store<PanelState>, private router: Router) { }
 
   ngOnInit() {
+
+    /*  TO DO:   EVALUATE WEATHER BINDINGS ARE ALIVE & write into boolean bindingsAlive */ 
     // nearly every container uses the bindings in some way or the other so we load them right away
     this.store.dispatch(new LoadBindings());
     this.store.dispatch(new LoadPanels());
