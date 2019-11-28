@@ -4,10 +4,27 @@
             (cdkDragStarted)="start($event)" (cdkDragEnded)="end($event)">
             <div class="top-row">
                 <h5>{{chart.name}}</h5>
-                <button (click)="deleteChart(chart)"><i class="fa fa-times" aria-hidden="true"></i></button>
+                <button (click)="confirmChartDeletion(chart)"><i class="fa fa-times" aria-hidden="true"></i></button>
             </div>
             <h6>type: {{chart.type}}</h6>
             <div class="img-container"><img src="{{chart.encodedImage}}" alt="image of rendered Chart"></div>
         </li>
     </ul>
 </div>
+
+<ng-template #confirmModal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-title">Chart deletion</h4>
+      <button type="button" class="close" aria-label="Close button" aria-describedby="modal-title" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p><strong>Are you sure you want to delete <span class="text-primary">{{chartToDelete.name}}</span> ?</strong></p>
+      <p><span class="text-danger">Its underlying Aggregation will be deleted as well.</span></p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancel</button>
+      <button type="button" ngbAutofocus class="btn btn-danger" (click)="deleteChart(chartToDelete)">Ok</button>
+    </div>
+  </ng-template>
