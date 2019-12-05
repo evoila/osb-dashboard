@@ -1,14 +1,28 @@
+@import '../../../../core/core';
+
 #log-search{
     margin-top: 3em;
     width: 100%;
 }
 .resultView {
+    display: flex;
     height: 80vh;
     overflow: scroll;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
 }
-.resultView table {
+.single-log-context-box{
+    width: calc(100% - 30px);
+    height: 40vh;
+    background-color: rgb(248, 112, 203);
+    margin: 5px 15px 15px 15px;
+}
+
+.resultList{
+    width: fit-content;
+}
+
+.resultList table {
     width: 100%;
     overflow: scroll;
 }
@@ -23,10 +37,9 @@
 }
 .key {
     display: inline-block;
-
     color: #283018;
     font-style: italic;
-    width: 20%;
+    text-align: end;
 }
 nav {
     margin: auto;
@@ -34,10 +47,12 @@ nav {
 }
 .value {
     color: #aa863a;
-    width: 70%;
 }
 .clearfix{
     padding-left: 1em;
+    display: grid;
+    grid-template-columns: 120px calc(100% - 120px - 1em);
+    grid-column-gap: 1em;
 }
 .clearfix::after {
     content: "";
@@ -45,7 +60,6 @@ nav {
     display: table;
 }
 tr {
-
     cursor: pointer;
 }
 code {
@@ -57,3 +71,27 @@ code {
 #log-search tr:nth-child(even) {
     background: #f0eceb;
 }    
+
+
+
+.btn.btn-secondary{
+    
+    border-radius: $basic-border-radius;
+    cursor: pointer;
+    margin: 15px 15px 15px 15px;
+    border: 0px;
+    outline: none;
+    background-color: $primary-color-light;
+    
+    &:focus{
+        background-color: $primary-color-light;
+    }
+    &:hover{
+        background-color: $primary-color;
+    }
+    &.hide-context:active{background-color: $primary-color-light;}
+    &.show-context:active{background-color: $primary-color-light;}
+    
+   
+}
+

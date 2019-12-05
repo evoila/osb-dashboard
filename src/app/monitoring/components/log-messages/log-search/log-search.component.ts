@@ -49,6 +49,8 @@ export class LogSearchComponent implements OnInit, OnDestroy {
 
   public direction: reversed = 'notReversed';
 
+  showSingleLogContext = false;
+
   // array containing the Interval of Pages that should be visible in navigation
   pageInterval: Array<number>;
 
@@ -62,6 +64,7 @@ export class LogSearchComponent implements OnInit, OnDestroy {
   constructor(private shortcut: ShortcutService) { }
   collapse(index: number) {
     this.isCollapsed[index] = !this.isCollapsed[index];
+    this.showSingleLogContext = false;
   }
 
   ngOnDestroy() {
@@ -125,6 +128,17 @@ export class LogSearchComponent implements OnInit, OnDestroy {
   getObjectEntries(object: any): Array<[string, string]> {
     return Object.entries(object);
   }
+
+  toggleLogContext(index: number){ // index to reference logmessage in this.hits
+    this.showSingleLogContext = !this.showSingleLogContext;
+    // decollapsing all other log-message-detail-lists when showing log message context for a specific log message
+    // legacy program logic leeds to isCollaped-array always having length of the index of highest user-collapsed row
+    this.isCollapsed = (Array<boolean>(index))
+    this.isCollapsed.push(true)
+
+
+  }
+
 }
 
 type reversed = 'reversed' | 'notReversed';

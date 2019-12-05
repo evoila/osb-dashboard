@@ -16,21 +16,31 @@
     </ul>
   </nav>
 
-  <div class=" resultView" *ngIf="results">
-    <table class="table">
-      <tbody>
-        <tr (click)="collapse(i)" *ngFor="let result of results.hits; let i = index" [@flyInOut]="direction">
-          <td>
-            <code>{{result._source.logMessage}}</code>
-            <div [ngbCollapse]="!isCollapsed[i]">
-              <div class="clearfix" *ngFor="let entry of getObjectEntries(result._source)">
-                <span class="key">{{entry[0]}}:</span>
-                <span class="value">{{entry[1]}}</span>
-              </div>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="resultView" *ngIf="results">
+      <div class="resultList">
+          <table class="table">
+            <tbody>
+              <tr (click)="collapse(i)" *ngFor="let result of results.hits; let i = index" [@flyInOut]="direction">
+                <td>
+                  <code>{{result._source.logMessage}}</code>
+
+                  <div [ngbCollapse]="!isCollapsed[i]">
+                    <div>
+                      <button [ngClass]="{'show-context': !showSingleLogContext, 'hide-context': showSingleLogContext, 'btn btn-secondary': true}" (click)="toggleLogContext(i);$event.stopPropagation();">{{showSingleLogContext? 'hide context': 'show context'}}</button>
+                    </div>
+                    <div *ngIf="showSingleLogContext && isCollapsed[i]" class="single-log-context-box">
+                    <sb-log-context-explorer [mainLogMsg]="result._source.logMessage" [mainLogDate]="result._source.timestamp"> </sb-log-context-explorer>
+                    
+                     </div>
+                    <div class="clearfix" *ngFor="let entry of getObjectEntries(result._source)">
+                      <span class="key">{{entry[0]}}:</span>
+                      <span class="value">{{entry[1]}}</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody> 
+          </table>
+      </div>   
   </div>
 </div>

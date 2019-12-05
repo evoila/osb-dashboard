@@ -1,8 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter, AfterViewInit, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Hits } from 'app/monitoring/model/search-response';
 import { Observable } from 'rxjs';
-import { CodegenComponentFactoryResolver } from '@angular/core/src/linker/component_factory_resolver';
-
 
 @Component({
   selector: 'sb-log-list',
