@@ -8,6 +8,7 @@ import { TimeService } from 'app/monitoring/shared/services/time.service';
 import * as moment from 'moment/moment';
 import { SearchService } from 'app/monitoring/shared/services/search.service';
 import { tap, filter } from 'rxjs/operators';
+import { LogDataModel } from 'app/monitoring/model/log-data-model';
 
 @Component({
   selector: 'sb-log-context-explorer',
@@ -16,12 +17,9 @@ import { tap, filter } from 'rxjs/operators';
 })
 export class LogContextExplorerComponent implements OnInit, OnDestroy {
   @ViewChild(LogListComponent) MonacoLogList;
-    
-  @Input('mainLogDate')
-  centralLogDate : number;
 
   @Input('mainLogMsg')
-  centralLogMsg : string;
+  centralLogMsg : LogDataModel;
   
   scope: Partial<ServiceBinding> = {};
   hits: Hits;
@@ -31,8 +29,6 @@ export class LogContextExplorerComponent implements OnInit, OnDestroy {
 
   hitsSubject = new Subject<Hits>();
   hits$ = new Observable<Hits>(k => this.hitsSubject.subscribe(k));
-  
-  
   
 
   // in a request where not all the data is fetched you need a pointer to the index
@@ -78,10 +74,10 @@ export class LogContextExplorerComponent implements OnInit, OnDestroy {
       }
     } as SearchRequest;
     
-    console.log(this.centralLogDate);
+    console.log(this.centralLogMsg._source.timestamp);
     searchRequest.range = new TimeRange(); 
     searchRequest.range.to = this.timeService.convertUnixToNumerical(moment().unix());
-    searchRequest.range.from = this.timeService.convertUnixToNumerical(this.centralLogDate / 1000); // milliseconds to seconds
+    searchRequest.range.from = this.timeService.convertUnixToNumerical(this.centralLogMsg._source.timestamp / 1000); // milliseconds to seconds
 
     return searchRequest;
   }

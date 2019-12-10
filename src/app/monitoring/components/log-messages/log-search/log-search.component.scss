@@ -4,32 +4,53 @@
     margin-top: 3em;
     width: 100%;
 }
-.resultView {
+
+.content-case{
     display: flex;
+    height: fit-content;
+}
+
+.resultView {
+    width: fit-content;
     height: 80vh;
     overflow: scroll;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-
 }
+
 .single-log-context-box{
     width: calc(100% - 30px);
-    height: 40vh;
-    background-color: rgb(248, 112, 203);
-    margin: 5px 15px 15px 15px;
+    height: 80vh;
+    margin: 0px 15px 15px 15px;
+    padding: 12px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    overflow: hidden;
+}
+
+.context-explorer{
+    height: fit-content;
 }
 
 .resultList{
-    width: fit-content;
+    width: 100%;
 }
 
 .resultList table {
     width: 100%;
-    overflow: scroll;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 #log-search h5 {
     text-align: center;
     margin-bottom: 1em;
 
+}
+
+#context-header{
+    color: $secondary-color; 
+}
+
+#context-sub-header{
+    color: $secondary-color;
 }
 .disabled {
     pointer-events:none; //This makes it not clickable
@@ -37,16 +58,18 @@
 }
 .key {
     display: inline-block;
-    color: #283018;
+    color: $gray-2;
     font-style: italic;
     text-align: end;
+    font-size: 0.7em;
 }
 nav {
     margin: auto;
     width: fit-content;
 }
 .value {
-    color: #aa863a;
+    color: $gray-1;
+    font-size: 0.7em;
 }
 .clearfix{
     padding-left: 1em;
@@ -61,16 +84,30 @@ nav {
 }
 tr {
     cursor: pointer;
+    height: 1.7em;
+    padding: 0.3rem;
+}
+#td {
+    padding: 0.55rem;
 }
 code {
-    color: #729f98;
+    color: #7a9490;
+    font-size: 0.7em;
 }
+
+// this one makes the <code> element containing the log messages in the normal result list a special color to indicate ..
+// ..that a message context is shown for this log result
+.table tr.active code {
+    color: $secondary-color;
+}
+
 #log-search tr {
-    
+    background: #fefefe;
 }
 #log-search tr:nth-child(even) {
-    background: #f0eceb;
+    background: #f9f9f9;
 }    
+
 
 
 
@@ -81,6 +118,7 @@ code {
     margin: 15px 15px 15px 15px;
     border: 0px;
     outline: none;
+    font-size: 0.7em;
     background-color: $primary-color-light;
     
     &:focus{
