@@ -44,7 +44,7 @@ export const getBindingsLoadingState = createSelector(
 export const getBindingsSpaceAndOrg = createSelector(
   getAllBindingsEntities,
   (entities: Array<ServiceBinding>) => {
-    return entities
+    return entities.length == 0 ? { space: "", org: "" } : entities
       .map(entity => {
         return {
           org: entity.organization_guid,

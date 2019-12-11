@@ -8,7 +8,7 @@
     cursor: pointer;
 }
 
-#appName{
+.custom-select.mr-sm-2.appName{   // select element with normal binding selected
     cursor: pointer;
     justify-self: stretch;
     padding-left: 50px;
@@ -17,11 +17,19 @@
     border: 3px solid $gray-4;
     border-radius: $basic-border-radius;
     background-color: $transparent;
+    &chosen-alive{
+        color: $gray-2;
+    }
+    &chosen-depr{   // select element with DEPRECATED binding selected
+        color: lightcoral;
+    }
 }
 
-#appName:hover{
+
+.custom-select.mr-sm-2.appName:hover{
     border: 3px solid $secondary_color;
 }
+
 
 div select{
     cursor: pointer;
@@ -34,4 +42,12 @@ div select{
     margin-top: 0.44rem;
     width: 35px;
     height: fit-content;
+}
+
+.binding-alive{
+    color: cadetblue;
+}
+
+.binding-deprecated{
+    color: indianred;
 }

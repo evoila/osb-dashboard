@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ElementRef, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ChartModelState } from '../../../shared/store/reducers/chart.reducer';
 import { LoadCharts, DeleteChart } from '../../../shared/store/actions/chart.actions';
@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { getCharts } from '../../../shared/store/selectors/chart.selector';
 import { Chart } from '../../../shared/model/chart';
 import { CdkDragEnd, CdkDragStart } from '@angular/cdk/drag-drop';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
@@ -20,8 +21,17 @@ export class AddChartSidepanelComponent implements OnInit {
   @Output('started')
   started = new EventEmitter<CdkDragStart>();
 
+  @ViewChild('confirmModal')
+  deleteChartConfirmModal: ElementRef;
+
   charts$: Observable<Array<Chart>>;
-  constructor(private chartStore: Store<ChartModelState>) { }
+  
+  //popup pane to confirm actions like chart deletion etc
+  private modal: NgbModalRef | null = null;
+  // reference for the modal to fullfill deletion and show attributes 
+  private chartToDelete; // value is read in html
+
+  constructor(private chartStore: Store<ChartModelState>, private modalService: NgbModal) { }
 
   ngOnInit() {
     this.chartStore.dispatch(new LoadCharts());
@@ -38,7 +48,12 @@ export class AddChartSidepanelComponent implements OnInit {
   }
 
   deleteChart(chart: Chart) {
-    console.log("delete chart here");
     this.chartStore.dispatch(new DeleteChart(chart.id!!));
+    this.modal!!.close();
+  }
+
+  confirmChartDeletion(chart: Chart) {
+    this.chartToDelete = chart;
+    this.modal = this.modalService.open(this.deleteChartConfirmModal, { size: 'lg' });
   }
 }
