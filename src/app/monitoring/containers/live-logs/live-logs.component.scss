@@ -25,12 +25,12 @@
     border: 3px solid $attention-red;
     background-color: $transparent;
     color: $attention-red;
-    font-size: 0.95em;
+    font-size: 1em;
     padding: 4px 2px
 }
 
 
-.btn-primary {  //start button
+.btn.btn-primary {  //start button
     height: 2.4em;
     align-self: start;
     border-radius: $basic-border-radius;
@@ -50,3 +50,4 @@
     align-self: start;
     border-radius: $basic-border-radius;
 }
+

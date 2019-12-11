@@ -43,6 +43,9 @@ export class MonitoringComponent implements OnInit {
           return k;
         }
       });
+      // panel edit mode favicon gets another css class when edit mode is active
+      this.menu[0].buttonFavicon = "fa-edit edit-mode-on";
+
     } else {
       this.quitPanelEditmode();
     }
@@ -57,6 +60,8 @@ export class MonitoringComponent implements OnInit {
         buttonActionListener: undefined,
       }
     });
+    // panel edit mode favicon looses his active-mode css class
+    this.menu[0].buttonFavicon = "fa-edit";
   }
 
   public deletePanel = (panel: any) => {
@@ -69,7 +74,12 @@ export class MonitoringComponent implements OnInit {
       const tempSubscription = this.store.select(getPanelState).pipe(filter(k => !k.panelSaveing && k.panelSaved)).subscribe(k => {
         this.store.dispatch(new LoadPanels());
         tempSubscription.unsubscribe();
+        // ending editmode after delete
         this.editModeListener();
+        // hiding edit mode button if there are no panels to edit 
+        if ((this.menu[0]["links"]).length == 1){
+          this.menu[0]["button"] = false;
+        }
       })
 
     }
@@ -79,7 +89,7 @@ export class MonitoringComponent implements OnInit {
     {
       name: 'Panels',
       isCollapsible: false,
-      button: true,
+      button: false,
       buttonFavicon: "fa-edit",
       buttonActionListener: this.editModeListener,
       links: [
@@ -186,6 +196,9 @@ export class MonitoringComponent implements OnInit {
         })
       )
       .subscribe(k => {
+        if ((this.menu[0]["links"]).length > 1){
+          this.menu[0]["button"] = true;
+        }
         this.notYetNavigate && this.router.navigate(['monitoring/' + k]);
         this.notYetNavigate = false;
       });
