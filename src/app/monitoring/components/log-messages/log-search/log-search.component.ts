@@ -9,7 +9,7 @@ import {
   animate,
   transition
 } from '@angular/animations';
-import { tap, debounceTime } from 'rxjs/operators';
+import { tap, debounceTime, filter } from 'rxjs/operators';
 import { LogDataModel } from 'app/monitoring/model/log-data-model';
 
 @Component({
@@ -44,6 +44,12 @@ export class LogSearchComponent implements OnInit, OnDestroy {
 
   @Input('steps')
   public steps: number;
+
+  @Input('query') // the query text is passed to eventually highlight the search string in the resulting logmessages list
+  queryText: string = "";
+
+  @Input('inputFocus') // the query text is passed to eventually highlight the search string in the resulting logmessages list
+  searchInputHasFocus: boolean = false;
 
   public pages: number;
   private hits$Subscription: Subscription;
@@ -90,10 +96,10 @@ export class LogSearchComponent implements OnInit, OnDestroy {
       key: "ArrowLeft",
       description: "Navigate to previous page",
       view: "Search Logs View"
-    }).pipe(tap(k => {
+    }).pipe(filter(k => this.results != null && !this.searchInputHasFocus), tap(k => { // without this filter, left-arrow-key presses trigger pagination, even before search button was hit and results were displayed at all
       if (this.page - 1 >= 0) {
         this.page -= 1;
-      }
+      } 
     }), debounceTime(300)).subscribe(k => {
       this.loadMore(this.page, false);
     });
@@ -103,11 +109,11 @@ export class LogSearchComponent implements OnInit, OnDestroy {
       key: "ArrowRight",
       description: "Navigate to next page",
       view: "Search Logs View"
-    }).pipe(tap(k => {
+    }).pipe(filter(k => this.results != null && !this.searchInputHasFocus), tap(k => {
       // Whe a user stays on the arrow key we want to count up the pages but do just one request every 300 ms
       if (this.page + 1 <= this.pages) {
         this.page += 1;
-      }
+      } 
     }), debounceTime(300)).subscribe(k => {
       this.loadMore(this.page, true);
     });
@@ -143,6 +149,8 @@ export class LogSearchComponent implements OnInit, OnDestroy {
     this.isCollapsed = (Array<boolean>(i))
     this.isCollapsed.push(true)
   }
+
+
 
 }
 

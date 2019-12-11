@@ -23,7 +23,7 @@
               <tbody>
                 <tr (click)="collapse(i)" *ngFor="let result of results.hits; let i = index" [class.active]="i == selectedRow" [@flyInOut]="direction">
                   <td id="td">
-                    <code>{{result._source.logMessage}}</code>
+                    <code innerHTML="{{result._source.logMessage}}"></code>
                     <div [ngbCollapse]="!isCollapsed[i]">
                       <div>
                         <button [ngClass]="{'show-context': !showSingleLogContext, 'hide-context': showSingleLogContext, 'btn btn-secondary': true}" (click)="toggleLogContext(result);$event.stopPropagation();">{{showSingleLogContext? 'hide context': 'show context'}}</button>

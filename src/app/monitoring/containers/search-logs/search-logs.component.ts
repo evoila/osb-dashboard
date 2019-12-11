@@ -19,9 +19,9 @@ export class SearchLogsComponent implements OnInit {
   showFilter = false;
   scope: ServiceBinding = {} as ServiceBinding;
   query: string;
+  queryString: string; // passed to the log-search component (result list) to highlight the result logs appropriately
+  queryInputHasFocus = false;
   public error: boolean = false;
-
-
 
   //number of elements per request
   size = 100;
@@ -119,12 +119,14 @@ export class SearchLogsComponent implements OnInit {
     // should be disabled due to missing user input
     return !(Object.keys(this.scope).length && this.query)
   }
+
   search() {
     const request = this.buildSearchRequest(0, true);
     this.lastRequestTimeStamp = moment().unix();
     this.page = 0;
     this.error = false;
-
+    // querystring ist only set and changed at this point and passed to child component to make highlighted search results possible
+    this.queryString = this.query.replace(/\*/g, ""); // remove * character
     this.fireRequest(request).subscribe((data: SearchResponse) => {
 
       this.hits = data.hits;
@@ -214,4 +216,15 @@ export class SearchLogsComponent implements OnInit {
   }
 
 
+  onLostFocusQueryInput(){
+    this.queryInputHasFocus = false;
+  }
+
+  onGotFocusQueryInput(){
+    this.queryInputHasFocus = true;
+  }
+
+
 }
+
+
