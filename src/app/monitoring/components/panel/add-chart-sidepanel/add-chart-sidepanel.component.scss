@@ -36,3 +36,12 @@ button {
 h6 {
     grid-area: type;
 }
+
+.btn{   // modal cancel & ok button when dleting charts
+    padding: 2px 6px;
+    border-radius: 8px;
+    
+}
+.btn.btn-danger{ // modal OK button when deleting charts
+    color: white;
+}
