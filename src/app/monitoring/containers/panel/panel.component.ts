@@ -4,8 +4,6 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import * as moment from 'moment/moment';
 import { EsTimerangeService } from 'app/monitoring/services/es-timerange.service';
 
-
-
 import { filter, switchMap, take } from 'rxjs/operators';
 import { CdkDragDrop, CdkDragStart, CdkDragEnd } from '@angular/cdk/drag-drop';
 
@@ -25,7 +23,6 @@ import { FirePanelAggregationRequest } from '../../shared/store/actions/chart.ac
 import { ChartInPanel } from '../../model/chart-in-panel';
 import { TimeService } from '../../shared/services/time.service';
 import { ShortcutService } from '../../../core/services/shortcut.service';
-
 
 
 
@@ -83,6 +80,7 @@ export class PanelComponent implements OnInit, OnDestroy {
   // CSS Classes for Notification Icon 
   public addingChartClasses = ["far", "fa-check-square"];
   private redoObject = {} as Panel;
+
   constructor(
     private timeRangeService: EsTimerangeService,
     private router: Router,

@@ -4,6 +4,8 @@ import * as program from '../node_modules/commander';
 
 import { ChildProcessManager } from './child-process-manager';
 import * as spawn from 'cross-spawn';
+//const https = require('https');
+
 
 const children = new ChildProcessManager();
 
@@ -36,9 +38,19 @@ function serve(buildTarget: string, cb) {
   });
 }
 
+/*function getCredentials(password: string, username: string, url: string) {
+  const uri = `${url}/oauth/token`;
+  https.post('', (resp) => {
+
+  })
+}*/
 program
   .version('0.0.1')
   .option('-t, --target <env>', 'Build Target (angular-cli environment)')
+  //.option('-ct, --cf-token <token>', 'UAA Token for Cloud Foundry')
+  //.option('-cu --cf-user <user>', 'Cloud Foundry User')
+  //.option('-cp --cf-password <password>', 'Cloud Foundry Passwords')
+  //.option('-uu --uaa-url <uaa>', 'The Url of the UAA')
   .parse(process.argv);
 
 serve(program['target'], (code) => {
