@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SbAppidComponent } from './sb-appid.component';
+import { AppidComponent } from './appid.component';
 
-describe('SbAppidComponent', () => {
-  let component: SbAppidComponent;
-  let fixture: ComponentFixture<SbAppidComponent>;
+describe('AppidComponent', () => {
+  let component: AppidComponent;
+  let fixture: ComponentFixture<AppidComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SbAppidComponent ]
+      declarations: [ AppidComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SbAppidComponent);
+    fixture = TestBed.createComponent(AppidComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
