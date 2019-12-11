@@ -34,8 +34,8 @@ export class PanelEditorComponent implements OnInit {
   public name: string;
   public description: string;
   public onEdit: boolean;
+  public authScope: CfAuthScope;
 
-  private authScope: CfAuthScope;
   private cfAuthParams: CfAuthParameterService;
 
   constructor(
@@ -44,7 +44,7 @@ export class PanelEditorComponent implements OnInit {
     private panelModelStore: Store<PanelState>,
     private router: Router,
     bindingStore: Store<BindingsState>,
-    cfAuthParams: CfAuthParameterService, 
+    cfAuthParams: CfAuthParameterService,
     private shortcut: ShortcutService
   ) {
     this.cfAuthParams = cfAuthParams.construct(bindingStore);
@@ -71,7 +71,7 @@ export class PanelEditorComponent implements OnInit {
       description: "Trigger Save Button",
       view: "Panel Editor View"
     }).subscribe(k => {
-        this.save(false);
+      this.save(false);
     });
   }
 
