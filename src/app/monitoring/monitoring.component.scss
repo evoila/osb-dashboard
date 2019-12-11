@@ -1,3 +1,14 @@
+@import '../core/core';
+
 .no-overflow{
     overflow: hidden;
 }
+
+.bindingsdead-div{
+    height: 8em;
+    background-color: slategray;
+    color: white;
+    text-align: center;
+    padding: 15px;
+}
+
