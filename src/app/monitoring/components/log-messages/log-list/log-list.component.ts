@@ -1,13 +1,13 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { Hits } from 'app/monitoring/model/search-response';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'sb-log-list',
   templateUrl: './log-list.component.html',
   styleUrls: ['./log-list.component.scss']
 })
-export class LogListComponent implements OnInit {
+export class LogListComponent implements OnInit, OnDestroy {
   @Input('searchResponse')
   searchResponse: Observable<Hits>;
   @Input('isStreaming')
@@ -20,13 +20,18 @@ export class LogListComponent implements OnInit {
   editorOptions = { readOnly: true, language: 'javascript' };
   code: string;
   logs: Array<String> = [];
+
+  subscription: Subscription;
   constructor() {
 
   }
 
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
   ngOnInit() {
     if (this.searchResponse) {
-      this.searchResponse.subscribe(data => {
+      this.subscription = this.searchResponse.subscribe(data => {
         this.code = '';
         this.hits = { ...data };
         if (this.hits.hits) {
@@ -35,12 +40,7 @@ export class LogListComponent implements OnInit {
           });
         }
       })
-    } else {
-      //TODO: Error-Message
     }
-  }
-  debug() {
-    console.log(this.code);
   }
   public loadMore() {
     this.more.emit([100, true]);

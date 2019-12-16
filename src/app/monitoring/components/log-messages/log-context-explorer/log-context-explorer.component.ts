@@ -1,14 +1,17 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, ViewChild } from '@angular/core';
-import { Hits, SearchResponse } from '../../../model/search-response';
-import { Observable, Subscription, Subject } from 'rxjs';
+import { Component, OnInit, Input, EventEmitter, OnDestroy, } from '@angular/core';
+import { Hits } from '../../../model/search-response';
+import { Observable, Subscription, Subject, throwError as observableThrowError } from 'rxjs';
 import { ServiceBinding } from 'app/monitoring/model/service-binding';
-import { LogListComponent } from '../log-list/log-list.component';
-import { SearchRequest, TimeRange } from 'app/monitoring/model/search-request';
-import { TimeService } from 'app/monitoring/shared/services/time.service';
-import * as moment from 'moment/moment';
+
 import { SearchService } from 'app/monitoring/shared/services/search.service';
-import { tap, filter } from 'rxjs/operators';
+import { tap, filter, take, map } from 'rxjs/operators';
 import { LogDataModel } from 'app/monitoring/model/log-data-model';
+import { Store } from '@ngrx/store';
+import { BindingsState, } from '../../../shared/store/reducers/binding.reducer';
+import { ElasticContextQuery } from '../../../shared/model/elastic-context-query';
+import { NotificationService, Notification, NotificationType } from '../../../../core/notification.service';
+import { authScopeFromBinding } from '../../../chart-configurator/model/cfAuthScope';
+import { getAllBindingsEntities } from '../../../shared/store/selectors/bindings.selector';
 
 @Component({
   selector: 'sb-log-context-explorer',
@@ -16,32 +19,28 @@ import { LogDataModel } from 'app/monitoring/model/log-data-model';
   styleUrls: ['./log-context-explorer.component.scss']
 })
 export class LogContextExplorerComponent implements OnInit, OnDestroy {
-  @ViewChild(LogListComponent) MonacoLogList;
 
   @Input('mainLogMsg')
-  centralLogMsg : LogDataModel;
-  
+  logMessage: LogDataModel
+
   scope: Partial<ServiceBinding> = {};
-  hits: Hits;
-  lastRequestTimeStamp: number;
+
   loadingSubject = new Subject<boolean>();
   loading$ = new Observable<boolean>(k => this.loadingSubject.subscribe(k));
 
   hitsSubject = new Subject<Hits>();
   hits$ = new Observable<Hits>(k => this.hitsSubject.subscribe(k));
-  
 
-  // in a request where not all the data is fetched you need a pointer to the index
-  // of the last request you made
-  requestPointer: number = 0;
 
-  constructor( private searchService: SearchService, private timeService: TimeService ) { }
+  constructor(
+    private searchService: SearchService,
+    private store: Store<BindingsState>,
+    private notificationService: NotificationService
+  ) { }
 
-  // number of entries that are polled 
-  size = 50
-  
+
   ngOnDestroy() {
-    
+
   }
 
   ngOnInit() {
@@ -50,53 +49,60 @@ export class LogContextExplorerComponent implements OnInit, OnDestroy {
   }
 
   fireContextSearchRequest() {
-      
-    const request = this.buildContextSearchRequest();
-    this.requestPointer = 0;
-    this.fireRequest(request).subscribe((data: SearchResponse) => {
-      this.loadingSubject.next(false);
-      this.hits = data.hits
-      this.hitsSubject.next(this.hits);
+    this.buildContextSearchRequest().pipe(filter(k => !(k instanceof Error))).subscribe((req: ElasticContextQuery) => {
+      this.fireRequest(req).subscribe((data: Hits) => {
+        this.loadingSubject.next(false);
+        this.hitsSubject.next(data);
+      });
     });
+
   }
 
 
-  // timerange from main log message to now    /// TO DO: build second request with time range before central log message
-  private buildContextSearchRequest(from = 0): SearchRequest {
-
-    let searchRequest = {
-      appName: this.scope.appName,
-      space: this.scope.space,
-      orgId: this.scope.organization_guid,
-      docSize: {
-        from,
-        size: this.size
-      }
-    } as SearchRequest;
-    
-    console.log(this.centralLogMsg._source.timestamp);
-    searchRequest.range = new TimeRange(); 
-    searchRequest.range.to = this.timeService.convertUnixToNumerical(moment().unix());
-    searchRequest.range.from = this.timeService.convertUnixToNumerical(this.centralLogMsg._source.timestamp / 1000); // milliseconds to seconds
-
-    return searchRequest;
+  private buildContextSearchRequest(): Observable<ElasticContextQuery | Error> {
+    let binding: ServiceBinding;
+    return this.store.select(getAllBindingsEntities).pipe(
+      tap(k => console.log(k)),
+      filter(k => !!k),
+      map((k: Array<ServiceBinding>) => k.filter(bind => bind.appId == this.logMessage._source.appId)), take(1),
+      map(k => {
+        if (k) {
+          binding = k[0]
+          return {
+            authScope: authScopeFromBinding(binding!!),
+            appId: binding!!.appId,
+            sourceInstance: this.logMessage._source.sourceInstance,
+            size: 10,
+            index: this.logMessage._index,
+            timestamp: this.logMessage._source.timestamp
+          } as ElasticContextQuery;
+        } else {
+          const errorMsg = "Binding for app is Missing";
+          console.error(errorMsg);
+          this.notificationService.addSelfClosing(new Notification(NotificationType.Error, errorMsg, undefined));
+          observableThrowError(errorMsg);
+          return new Error();
+        }
+      }));
   }
 
 
 
-  private fireRequest(request: SearchRequest): Observable<SearchResponse> {
+  private fireRequest(request: ElasticContextQuery): Observable<Hits> {
     this.loadingSubject.next(true);
-    this.lastRequestTimeStamp = moment().unix();
-    return this.searchService.getSearchResults(request).pipe(
-      tap((data: SearchResponse) => {
-        if (!data.timed_out && data.hits.total === 0) {
-          console.log("no data found, CHECK YOUR REQUEST");
+    return this.searchService.getChronologicalContext(request).pipe(
+      tap((data: Array<LogDataModel>) => {
+        if (!data) {
+          const errorMsg = "no data found, CHECK YOUR REQUEST"
+          console.error(errorMsg);
+          this.notificationService.addSelfClosing(new Notification(NotificationType.Error, errorMsg, undefined));
         }
       }),
-      filter((data: SearchResponse) => !data.timed_out && data.hits.total !== 0)
+      filter((data: Array<LogDataModel>) => !!data),
+      map(data => { return { total: data.length, max_score: 1, hits: data } as Hits })
     );
   }
-  
 
-  
+
+
 }

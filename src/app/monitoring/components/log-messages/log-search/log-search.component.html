@@ -18,32 +18,35 @@
 
   <div class="content-case">
     <div class="resultView" *ngIf="results">
-        <div class="resultList">
-            <table class="table">
-              <tbody>
-                <tr (click)="collapse(i)" *ngFor="let result of results.hits; let i = index" [class.active]="i == selectedRow" [@flyInOut]="direction">
-                  <td id="td">
-                    <code innerHTML="{{result._source.logMessage}}"></code>
-                    <div [ngbCollapse]="!isCollapsed[i]">
-                      <div>
-                        <button [ngClass]="{'show-context': !showSingleLogContext, 'hide-context': showSingleLogContext, 'btn btn-secondary': true}" (click)="toggleLogContext(result);$event.stopPropagation();">{{showSingleLogContext? 'hide context': 'show context'}}</button>
-                      </div>
-                      <div class="clearfix" *ngFor="let entry of getObjectEntries(result._source)">
-                        <span class="key">{{entry[0]}}:</span>
-                        <span class="value">{{entry[1]}}</span>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-              </tbody> 
-            </table>
-        </div> 
+      <div class="resultList">
+        <table class="table">
+          <tbody>
+            <tr (click)="collapse(i)" *ngFor="let result of results.hits; let i = index"
+              [class.active]="i == selectedRow" [@flyInOut]="direction">
+              <td id="td">
+                <code innerHTML="{{result._source.logMessage}}"></code>
+                <div [ngbCollapse]="!isCollapsed[i]">
+                  <div>
+                    <button
+                      [ngClass]="{'show-context': !showSingleLogContext, 'hide-context': showSingleLogContext, 'btn btn-secondary': true}"
+                      (click)="toggleLogContext(result);$event.stopPropagation();">{{showSingleLogContext? 'hide context': 'show context'}}</button>
+                  </div>
+                  <div class="clearfix" *ngFor="let entry of getObjectEntries(result._source)">
+                    <span class="key">{{entry[0]}}:</span>
+                    <span class="value">{{entry[1]}}</span>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
     <div *ngIf="showSingleLogContext" class="single-log-context-box">
-        <h6 id="context-header">Log History Context</h6>
-        <!--<code id="context-sub-header">{{logContextSeed._source.logMessage}}</code>-->
-        <sb-log-context-explorer class="context-explorer" [mainLogMsg]="logContextSeed"> </sb-log-context-explorer>    
-    </div> 
+      <h6 id="context-header">Log History Context</h6>
+      <!--<code id="context-sub-header">{{logContextSeed._source.logMessage}}</code>-->
+      <sb-log-context-explorer class="context-explorer" [mainLogMsg]="logContextSeed"> </sb-log-context-explorer>
+    </div>
   </div>
 
 </div>
