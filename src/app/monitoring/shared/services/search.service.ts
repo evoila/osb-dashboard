@@ -12,6 +12,8 @@ import { Field } from 'app/monitoring/aggregation-editor/model/field';
 import { AggregationRequestObject } from 'app/monitoring/chart-configurator/model/aggregationRequestObject';
 import { Panel } from '../model/panel';
 import { QueryAndResponse } from '../model/query-and-response';
+import { ElasticContextQuery } from '../model/elastic-context-query';
+import { LogDataModel } from '../../model/log-data-model';
 
 @Injectable()
 export class SearchService {
@@ -92,6 +94,18 @@ export class SearchService {
         });
         return returnVal;
       }),
+      catchError((error: any) => {
+        this.notification.addSelfClosing(
+          new Notification(NotificationType.Error, error.error.message)
+        );
+        return observableThrowError(error.json);
+      })
+    );
+  }
+
+  public getChronologicalContext(data: ElasticContextQuery): Observable<Array<LogDataModel>> {
+    const endpoint = this.endpoint.getUri() + '/search/context';
+    return this.http.post<Array<LogDataModel>>(endpoint, data, this.httpOptions).pipe(
       catchError((error: any) => {
         this.notification.addSelfClosing(
           new Notification(NotificationType.Error, error.error.message)

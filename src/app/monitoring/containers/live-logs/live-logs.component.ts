@@ -32,6 +32,7 @@ export class LiveLogsComponent implements OnInit, OnDestroy {
      Config-Values 
      for Request-Scheduling 
   */
+  private subscriptions: Array<Subscription> = [];
 
   interval = 5000;
   // amount of lines being polled
@@ -46,7 +47,7 @@ export class LiveLogsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    this.shortcut.bindShortcut({
+    const sub = this.shortcut.bindShortcut({
       key: "Enter",
       description: "Trigger Search Request",
       view: "Search Logs View"
@@ -55,11 +56,14 @@ export class LiveLogsComponent implements OnInit, OnDestroy {
         this.toggleStream();
       }
     });
-
+    this.subscriptions = [...this.subscriptions, sub];
   }
   ngOnDestroy() {
     if (this.streamSub) {
       this.streamSub.unsubscribe();
+    }
+    if (this.subscriptions.length) {
+      this.subscriptions.forEach(k => k.unsubscribe());
     }
   }
   setScope(scope: ServiceBinding) {
@@ -67,7 +71,7 @@ export class LiveLogsComponent implements OnInit, OnDestroy {
       this.scope = scope;
       this.buttonDisabled = false;
     }
-    else{
+    else {
       this.buttonDisabled = true;
     }
 

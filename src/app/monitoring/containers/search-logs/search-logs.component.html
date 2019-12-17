@@ -1,36 +1,44 @@
 <div class="container" sbSpinner [condition$]="loading$">
   <div class="head">
     <div class="head-group head-group-1">
-        <sb-appid class="appId" [selected]="scope.appId" (app)="setScope($event)" id="appid"></sb-appid>
-        <button (click)="showFilter = !showFilter" class="btn btn-light calendar-button">
-          <i class="fas fa-history"></i>
-          <span><label id="dateinfo">{{timeInfo}}</label></span>
-        </button>
+      <sb-appid class="appId" [selected]="scope.appId" (app)="setScope($event)" id="appid"></sb-appid>
+      <button (click)="showFilter = !showFilter" class="btn btn-light calendar-button">
+        <i class="fas fa-history"></i>
+        <span><label id="dateinfo">{{timeInfo}}</label></span>
+      </button>
     </div>
     <div class="head-group head-group-2">
-        <input type="text" class="form-control" (focus)="onGotFocusQueryInput()" (blur)="onLostFocusQueryInput()" [(ngModel)]="query" id="search" placeholder="type in Lucene Query">
-        <button (click)="search()" class="btn btn-primary" [disabled]="buttonDisabled()">search</button>
+      <input type="text" class="form-control" (focus)="onGotFocusQueryInput()" (blur)="onLostFocusQueryInput()"
+        [(ngModel)]="query" id="search" placeholder="type in Lucene Query">
+      <button (click)="search()" class="btn btn-primary" [disabled]="buttonDisabled()">search</button>
     </div>
   </div>
   <div *ngIf="!showFilter" class="subhead">
-      <div id="dateinfo-div">
-              <label id="date-error-info">{{timeErrorInfo}}</label>
-      </div>
-      <span></span>
-      <span></span>
+    <div id="dateinfo-div">
+      <label id="date-error-info">{{timeErrorInfo}}</label>
+    </div>
+    <span></span>
+    <span></span>
   </div>
-  <div *ngIf="showFilter"> 
-      <sb-timefilter class="time-filter" [toDate]="toDate" [fromDate]="fromDate"
-      (fromDateChange)="setFromDate($event)" (toDateChange)="setToDate($event)"></sb-timefilter>
+  <div *ngIf="showFilter">
+    <sb-timefilter class="time-filter" [toDate]="toDate" [fromDate]="fromDate" (fromDateChange)="setFromDate($event)"
+      (toDateChange)="setToDate($event)"></sb-timefilter>
   </div>
   <main>
-    <sb-log-search *ngIf="!buttonDisabled() && !error" [pagination]="page" [steps]="size" [hits]="hits$" [query]="queryString" [inputFocus]="queryInputHasFocus"
-      (more)="flick($event)">
+    <sb-log-search *ngIf="!buttonDisabled() && !error" [pagination]="page" [steps]="size" [hits]="hits$"
+     [inputFocus]="queryInputHasFocus" (more)="flick($event)" (toggleContextSearch)="contextSearch = $event" (logContextSeed)="logContextSeed = $event" >
     </sb-log-search>
+
     <div *ngIf="error" id="error">
       <i [ngClass]="{'far fa-eye': true}" class="noresulticon"></i>
       <p id="noresultmsg"> No Data found. Please check your requests. </p>
     </div>
 
+    <div class="single-log-context-box" *ngIf="contextSearch">
+      <h6 id="context-header">Log History Context</h6>
+      <!--<code id="context-sub-header">{{logContextSeed._source.logMessage}}</code>-->
+      <sb-log-context-explorer class="context-explorer" [mainLogMsg]="logContextSeed"> </sb-log-context-explorer>
+    </div>
+  
   </main>
 </div>

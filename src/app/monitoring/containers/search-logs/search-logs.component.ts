@@ -9,6 +9,7 @@ import { tap, filter, catchError } from 'rxjs/operators';
 import { NotificationService, NotificationType, Notification } from '../../../core/notification.service';
 import { TimeService } from '../../shared/services/time.service';
 import { ShortcutService } from '../../../core/services/shortcut.service';
+import { LogDataModel } from 'app/monitoring/model/log-data-model';
 
 @Component({
   selector: 'sb-search-logs',
@@ -24,10 +25,15 @@ export class SearchLogsComponent implements OnInit {
   public error: boolean = false;
 
   //number of elements per request
-  size = 100;
+  size = 10;
+
+  contextSearch: boolean = false;
+
+  logContextSeed: LogDataModel;
 
   fromDate: any = moment().subtract(30, "days").unix();
   toDate: any = moment().unix();
+
   // formatted locale compact string to show on screen
   timeInfo: string = "";
   timeErrorInfo: string = "";
