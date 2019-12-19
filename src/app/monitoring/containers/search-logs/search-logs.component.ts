@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { SearchService } from '../../shared/services/search.service';
 import { SearchRequest, TimeRange } from '../../model/search-request';
 import { ServiceBinding } from '../../model/service-binding';
@@ -10,6 +10,7 @@ import { NotificationService, NotificationType, Notification } from '../../../co
 import { TimeService } from '../../shared/services/time.service';
 import { ShortcutService } from '../../../core/services/shortcut.service';
 import { LogDataModel } from 'app/monitoring/model/log-data-model';
+import { LogSearchComponent } from 'app/monitoring/components/log-messages/log-search/log-search.component';
 
 @Component({
   selector: 'sb-search-logs',
@@ -17,18 +18,19 @@ import { LogDataModel } from 'app/monitoring/model/log-data-model';
   styleUrls: ['./search-logs.component.scss']
 })
 export class SearchLogsComponent implements OnInit {
+
+  @ViewChild(LogSearchComponent) logSearchComponentResultList;
+
   showFilter = false;
   scope: ServiceBinding = {} as ServiceBinding;
   query: string;
-  queryString: string; // passed to the log-search component (result list) to highlight the result logs appropriately
   queryInputHasFocus = false;
   public error: boolean = false;
 
   //number of elements per request
-  size = 10;
+  size = 100;
 
   contextSearch: boolean = false;
-
   logContextSeed: LogDataModel;
 
   fromDate: any = moment().subtract(30, "days").unix();
@@ -131,8 +133,9 @@ export class SearchLogsComponent implements OnInit {
     this.lastRequestTimeStamp = moment().unix();
     this.page = 0;
     this.error = false;
-    // querystring ist only set and changed at this point and passed to child component to make highlighted search results possible
-    this.queryString = this.query.replace(/\*/g, ""); // remove * character
+    this.contextSearch = false;
+    this.logSearchComponentResultList.isCollapsed = [];
+
     this.fireRequest(request).subscribe((data: SearchResponse) => {
 
       this.hits = data.hits;

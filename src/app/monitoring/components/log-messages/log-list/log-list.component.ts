@@ -29,7 +29,7 @@ export class LogListComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
-  
+
   ngOnInit() {
     if (this.searchResponse) {
       this.subscription = this.searchResponse.subscribe(data => {
@@ -42,7 +42,6 @@ export class LogListComponent implements OnInit, OnDestroy {
         }
       })
     }
-    this.code = "hure";
   }
   public loadMore() {
     this.more.emit([100, true]);

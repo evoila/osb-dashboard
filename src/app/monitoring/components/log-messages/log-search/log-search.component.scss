@@ -1,29 +1,19 @@
 @import '../../../../core/core';
 
 #log-search{
-    margin-top: 3em;
+    margin-top: 0.5em;
     width: 100%;
 }
 
 
 .resultView {
     width: fit-content;
-    height: 80vh;
-    overflow: scroll;
+    height: 70vh;
+    //overflow: scroll;
+    overflow-y: scroll;
+    overflow-x: hidden;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
-
-.single-log-context-box{
-    width: calc(100% - 30px);
-    height: 80vh;
-    margin: 0px 15px 15px 15px;
-    padding: 12px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    overflow: hidden;
-}
-
-.context-explorer{
-    height: fit-content;
+    border-radius: 10px;
 }
 
 .resultList{
@@ -35,19 +25,21 @@
     overflow-y: scroll;
     overflow-x: hidden;
 }
+
 #log-search h5 {
     text-align: center;
     margin-bottom: 1em;
 
 }
 
-#context-header{
-    color: $secondary-color; 
+.pagination{
+    width: 100%;
+    border-radius: 18px;
+}
+.pagination-box{
+    width: 100%;
 }
 
-#context-sub-header{
-    color: $secondary-color;
-}
 .disabled {
     pointer-events:none; //This makes it not clickable
     opacity:0.6;         //This grays it out to look disabled
@@ -62,6 +54,7 @@
 nav {
     margin: auto;
     width: fit-content;
+
 }
 .value {
     color: $gray-1;
@@ -111,7 +104,7 @@ code {
     
     border-radius: $basic-border-radius;
     cursor: pointer;
-    margin: 15px 15px 15px 15px;
+    margin: 15px 15px 15px 25px;
     border: 0px;
     outline: none;
     font-size: 0.7em;

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, EventEmitter, OnDestroy, ChangeDetectorRef, AfterViewInit, HostListener, } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, OnDestroy, AfterViewInit, HostListener, } from '@angular/core';
 import { Hits } from '../../../model/search-response';
 import { Observable, Subscription, Subject, throwError as observableThrowError } from 'rxjs';
 import { ServiceBinding } from 'app/monitoring/model/service-binding';
@@ -18,7 +18,7 @@ import { getAllBindingsEntities } from '../../../shared/store/selectors/bindings
   templateUrl: './log-context-explorer.component.html',
   styleUrls: ['./log-context-explorer.component.scss']
 })
-export class LogContextExplorerComponent implements OnInit, OnDestroy, AfterViewInit {
+export class LogContextExplorerComponent implements OnInit, OnDestroy{
 
   @Input('mainLogMsg')
   logMessage: LogDataModel
@@ -32,7 +32,6 @@ export class LogContextExplorerComponent implements OnInit, OnDestroy, AfterView
   hits$ = new Observable<Hits>(k => this.hitsSubject.subscribe(k));
 
   constructor(
-    private cdr: ChangeDetectorRef,
     private searchService: SearchService,
     private store: Store<BindingsState>,
     private notificationService: NotificationService
@@ -43,15 +42,8 @@ export class LogContextExplorerComponent implements OnInit, OnDestroy, AfterView
     
   }
 
-  ngAfterViewInit() {
-    //console.log("detatching change detection");
-    // We only want to detach the change detectors after change detection has been
-    // performed for the first time
-    //this.cdr.detach();
-}
 
   ngOnInit() {
-    console.log("ngOnInit() LogContextExplorerComponent");
     this.fireContextSearchRequest();
   }
 
@@ -79,7 +71,7 @@ export class LogContextExplorerComponent implements OnInit, OnDestroy, AfterView
             authScope: authScopeFromBinding(binding!!),
             appId: binding!!.appId,
             sourceInstance: this.logMessage._source.sourceInstance,
-            size: 10,
+            size: 100,
             index: this.logMessage._index,
             timestamp: this.logMessage._source.timestamp
           } as ElasticContextQuery;
