@@ -53,23 +53,23 @@
 
 .single-log-context-box{
     width: calc(100% - 30px);
-    height: 80vh;
-    margin: 5px 10px 15px 10px;
+    margin: 61px 5px 15px 10px;
     padding: 8px;
-    
+    height:70vh;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 10px;
+    border: 3px solid $secondary-color-light;
     overflow: hidden;
 }
 .inner-context-box{
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    padding: 0.5em;
-    border-radius: 10px;
-    border: 3px solid $secondary-color-light;
-    height:70vh;
+    padding: 3px;
+    margin: 0px;
+    height: 100%;
 }
 
 #context-header{
     color: $primary-color; 
-    margin-bottom: 1.25em;
+    margin-bottom: 0.75em;
     text-align: center;
 }
 

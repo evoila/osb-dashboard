@@ -11,11 +11,34 @@ import { TimeService } from '../../shared/services/time.service';
 import { ShortcutService } from '../../../core/services/shortcut.service';
 import { LogDataModel } from 'app/monitoring/model/log-data-model';
 import { LogSearchComponent } from 'app/monitoring/components/log-messages/log-search/log-search.component';
+import {
+  trigger,
+  state,
+  style,
+  animate,
+  transition
+} from '@angular/animations';
 
 @Component({
   selector: 'sb-search-logs',
   templateUrl: './search-logs.component.html',
-  styleUrls: ['./search-logs.component.scss']
+  styleUrls: ['./search-logs.component.scss'],
+  animations: [
+    trigger('swipeInOut', [
+      state('in', style({ transform: 'translateX(0)' })),
+      transition('void => out', [
+        style({ transform: 'translateX(100%)' }),
+        animate('0.3s ease')
+      ])
+    ])/*, 
+    trigger('swipeInOut', [
+      state('out', style({ transform: 'translateX(0)' })),
+      transition('void => in', [
+        style({ transform: 'translateX(-100%)' }),
+        animate(140)
+      ])    
+    ])*/
+  ]
 })
 export class SearchLogsComponent implements OnInit {
 
@@ -45,6 +68,8 @@ export class SearchLogsComponent implements OnInit {
   loadingSubject = new Subject<boolean>();
   loading$ = new Observable<boolean>(k => this.loadingSubject.subscribe(k));
 
+  // animations
+  public direction: dir = 'in';
 
   /* Timestamp of the last request Important for pagination cause search results might 
   grow continuesly which would lead to broken indeces
@@ -236,4 +261,5 @@ export class SearchLogsComponent implements OnInit {
 
 }
 
+type dir = 'in' | 'out';
 
