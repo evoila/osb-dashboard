@@ -5,6 +5,12 @@
     height: 2.5em; 
     border: 1px solid #eee;
 }
+
 :host /deep/ .myGlyphMarginClass {
     background-color: yellow;
+}
+
+#monacoEditor{
+    width: 100%;
+    height: 65vh;
 }

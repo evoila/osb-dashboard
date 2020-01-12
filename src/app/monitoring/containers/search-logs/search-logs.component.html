@@ -30,12 +30,12 @@
         [inputFocus]="queryInputHasFocus" (more)="flick($event)" (toggleContextSearch)="contextSearch = $event" (logContextSeed)="logContextSeed = $event" >
         </sb-log-search>
 
-        <div class="single-log-context-box" *ngIf="contextSearch">
+        <div class="single-log-context-box" *ngIf="contextSearch" [@swipeInOut]="contextSearch ? 'out' : 'in'">
           <h5 id="context-header">Log History Context</h5>
           <div class="inner-context-box">
             <!--<code id="context-sub-header">{{logContextSeed._source.logMessage}}</code>-->
             <sb-log-context-explorer class="context-explorer" [mainLogMsg]="logContextSeed"> </sb-log-context-explorer>
-          </div>>
+          </div>
         </div>
       </div>
 
