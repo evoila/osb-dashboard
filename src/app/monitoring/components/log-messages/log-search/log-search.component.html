@@ -1,24 +1,24 @@
 <div id="log-search" *ngIf="shouldBeVisible()">
   <div class="pagination-box">
-  <nav aria-label="Pagination">
-    <ul class="pagination">
-      <li (click)="loadMore(page-1, false)" [ngClass]="{'page-item': true, 'disabled': page == 0}">
-        <a class="page-link" href="javascript:;"> <i class="fas fa-chevron-left"></i></a>
-      </li>
-      <li class="page-item disabled" *ngIf="pageInterval[0] != 0"> <a class="page-link" href="javascript:;">[...]</a>
-      </li>
-      <li *ngFor="let i of pageInterval" (click)="loadMore(i ,i > page)"
-        [ngClass]="{'page-item': true, 'active': i == page }"><a class="page-link" href="javascript:;">{{i}}</a></li>
-      <li class="page-item disabled" *ngIf="pageInterval[pageInterval.length -1] != pages"> <a class="page-link"
-          href="javascript:;">[...]</a></li>
-      <li (click)="loadMore(page+1 ,true)" [ngClass]="{'page-item': true, 'disabled': page == pages}">
-        <a class="page-link" href="javascript:;"><i class="fas fa-chevron-right"></i></a>
-      </li>
-    </ul>
-  </nav>
+    <nav aria-label="Pagination">
+      <ul class="pagination">
+        <li (click)="loadMore(page-1, false)" [ngClass]="{'page-item': true, 'disabled': page == 0}">
+          <a class="page-link" href="javascript:;"> <i class="fas fa-chevron-left"></i></a>
+        </li>
+        <li class="page-item disabled" *ngIf="pageInterval[0] != 0"> <a class="page-link" href="javascript:;">[...]</a>
+        </li>
+        <li *ngFor="let i of pageInterval" (click)="loadMore(i ,i > page)"
+          [ngClass]="{'page-item': true, 'active': i == page }"><a class="page-link" href="javascript:;">{{i}}</a></li>
+        <li class="page-item disabled" *ngIf="pageInterval[pageInterval.length -1] != pages"> <a class="page-link"
+            href="javascript:;">[...]</a></li>
+        <li (click)="loadMore(page+1 ,true)" [ngClass]="{'page-item': true, 'disabled': page == pages}">
+          <a class="page-link" href="javascript:;"><i class="fas fa-chevron-right"></i></a>
+        </li>
+      </ul>
+    </nav>
   </div>
   <!-- <label>{{shouldBeVisible()}}</label> -->
-   
+
   <div class="content-case">
     <div class="resultView">
       <div class="resultList">
@@ -28,21 +28,21 @@
               [class.active]="i == selectedRow">
               <td id="td">
                 <code innerHTML="{{result._source.logMessage}}"></code>
-                
+
                 <div [ngbCollapse]="!isCollapsed[i]">
-                   <div>
-                      <button
-                        [ngClass]="{'show-context': !showSingleLogContext, 'hide-context': showSingleLogContext, 'btn btn-secondary': true}"
-                        (click)="toggleLogContext(result, $event)">{{showSingleLogContext? 'hide context': 'show context'}}
-                      </button>
-                   </div>
-                   <div *ngIf="isCollapsed[i]">
-                      <div class="clearfix" *ngFor="let entry of getObjectEntries(result._source)">
-                        <span class="key">{{entry[0]}}:</span>
-                        <span class="value">{{entry[1]}}</span>
-                     </div>
+                  <div>
+                    <button
+                      [ngClass]="{'show-context': !showSingleLogContext, 'hide-context': showSingleLogContext, 'btn btn-secondary': true}"
+                      (click)="toggleLogContext(result, $event)">{{showSingleLogContext? 'hide context': 'show context'}}
+                    </button>
                   </div>
-                </div> 
+                  <div *ngIf="isCollapsed[i]">
+                    <div class="clearfix" *ngFor="let entry of getObjectEntries(result._source)">
+                      <span class="key">{{entry[0]}}:</span>
+                      <span class="value">{{entry[1]}}</span>
+                    </div>
+                  </div>
+                </div>
               </td>
             </tr>
           </tbody>
@@ -50,5 +50,4 @@
       </div>
     </div>
   </div>
-
 </div>

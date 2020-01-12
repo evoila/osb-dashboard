@@ -12,6 +12,7 @@ import * as moment from 'moment/moment';
 import { TimeService } from '../../shared/services/time.service';
 import { ShortcutService } from '../../../core/services/shortcut.service';
 import { LogFilterComponent } from '../../components/log-messages/log-filter/log-filter.component';
+import { HighlightingAndHits } from '../../components/log-messages/log-list/log-list.component';
 
 @Component({
   selector: 'sb-explore-logs',
@@ -35,8 +36,8 @@ export class ExploreLogsComponent implements OnInit, OnDestroy {
 
   showFilter = false;
 
-  hitsSubject = new Subject<Hits>();
-  hits$ = new Observable<Hits>(k => this.hitsSubject.subscribe(k));
+  hitsSubject = new Subject<Hits | HighlightingAndHits>();
+  hits$ = new Observable<Hits | HighlightingAndHits>(k => this.hitsSubject.subscribe(k));
 
   private subscriptions: Array<Subscription> = [];
 

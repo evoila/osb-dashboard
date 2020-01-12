@@ -11,11 +11,12 @@ import {
 } from '@angular/animations';
 import { tap, debounceTime, filter } from 'rxjs/operators';
 import { LogDataModel } from 'app/monitoring/model/log-data-model';
+import { HighlightingAndHits } from '../log-list/log-list.component';
 
 @Component({
   selector: 'sb-log-search',
   templateUrl: './log-search.component.html',
-   animations: [
+  animations: [
     trigger('flyInOut', [
       state('notReversed, reversed', style({ transform: 'translateX(0)' })),
       transition('void => notReversed', [
@@ -33,7 +34,7 @@ import { LogDataModel } from 'app/monitoring/model/log-data-model';
         animate(140)
       ])
     ])
-  ], 
+  ],
   styleUrls: ['./log-search.component.scss']
 })
 export class LogSearchComponent implements OnInit, OnDestroy {

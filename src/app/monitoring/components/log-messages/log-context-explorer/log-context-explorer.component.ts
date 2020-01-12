@@ -12,13 +12,14 @@ import { ElasticContextQuery } from '../../../shared/model/elastic-context-query
 import { NotificationService, Notification, NotificationType } from '../../../../core/notification.service';
 import { authScopeFromBinding } from '../../../chart-configurator/model/cfAuthScope';
 import { getAllBindingsEntities } from '../../../shared/store/selectors/bindings.selector';
+import { HighlightingAndHits } from '../log-list/log-list.component';
 
 @Component({
   selector: 'sb-log-context-explorer',
   templateUrl: './log-context-explorer.component.html',
   styleUrls: ['./log-context-explorer.component.scss']
 })
-export class LogContextExplorerComponent implements OnInit, OnDestroy{
+export class LogContextExplorerComponent implements OnInit, OnDestroy {
 
   @Input('mainLogMsg')
   logMessage: LogDataModel
@@ -28,8 +29,8 @@ export class LogContextExplorerComponent implements OnInit, OnDestroy{
   loadingSubject = new Subject<boolean>();
   loading$ = new Observable<boolean>(k => this.loadingSubject.subscribe(k));
 
-  hitsSubject = new Subject<Hits>();
-  hits$ = new Observable<Hits>(k => this.hitsSubject.subscribe(k));
+  hitsSubject = new Subject<Hits | HighlightingAndHits>();
+  hits$ = new Observable<Hits | HighlightingAndHits>(k => this.hitsSubject.subscribe(k));
 
   constructor(
     private searchService: SearchService,
@@ -39,7 +40,7 @@ export class LogContextExplorerComponent implements OnInit, OnDestroy{
 
 
   ngOnDestroy() {
-    
+
   }
 
 
@@ -51,8 +52,25 @@ export class LogContextExplorerComponent implements OnInit, OnDestroy{
   fireContextSearchRequest() {
     this.buildContextSearchRequest().pipe(filter(k => !(k instanceof Error))).subscribe((req: ElasticContextQuery) => {
       this.fireRequest(req).subscribe((data: Hits) => {
+        let index: number;
+        for (let i = 0; i < data.hits.length; i++) {
+          if (data.hits[i]._source.logMessage == this.logMessage._source.logMessage) {
+            index = i
+          }
+        }
+        let highlightsAndHits: Hits | HighlightingAndHits;
+        if (index!!) {
+          // Index starts at zero monaco line numers at 1 so we have to add something to it
+          index!! += 1;
+          highlightsAndHits = {
+            hits: data,
+            highlightRange: new monaco.Range(index!!, 1, index!!, 1),
+          } as HighlightingAndHits
+        } else {
+          highlightsAndHits = data;
+        }
         this.loadingSubject.next(false);
-        this.hitsSubject.next(data);
+        this.hitsSubject.next(highlightsAndHits);
       });
     });
   }
@@ -62,7 +80,7 @@ export class LogContextExplorerComponent implements OnInit, OnDestroy{
     let binding: ServiceBinding;
     return this.store.select(getAllBindingsEntities).pipe(
       tap(k => console.log(k)),
-      filter(k => !!k),
+      filter(k => !!k), #
       map((k: Array<ServiceBinding>) => k.filter(bind => bind.appId == this.logMessage._source.appId)), take(1),
       map(k => {
         if (k) {

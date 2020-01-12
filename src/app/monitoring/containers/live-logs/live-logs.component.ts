@@ -8,6 +8,7 @@ import { SearchResponse, Hits } from '../../model/search-response';
 import * as moment from 'moment/moment';
 import { TimeService } from '../../shared/services/time.service';
 import { ShortcutService } from '../../../core/services/shortcut.service';
+import { HighlightingAndHits } from '../../components/log-messages/log-list/log-list.component';
 
 @Component({
   selector: 'sb-live-logs',
@@ -25,8 +26,8 @@ export class LiveLogsComponent implements OnInit, OnDestroy {
   buttonDisabled: boolean = false;
 
   //Observable to pass data to subcomponent
-  hitSubject = new Subject<Hits>();
-  hits$ = new Observable<Hits>(k => this.hitSubject.subscribe(k));
+  hitSubject = new Subject<Hits | HighlightingAndHits>();
+  hits$ = new Observable<Hits | HighlightingAndHits>(k => this.hitSubject.subscribe(k));
 
   /* 
      Config-Values 
@@ -87,7 +88,7 @@ export class LiveLogsComponent implements OnInit, OnDestroy {
           switchMap(k => {
             const request = this.buildSearchRequest();
             return this.searchService.getSearchResults(request).pipe(
-              filter((data: SearchResponse) => !data.timed_out && data.hits.total !== 0),
+              filter((data: SearchResponse) => !data.timed_out && data.hits.total !== 0)
             )
 
           })).subscribe((data: SearchResponse) => {
