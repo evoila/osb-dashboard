@@ -80,7 +80,7 @@ export class LogContextExplorerComponent implements OnInit, OnDestroy {
     let binding: ServiceBinding;
     return this.store.select(getAllBindingsEntities).pipe(
       tap(k => console.log(k)),
-      filter(k => !!k), #
+      filter(k => !!k),
       map((k: Array<ServiceBinding>) => k.filter(bind => bind.appId == this.logMessage._source.appId)), take(1),
       map(k => {
         if (k) {
