@@ -7,10 +7,10 @@
     grid-column-gap: 10%;
     grid-auto-flow: column;
     align-items: start;
-    padding: 1px;
-    margin: 2vh 0vw;
+    padding: 8px;
+    margin: 0px;
     border: 2px solid $gray-5;
-    border-radius: $basic-border-radius;
+    border-radius: 5px;//$basic-border-radius;
 }
 .form-group-x{
     padding: 0em;
@@ -23,7 +23,6 @@
     text-align: right;
     color: $gray-2;
 }
-
 
 .datepick-div{
     display: grid;

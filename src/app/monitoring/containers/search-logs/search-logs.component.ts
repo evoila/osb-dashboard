@@ -30,14 +30,14 @@ import {
         style({ transform: 'translateX(100%)' }),
         animate('0.3s ease')
       ])
-    ]), 
+    ])/*, 
     trigger('swipeInOut', [
       state('out', style({ transform: 'translateX(0)' })),
       transition('void => in', [
         style({ transform: 'translateX(-100%)' }),
         animate(140)
       ])    
-    ])
+    ])*/
   ]
 })
 export class SearchLogsComponent implements OnInit {

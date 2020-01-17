@@ -124,7 +124,6 @@ export class MonitoringComponent implements OnInit {
 
   ngOnInit() {
 
-    /*  TO DO:   EVALUATE WEATHER BINDINGS ARE ALIVE & write into boolean bindingsAlive */ 
     // nearly every container uses the bindings in some way or the other so we load them right away
     this.store.dispatch(new LoadBindings());
     this.store.dispatch(new LoadPanels());

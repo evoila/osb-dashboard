@@ -1,16 +1,16 @@
 <div class="grid-container" #container>
+  
   <sb-timefilter [toDate]="toDateView" [fromDate]="fromDateView" (fromDateChange)="setFromDate($event)"
-    (toDateChange)="setToDate($event)" class="timefilter">
-  </sb-timefilter>
+  (toDateChange)="setToDate($event)" class="timefilter">
+</sb-timefilter>
+
   <span #toggleSidePanelEle [ngClass]="{'draghandle': true, 'active': !sidePanelHidden}" (click)="toggleSidePanel()">
     <span>
       <i class="fas fa-chevron-left"></i>
     </span>
   </span>
   <div id="mainview">
-    <aside id="sidePanel" [ngClass]="{'active': !sidePanelHidden}" *ngIf="!sidePanelHidden">
-      <sb-add-chart-sidepanel (ended)="ended($event)" (started)="started($event)"></sb-add-chart-sidepanel>
-    </aside>
+    
     <div #chartcontainer id="chartcontainer" [ngClass]="{'active': !sidePanelHidden, 'chartcontainer': true}"
       *ngIf="panel" cdkDropList id="list-two" [cdkDropListConnectedTo]="['list-one']"
       (cdkDropListDropped)="drop($event)">
@@ -42,8 +42,13 @@
         </sb-chart>
       </div>
     </div>
+
+    <aside id="sidePanel" [ngClass]="{'active': !sidePanelHidden}" *ngIf="!sidePanelHidden">
+      <sb-add-chart-sidepanel id="sidePanelComponent" (ended)="ended($event)" (started)="started($event)"></sb-add-chart-sidepanel>
+    </aside>
   </div>
 
+  
 </div>
 <aside id="edit-controls" *ngIf="edit">
   <div class="button-box">
