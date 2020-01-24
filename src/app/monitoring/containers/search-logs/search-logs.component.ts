@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { SearchService } from '../../shared/services/search.service';
 import { SearchRequest, TimeRange } from '../../model/search-request';
 import { ServiceBinding } from '../../model/service-binding';
@@ -9,25 +9,56 @@ import { tap, filter, catchError } from 'rxjs/operators';
 import { NotificationService, NotificationType, Notification } from '../../../core/notification.service';
 import { TimeService } from '../../shared/services/time.service';
 import { ShortcutService } from '../../../core/services/shortcut.service';
+import { LogDataModel } from 'app/monitoring/model/log-data-model';
+import { LogSearchComponent } from 'app/monitoring/components/log-messages/log-search/log-search.component';
+import {
+  trigger,
+  state,
+  style,
+  animate,
+  transition
+} from '@angular/animations';
 
 @Component({
   selector: 'sb-search-logs',
   templateUrl: './search-logs.component.html',
-  styleUrls: ['./search-logs.component.scss']
+  styleUrls: ['./search-logs.component.scss'],
+  animations: [
+    trigger('swipeInOut', [
+      state('in', style({ transform: 'translateX(0)' })),
+      transition('void => out', [
+        style({ transform: 'translateX(100%)' }),
+        animate('0.3s ease')
+      ])
+    ])/*, 
+    trigger('swipeInOut', [
+      state('out', style({ transform: 'translateX(0)' })),
+      transition('void => in', [
+        style({ transform: 'translateX(-100%)' }),
+        animate(140)
+      ])    
+    ])*/
+  ]
 })
 export class SearchLogsComponent implements OnInit {
+
+  @ViewChild(LogSearchComponent) logSearchComponentResultList;
+
   showFilter = false;
   scope: ServiceBinding = {} as ServiceBinding;
   query: string;
+  queryInputHasFocus = false;
   public error: boolean = false;
-
-
 
   //number of elements per request
   size = 100;
 
+  contextSearch: boolean = false;
+  logContextSeed: LogDataModel;
+
   fromDate: any = moment().subtract(30, "days").unix();
   toDate: any = moment().unix();
+
   // formatted locale compact string to show on screen
   timeInfo: string = "";
   timeErrorInfo: string = "";
@@ -37,12 +68,13 @@ export class SearchLogsComponent implements OnInit {
   loadingSubject = new Subject<boolean>();
   loading$ = new Observable<boolean>(k => this.loadingSubject.subscribe(k));
 
+  // animations
+  public direction: dir = 'in';
 
   /* Timestamp of the last request Important for pagination cause search results might 
   grow continuesly which would lead to broken indeces
  */
   lastRequestTimeStamp: number;
-
 
   hitsSubject = new Subject<Hits>();
   hits$ = new Observable<Hits>(k => this.hitsSubject.subscribe(k));
@@ -88,28 +120,28 @@ export class SearchLogsComponent implements OnInit {
     this.setDateInfo();
   }
 
-  setDateInfo(){
+  setDateInfo() {
     const from = new Date((this.fromDate as number) * 1000);
     const to = new Date((this.toDate as number) * 1000);
-    const fromParts = { day: from.getUTCDate(), month: from.getUTCMonth() + 1, year: from.getUTCFullYear(), hour: from.getHours(), minute: from.getMinutes()};
-    const toParts = { day: to.getUTCDate(), month: to.getUTCMonth() + 1, year: to.getUTCFullYear(), hour: to.getHours(), minute: to.getMinutes()};
-     
-    if (fromParts.year == toParts.year && fromParts.month == toParts.month && fromParts.day == toParts.day){
+    const fromParts = { day: from.getUTCDate(), month: from.getUTCMonth() + 1, year: from.getUTCFullYear(), hour: from.getHours(), minute: from.getMinutes() };
+    const toParts = { day: to.getUTCDate(), month: to.getUTCMonth() + 1, year: to.getUTCFullYear(), hour: to.getHours(), minute: to.getMinutes() };
+
+    if (fromParts.year == toParts.year && fromParts.month == toParts.month && fromParts.day == toParts.day) {
       // startdate and enddate at same day -> display only hours and minutes
-      const today :Date = new Date();
+      const today: Date = new Date();
       const todayParts = { day: today.getUTCDate(), month: today.getUTCMonth() + 1, year: today.getUTCFullYear() };
-      const isToday :boolean = (todayParts.day == fromParts.day && todayParts.month == fromParts.month && todayParts.year == fromParts.year);
+      const isToday: boolean = (todayParts.day == fromParts.day && todayParts.month == fromParts.month && todayParts.year == fromParts.year);
       this.timeInfo = `${isToday ? "" : `${this.simpleDate(fromParts.day, fromParts.month)}`} ${fromParts.hour > 9 ? "" : "0"}${fromParts.hour}:${fromParts.minute > 9 ? "" : "0"}${fromParts.minute}  -  ${toParts.hour > 9 ? "" : "0"}${toParts.hour}:${toParts.minute > 9 ? "" : "0"}${toParts.minute}`;
     }
-    else{
+    else {
       // startdate and enddate NOT same day -> display only days and month
-      this.timeInfo =  `${this.simpleDate(fromParts.day, fromParts.month)}  -  ${this.simpleDate(toParts.day, toParts.month)}`;
+      this.timeInfo = `${this.simpleDate(fromParts.day, fromParts.month)}  -  ${this.simpleDate(toParts.day, toParts.month)}`;
     }
     //show error hint, if enddate before startdate
     this.timeErrorInfo = from > to ? "enddate before startdate, please adjust to see logs" : "";
   }
 
-  private simpleDate(day: number, month: number): string{
+  private simpleDate(day: number, month: number): string {
     const s = `${day > 9 ? "" : "0"}${day}.${month > 9 ? "" : "0"}${month}.`;
     return s;
   }
@@ -119,11 +151,14 @@ export class SearchLogsComponent implements OnInit {
     // should be disabled due to missing user input
     return !(Object.keys(this.scope).length && this.query)
   }
+
   search() {
     const request = this.buildSearchRequest(0, true);
     this.lastRequestTimeStamp = moment().unix();
     this.page = 0;
     this.error = false;
+    this.contextSearch = false;
+    this.logSearchComponentResultList.isCollapsed = [];
 
     this.fireRequest(request).subscribe((data: SearchResponse) => {
 
@@ -214,4 +249,16 @@ export class SearchLogsComponent implements OnInit {
   }
 
 
+  onLostFocusQueryInput() {
+    this.queryInputHasFocus = false;
+  }
+
+  onGotFocusQueryInput() {
+    this.queryInputHasFocus = true;
+  }
+
+
 }
+
+type dir = 'in' | 'out';
+

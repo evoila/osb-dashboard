@@ -1,24 +1,25 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { Filter } from 'app/monitoring/model/filter';
 import { ServiceBinding } from '../../model/service-binding';
 import { SearchRequest, TimeRange } from '../../model/search-request';
 import { SearchService } from '../../shared/services/search.service';
 import { Hits, SearchResponse } from '../../model/search-response';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
 import { tap, filter, timestamp } from 'rxjs/operators';
 import { NotificationService, Notification, NotificationType } from '../../../core/notification.service';
 import * as moment from 'moment/moment';
 import { TimeService } from '../../shared/services/time.service';
 import { ShortcutService } from '../../../core/services/shortcut.service';
-import { LogFilterComponent} from '../../components/log-messages/log-filter/log-filter.component';
+import { LogFilterComponent } from '../../components/log-messages/log-filter/log-filter.component';
+import { HighlightingAndHits } from '../../components/log-messages/log-list/log-list.component';
 
 @Component({
   selector: 'sb-explore-logs',
   templateUrl: './explore-logs.component.html',
   styleUrls: ['./explore-logs.component.scss']
 })
-export class ExploreLogsComponent implements OnInit {
+export class ExploreLogsComponent implements OnInit, OnDestroy {
   @ViewChild(LogFilterComponent) logFilter;
 
   fromDate: any = moment().subtract(2, "days").unix();
@@ -35,9 +36,10 @@ export class ExploreLogsComponent implements OnInit {
 
   showFilter = false;
 
-  hitsSubject = new Subject<Hits>();
-  hits$ = new Observable<Hits>(k => this.hitsSubject.subscribe(k));
+  hitsSubject = new Subject<Hits | HighlightingAndHits>();
+  hits$ = new Observable<Hits | HighlightingAndHits>(k => this.hitsSubject.subscribe(k));
 
+  private subscriptions: Array<Subscription> = [];
 
   // needed for the scoping component as an input
   appId: string;
@@ -59,7 +61,7 @@ export class ExploreLogsComponent implements OnInit {
     private shortcut: ShortcutService) { }
 
   ngOnInit() {
-    this.shortcut.bindShortcut({
+    const sub = this.shortcut.bindShortcut({
       key: "Enter",
       description: "Trigger Search Request",
       view: "Search Logs View"
@@ -69,8 +71,16 @@ export class ExploreLogsComponent implements OnInit {
       }
     });
     this.setDateInfo();
+    this.subscriptions = [...this.subscriptions, sub];
   }
 
+  ngOnDestroy() {
+    if (this.subscriptions.length) {
+      this.subscriptions.forEach(k => {
+        k.unsubscribe();
+      });
+    }
+  }
   fireSearchRequest() {
     const request = this.buildSearchRequest();
     this.lastRequestTimeStamp = moment().unix();
@@ -82,7 +92,7 @@ export class ExploreLogsComponent implements OnInit {
     });
   }
 
-  showAddFilterDialouge(){
+  showAddFilterDialouge() {
     this.logFilter.addFilter();
   }
 
@@ -109,34 +119,34 @@ export class ExploreLogsComponent implements OnInit {
     this.setDateInfo();
   }
   setScope(scope: ServiceBinding) {
-    if(scope) {
+    if (scope) {
       this.scope = scope;
       this.appId = scope.appId;
     }
   }
 
-  setDateInfo(){
+  setDateInfo() {
     const from = new Date((this.fromDate as number) * 1000);
     const to = new Date((this.toDate as number) * 1000);
-    const fromParts = { day: from.getUTCDate(), month: from.getUTCMonth() + 1, year: from.getUTCFullYear(), hour: from.getHours(), minute: from.getMinutes()};
-    const toParts = { day: to.getUTCDate(), month: to.getUTCMonth() + 1, year: to.getUTCFullYear(), hour: to.getHours(), minute: to.getMinutes()};
-     
-    if (fromParts.year == toParts.year && fromParts.month == toParts.month && fromParts.day == toParts.day){
+    const fromParts = { day: from.getUTCDate(), month: from.getUTCMonth() + 1, year: from.getUTCFullYear(), hour: from.getHours(), minute: from.getMinutes() };
+    const toParts = { day: to.getUTCDate(), month: to.getUTCMonth() + 1, year: to.getUTCFullYear(), hour: to.getHours(), minute: to.getMinutes() };
+
+    if (fromParts.year == toParts.year && fromParts.month == toParts.month && fromParts.day == toParts.day) {
       // startdate and enddate today -> display only hours and minutes
-      const today :Date = new Date();
+      const today: Date = new Date();
       const todayParts = { day: today.getUTCDate(), month: today.getUTCMonth() + 1, year: today.getUTCFullYear() };
-      const isToday :boolean = (todayParts.day == fromParts.day && todayParts.month == fromParts.month && todayParts.year == fromParts.year);
+      const isToday: boolean = (todayParts.day == fromParts.day && todayParts.month == fromParts.month && todayParts.year == fromParts.year);
       this.timeInfo = `${isToday ? "" : `${this.simpleDate(fromParts.day, fromParts.month)}`} ${fromParts.hour > 9 ? "" : "0"}${fromParts.hour}:${fromParts.minute > 9 ? "" : "0"}${fromParts.minute}  -  ${toParts.hour > 9 ? "" : "0"}${toParts.hour}:${toParts.minute > 9 ? "" : "0"}${toParts.minute}`;
     }
-    else{
+    else {
       // startdate and enddate NOT same day -> display only days and month
-      this.timeInfo =  `${this.simpleDate(fromParts.day, fromParts.month)}  -  ${this.simpleDate(toParts.day, toParts.month)}`;
+      this.timeInfo = `${this.simpleDate(fromParts.day, fromParts.month)}  -  ${this.simpleDate(toParts.day, toParts.month)}`;
     }
     //show error hint, if enddate before startdate
     this.timeErrorInfo = from > to ? "enddate before startdate, please adjust to see logs" : "";
   }
 
-  private simpleDate(day: number, month: number): string{
+  private simpleDate(day: number, month: number): string {
     const s = `${day > 9 ? "" : "0"}${day}.${month > 9 ? "" : "0"}${month}.`;
     return s;
   }

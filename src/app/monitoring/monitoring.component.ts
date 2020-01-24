@@ -134,7 +134,7 @@ export class MonitoringComponent implements OnInit {
   constructor(private store: Store<PanelState>, private router: Router) { }
 
   ngOnInit() {
- 
+
     // nearly every container uses the bindings in some way or the other so we load them right away
     this.store.dispatch(new LoadBindings());
     this.store.dispatch(new LoadPanels());

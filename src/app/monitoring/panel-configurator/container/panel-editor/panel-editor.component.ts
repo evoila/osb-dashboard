@@ -36,6 +36,9 @@ export class PanelEditorComponent implements OnInit {
   public onEdit: boolean;
   public authScope: CfAuthScope;
 
+
+  public authScope: CfAuthScope;
+
   private cfAuthParams: CfAuthParameterService;
 
   constructor(

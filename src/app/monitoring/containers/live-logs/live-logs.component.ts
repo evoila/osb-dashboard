@@ -8,6 +8,7 @@ import { SearchResponse, Hits } from '../../model/search-response';
 import * as moment from 'moment/moment';
 import { TimeService } from '../../shared/services/time.service';
 import { ShortcutService } from '../../../core/services/shortcut.service';
+import { HighlightingAndHits } from '../../components/log-messages/log-list/log-list.component';
 
 @Component({
   selector: 'sb-live-logs',
@@ -25,13 +26,14 @@ export class LiveLogsComponent implements OnInit, OnDestroy {
   buttonDisabled: boolean = false;
 
   //Observable to pass data to subcomponent
-  hitSubject = new Subject<Hits>();
-  hits$ = new Observable<Hits>(k => this.hitSubject.subscribe(k));
+  hitSubject = new Subject<Hits | HighlightingAndHits>();
+  hits$ = new Observable<Hits | HighlightingAndHits>(k => this.hitSubject.subscribe(k));
 
   /* 
      Config-Values 
      for Request-Scheduling 
   */
+  private subscriptions: Array<Subscription> = [];
 
   interval = 5000;
   // amount of lines being polled
@@ -46,7 +48,7 @@ export class LiveLogsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    this.shortcut.bindShortcut({
+    const sub = this.shortcut.bindShortcut({
       key: "Enter",
       description: "Trigger Search Request",
       view: "Search Logs View"
@@ -55,11 +57,14 @@ export class LiveLogsComponent implements OnInit, OnDestroy {
         this.toggleStream();
       }
     });
-
+    this.subscriptions = [...this.subscriptions, sub];
   }
   ngOnDestroy() {
     if (this.streamSub) {
       this.streamSub.unsubscribe();
+    }
+    if (this.subscriptions.length) {
+      this.subscriptions.forEach(k => k.unsubscribe());
     }
   }
   setScope(scope: ServiceBinding) {
@@ -67,7 +72,7 @@ export class LiveLogsComponent implements OnInit, OnDestroy {
       this.scope = scope;
       this.buttonDisabled = false;
     }
-    else{
+    else {
       this.buttonDisabled = true;
     }
 
@@ -83,7 +88,7 @@ export class LiveLogsComponent implements OnInit, OnDestroy {
           switchMap(k => {
             const request = this.buildSearchRequest();
             return this.searchService.getSearchResults(request).pipe(
-              filter((data: SearchResponse) => !data.timed_out && data.hits.total !== 0),
+              filter((data: SearchResponse) => !data.timed_out && data.hits.total !== 0)
             )
 
           })).subscribe((data: SearchResponse) => {

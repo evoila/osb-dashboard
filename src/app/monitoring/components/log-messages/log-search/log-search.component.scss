@@ -1,43 +1,68 @@
-#log-search{
-    margin-top: 3em;
-    width: 100%;
-}
-.resultView {
-    height: 80vh;
-    overflow: scroll;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+@import '../../../../core/core';
 
-}
-.resultView table {
+#log-search{
+    margin-top: 0.5em;
     width: 100%;
-    overflow: scroll;
 }
+
+.resultView {
+    width: 100%; //fit-content;
+    height: 70vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 10px;
+}
+
+.resultList{
+    width: 100%;
+}
+
+.resultList table {
+    width: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
 #log-search h5 {
     text-align: center;
     margin-bottom: 1em;
 
 }
+
+.pagination{
+    width: 100%;
+    border-radius: 18px;
+}
+.pagination-box{
+    width: 100%;
+}
+
 .disabled {
     pointer-events:none; //This makes it not clickable
     opacity:0.6;         //This grays it out to look disabled
 }
 .key {
     display: inline-block;
-
-    color: #283018;
+    color: $gray-2;
     font-style: italic;
-    width: 20%;
+    text-align: end;
+    font-size: 0.7em;
 }
 nav {
     margin: auto;
     width: fit-content;
+
 }
 .value {
-    color: #aa863a;
-    width: 70%;
+    color: $gray-1;
+    font-size: 0.7em;
 }
 .clearfix{
     padding-left: 1em;
+    display: grid;
+    grid-template-columns: 120px calc(100% - 120px - 1em);
+    grid-column-gap: 1em;
 }
 .clearfix::after {
     content: "";
@@ -45,15 +70,57 @@ nav {
     display: table;
 }
 tr {
-
     cursor: pointer;
+    height: 1.7em;
+    padding: 0.3rem;
+}
+#td {
+    padding: 0.55rem;
 }
 code {
-    color: #729f98;
+    color: #7a9490;
+    font-size: 0.7em;
 }
+
+// this one makes the <code> element containing the log messages in the normal result list a special color to indicate ..
+// ..that a message context is shown for this log result
+.table tr.active code {
+    color: $secondary-color;
+}
+
 #log-search tr {
-    
+    background: #fefefe;
 }
 #log-search tr:nth-child(even) {
-    background: #f0eceb;
+    background: #f9f9f9;
 }    
+
+
+
+
+.btn.btn-secondary{
+    
+    border-radius: $basic-border-radius;
+    cursor: pointer;
+    margin: 15px 15px 15px 25px;
+    border: 0px;
+    outline: none;
+    font-size: 0.7em;
+    background-color: $primary-color-light;
+    
+    &:focus{
+        background-color: $primary-color-light;
+    }
+    &:hover{
+        background-color: $primary-color;
+    }
+    &.hide-context:active{background-color: $primary-color-light;}
+    &.show-context:active{background-color: $primary-color-light;}
+    
+   
+}
+
+.highlighted{
+    color: orchid;
+}
+

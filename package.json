@@ -74,7 +74,7 @@
     "ng2-nouislider": "^1.7.8",
     "ng4-loading-spinner": "^1.1.0",
     "ngrx-store-freeze": "^0.2.4",
-    "ngx-monaco-editor": "^6.0.0",
+    "ngx-monaco-editor": "^7.0.0",
     "ngx-schema-form": "^2.2.0-beta.1",
     "nouislider": "^9.1.0",
     "open-iconic": "^1.1.1",
