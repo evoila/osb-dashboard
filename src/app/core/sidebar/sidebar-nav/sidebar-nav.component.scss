@@ -127,21 +127,45 @@ $nav-text-color-light: $gray-600;
 }
 .buttonContainer {
   display: grid !important;
-  grid-template-columns: 85% 10%;
+  grid-template-columns: 90% 7%;
   grid-template-rows: auto;
-  grid-column-gap: 5%;
+  grid-column-gap: 3%;
 
 
   .nav-link {
    
   }
+
   .buttonFavicon {
     grid-column: 2/3;
     grid-row: 1/2;
     cursor: pointer;
-    padding: .5rem 0;
+    padding: .45rem 0;
     line-height: 100%; 
     vertical-align: bottom;
   }
 
 }
+
+.section-header-edit-button-span { 
+  padding-top: 2.5px;
+}
+
+i.fa-edit.fas::before { // edit button im panel section header
+  cursor: pointer;
+  vertical-align: super;
+  color: $gray-2;
+}
+
+i.fa-edit.edit-mode-on::before{  // edit button im panel section header (Edit Mode ON)
+  cursor: pointer;
+  vertical-align: super;
+  color: $primary-color-light;
+}
+
+i.fa-trash.fas::before { // delete button neben panel links
+  color: $attention-red-light;
+}
+
+
+

@@ -37,8 +37,6 @@ export class SidebarNavComponent implements OnInit {
 
   ngOnInit() {
     this.tryCollapse(this._window.innerWidth);
-
-    this.checkPanelSection();
   }
 
   @HostListener('window:resize', ['$event'])
@@ -71,11 +69,4 @@ export class SidebarNavComponent implements OnInit {
     section['isCollapsed'] = (!section['isCollapsed']);
   }
 
-  private checkPanelSection(){
-    // if  first item in menu array only contains one link, it must be the "Add Panel" navItem 
-    //so there are no defined Panels, so we don't need no edit-panel-button next to the sectin header
-    if ((this.menu[0]["links"]).length == 1){
-      this.menu[0]["button"] = false;
-    }
-  }
 }
