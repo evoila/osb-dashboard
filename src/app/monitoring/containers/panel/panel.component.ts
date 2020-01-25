@@ -135,11 +135,11 @@ export class PanelComponent implements OnInit, OnDestroy {
   }
 
   rerenderSidePanel() {
-    if (this.sidePanelHidden) {
-      this.renderer.setStyle(this.container.nativeElement, 'grid-template-columns', '7fr 1fr');
-    } else {
-      this.renderer.setStyle(this.container.nativeElement, 'grid-template-columns', '1fr 0px');
-    }
+    /*   if (this.sidePanelHidden) {
+        this.renderer.setStyle(this.container.nativeElement, 'grid-template-columns', '7fr 1fr');
+      } else {
+        this.renderer.setStyle(this.container.nativeElement, 'grid-template-columns', '1fr 0px');
+      } */
   }
   // Side Panel to add charts has a Toggle to hide and seek which should be deactivated on edit mode
   hideToggleSidePanel(hide: boolean) {

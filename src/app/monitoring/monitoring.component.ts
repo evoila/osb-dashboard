@@ -9,7 +9,7 @@ import { getAllPanels, getPanelState } from './shared/store/selectors/panel.sele
 import { getAllBindingsState } from './shared/store/selectors/bindings.selector';
 import { map, take, filter } from 'rxjs/operators';
 import { LoadBindings } from './shared/store/actions/binding.action';
-import { getState} from './store';
+import { getState } from './store';
 
 
 @Component({
@@ -52,7 +52,7 @@ export class MonitoringComponent implements OnInit {
     this.menu = [...this.menu]
   }
 
-  private quitPanelEditmode(){
+  private quitPanelEditmode() {
     this.menu[0].links = this.menu[0].links.map(k => {
       return {
         ...k, button: false,
@@ -77,7 +77,7 @@ export class MonitoringComponent implements OnInit {
         // ending editmode after delete
         this.editModeListener();
         // hiding edit mode button if there are no panels to edit 
-        if ((this.menu[0]["links"]).length == 1){
+        if ((this.menu[0]["links"]).length == 1) {
           this.menu[0]["button"] = false;
         }
       })
@@ -141,30 +141,30 @@ export class MonitoringComponent implements OnInit {
     this.loadPanels();
     // evaluate bindings load success
     const onetimesubscr = this.store.select(getAllBindingsState).pipe(filter((k) => !k.loading)).subscribe((bindings) => {
-          if (bindings.loaded){ // finished loading without error
-              if (bindings.entities.length > 0){ // everything fine
-                this.bindingsAlive = true;
-                this.bindingsProblemUserInfo = "";
-              }
-              else{ // no bindings found, but valid http response, User has subscribed to a CF Service, but missed to bind any App  
-                this.bindingsAlive = false;
-                this.bindingsProblemUserInfo = "No Bindings found. Please bind Apps via CF CLI.";
-              }
-              onetimesubscr.unsubscribe();
-          }
-          else{ // finished loading with error 
-            this.bindingsAlive = false;
-            this.bindingsProblemUserInfo = "Technical Problem: App Bindings not available.";
-          }
+      if (bindings.loaded) { // finished loading without error
+        if (bindings.entities.length > 0) { // everything fine
+          this.bindingsAlive = true;
+          this.bindingsProblemUserInfo = "";
+        }
+        else { // no bindings found, but valid http response, User has subscribed to a CF Service, but missed to bind any App  
+          this.bindingsAlive = false;
+          this.bindingsProblemUserInfo = "No Bindings found. Please bind Apps via the CF CLI.";
+        }
+        onetimesubscr.unsubscribe();
+      }
+      else { // finished loading with error 
+        this.bindingsAlive = false;
+        this.bindingsProblemUserInfo = "Technical Problem: App Bindings not available.";
+      }
     })
 
     // end panel edit mode when other sidebar section or panelconfigurator gets clicked
     this.store.select(getState).pipe(filter(route => this.panelEditMode && (!route.url.includes('panel') || route.url.includes('configurator')))).subscribe((route: any) => {
-        this.editModeListener(); // turning off panel edit mode
+      this.editModeListener(); // turning off panel edit mode
     })
   }
 
-  
+
   loadPanels() {
     this.store
       .select(getAllPanels)
@@ -196,7 +196,7 @@ export class MonitoringComponent implements OnInit {
         })
       )
       .subscribe(k => {
-        if ((this.menu[0]["links"]).length > 1){
+        if ((this.menu[0]["links"]).length > 1) {
           this.menu[0]["button"] = true;
         }
         this.notYetNavigate && this.router.navigate(['monitoring/' + k]);
@@ -204,7 +204,7 @@ export class MonitoringComponent implements OnInit {
       });
   }
 
- 
+
 
 }
 

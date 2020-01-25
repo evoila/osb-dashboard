@@ -27,7 +27,6 @@ $text-color-light: $gray-600;
 #mainview {
     grid-area: mainview;
     display: flex;
-    align-items: flex-start;
 }
 .charts {
     margin: 0.2em 0 0.2em 0;
@@ -41,14 +40,13 @@ $text-color-light: $gray-600;
     justify-content: space-around;
 }
 .chartcontainer {
-    //max-width: 86vw;
-    width: auto;
+    max-width: 86vw;
+    flex-grow: 1;
+    flex-shrink: 1;
 }
 
 .chartcontainer.active {
-    padding-right: 0vw;
-    //width: 80vw;
-    width: auto;
+     width: 80vw;
 }
 %chart-shared {
     flex-shrink: 1;
@@ -66,20 +64,19 @@ $text-color-light: $gray-600;
     flex-basis: 33%; 
 }
 #sidePanel {
-    width: 21.2vw;
+    width: 15vw;
+    flex-grow: 0;
+    flex-shrink: 0;
     position: sticky;
+    overflow: scroll;
     top: 70px;
     margin-top: 0px;
-    right: 0;
+    left: 80vw;
     height: 89vh;
+    border-left: 1px solid #dee2e6;
 }
 
 
-
-aside > * {
-/*     position: sticky;
-    top: 0; */
-}
 
 .timefilter {
     margin-top: -1.85vh;
@@ -104,7 +101,7 @@ aside > * {
     cursor: pointer;
 }
 .draghandle.active {
-    right: 14%;
+    right: 15vw;
 }
 .draghandle > span {
     display: inline-block;

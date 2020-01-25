@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, ViewChild, Inject, OnInit, AfterViewInit, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Directive, ElementRef, Input, ViewChild, Inject, OnInit, AfterViewInit, Output, EventEmitter, OnDestroy, Renderer2 } from '@angular/core';
 import { ChartInPanel } from '../../../model/chart-in-panel';
 import { DOCUMENT } from '@angular/platform-browser';
 import { timer, Observable, Subscription } from 'rxjs';
@@ -39,6 +39,7 @@ export class ResizerDirective implements AfterViewInit, OnDestroy {
       //diff *= 1.3; // multiplier for faster resize
       this.x = e.clientX;
       let diffPercent = (diff / this.el.nativeElement.parentNode.offsetWidth) * 100;
+      //console.log({ widthPercentage, diffPercent });
       if (diffPercent != 0) {
         if (diffPercent < 0) {
           if (widthPercentage < 50) {
@@ -125,7 +126,7 @@ export class ResizerDirective implements AfterViewInit, OnDestroy {
   resizingLeft = true;
   x: number;
 
-  constructor(private el: ElementRef, @Inject(DOCUMENT) private document) {
+  constructor(private renderer: Renderer2, private el: ElementRef, @Inject(DOCUMENT) private document) {
     this.draghandleLeft = document.createElement('i');
     this.draghandleLeft.style.cssText = `cursor: col-resize; width: 6px; background-color: grey; height: 10%; float: left;`;
 
@@ -194,6 +195,7 @@ export class ResizerDirective implements AfterViewInit, OnDestroy {
     chart.style.display = "flex";
   }
   private setChartSize(size: number) {
-    this.el.nativeElement.style.cssText = `flex-basis: ${size}%;`;
+    this.renderer.setStyle(this.el.nativeElement, 'flex-basis', `${size}%`);
+    //this.el.nativeElement.style.cssText = `flex-basis: ${size}%;`;
   }
 }

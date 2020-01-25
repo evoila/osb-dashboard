@@ -1,5 +1,7 @@
 
-
+.container {
+    padding: 0;
+}
 .grid-container {
     cursor: pointer;
     grid-template-rows: 1fr 1fr 2fr;
