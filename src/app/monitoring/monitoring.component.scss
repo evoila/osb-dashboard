@@ -2,7 +2,7 @@
 
 .no-overflow{
 
-    margin-top: 11vh;
+    margin-top: 0em;
     //overflow: hidden; // anny overflow kind of attribute leads to 'position: sticky' not working in every child component, no matter how deep
                         // so we need to live without this 'overflow: hidden' at the very top component
 }

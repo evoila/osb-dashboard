@@ -17,6 +17,8 @@ $text-color-light: $gray-600;
     text-align: right;
 }
 .grid-container {
+    margin-top: 0px;
+    padding-top: 67px;
     display: grid;
     grid-template-areas:
     'timefilter timefilter' 
