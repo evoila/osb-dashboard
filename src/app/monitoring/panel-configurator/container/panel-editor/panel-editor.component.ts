@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { Chart } from '../../../shared/model/chart';
 import { Observable } from 'rxjs/internal/Observable';
@@ -37,7 +37,7 @@ export class PanelEditorComponent implements OnInit {
   public authScope: CfAuthScope;
 
 
-
+  private subscriptions: Array<Subscription> = [];
   private cfAuthParams: CfAuthParameterService;
 
   constructor(
@@ -68,13 +68,20 @@ export class PanelEditorComponent implements OnInit {
     this.charts$.subscribe(k => console.log(k));
     this.cfAuthParams.createCfAuthScope().subscribe(k => (this.authScope = k));
 
-    this.shortcut.bindShortcut({
+    const sub = this.shortcut.bindShortcut({
       key: "Enter",
       description: "Trigger Save Button",
       view: "Panel Editor View"
     }).subscribe(k => {
       this.save(false);
     });
+    this.subscriptions = [...this.subscriptions, sub];
+  }
+
+  ngOnDestroy() {
+    if (this.subscriptions.length) {
+      this.subscriptions.forEach(k => k.unsubscribe());
+    }
   }
 
   save(deleteFlag: boolean) {
