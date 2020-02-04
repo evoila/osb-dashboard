@@ -34,6 +34,7 @@ import { environment } from '../../environments/runtime-environment';
 
 import { SharedModule } from './shared/shared.module';
 import { ChartConfiguratorModule } from './chart-configurator/chart-configurator.module';
+import { TableEditorModule } from './table-editor/table-editor.module';
 import { reducers as sharedReducer } from './shared/store/reducers';
 import { components } from './components';
 import { effects as sharedEffects } from './shared/store/effects/index';
@@ -80,6 +81,7 @@ export const bootstrapDeps = [
     DragDropModule,
     SharedModule,
     ChartConfiguratorModule,
+    TableEditorModule,
     StoreModule.forRoot(reducers, { metaReducers }),
     EffectsModule.forRoot([]),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
