@@ -21,7 +21,7 @@ export class MonitoringComponent implements OnInit {
   public chart: Chart;
   private notYetNavigate = true;
   panelEditMode = false;
-  bindingsAlive = false;
+  bindingsAlive = true;
   bindingsProblemUserInfo = "";
 
   // The Panels are getting an Edit Mode
