@@ -2,6 +2,7 @@
 
 import { Component, OnInit } from '@angular/core';
 
+
 @Component({
   selector: 'sb-base-query-input',
   templateUrl: './base-query-input.component.html',

@@ -25,7 +25,7 @@ export const ROUTES: Routes = [
       {
         path: 'tableeditor',
         loadChildren:
-          'app/monitoring/table-editor/table-editor.module#TableEditorModule'
+        'app/monitoring/table-editor/table-editor.module#TableEditorModule'
       },
       {
         path: 'panel/:id',

@@ -1,7 +1,7 @@
 <div class="frame">
-  <button *ngIf="!query" (click)="ceateQuery()" class="btn btn-primary">create</button>
-  <sb-query-select *ngIf="!query"></sb-query-select>
-  <span *ngIf="query" ><i class="far fa-check-circle"></i></span>
+  <button *ngIf="true" (click)="ceateQuery()" class="btn btn-primary">create</button> ///*'!query'*/
+  <sb-query-select *ngIf="true"></sb-query-select> ///*'!query'*/
+  <span *ngIf="true"><i class="far fa-check-circle"></i></span> // /*'query'*/
   <sb-appid class="appId" [selected]="appId" (app)="setScope($event)"></sb-appid>
 </div>
 
