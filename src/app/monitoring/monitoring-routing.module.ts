@@ -18,9 +18,14 @@ export const ROUTES: Routes = [
           './panel-configurator/panel-configurator.module#PanelConfiguratorModule'
       },
       {
-        path: 'configurator',
+        path: 'chartconfigurator',
         loadChildren:
           'app/monitoring/chart-configurator/chart-configurator.module#ChartConfiguratorModule'
+      },
+      {
+        path: 'tableeditor',
+        loadChildren:
+          'app/monitoring/table-editor/table-editor.module#TableEditorModule'
       },
       {
         path: 'panel/:id',

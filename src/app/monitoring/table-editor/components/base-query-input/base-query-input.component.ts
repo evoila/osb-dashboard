@@ -1,3 +1,5 @@
+// this component represents a single ES Query and the ability to create/select & test it
+
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -8,24 +10,32 @@ import { Component, OnInit } from '@angular/core';
 export class BaseQueryInputComponent implements OnInit {
 
 
-  // I think scope is needed for query
+
   //scope: ServiceBinding = {} as ServiceBinding;
   
+  // after set via dropdown-select or query-editor component,
+  // ..query's name gets displayed and it gets automatically tested with selected app binding
   query: string;
-  queryInputHasFocus = false;
+
+  
+
 
   constructor() { }
 
   ngOnInit() {
+
+  }
+  
+
+  // open ES Query Editor Container
+  ceateQuery(){
+
   }
 
+  // dud select a persisted elastic search query from db via drop down select
+  did_select_query(es_query){
+    
 
-  onLostFocusQueryInput() {
-    this.queryInputHasFocus = false;
-  }
-
-  onGotFocusQueryInput() {
-    this.queryInputHasFocus = true;
   }
 
 

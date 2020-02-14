@@ -1,7 +1,7 @@
 <div class="frame">
-  <input type="text" class="form-control" (focus)="onGotFocusQueryInput()" (blur)="onLostFocusQueryInput()"
-    [(ngModel)]="query" id="base-input" placeholder="Elsatic Search Query">
-  <button (click)="test()" class="btn btn-primary" [disabled]="buttonDisabled()">test</button>
-  <span><i class="far fa-check-circle"></i></span>
+  <button *ngIf="!query" (click)="ceateQuery()" class="btn btn-primary">create</button>
+  <sb-query-select *ngIf="!query"></sb-query-select>
+  <span *ngIf="query" ><i class="far fa-check-circle"></i></span>
+  <sb-appid class="appId" [selected]="appId" (app)="setScope($event)"></sb-appid>
 </div>
 

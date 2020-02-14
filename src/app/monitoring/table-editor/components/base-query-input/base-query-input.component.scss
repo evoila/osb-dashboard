@@ -1,4 +1,15 @@
+@import '../../../../core/core';
+
+
 #base-input{
     border-radius: $basic-border-radius;
     border: 3px solid $gray-4;
+}
+
+.appId{
+    //width: calc(100% - 11.6em);
+    justify-self: stretch;
+    align-self: start;
+    cursor: pointer;
+    
 }

@@ -1,3 +1,6 @@
+// this component lets the user define table columns
+// from the data returned by the all valid queries via query-group component 
+
 import { Component, OnInit } from '@angular/core';
 
 @Component({

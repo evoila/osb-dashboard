@@ -124,8 +124,12 @@ export class MonitoringComponent implements OnInit {
       isCollapsible: false,
       links: [
         {
-          name: 'configurator',
-          href: 'configurator'
+          name: 'chart configurator',
+          href: 'chartconfigurator'
+        },
+        {
+          name: 'table configurator',
+          href: 'tableeditor'
         }
       ]
     }
