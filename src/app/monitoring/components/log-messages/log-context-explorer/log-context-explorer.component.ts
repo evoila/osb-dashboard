@@ -63,7 +63,7 @@ export class LogContextExplorerComponent implements OnInit, OnDestroy {
           // Index starts at zero monaco line numers at 1 so we have to add something to it
           index!! += 1;
           highlightsAndHits = {
-            hits: data,
+            hits: data.hits,
             highlightRange: new monaco.Range(index!!, 1, index!!, 1),
           } as HighlightingAndHits
         } else {

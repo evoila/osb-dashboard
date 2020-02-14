@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, ViewChild, E
 import { Hits } from 'app/monitoring/model/search-response';
 import { Observable, Subscription, timer } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { LogDataModel } from '../../../model/log-data-model';
 
 @Component({
   selector: 'sb-log-list',
@@ -18,7 +19,7 @@ export class LogListComponent implements OnInit, OnDestroy {
   isStreaming: boolean;
   @Input('inRequest')
   inRequest: boolean;
-  data: [Hits, monaco.Range?, number?];
+  data: [Array<LogDataModel>, monaco.Range?, number?];
   @Output('more')
   public more = new EventEmitter<[number, boolean]>();
 
@@ -50,11 +51,11 @@ export class LogListComponent implements OnInit, OnDestroy {
           return returnVal;
         }
 
-      })).subscribe((data: [Hits, monaco.Range?, number?]) => {
+      })).subscribe((data: [Array<LogDataModel>, monaco.Range?, number?]) => {
         this.code = '';
         this.data = data;
-        if (this.data[0].hits) {
-          this.data[0].hits.forEach(hit => {
+        if (this.data[0]) {
+          this.data[0].forEach(hit => {
             this.code += hit._source.logMessage + '\n';
           });
           if (data[1] || data[2]) {
@@ -99,5 +100,5 @@ export class LogListComponent implements OnInit, OnDestroy {
 export type HighlightingAndHits = {
   highlightRange: monaco.Range,
   scrollTo: number,
-  hits: Hits
+  hits: Array<LogDataModel>
 }
