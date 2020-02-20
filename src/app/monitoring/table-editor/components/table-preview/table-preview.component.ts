@@ -9,6 +9,8 @@ export class TablePreviewComponent implements OnInit {
 
   constructor() { }
 
+  
+
   ngOnInit() {
   }
 

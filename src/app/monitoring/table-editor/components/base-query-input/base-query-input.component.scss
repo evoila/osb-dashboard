@@ -1,6 +1,14 @@
 @import '../../../../core/core';
 
 
+.frame{
+    background-color: aliceblue;
+    width: fit-content;
+    display: grid;
+    grid-template-columns: 85px 250px 250px 30px;
+    column-gap: 5px;
+}
+
 #base-input{
     border-radius: $basic-border-radius;
     border: 3px solid $gray-4;
@@ -12,4 +20,28 @@
     align-self: start;
     cursor: pointer;
     
+}
+
+.btn.btn-primary.create-query{
+
+
+    border-radius: 18px;
+    margin-left: 10px;
+    border: none;
+    background-color: #ccc;
+    width: fit-content;
+
+}
+
+.btn.btn-primary.create-query:hover{
+
+    background-color: #c091f3;
+}
+
+#query-with-binding-test-result{
+
+    align-self: center;
+    text-align: center;
+    color: lightgreen;
+
 }

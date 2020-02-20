@@ -25,7 +25,8 @@ export function reducer(
       };
     }
     case fromQueries.LOAD_QUERIES_SUCCESS: {
-      const entities = action.payload;
+      // TODO::: take action payload
+      const entities = [new ESQuery()]//action.payload;
       return {
         ...state,
         entities,
