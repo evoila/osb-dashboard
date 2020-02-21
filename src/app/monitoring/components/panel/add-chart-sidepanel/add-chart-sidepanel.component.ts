@@ -2,11 +2,12 @@ import { Component, OnInit, Output, EventEmitter, ElementRef, ViewChild } from '
 import { Store } from '@ngrx/store';
 import { ChartModelState } from '../../../shared/store/reducers/chart.reducer';
 import { LoadCharts, DeleteChart } from '../../../shared/store/actions/chart.actions';
-import { Observable } from 'rxjs';
-import { getCharts } from '../../../shared/store/selectors/chart.selector';
+import { Observable, Subscription } from 'rxjs';
+import { getCharts, getChartDeletingState } from '../../../shared/store/selectors/chart.selector';
 import { Chart } from '../../../shared/model/chart';
 import { CdkDragEnd, CdkDragStart } from '@angular/cdk/drag-drop';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { filter } from 'rxjs/operators';
 
 
 @Component({
@@ -48,8 +49,39 @@ export class AddChartSidepanelComponent implements OnInit {
   }
 
   deleteChart(chart: Chart) {
+    // .pipe(filter(k => k.chartDeleting))   
+
     this.chartStore.dispatch(new DeleteChart(chart.id!!));
-    this.modal!!.close();
+    this.chartStore.select(getChartDeletingState).subscribe(k => {  
+      console.log(k);
+      
+
+
+    /*  UNSUBSCRIBE  HERE!!!! */
+    /*
+      if (!k.chartDeleted && !k.chartDeleting && k.chartNotDeletable){
+        console.log('deletion not possible!');
+      }
+      else if (k.chartDeleted){
+        console.log('deletion successfull');
+      }
+      else{
+          console.log('unknown error');
+
+      }
+      */
+      //this.modal!!.close();
+    })
+
+
+
+
+
+
+
+    
+
+    
   }
 
   confirmChartDeletion(chart: Chart) {
@@ -57,3 +89,4 @@ export class AddChartSidepanelComponent implements OnInit {
     this.modal = this.modalService.open(this.deleteChartConfirmModal, { size: 'lg' });
   }
 }
+

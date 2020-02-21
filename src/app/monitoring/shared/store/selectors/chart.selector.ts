@@ -41,6 +41,19 @@ export const getChartDeleting = createSelector(
   getChartModelState,
   fromChartReducer.getChartDeleting
 );
+export const getChartDeletingState = createSelector(
+  getChartModelState,
+  (state) => {
+    const { chartDeleted,
+      chartDeleting,
+      chartNotDeletable
+    } = state;
+    return { chartDeleted,
+      chartDeleting,
+      chartNotDeletable
+    }
+  }
+)
 
 export const getAggregationResponseAndLoaded = createSelector(
   getChartModelState,

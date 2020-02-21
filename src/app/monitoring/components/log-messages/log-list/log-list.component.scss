@@ -1,9 +1,15 @@
+#container{
+    height: calc(100vh - 170px);
+}
+
+
 :host /deep/ .loadmore {
     width: 97%;
     margin-left: 1.9%;
-    margin-bottom: 1px;
-    height: 2.5em; 
+    margin-bottom: 10px;
+    height: 1.5em; 
     border: 1px solid #eee;
+    font-size: small;
 }
 
 :host /deep/ .myGlyphMarginClass {

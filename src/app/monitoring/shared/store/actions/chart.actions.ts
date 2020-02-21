@@ -10,7 +10,8 @@ export const SAVE_CHART_FAIL = '[Chart] Save Chart Fail';
 export const DELETE_CHART = '[Chart] Delete Chart';
 export const DELETE_CHART_SUCCESS = '[Chart] Delete Chart success';
 export const DELETE_CHART_FAIL = '[Chart] Delete Chart fail';
-
+// thrown when a Chart is referenced and therefore not deletable to ensure data consistency
+export const CHART_NOT_DELETEABLE = '[Chart] Chart not deletable';
 
 export const LOAD_CHARTS = '[Chart] Load Charts';
 export const LOAD_CHARTS_SUCCESS = '[Chart] Load Charts Success';
@@ -35,6 +36,10 @@ export class SaveChartSuccess implements Action {
 }
 export class SaveChartFail implements Action {
   readonly type = SAVE_CHART_FAIL;
+}
+
+export class ChartNotDeletable implements Action {
+  readonly type = CHART_NOT_DELETEABLE;
 }
 
 export class DeleteChart implements Action {
@@ -104,4 +109,5 @@ export type ChartAction =
   | FireAggregationRequestFail
   | DeleteChart
   | DeleteChartFail
-  | DeleteChartSuccess;
+  | DeleteChartSuccess
+  | ChartNotDeletable;

@@ -13,6 +13,7 @@ export interface ChartModelState {
   chartSaveing: boolean;
   chartDeleted: boolean;
   chartDeleting: boolean;
+  chartNotDeletable: boolean;
   aggregationResponse: {
     [id: string]: Array<QueryAndResponse>;
   };
@@ -25,10 +26,11 @@ export const initialState: ChartModelState = {
   chartsLoaded: false,
   chartSaved: false,
   chartSaveing: false,
+  chartNotDeletable: false,
   aggregationResponse: {},
   aggregationLoading: false,
   aggregationLoaded: false,
-  chartDeleted: false,
+  chartDeleted: true,
   chartDeleting: false
 };
 
@@ -86,21 +88,33 @@ export function reducer(
         ...state,
         charts,
         chartDeleted: true,
-        chartDeleting: false
+        chartDeleting: false,
+        ChartNotDeletable: false
       }
     }
     case fromChartActions.DELETE_CHART_FAIL: {
       return {
         ...state,
         chartDeleted: false,
-        chartDeleting: false
+        chartDeleting: false,
+        ChartNotDeletable: false
+
       }
     }
     case fromChartActions.DELETE_CHART: {
       return {
         ...state,
         chartDeleted: false,
-        chartDeleting: true
+        chartDeleting: true,
+        chartNotDeletable: false
+      }
+    }
+    case fromChartActions.CHART_NOT_DELETEABLE: {
+      return {
+        ...state,
+        chartDeleted: false,
+        chartDeleting: false,
+        ChartNotDeletable: true
       }
     }
     case fromChartActions.FIRE_AGGREGATION_REQUEST: {
@@ -142,7 +156,6 @@ export const getChartsLoading = (state: ChartModelState) => state.chartsLoading;
 
 export const getChartDeleted = (state: ChartModelState) => state.chartDeleted;
 export const getChartDeleting = (state: ChartModelState) => state.chartDeleting;
-
 
 export const getChartSaveing = (state: ChartModelState) => state.chartSaveing;
 export const getChartSaved = (state: ChartModelState) => state.chartSaved;

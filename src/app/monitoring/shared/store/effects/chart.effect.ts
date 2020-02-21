@@ -36,7 +36,14 @@ export class ChartEffect {
     switchMap((action: fromChart.DeleteChart) => {
       return this.chartService.deleteChart(action.payload).pipe(
         map(result => new fromChart.DeleteChartSuccess(result)),
-        catchError(error => of(new fromChart.SaveChartFail()))
+        catchError(error => {
+          if(error.status === 409) {
+            return of(new fromChart.ChartNotDeletable())
+          } else {
+            return of(new fromChart.SaveChartFail());
+          }
+          
+        })
       );
     })
   )
