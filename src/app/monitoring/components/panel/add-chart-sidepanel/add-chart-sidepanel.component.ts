@@ -2,12 +2,12 @@ import { Component, OnInit, Output, EventEmitter, ElementRef, ViewChild } from '
 import { Store } from '@ngrx/store';
 import { ChartModelState } from '../../../shared/store/reducers/chart.reducer';
 import { LoadCharts, DeleteChart } from '../../../shared/store/actions/chart.actions';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, Subject } from 'rxjs';
 import { getCharts, getChartDeletingState } from '../../../shared/store/selectors/chart.selector';
 import { Chart } from '../../../shared/model/chart';
 import { CdkDragEnd, CdkDragStart } from '@angular/cdk/drag-drop';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { filter } from 'rxjs/operators';
+import { filter, take, takeUntil } from 'rxjs/operators';
 
 
 @Component({
@@ -26,6 +26,7 @@ export class AddChartSidepanelComponent implements OnInit {
   deleteChartConfirmModal: ElementRef;
 
   charts$: Observable<Array<Chart>>;
+  private ngUnsubscribe: Subject<void> = new Subject<void>();
   
   //popup pane to confirm actions like chart deletion etc
   private modal: NgbModalRef | null = null;
@@ -38,6 +39,12 @@ export class AddChartSidepanelComponent implements OnInit {
     this.chartStore.dispatch(new LoadCharts());
     this.charts$ = this.chartStore.select(getCharts);
   }
+
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+  }
+
   end(event: CdkDragEnd) {
     console.log('fire');
     // push end event in parent component
@@ -49,37 +56,16 @@ export class AddChartSidepanelComponent implements OnInit {
   }
 
   deleteChart(chart: Chart) {
-    // .pipe(filter(k => k.chartDeleting))   
-
+    // pipe(filter(k => k.chartNotDeletable)).
     this.chartStore.dispatch(new DeleteChart(chart.id!!));
-    this.chartStore.select(getChartDeletingState).subscribe(k => {  
-      console.log(k);
-      
-
-
-    /*  UNSUBSCRIBE  HERE!!!! */
-    /*
-      if (!k.chartDeleted && !k.chartDeleting && k.chartNotDeletable){
-        console.log('deletion not possible!');
-      }
-      else if (k.chartDeleted){
-        console.log('deletion successfull');
-      }
-      else{
-          console.log('unknown error');
-
-      }
-      */
-      //this.modal!!.close();
-    })
-
-
-
-
-
-
-
     
+    this.chartStore.select(getChartDeletingState).pipe(take(1)).subscribe((ka) => {
+
+      // WHATS GOING ON HERE
+      console.log(ka);
+      //this.modal!!.close();
+    });
+        
 
     
   }
