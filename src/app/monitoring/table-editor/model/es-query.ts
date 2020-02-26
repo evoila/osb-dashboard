@@ -1,4 +1,4 @@
-import { RawQuery } from "./raw-query ";
+import { RawQuery } from "./raw-query";
 
 /*
   {

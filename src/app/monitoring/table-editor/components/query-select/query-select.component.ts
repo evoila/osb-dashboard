@@ -4,6 +4,7 @@ import { Component, OnInit, Output, Input, EventEmitter} from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { GetESQueriesState } from '../../store/reducers/query.reducer';
 import { ESQuery } from '../../model/es-query';
+import { RawQuery } from '../../model/raw-query';
 import { Store } from '@ngrx/store';
 import { getAllQueriesEntities } from '../../store/selectors/queries.selector';
 @Component({
@@ -31,8 +32,17 @@ export class QuerySelectComponent implements OnInit {
 
 
   ngOnInit() {
-    this.queries$ = this.store.select(getAllQueriesEntities);
-    this.queries$.subscribe((data: Array<ESQuery>) => {
+
+
+    var must_val = [{'match' : { '_index' : '*-logmessages'} }] 
+    var rawquery = new RawQuery([], [], [], must_val)
+    var query1 = new ESQuery(123, 'test query', rawquery)
+    var query2 = new ESQuery(456, 'test query 2', rawquery)
+
+    this.queries = [query1, query2]
+    // this.queries$ = this.store.select(getAllQueriesEntities);
+    
+   /* this.queries$.subscribe((data: Array<ESQuery>) => {
       if (data.length === 0) {
         console.log('no persisted queries found')
       }
@@ -45,7 +55,7 @@ export class QuerySelectComponent implements OnInit {
 
       this.choosen = this.choosen == -1 || !this.choosen ? 0 : this.choosen;
 
-    })
+    }) */
 
   }
   public setChoosen() {

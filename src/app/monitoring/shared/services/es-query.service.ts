@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { NotificationService, Notification, NotificationType } from 'app/core';
 import { EndpointService } from './endpoint.service';
 import { ESQuery } from 'app/monitoring/table-editor/model/es-query';
+import { RawQuery } from 'app/monitoring/table-editor/model/raw-query';
 import { catchError, map } from 'rxjs/internal/operators';
 
 
@@ -24,7 +25,8 @@ export class ESQueryService {
       ) {}
 
       getESQueries(): Observable<Array<ESQuery> | null> {
-        if (environment.baseUrls.serviceBrokerUrl !== '/*[[${endpointUrl}]]*/') {
+
+        if (environment.baseUrls.serviceBrokerUrl !== '') {
           let uri = this.endpointService.getUri() + this.endpoint;
           return this.http.get(uri, this.endpointService.httpOptions).pipe(
             map(data => data as Array<ESQuery>),

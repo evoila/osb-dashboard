@@ -1,6 +1,6 @@
 import * as fromQueries from '../actions/query.action';
 import { ESQuery } from '../../model/es-query';
-import { RawQuery } from '../../model/raw-query ';
+import { RawQuery } from '../../model/raw-query';
 
 export interface GetESQueriesState {
   entities: Array<ESQuery>;
@@ -27,7 +27,7 @@ export function reducer(
     }
     case fromQueries.LOAD_QUERIES_SUCCESS: {
       // TODO::: take action payload
-      const entities = [new ESQuery(123, 'abc_query', new RawQuery([], [], [], []))]; //action.payload;
+      const entities = action.payload;
       return {
         ...state,
         entities,

@@ -20,7 +20,7 @@
 
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { ESQuery } from '../../model/es-query';
-import { RawQuery } from '../../model/raw-query ';
+import { RawQuery } from '../../model/raw-query';
 
 @Component({
   selector: 'sb-query-editor',

@@ -14,7 +14,7 @@ import { ESQuery } from '../../model/es-query';
 export class BaseQueryInputComponent implements OnInit {
   
 
-  
+
   scope: ServiceBinding | null = null;
   query: ESQuery | null = null;
 
@@ -31,7 +31,7 @@ export class BaseQueryInputComponent implements OnInit {
   }
 
   ngOnInit() {
-
+       
   }
 
   // user did select an app binding via drop down
