@@ -39,10 +39,14 @@ export class QuerySelectComponent implements OnInit {
     var query1 = new ESQuery(123, 'test query', rawquery)
     var query2 = new ESQuery(456, 'test query 2', rawquery)
 
+    // dry data test code start
+    this.choosen = this.choosen == -1 || !this.choosen ? 0 : this.choosen;
     this.queries = [query1, query2]
-    // this.queries$ = this.store.select(getAllQueriesEntities);
+    // test code end
+/*
+     this.queries$ = this.store.select(getAllQueriesEntities);
     
-   /* this.queries$.subscribe((data: Array<ESQuery>) => {
+    this.queries$.subscribe((data: Array<ESQuery>) => {
       if (data.length === 0) {
         console.log('no persisted queries found')
       }

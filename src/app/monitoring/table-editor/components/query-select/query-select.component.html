@@ -1,8 +1,8 @@
 
 <div class="box">
-  <select class="custom-select mr-sm-2 query-select" [(ngModel)]="choosen" name="queryName"
+  <select class="custom-select mr-sm-2 query-select" [(ngModel)]="choosen" name="query_name"
   (change)="setChoosen()" >
-      <option selected *ngFor="let query of queries; let i = index" [value]="i">{{query.queryName}}</option>
+      <option selected *ngFor="let query of queries; let i = index" [value]="i">{{query.name}}</option>
   </select>
-  <label id="placeholder">query</label>
+  <label id="placeholder">query:</label>
 </div>

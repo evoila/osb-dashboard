@@ -1,7 +1,6 @@
 <div class="frame">
-  <button *ngIf="true" (click)="showQueryEditor()" class="btn btn-primary create-query">create</button> <!-- '!query' -->
-  <sb-query-select *ngIf="true"></sb-query-select> <!-- '!query' -->
-  <sb-appid class="appId" [selected]="appId" (app)="did_select_scope($event)"></sb-appid>
-  <span id="query-with-binding-test-result" *ngIf="true"><i class="far fa-check-circle"></i></span> <!-- 'query' -->
+  <button *ngIf="true" (click)="showQueryEditor()" class="btn btn-primary create-query">create</button>
+  <sb-query-select [selected]="selected_query_name" (query)="did_select_query($event)"></sb-query-select>
+  <sb-appid class="appId" [selected]="XXX" (app)="did_select_scope($event)"></sb-appid>
+  <span id="query-with-binding-test-result" *ngIf="true"><i [ngClass]="{'fas fa-exclamation-circle': !valid, 'far fa-check-circle': valid}"></i></span> <!-- , 'far fa-question-circle': true -->
 </div>
-

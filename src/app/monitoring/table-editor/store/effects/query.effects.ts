@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ESQueryService } from '../../../shared/services/es-query.service';
+import { ESQueryService } from '../../services/es-query.service';
 import { Actions, Effect } from '@ngrx/effects';
 import * as queryAction from '../actions/query.action';
 import { switchMap } from 'rxjs/internal/operators/switchMap';

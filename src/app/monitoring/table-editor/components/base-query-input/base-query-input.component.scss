@@ -24,7 +24,6 @@
 
 .btn.btn-primary.create-query{
 
-
     border-radius: 18px;
     margin-left: 10px;
     border: none;
@@ -42,6 +41,13 @@
 
     align-self: center;
     text-align: center;
-    color: lightgreen;
 
+}
+
+.fa-exclamation-circle{
+    color:rgb(254, 127, 105);
+}
+
+.fa-check-circle{
+    color: rgb(109, 196, 102);
 }

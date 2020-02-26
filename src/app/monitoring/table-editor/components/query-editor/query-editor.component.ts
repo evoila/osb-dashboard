@@ -47,7 +47,7 @@ export class QueryEditorComponent implements OnInit {
 
         var must_val = [{'match' : { '_index' : '*-logmessages'} }] 
         this.valid_query = new RawQuery([], [], [], must_val)
-        this.query = new ESQuery(123, 'test query', this.valid_query)
+        this.query = new ESQuery(123, 'nice query', this.valid_query)
 
   }
 
