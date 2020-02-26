@@ -1,6 +1,6 @@
 <div class="query-editor-frame">
-    <p> create a valid ES Query here  </p>
-    <p> for now, hardcoded test query is returned when klicking take </p>
+    <p> demo query: </p>
+    <p> {{  query.name  + ': '  + query.raw_query.to_json() }} </p>
     
     <div>
       <button class="btn btn-primary cancel_q" (click)="cancel_query_editor()"> cancel </button>

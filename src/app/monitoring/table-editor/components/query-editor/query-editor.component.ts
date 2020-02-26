@@ -1,8 +1,26 @@
+
+    /*
+  {
+    "should": [],
+    "filter": [],
+    "mustNot": [],
+    "must": [
+      {
+        "match": {
+          "_index": "*-logmessages"
+        }
+      }
+    ]
+  } 
+  */    
+
+
 // this component is the full page container offering the Possibility to create a valid es Query
 // before saving an ES Query it's possible to validate it with different App Bindings
 
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { ESQuery } from '../../model/es-query';
+import { RawQuery } from '../../model/raw-query ';
 
 @Component({
   selector: 'sb-query-editor',
@@ -17,15 +35,20 @@ export class QueryEditorComponent implements OnInit {
   @Output('save-new-query')
   save_new_query = new EventEmitter();
 
-  // while constructing
+  //raw query + name & id
   query: ESQuery;
   // not null after successfull query-editor-query-test
-  valid_query: ESQuery;
+  valid_query: RawQuery;
 
 
   constructor() { }
 
   ngOnInit() {
+
+        var must_val = [{'match' : { '_index' : '*-logmessages'} }] 
+        this.valid_query = new RawQuery([], [], [], must_val)
+        this.query = new ESQuery(123, 'test query', this.valid_query)
+
   }
 
 

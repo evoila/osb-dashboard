@@ -21,6 +21,7 @@ export class QuerySelectComponent implements OnInit {
 
   queries: Array<ESQuery> | null;
   queries$: Observable<Array<ESQuery> | null>;
+
   choosen: number = -1;
   constructor(
     // in constructor of app id component BindingService gets initialized but not used --> find out about
@@ -36,8 +37,7 @@ export class QuerySelectComponent implements OnInit {
         console.log('no persisted queries found')
       }
       this.queries = [...data];
-      this.choosen = data!!
-        .map((query, index) => {
+      this.choosen = data!!.map((query, index) => {
           return { query, index };
         })
         .filter(query => query.query.name == this.query_name)

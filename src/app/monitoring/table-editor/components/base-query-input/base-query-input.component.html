@@ -1,7 +1,7 @@
 <div class="frame">
   <button *ngIf="true" (click)="showQueryEditor()" class="btn btn-primary create-query">create</button> <!-- '!query' -->
   <sb-query-select *ngIf="true"></sb-query-select> <!-- '!query' -->
-  <sb-appid class="appId" [selected]="appId" (app)="setScope($event)"></sb-appid>
+  <sb-appid class="appId" [selected]="appId" (app)="did_select_scope($event)"></sb-appid>
   <span id="query-with-binding-test-result" *ngIf="true"><i class="far fa-check-circle"></i></span> <!-- 'query' -->
 </div>
 
