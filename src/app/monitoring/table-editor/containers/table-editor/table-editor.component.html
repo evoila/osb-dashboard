@@ -8,13 +8,9 @@
 
   <sb-query-editor *ngIf="query_editor_visible" (save-new-query)="received_query_from_q_editor($event)" (close-query-editor)="close_query_editor_component()" class="query-editor"></sb-query-editor>
   
-  <sb-column-builder class="column-builder"></sb-column-builder>
+  <sb-column-builder *ngIf="false" class="column-builder"></sb-column-builder>
 
-  <sb-table-preview class="preview"></sb-table-preview>
-
-
-
-
+  <sb-table-preview *ngIf="false" class="preview"></sb-table-preview>
 
 
 

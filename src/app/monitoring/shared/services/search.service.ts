@@ -6,7 +6,6 @@ import { SearchRequest } from '../../model/search-request';
 import { SearchResponse } from '../../model/search-response';
 import { Response } from '@angular/http/src/static_response';
 import { NotificationType, NotificationService, Notification } from 'app/core';
-
 import { catchError, map } from 'rxjs/operators';
 import { Field } from 'app/monitoring/aggregation-editor/model/field';
 import { AggregationRequestObject } from 'app/monitoring/chart-configurator/model/aggregationRequestObject';
@@ -14,6 +13,13 @@ import { Panel } from '../model/panel';
 import { QueryAndResponse } from '../model/query-and-response';
 import { ElasticContextQuery } from '../model/elastic-context-query';
 import { LogDataModel } from '../../model/log-data-model';
+import { ESQuery } from 'app/monitoring/table-editor/model/es-query';
+import { ServiceBinding } from 'app/monitoring/model/service-binding';
+import { ESQuery_Request } from 'app/monitoring/table-editor/model/es-query-request';
+import { CfAuthScope, authScopeFromBinding } from 'app/monitoring/chart-configurator/model/cfAuthScope';
+import { environment } from 'environments/runtime-environment';
+
+
 
 @Injectable()
 export class SearchService {
@@ -23,6 +29,23 @@ export class SearchService {
     private http: HttpClient,
     private notification: NotificationService
   ) { }
+
+
+
+ // BOOLQuery POST /v1/queries/run
+
+ public run(query: ESQuery, scope: ServiceBinding): Observable<boolean>{
+  const url = this.endpoint.getUri() + "/queries" + "/run";
+  const authScope = authScopeFromBinding(scope);
+  const boolQueryRequest = new ESQuery_Request(scope.appId, 5, authScope, query.raw_query);
+  const body = boolQueryRequest.jsonify();
+  console.log(body);
+  return this.http.post<boolean>(url, body); 
+}
+
+
+
+
   public getSearchResults(
     request: SearchRequest
   ): Observable<SearchResponse | Response> {

@@ -18,9 +18,9 @@ import { RawQuery } from "./raw-query";
 
 export class ESQuery{
 
-  public id?: number;
-  public name?: string;
-  public raw_query?: RawQuery;
+  public id: number;
+  public name: string;
+  public raw_query: RawQuery;
   
   
   

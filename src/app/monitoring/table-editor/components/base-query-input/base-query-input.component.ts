@@ -9,6 +9,7 @@ import { ESQueryService } from '../../services/es-query.service';
 import { ServiceBinding } from '../../../model/service-binding';
 import { ESQuery } from '../../model/es-query';
 import { QuerySelectComponent } from '../query-select/query-select.component';
+import { SearchService } from 'app/monitoring/shared/services/search.service';
 
 @Component({
   selector: 'sb-base-query-input',
@@ -32,6 +33,7 @@ export class BaseQueryInputComponent implements OnInit {
   open_query_editor = new EventEmitter<number>();
 
   constructor(
+    private searchService: SearchService,
     private esQueryService: ESQueryService, 
     private notificationService: NotificationService
     ) {}
@@ -65,19 +67,33 @@ export class BaseQueryInputComponent implements OnInit {
   test_query_with_binding(query: ESQuery, binding: ServiceBinding){
     
     console.log('testing query-scope-combi!');
-    return; // test endpoint not axisting yet
-    return this.esQueryService.testESQueryWithScope(query, binding).pipe(
-      tap((data: boolean) => {
+    //this.esQueryService.run(query, binding);
+
+    
+    return this.searchService.run(query, binding).pipe(
+      tap((data: any) => {
+
+        /* console.log(data);
         if (!data) {
+          this.valid = false;
           const errorMsg = "query validation failed, CHECK YOUR REQUEST";
           console.error(errorMsg);
           this.notificationService.addSelfClosing(new Notification(NotificationType.Error, errorMsg, undefined));
         }
         else{
-          this.valid = data;
-        }
+          this.valid = true;
+        } */
       })
-    );
+    ).subscribe(k => {
+      
+      
+      
+      
+      console.log(k)});
+
+
+
+
   }
 
   
@@ -90,11 +106,9 @@ export class BaseQueryInputComponent implements OnInit {
   
   received_query_editor_result_query(query: ESQuery){
     console.log('base query 1 received result');
-    console.log(this.queryDropdownSelect.queries);
-    this.queryDropdownSelect.appendQuery(query);
-    console.log(this.queryDropdownSelect.queries);
-    this.queryDropdownSelect.choosen = 0;
-    //this.queryDropdownSelect.setChoosen();
+    
+    
+    
   }
  
   

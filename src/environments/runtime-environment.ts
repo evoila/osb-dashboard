@@ -18,7 +18,8 @@ if (!injectedEnv) {
     },
     production: false,
     customEndpoints: [
-      { url: 'https://osb-log-metric-dashboard-backend-test.system.cf.hob.local', identifier: 'log-metric-backend' },
+      //{ url: 'https://osb-log-metric-dashboard-backend-test.system.cf.hob.local', identifier: 'log-metric-backend' },
+      { url: 'https://log-metric-backend-feature.system.cf.hob.local', identifier: 'log-metric-backend' },
       //{ url: 'http://localhost:8080', identifier: 'log-metric-backend' },
       { url: 'http://localhost:8081', identifier: 'osb-backup-manager' }
     ],

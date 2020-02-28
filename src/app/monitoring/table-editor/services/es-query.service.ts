@@ -2,83 +2,86 @@ import { throwError as observableThrowError, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/runtime-environment';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { NotificationService, Notification, NotificationType } from 'app/core';
 import { EndpointService } from '../../shared/services/endpoint.service';
 import { ESQuery } from 'app/monitoring/table-editor/model/es-query';
-import { catchError, map } from 'rxjs/internal/operators';
+import { map } from 'rxjs/internal/operators';
 import { ServiceBinding } from 'app/monitoring/model/service-binding';
+import { ESQuery_Request } from '../model/es-query-request';
+import { CfAuthScope } from 'app/monitoring/chart-configurator/model/cfAuthScope';
+import { RawQuery } from '../model/raw-query';
 
+// GET /v1/queries/        --> getESQueries()
+// GET /v1/queries/{ID}    --> getESQuery()
+// POST /v1/queries/run    --> run() in shared/services/search.service.ts
+// POST /v1/queries/       --> createESQuery() 
+// PUT /v1/queries/{ID}    --> updateESQuery()
+// DELETE /v1/queries/{ID} --> deletESQuery()
 
-/******************************************************/ 
-const get_queries_point = 'xxx';                    // ???? 
-const test_query_point = 'xxx/queryID/scope_appID'; // ???? 
-const esquery_point = 'xxx';
-/******************************************************/
 
 
 @Injectable({ providedIn: 'root' })
 export class ESQueryService {
-    private instanceId = environment.serviceInstanceId;
-    private get_all_esqueries_endpoint = `/serviceinstance/${this.instanceId}/`+ get_queries_point;
-    private test_query_with_scope_endpoint = `/serviceinstance/${this.instanceId}/`+ test_query_point;
-    private create_esquery_endpoint = `/serviceinstance/${this.instanceId}/`+ esquery_point;
+
+    private uri = this.endpointService.getUri() + "/queries"
 
       constructor(
         private http: HttpClient,
-        private notification: NotificationService,
         private endpointService: EndpointService
       ) {}
 
-      getESQueries(): Observable<Array<ESQuery> | null> {
+      public getESQueries(): Observable<Array<ESQuery> | null> {
 
-        if (environment.baseUrls.serviceBrokerUrl !== '') {
-          let uri = this.endpointService.getUri() + this.get_all_esqueries_endpoint;
-          return this.http.get(uri, this.endpointService.httpOptions).pipe(
-            map(data => data as Array<ESQuery>),
-            catchError(error => {
-              console.log(error);
-              this.notification.addSelfClosing(
-                new Notification(NotificationType.Error, error.message)
-              );
-              return observableThrowError(error);
-            })
-          );
-        }
-        return new Observable(observer => observer.next(null));
+         const url = this.uri;
+         return this.http.get(url, this.endpointService.httpOptions).pipe(
+              map(data => data as Array<ESQuery>));
       }
 
+      public getESQuery(query_id): Observable<ESQuery | null> {
+
+        const url = this.uri + "/" + query_id;
+        return this.http.get(url, this.endpointService.httpOptions).pipe(
+             map(data => data as ESQuery));
+     }
       
-      public testESQueryWithScope(que: ESQuery, sco: ServiceBinding): Observable<boolean>{
-        if (environment.baseUrls.serviceBrokerUrl !== '') {
-          let uri = this.endpointService.getUri() + this.test_query_with_scope_endpoint + '/' + que.id + '/' + sco.appId;
-            return this.http.get<boolean>(uri);
-        }
-        return new Observable(observer => observer.next(false));
-      }
-
       
       public createESQuery(query: ESQuery): Observable<ESQuery | null>{
-        if (environment.baseUrls.serviceBrokerUrl !== '') {
-          let uri = this.endpointService.getUri() + this.create_esquery_endpoint;
-          return this.http.put<ESQuery>(uri, query);
-        }
-        return new Observable(observer => observer.next(null));
+          const url = this.uri;
+          const body = query.raw_query!!.to_json();
+          return this.http.post<ESQuery>(url, body);
+      }
+
+    
+      public updateESQuery(query_id): Observable<ESQuery | null>{
+          const url = this.uri + "/" + query_id;
+          return this.http.put(url, this.endpointService.httpOptions).pipe(
+            map(data => data as ESQuery));
       }
 
 
+      public deleteESQuery(query_id): Observable<ESQuery | null>{
+        const url = this.uri + "/" + query_id;
+        return this.http.delete(url, this.endpointService.httpOptions).pipe(
+          map(data => data as ESQuery));
+      }
 
 
-      /* EXAMPLE WITH BODY DATA 
-      public getAllAggregations(chartType: string): Observable<Array<Aggregation>> {
-    return this.authParamService.createCfAuthParameters().pipe(
-      flatMap(param => {
-        const params = param.append('chartType', chartType);
-        return this.http.get<Array<Aggregation>>(this.url, { params });
-      })
-    );
-  }
-      
-      
-      */
+      public run(query: ESQuery, scope: ServiceBinding): Observable<boolean>{
+        console.log("...");
+        const url = this.uri + "/run";
+        const authScope = this.authScopeFromBinding(scope);
+        const boolQueryRequest = new ESQuery_Request(scope.appId, 5, authScope, query.raw_query);
+        const body = boolQueryRequest.jsonify();
+        console.log(body);
+        return this.http.post<boolean>(url, body); 
+      }
 
+      authScopeFromBinding(binding: ServiceBinding, type: string = "cf"): CfAuthScope {
+        //binding.organization_guid
+        return {
+          type,
+          orgId: binding.organization_guid,
+          spaceId: binding.space,
+          serviceInstanceId: environment.serviceInstanceId
+        } as CfAuthScope
+      }
 }
