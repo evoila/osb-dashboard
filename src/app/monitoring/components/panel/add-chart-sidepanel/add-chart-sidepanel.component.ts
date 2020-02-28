@@ -25,11 +25,19 @@ export class AddChartSidepanelComponent implements OnInit {
   @ViewChild('confirmModal')
   deleteChartConfirmModal: ElementRef;
 
+  @ViewChild('chartNotDeletableModal')
+  chartNotDeletableModal: ElementRef;
+
+
+
   charts$: Observable<Array<Chart>>;
   private ngUnsubscribe: Subject<void> = new Subject<void>();
   
-  //popup pane to confirm actions like chart deletion etc
+  // popup pane to confirm actions like chart deletion etc
   private modal: NgbModalRef | null = null;
+  // popup pane to inform user about unability to delete chart
+  private modal2: NgbModalRef | null = null;
+
   // reference for the modal to fullfill deletion and show attributes 
   private chartToDelete; // value is read in html
 
@@ -56,19 +64,28 @@ export class AddChartSidepanelComponent implements OnInit {
   }
 
   deleteChart(chart: Chart) {
-    // pipe(filter(k => k.chartNotDeletable)).
+   
     this.chartStore.dispatch(new DeleteChart(chart.id!!));
-    
-    this.chartStore.select(getChartDeletingState).pipe(take(1)).subscribe((ka) => {
 
-      // WHATS GOING ON HERE
-      console.log(ka);
-      //this.modal!!.close();
+    this.chartStore.select(getChartDeletingState).pipe(filter(k => k.chartDeleting), take(1)).subscribe((ka) => {
+      this.chartStore.select(getChartDeletingState).pipe(filter(k => !k.chartDeleting), take(1)).subscribe(deleteSate => {
+        if(!deleteSate.chartDeleted && deleteSate.chartNotDeletable) {
+          // chart not deletable, beacuse it's used in panel
+          this.modal!!.close();
+          this.modal2 = this.modalService.open(this.chartNotDeletableModal, { size: 'lg' });
+        }
+        else if(deleteSate.chartDeleted && !deleteSate.chartNotDeletable){
+          // chart deleted successfully
+          this.modal!!.close();
+        }
+      });
+      
     });
-        
 
-    
+    //
   }
+
+
 
   confirmChartDeletion(chart: Chart) {
     this.chartToDelete = chart;

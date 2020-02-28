@@ -89,7 +89,7 @@ export function reducer(
         charts,
         chartDeleted: true,
         chartDeleting: false,
-        ChartNotDeletable: false
+        chartNotDeletable: false
       }
     }
     case fromChartActions.DELETE_CHART_FAIL: {
@@ -97,7 +97,7 @@ export function reducer(
         ...state,
         chartDeleted: false,
         chartDeleting: false,
-        ChartNotDeletable: false
+        chartNotDeletable: false
 
       }
     }
@@ -114,7 +114,7 @@ export function reducer(
         ...state,
         chartDeleted: false,
         chartDeleting: false,
-        ChartNotDeletable: true
+        chartNotDeletable: true
       }
     }
     case fromChartActions.FIRE_AGGREGATION_REQUEST: {

@@ -28,3 +28,20 @@
       <button type="button" ngbAutofocus class="btn btn-danger" (click)="deleteChart(chartToDelete)">Ok</button>
     </div>
   </ng-template>
+
+  <ng-template #chartNotDeletableModal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-title">Chart not deletable</h4>
+      <button type="button" class="close" aria-label="Close button" aria-describedby="modal-title" (click)="modal2.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p>This Chart is in used still used by Panel </p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" ngbAutofocus class="btn btn-danger" (click)="modal2.close();">Ok</button>
+    </div>
+  </ng-template>
+
+  
