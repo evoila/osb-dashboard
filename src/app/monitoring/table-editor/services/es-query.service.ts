@@ -10,8 +10,9 @@ import { ServiceBinding } from 'app/monitoring/model/service-binding';
 
 
 /******************************************************/ 
-const get_queries_point = 'ZZZZZZZZ'                    // ???? 
-const test_query_point = 'XXXXXXXX/queryID/scope_appID' // ???? 
+const get_queries_point = 'xxx';                    // ???? 
+const test_query_point = 'xxx/queryID/scope_appID'; // ???? 
+const esquery_point = 'xxx';
 /******************************************************/
 
 
@@ -20,6 +21,7 @@ export class ESQueryService {
     private instanceId = environment.serviceInstanceId;
     private get_all_esqueries_endpoint = `/serviceinstance/${this.instanceId}/`+ get_queries_point;
     private test_query_with_scope_endpoint = `/serviceinstance/${this.instanceId}/`+ test_query_point;
+    private create_esquery_endpoint = `/serviceinstance/${this.instanceId}/`+ esquery_point;
 
       constructor(
         private http: HttpClient,
@@ -53,6 +55,17 @@ export class ESQueryService {
         }
         return new Observable(observer => observer.next(false));
       }
+
+      
+      public createESQuery(query: ESQuery): Observable<ESQuery | null>{
+        if (environment.baseUrls.serviceBrokerUrl !== '') {
+          let uri = this.endpointService.getUri() + this.create_esquery_endpoint;
+          return this.http.put<ESQuery>(uri, query);
+        }
+        return new Observable(observer => observer.next(null));
+      }
+
+
 
 
       /* EXAMPLE WITH BODY DATA 

@@ -16,7 +16,7 @@ import { QuerySelectComponent } from '../query-select/query-select.component';
   styleUrls: ['./base-query-input.component.scss']
 })
 export class BaseQueryInputComponent implements OnInit {
-
+  @ViewChild('queryDropdownSelect') queryDropdownSelect: QuerySelectComponent;
 
   scope: ServiceBinding | null = null;
   query: ESQuery | null = null;
@@ -89,7 +89,12 @@ export class BaseQueryInputComponent implements OnInit {
 
   
   received_query_editor_result_query(query: ESQuery){
-    this.selected_query_name = query.name;
+    console.log('base query 1 received result');
+    console.log(this.queryDropdownSelect.queries);
+    this.queryDropdownSelect.appendQuery(query);
+    console.log(this.queryDropdownSelect.queries);
+    this.queryDropdownSelect.choosen = 0;
+    //this.queryDropdownSelect.setChoosen();
   }
  
   

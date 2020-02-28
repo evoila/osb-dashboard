@@ -18,7 +18,7 @@ export class QueryGroupComponent implements OnInit {
 
 
   // dict { id : component } holding unknown number child components
-  base_query_components = [this.baseQuery1];
+  //base_query_components = [this.baseQuery1];
 
   constructor() { }
 

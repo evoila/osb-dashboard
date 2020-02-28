@@ -9,7 +9,6 @@ export const getAllQueriesState = createSelector(
     (state: SharedModuleState) => state.queries
 );
 
-
 export const getAllQueriesEntities = createSelector(
     getAllQueriesState,
   fromQueries.getQueriesEntities

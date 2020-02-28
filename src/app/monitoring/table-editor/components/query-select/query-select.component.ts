@@ -66,6 +66,10 @@ export class QuerySelectComponent implements OnInit {
     this.query.next(this.queries!![this.choosen]);
   }
 
+  public appendQuery(q: ESQuery) {
+    //...
+  }
+
 
 
 }
