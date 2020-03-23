@@ -22,7 +22,7 @@ export class MonitoringComponent implements OnInit {
   private notYetNavigate = true;
   panelEditMode = false;
   bindingsAlive = true;
-  bindingsProblemUserInfo = "";
+  bindingsProblemUserInfo = "No Bindings Found";
 
   // The Panels are getting an Edit Mode
   // This Listener is called when the corresponding Button within
