@@ -1,17 +1,22 @@
 import * as fromQueries from '../actions/query.action';
 import { ESQuery } from '../../model/es-query';
-import { RawQuery } from '../../model/raw-query';
+import { ESBoolQueryRawResponseMap } from '../../model/es-bool-query-result';
 
 export interface GetESQueriesState {
   entities: Array<ESQuery>;
   loading: boolean;
   loaded: boolean;
+  running: boolean;
+  // ONLY one result of lastly run bool query
+  run_result: ESBoolQueryRawResponseMap | null;
 }
 
 export const initialState: GetESQueriesState = {
   entities: [],
   loaded: false,
-  loading: false
+  loading: false,
+  running: false,
+  run_result: null
 };
 
 export function reducer(
@@ -26,11 +31,10 @@ export function reducer(
       };
     }
     case fromQueries.LOAD_QUERIES_SUCCESS: {
-      // TODO::: take action payload
       const entities = action.payload;
       return {
         ...state,
-        entities,
+        entities: entities,
         loading: false,
         loaded: true
       };
@@ -42,6 +46,28 @@ export function reducer(
         loaded: false
       };
     }
+    case fromQueries.RUN_QUERY: {
+      return {
+        ...state,
+        running: true
+      };
+    }
+    case fromQueries.RUN_QUERY_FAIL: {
+      return {
+        ...state,
+        running: false
+      };
+    }
+    case fromQueries.RUN_QUERY_SUCCESS: {
+      const result = action.payload;
+      console.log('..');
+      console.log(result);
+      return {
+        ...state,
+        run_result: result,
+        running: false
+      };
+    }
   }
   return state;
 }
@@ -49,3 +75,5 @@ export function reducer(
 export const getQueriesLoading = (state: GetESQueriesState) => state.loading;
 export const getQueriesLoaded = (state: GetESQueriesState) => state.loaded;
 export const getQueriesEntities = (state: GetESQueriesState) => state.entities;
+export const getQueryRunning = (state: GetESQueriesState) => state.running;
+export const getQueryRunResult = (state: GetESQueriesState) => state.run_result;

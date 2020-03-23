@@ -1,14 +1,15 @@
 import * as fromQueries from './query.reducer';
 import { ActionReducerMap, createFeatureSelector } from '@ngrx/store';
 
-export interface SharedModuleState {
+export interface QueriesState {
   queries: fromQueries.GetESQueriesState;
 }
 
-export const reducers: ActionReducerMap<SharedModuleState> = {
+export const reducers: ActionReducerMap<QueriesState> = {
   queries: fromQueries.reducer
 };
 
-export const getSharedModuleState = createFeatureSelector<SharedModuleState>(
-  'sharedmodule'
+export const getQueriesState = createFeatureSelector<QueriesState>(
+  'queries'
 );
+

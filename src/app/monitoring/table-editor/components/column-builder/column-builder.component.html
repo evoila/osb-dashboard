@@ -1,8 +1,19 @@
 <div class="column-builder-frame">
     
   <p>
-    column builder component
+    column builder
   </p>
+
+  <div id="column-definition-table">
+    <sb-column-definition (query)="did_select_query($event)"> </sb-column-definition>
+    
+   
+    
+  </div>
+
+  <button id="b_save_column" (click)="save_column()">save</button>
+
+  
 
 </div>
 

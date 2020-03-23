@@ -1,9 +1,36 @@
 import { Action } from '@ngrx/store';
 import { ESQuery } from '../../model/es-query';
+import { ESBoolQueryRawResponseMap } from '../../model/es-bool-query-result';
+import { ServiceBinding } from 'app/monitoring/model/service-binding';
 
-export const LOAD_QUERIES = '[Configurator] Load Queries';
-export const LOAD_QUERIES_SUCCESS = '[Configurator] Load Queries Success';
-export const LOAD_QUERIES_FAIL = '[Configurator] Load Queries Fail';
+
+
+export const SAVE_QUERY = '[Query] Save Query';
+export const SAVE_QUERY_SUCCESS = '[Query] Save Query Success';
+export const SAVE_QUERY_FAIL = '[Query] Save Query Fail';
+
+export const LOAD_QUERIES = '[Query] Load Queries';
+export const LOAD_QUERIES_SUCCESS = '[Query] Load Queries Success';
+export const LOAD_QUERIES_FAIL = '[Query] Load Queries Fail';
+
+export const RUN_QUERY = '[Query] Run Queries';
+export const RUN_QUERY_SUCCESS = '[Query] Run Queries Success';
+export const RUN_QUERY_FAIL = '[Query] Run Queries Fail';
+
+
+
+export class SaveQuery implements Action {
+  readonly type = SAVE_QUERY;
+  constructor(public payload: ESQuery) { }
+}
+export class SaveQuerySuccess implements Action {
+  readonly type = SAVE_QUERY_SUCCESS;
+  constructor(public payload: ESQuery) { }
+}
+export class SaveQueryFail implements Action {
+  readonly type = SAVE_QUERY_FAIL;
+}
+
 
 export class LoadQueries implements Action {
   readonly type = LOAD_QUERIES;
@@ -17,7 +44,29 @@ export class LoadQueriesFail implements Action {
   constructor(public payload: any) {}
 }
 
+
+export class RunQuery implements Action {
+  readonly type = RUN_QUERY;
+  constructor(public payload: ESQuery, public scope: ServiceBinding) {}
+}
+export class RunQuerySuccess implements Action {
+  readonly type = RUN_QUERY_SUCCESS;
+  constructor(public payload: ESBoolQueryRawResponseMap) {}
+}
+export class RunQueryFail implements Action {
+  readonly type = RUN_QUERY_FAIL;
+  constructor(public payload: any) {}
+}
+
+
+
 export type ESQueryAction =
+  | SaveQuery
+  | SaveQuerySuccess
+  | SaveQueryFail
   | LoadQueries
   | LoadQueriesFail
-  | LoadQueriesSuccess;
+  | LoadQueriesSuccess
+  | RunQuery
+  | RunQueryFail
+  | RunQuerySuccess;

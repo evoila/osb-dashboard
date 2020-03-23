@@ -4,19 +4,20 @@ import { Component, OnInit, Output, Input, EventEmitter} from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { GetESQueriesState } from '../../store/reducers/query.reducer';
 import { ESQuery } from '../../model/es-query';
-import { RawQuery } from '../../model/raw-query';
 import { Store } from '@ngrx/store';
+import { tap, filter, take, map } from 'rxjs/operators';
 import { getAllQueriesEntities } from '../../store/selectors/queries.selector';
+import { RawQuery } from '../../model/raw-query';
 @Component({
   selector: 'sb-query-select',
   templateUrl: './query-select.component.html',
   styleUrls: ['./query-select.component.scss']
 })
 export class QuerySelectComponent implements OnInit {
+
   @Output('query')
   query = new EventEmitter<ESQuery>();
   
-
   @Input('selected')
   query_name: string;
 
@@ -24,9 +25,9 @@ export class QuerySelectComponent implements OnInit {
   queries$: Observable<Array<ESQuery> | null>;
 
   choosen: number = -1;
+  
   constructor(
-    // in constructor of app id component BindingService gets initialized but not used --> find out about
-    // public getPersistedESQueriesService: GetPersistedESQueriesService,
+    
     private store: Store<GetESQueriesState>
   ) { }
 
@@ -34,6 +35,7 @@ export class QuerySelectComponent implements OnInit {
   ngOnInit() {
 
 
+    /*
     var must_val = [{'match' : { '_index' : '*-logmessages'} }] 
     var rawquery = new RawQuery([], [], [], must_val)
     var query1 = new ESQuery(123, 'test query', rawquery)
@@ -43,14 +45,22 @@ export class QuerySelectComponent implements OnInit {
     this.choosen = this.choosen == -1 || !this.choosen ? 0 : this.choosen;
     this.queries = [query1, query2]
     // test code end
-/*
-     this.queries$ = this.store.select(getAllQueriesEntities);
+
+    */
+  
+
+    this.queries$ = this.store.select(getAllQueriesEntities);
     
-    this.queries$.subscribe((data: Array<ESQuery>) => {
+    this.queries$.pipe(filter(k => k!!.length > 0)).subscribe((data: Array<ESQuery>) => {
       if (data.length === 0) {
         console.log('no persisted queries found')
       }
+      else{
+        console.log(data.length + ' persisted queries found')
+      }
       this.queries = [...data];
+
+
       this.choosen = data!!.map((query, index) => {
           return { query, index };
         })
@@ -58,13 +68,17 @@ export class QuerySelectComponent implements OnInit {
         .map(k => k.index)[0];
 
       this.choosen = this.choosen == -1 || !this.choosen ? 0 : this.choosen;
+      this.setChoosen();
 
-    }) */
+    }) 
+
+    
 
   }
   public setChoosen() {
     this.query.next(this.queries!![this.choosen]);
   }
+
 
   public appendQuery(q: ESQuery) {
     //...

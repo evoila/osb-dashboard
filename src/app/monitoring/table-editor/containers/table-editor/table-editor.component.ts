@@ -1,6 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ESQuery } from '../../model/es-query';
+import { GetESQueriesState } from '../../store/reducers/query.reducer';
+import * as fromQueries from '../../store/actions/query.action';
 import { QueryGroupComponent } from '../../components/query-group/query-group.component';
+import { Store } from '@ngrx/store';
+import { ColumnDefinition } from '../../model/column-definition';
+import { ColumnMapping } from '../../model/column-mapping';
 
 @Component({
   selector: 'sb-table-editor',
@@ -13,10 +18,15 @@ export class TableEditorComponent implements OnInit {
   
   query_editor_visible = false;
   query_editor_result_awaited_by_base_query_id : number = 0;
-  constructor() { }
+  columnDefinitions: Array<ColumnDefinition> = [];
+
+  selectable_fields : Array<string>  = ['fieldname 1', 'fieldname 2', 'fieldname 3']
+
+  constructor(private store: Store<GetESQueriesState>) { }
 
   ngOnInit() {
-    
+    console.log('loading stored Elastic Bool Queries from db into ngrx store')
+    this.store.dispatch(new fromQueries.LoadQueries());
   }
   
   open_query_editor(base_query_id: number){
@@ -36,5 +46,8 @@ export class TableEditorComponent implements OnInit {
       console.log(this.query_editor_result_awaited_by_base_query_id);
       this.base_query_group.receive_query_editor_result_query(query, this.query_editor_result_awaited_by_base_query_id)
   }
+
+  
+  
 
 }

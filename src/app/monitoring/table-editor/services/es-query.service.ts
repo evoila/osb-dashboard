@@ -46,7 +46,7 @@ export class ESQueryService {
       
       public createESQuery(query: ESQuery): Observable<ESQuery | null>{
           const url = this.uri;
-          const body = query.raw_query!!.to_json();
+          const body = query!!.to_json();
           return this.http.post<ESQuery>(url, body);
       }
 
@@ -64,12 +64,12 @@ export class ESQueryService {
           map(data => data as ESQuery));
       }
 
-
+/*
       public run(query: ESQuery, scope: ServiceBinding): Observable<boolean>{
         console.log("...");
         const url = this.uri + "/run";
         const authScope = this.authScopeFromBinding(scope);
-        const boolQueryRequest = new ESQuery_Request(scope.appId, 5, authScope, query.raw_query);
+        const boolQueryRequest = new ESQuery_Request(scope.appId, 5, authScope, query);
         const body = boolQueryRequest.jsonify();
         console.log(body);
         return this.http.post<boolean>(url, body); 
@@ -84,4 +84,7 @@ export class ESQueryService {
           serviceInstanceId: environment.serviceInstanceId
         } as CfAuthScope
       }
+
+
+      */
 }

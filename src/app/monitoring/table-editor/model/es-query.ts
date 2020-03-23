@@ -20,15 +20,14 @@ export class ESQuery{
 
   public id: number;
   public name: string;
-  public raw_query: RawQuery;
+  public boolQuery: RawQuery;
   
   
-  
-  constructor(id: number, name: string, raw_query: RawQuery) { 
+  constructor(id: number, name: string, boolQuery: RawQuery) { 
 
     this.id = id;
     this.name = name;
-    this.raw_query = raw_query;
+    this.boolQuery = boolQuery;
   }
 
   to_json(){

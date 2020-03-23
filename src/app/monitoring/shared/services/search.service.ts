@@ -18,6 +18,7 @@ import { ServiceBinding } from 'app/monitoring/model/service-binding';
 import { ESQuery_Request } from 'app/monitoring/table-editor/model/es-query-request';
 import { CfAuthScope, authScopeFromBinding } from 'app/monitoring/chart-configurator/model/cfAuthScope';
 import { environment } from 'environments/runtime-environment';
+import { ESBoolQueryRawResponseMap } from 'app/monitoring/table-editor/model/es-bool-query-result';
 
 
 
@@ -34,13 +35,13 @@ export class SearchService {
 
  // BOOLQuery POST /v1/queries/run
 
- public run(query: ESQuery, scope: ServiceBinding): Observable<boolean>{
+ public run(query: ESQuery, scope: ServiceBinding): Observable<any>{ //ESBoolQueryRawResponseMap>{
   const url = this.endpoint.getUri() + "/queries" + "/run";
   const authScope = authScopeFromBinding(scope);
-  const boolQueryRequest = new ESQuery_Request(scope.appId, 5, authScope, query.raw_query);
+  const boolQueryRequest = new ESQuery_Request(scope.appId, 5, authScope, query.boolQuery);
   const body = boolQueryRequest.jsonify();
   console.log(body);
-  return this.http.post<boolean>(url, body); 
+  return this.http.post<ESBoolQueryRawResponseMap>(url, body); 
 }
 
 

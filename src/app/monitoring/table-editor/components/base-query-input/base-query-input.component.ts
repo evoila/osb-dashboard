@@ -10,6 +10,12 @@ import { ServiceBinding } from '../../../model/service-binding';
 import { ESQuery } from '../../model/es-query';
 import { QuerySelectComponent } from '../query-select/query-select.component';
 import { SearchService } from 'app/monitoring/shared/services/search.service';
+import { Store } from '@ngrx/store';
+import { RUN_QUERY, RunQuery } from '../../store/actions/query.action';
+import { getQueryRunResult } from '../../store/reducers/query.reducer';
+import { getQueriesState } from '../../store';
+
+
 
 @Component({
   selector: 'sb-base-query-input',
@@ -33,13 +39,21 @@ export class BaseQueryInputComponent implements OnInit {
   open_query_editor = new EventEmitter<number>();
 
   constructor(
+    private store: Store<ESQuery>,
     private searchService: SearchService,
-    private esQueryService: ESQueryService, 
-    private notificationService: NotificationService
+     
+    //private notificationService: NotificationService
     ) {}
 
   ngOnInit() {
        
+
+
+
+      
+
+
+
   }
 
   // user did select an app binding via drop down
@@ -58,7 +72,9 @@ export class BaseQueryInputComponent implements OnInit {
 
 
   validate_new_selection(){
+    console.log('in validate');
     if (this.scope && this.query){
+      console.log('both set');
       this.test_query_with_binding(this.query, this.scope)
     }
   }
@@ -67,33 +83,33 @@ export class BaseQueryInputComponent implements OnInit {
   test_query_with_binding(query: ESQuery, binding: ServiceBinding){
     
     console.log('testing query-scope-combi!');
-    //this.esQueryService.run(query, binding);
+    /*
+    this.store.dispatch(new RunQuery(query, binding));
+    this.store.select(getQueriesState).pipe(take(2)).subscribe(k => {
+      var esbq_run_result = k.queries.run_result; 
+      //subscr.unsubscribe();
+      console.log(esbq_run_result);
+      console.log(JSON.stringify(esbq_run_result));
+    })
+   */
+
 
     
     return this.searchService.run(query, binding).pipe(
       tap((data: any) => {
 
-        /* console.log(data);
-        if (!data) {
-          this.valid = false;
-          const errorMsg = "query validation failed, CHECK YOUR REQUEST";
-          console.error(errorMsg);
-          this.notificationService.addSelfClosing(new Notification(NotificationType.Error, errorMsg, undefined));
-        }
-        else{
-          this.valid = true;
-        } */
+        
       })
     ).subscribe(k => {
       
+      //var total_hits = k.hits.total;
       
-      
-      
-      console.log(k)});
+      console.log(k);
+    
+    });
 
 
-
-
+    
   }
 
   
@@ -106,8 +122,6 @@ export class BaseQueryInputComponent implements OnInit {
   
   received_query_editor_result_query(query: ESQuery){
     console.log('base query 1 received result');
-    
-    
     
   }
  

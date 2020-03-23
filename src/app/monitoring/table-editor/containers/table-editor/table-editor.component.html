@@ -7,8 +7,8 @@
   <sb-query-group class="query-group" (open-query-editor-forward)="open_query_editor($event)"></sb-query-group>
 
   <sb-query-editor *ngIf="query_editor_visible" (save-new-query)="received_query_from_q_editor($event)" (close-query-editor)="close_query_editor_component()" class="query-editor"></sb-query-editor>
-  
-  <sb-column-builder *ngIf="false" class="column-builder"></sb-column-builder>
+
+  <sb-column-builder *ngIf="selectable_fields.length > 0" class="column-builder"></sb-column-builder>
 
   <sb-table-preview *ngIf="false" class="preview"></sb-table-preview>
 

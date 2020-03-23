@@ -1,0 +1,61 @@
+@import '../../../../core/core';
+
+
+.column-definition{
+
+    background-color: transparent;
+}
+
+.column-definition:active{
+
+    background-color: #ea3;
+}
+
+
+.data-picker{
+    display: grid;
+    grid-template-columns: 0px 240px;
+    grid-gap: 0.6em;
+    border-radius: $basic-border-radius;;
+    cursor: pointer;
+    width: 200px;
+    margin: 5px;
+}
+
+
+.custom-select.mr-sm-2.data-select{  
+    cursor: pointer;
+    justify-self: stretch;
+    padding-left: 60px;
+    padding-top: 4px;
+    width: 200px;
+    border: 3px solid $gray-4;
+    border-radius: $basic-border-radius;
+    background-color: $transparent;
+    color: #c897f3;
+    
+}
+
+.custom-select.mr-sm-2.data-select:hover{
+    border: 3px solid #dac7ef;
+}
+
+
+#placeholder {
+    color: $gray-3;
+    font-size: 1em;
+    margin: 0rem;
+    margin-left: 4px;
+    margin-top: 0.44rem;
+    width: 35px;
+    height: fit-content;
+}
+
+.form-control.cdef-name{
+
+    border-radius: 18px;
+    border: 3px solid #ddd;
+    width: 200px;
+    margin: 5px;
+    cursor: pointer;
+}

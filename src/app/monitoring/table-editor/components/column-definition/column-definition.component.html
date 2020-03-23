@@ -1,0 +1,13 @@
+<div  class="column-definition">
+    
+      <input type="text" class="form-control cdef-name" [(ngModel)]="cdef_name" (focus)="onGotFocusNameInput()" (blur)="onLostFocusNameInput()" placeholder="column name">
+
+      <div class="data-picker">
+        <select class="custom-select mr-sm-2 data-select" [(ngModel)]="choosen" name="fields[choosen]"
+        (change)="setFieldChoosen()" >
+            <option selected *ngFor="let field of fields; let i = index" [value]="i">{{field}}</option>
+        </select>
+        <label id="placeholder">data:</label>
+      </div>
+    
+</div>
