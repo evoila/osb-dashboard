@@ -40,7 +40,6 @@ export class SearchService {
   const authScope = authScopeFromBinding(scope);
   const boolQueryRequest = new ESQuery_Request(scope.appId, 5, authScope, query.boolQuery);
   const body = boolQueryRequest.jsonify();
-  console.log(body);
   return this.http.post<ESBoolQueryRawResponseMap>(url, body); 
 }
 

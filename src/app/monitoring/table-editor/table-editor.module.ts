@@ -9,12 +9,16 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { reducers, effects } from './store';
 import { ColumnDefinitionComponent } from './components/column-definition/column-definition.component';
+import { MatTreeModule, MatIconModule, MatButtonModule } from '@angular/material';
 
 @NgModule({
   imports: [
     CommonModule,
     SharedModule, 
     FormsModule,
+    MatTreeModule,
+    MatIconModule,
+    MatButtonModule,
     StoreModule.forFeature('queries', reducers),
     EffectsModule.forFeature(effects),
     TableEditorRoutingModule

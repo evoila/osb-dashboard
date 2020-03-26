@@ -9,6 +9,7 @@ import { ServiceBinding } from 'app/monitoring/model/service-binding';
 import { ESQuery_Request } from '../model/es-query-request';
 import { CfAuthScope } from 'app/monitoring/chart-configurator/model/cfAuthScope';
 import { RawQuery } from '../model/raw-query';
+import { ESBoolQueryResponse } from '../model/es-bool-query-result';
 
 // GET /v1/queries/        --> getESQueries()
 // GET /v1/queries/{ID}    --> getESQuery()
@@ -64,27 +65,35 @@ export class ESQueryService {
           map(data => data as ESQuery));
       }
 
-/*
-      public run(query: ESQuery, scope: ServiceBinding): Observable<boolean>{
-        console.log("...");
-        const url = this.uri + "/run";
-        const authScope = this.authScopeFromBinding(scope);
-        const boolQueryRequest = new ESQuery_Request(scope.appId, 5, authScope, query);
-        const body = boolQueryRequest.jsonify();
-        console.log(body);
-        return this.http.post<boolean>(url, body); 
-      }
 
-      authScopeFromBinding(binding: ServiceBinding, type: string = "cf"): CfAuthScope {
-        //binding.organization_guid
-        return {
-          type,
-          orgId: binding.organization_guid,
-          spaceId: binding.space,
-          serviceInstanceId: environment.serviceInstanceId
-        } as CfAuthScope
+      
+      // building datastructure with only keys
+      public buildKeyTree(data: Object, key_path: any[]=[]){
+        var key_tree = {};
+        var level_keys = this.getKeys(data, key_path);
+        for (var i in level_keys){
+          var key = level_keys[i];
+          var extd_path = key_path.concat(key);
+          var next_level_keys = this.getKeys(data, extd_path);
+          key_tree[key] = next_level_keys.length > 0 ? this.buildKeyTree(data, extd_path) : '';
+        }
+        key_tree = key_tree == {} ? '' : key_tree;
+        return key_tree;
       }
 
 
-      */
+      // recursive way to get all keys at level specified by key_path
+      public getKeys(data: Object, key_path: any[]){
+        if (key_path.length > 0){
+          var val = data[key_path[0]];
+          return this.isLeave(val) ? [] : this.getKeys(val, key_path.slice(1));
+        }
+        return Object.keys(data);
+      }
+
+      private isLeave(value){
+        return typeof value == 'string' || typeof value == 'number';
+      }
+    
+
 }

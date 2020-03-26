@@ -5,7 +5,7 @@ import * as fromQueries from '../../store/actions/query.action';
 import { QueryGroupComponent } from '../../components/query-group/query-group.component';
 import { Store } from '@ngrx/store';
 import { ColumnDefinition } from '../../model/column-definition';
-import { ColumnMapping } from '../../model/column-mapping';
+
 
 @Component({
   selector: 'sb-table-editor',

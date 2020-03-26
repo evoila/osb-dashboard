@@ -41,18 +41,10 @@ export class ColumnBuilderComponent implements OnInit {
 
   public save_column(){
 
-    this.parent.columnDefinitions.push(new ColumnDefinition(this.generateUniqueString(), "enter name"))
+    //this.parent.columnDefinitions.push(new ColumnDefinition("enter name"))
 
   }
 
-  private generateUniqueString() {
-    var ts = String(new Date().getTime()),
-        i = 0,
-        out = '';
-    for (i = 0; i < ts.length; i += 2) {
-        out += Number(ts.substr(i, 2)).toString(36);
-    }
-    return ('prefix' + out);
-}
+  
 
 }

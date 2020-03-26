@@ -55,13 +55,13 @@ export function reducer(
     case fromQueries.RUN_QUERY_FAIL: {
       return {
         ...state,
-        running: false
+        running: false,
+        run_result: null
+
       };
     }
     case fromQueries.RUN_QUERY_SUCCESS: {
       const result = action.payload;
-      console.log('..');
-      console.log(result);
       return {
         ...state,
         run_result: result,

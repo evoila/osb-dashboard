@@ -14,4 +14,8 @@ export class TablePreviewComponent implements OnInit {
   ngOnInit() {
   }
 
+
+  public save_table(){
+    
+  }
 }

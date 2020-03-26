@@ -28,6 +28,7 @@ export class BaseQueryInputComponent implements OnInit {
   scope: ServiceBinding | null = null;
   query: ESQuery | null = null;
   selected_query_name?: string = "";
+  hit_count: number = 0; 
   // flag indicating if current selected combination of scope and es-query is proofed valid
   valid = false;
   // id of this base-query-input row 
@@ -41,7 +42,7 @@ export class BaseQueryInputComponent implements OnInit {
   constructor(
     private store: Store<ESQuery>,
     private searchService: SearchService,
-     
+    
     //private notificationService: NotificationService
     ) {}
 
@@ -49,8 +50,7 @@ export class BaseQueryInputComponent implements OnInit {
        
 
 
-
-      
+    
 
 
 
@@ -58,23 +58,19 @@ export class BaseQueryInputComponent implements OnInit {
 
   // user did select an app binding via drop down
   did_select_scope(service_binding: ServiceBinding){
-    console.log('did select scope');
     this.scope = service_binding;
     this.validate_new_selection();
   }
 
   // user did select a persisted or newly created es-query via drop down select
   did_select_query(es_query: ESQuery){
-    console.log('did select query');
     this.query = es_query;
     this.validate_new_selection();
   }
 
 
   validate_new_selection(){
-    console.log('in validate');
     if (this.scope && this.query){
-      console.log('both set');
       this.test_query_with_binding(this.query, this.scope)
     }
   }
@@ -83,17 +79,24 @@ export class BaseQueryInputComponent implements OnInit {
   test_query_with_binding(query: ESQuery, binding: ServiceBinding){
     
     console.log('testing query-scope-combi!');
-    /*
+    
     this.store.dispatch(new RunQuery(query, binding));
-    this.store.select(getQueriesState).pipe(take(2)).subscribe(k => {
-      var esbq_run_result = k.queries.run_result; 
-      //subscr.unsubscribe();
+    this.store.select(getQueriesState).pipe(filter(k => !k.queries.running)).pipe(take(1)).subscribe(k => {
+      var esbq_run_result = k.queries.run_result;
+      if (esbq_run_result != null){
+        this.valid = true;
+        this.hit_count = +esbq_run_result.responses[0].hits.total; // + operator converting string to number
+        console.log('hits: ' + this.hit_count);
+      }
+      else{
+        this.valid = false;
+      }
       console.log(esbq_run_result);
-      console.log(JSON.stringify(esbq_run_result));
+      //console.log(JSON.stringify(esbq_run_result));
     })
-   */
+   
 
-
+/*
     
     return this.searchService.run(query, binding).pipe(
       tap((data: any) => {
@@ -108,7 +111,7 @@ export class BaseQueryInputComponent implements OnInit {
     
     });
 
-
+*/
     
   }
 

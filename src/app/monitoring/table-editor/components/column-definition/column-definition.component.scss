@@ -6,11 +6,27 @@
     background-color: transparent;
 }
 
-.column-definition:active{
-
-    background-color: #ea3;
+#tree_leaf{
+    cursor: pointer;
+    color: $primary-color;
+    max-height: 25px;
+    min-height: 25px;
 }
 
+#tree_leaf:hover{
+    color: $primary-color-light;
+}
+
+
+
+#tree_node{
+    color: #888;
+    max-height: 25px;
+    min-height: 25px;
+}
+.mat-icon-rtl-mirror{
+    color: $primary-color;
+}
 
 .data-picker{
     display: grid;
@@ -20,6 +36,7 @@
     cursor: pointer;
     width: 200px;
     margin: 5px;
+    margin-bottom: 1em;;
 }
 
 
@@ -40,6 +57,16 @@
     border: 3px solid #dac7ef;
 }
 
+#tree-node-button{
+
+    outline: none;
+    background-color: #0000;
+}
+
+#tree-leave-button{
+    outline: none;
+    background-color: #0000;
+}
 
 #placeholder {
     color: $gray-3;
@@ -49,6 +76,10 @@
     margin-top: 0.44rem;
     width: 35px;
     height: fit-content;
+}
+#chosen_key{
+
+
 }
 
 .form-control.cdef-name{

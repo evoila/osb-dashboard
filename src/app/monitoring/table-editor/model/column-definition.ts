@@ -1,21 +1,31 @@
-import { ColumnMapping } from "./column-mapping";
+
 
 export class ColumnDefinition{
 
     public id: string;
     public name: string;
-    public content: ColumnMapping | null;
+    public path: any[];
     
-    public constructor(id: string, name: string) { 
+    public constructor(name: string, path: any[]) { 
 
-        this.id = id;
+        this.id = this.generateUniqueString();
         this.name = name;
-        this.content = null;
+        this.path = path;
       }
     
       jsonify(){
         return JSON.stringify(this);
       }
+
+      private generateUniqueString() {
+        var ts = String(new Date().getTime()),
+            i = 0,
+            out = '';
+        for (i = 0; i < ts.length; i += 2) {
+            out += Number(ts.substr(i, 2)).toString(36);
+        }
+        return ('prefix' + out);
+    }
     
     
 

@@ -3,11 +3,25 @@
       <input type="text" class="form-control cdef-name" [(ngModel)]="cdef_name" (focus)="onGotFocusNameInput()" (blur)="onLostFocusNameInput()" placeholder="column name">
 
       <div class="data-picker">
-        <select class="custom-select mr-sm-2 data-select" [(ngModel)]="choosen" name="fields[choosen]"
-        (change)="setFieldChoosen()" >
-            <option selected *ngFor="let field of fields; let i = index" [value]="i">{{field}}</option>
-        </select>
-        <label id="placeholder">data:</label>
+       <span style="width:3em;">
+         <label id="placeholder">data:</label>
+         <label id="chosen_key">?</label>
+       </span>
       </div>
+       <mat-tree [dataSource] = "dataSource" [treeControl] = "treeControl">
+        <mat-tree-node *matTreeNodeDef = "let node" (click)="select_leaf()" id="tree_leaf" matTreeNodeToggle matTreeNodePadding>
+           <button mat-icon-button id="tree-leave-button" disabled></button>
+           {{node.filename}} <!--: {{node.type}} -->
+        </mat-tree-node>
+        <mat-tree-node *matTreeNodeDef = "let node;when: hasChild" (click)="select_node()" id="tree_node" matTreeNodePadding>
+           <button mat-icon-button matTreeNodeToggle id="tree-node-button" [attr.aria-label] = "'toggle ' + node.filename">
+              <mat-icon class = "mat-icon-rtl-mirror">
+                 {{treeControl.isExpanded(node) ? '-' : '+'}}
+              </mat-icon>
+           </button>
+           {{node.filename}}
+        </mat-tree-node>
+     </mat-tree>
+      
     
 </div>

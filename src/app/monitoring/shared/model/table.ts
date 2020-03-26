@@ -1,17 +1,24 @@
 import { CfAuthScope } from '../../chart-configurator/model/cfAuthScope';  
 import { TableOptionsEntity } from '../../table-editor/model/table-options-entity'
-import { ColumnMapping } from '../../table-editor/model/column-mapping'
+import { ColumnDefinition } from 'app/monitoring/table-editor/model/column-definition';
 
 export class Table{
 	
 readonly id?: String;
 title: string;
+boolQueryId: string;
 authScope: CfAuthScope;
-query: null;
 options: TableOptionsEntity;
-headers: Array<string>;
-columns: Array<ColumnMapping>;
-fields: Array<string>; // COLUMN DEFINITIONS !!  
-	
+columns: Array<ColumnDefinition>;
+ 
+public constructor(title: string, columns: ColumnDefinition[]) { 
+    this.title = name;
+    this.columns = columns;
+}
+
+jsonify(){
+    return JSON.stringify(this);
+}
+
 }
 

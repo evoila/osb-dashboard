@@ -44,10 +44,12 @@
 
 }
 
-.fa-exclamation-circle{
+.fa-exclamation-circle.fail{
     color:rgb(254, 127, 105);
 }
-
+.fa-exclamation-circle.soft{
+    color:rgb(255, 224, 83);
+}
 .fa-check-circle{
     color: rgb(109, 196, 102);
 }
