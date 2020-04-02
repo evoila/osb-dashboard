@@ -1,15 +1,9 @@
 import { throwError as observableThrowError, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { environment } from '../../../../environments/runtime-environment';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { EndpointService } from '../../shared/services/endpoint.service';
 import { ESQuery } from 'app/monitoring/table-editor/model/es-query';
 import { map } from 'rxjs/internal/operators';
-import { ServiceBinding } from 'app/monitoring/model/service-binding';
-import { ESQuery_Request } from '../model/es-query-request';
-import { CfAuthScope } from 'app/monitoring/chart-configurator/model/cfAuthScope';
-import { RawQuery } from '../model/raw-query';
-import { ESBoolQueryResponse } from '../model/es-bool-query-result';
 
 // GET /v1/queries/        --> getESQueries()
 // GET /v1/queries/{ID}    --> getESQuery()
@@ -17,7 +11,6 @@ import { ESBoolQueryResponse } from '../model/es-bool-query-result';
 // POST /v1/queries/       --> createESQuery() 
 // PUT /v1/queries/{ID}    --> updateESQuery()
 // DELETE /v1/queries/{ID} --> deletESQuery()
-
 
 
 @Injectable({ providedIn: 'root' })

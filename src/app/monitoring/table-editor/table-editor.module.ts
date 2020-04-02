@@ -8,8 +8,8 @@ import { TableEditorRoutingModule } from './table-editor-routing.module'
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { reducers, effects } from './store';
-import { ColumnDefinitionComponent } from './components/column-definition/column-definition.component';
 import { MatTreeModule, MatIconModule, MatButtonModule } from '@angular/material';
+import { TableService } from '../shared/services/table.service';
 
 @NgModule({
   imports: [
@@ -23,6 +23,7 @@ import { MatTreeModule, MatIconModule, MatButtonModule } from '@angular/material
     EffectsModule.forFeature(effects),
     TableEditorRoutingModule
   ],
-  declarations: [ ...components, ...containerComponents, ColumnDefinitionComponent]
+  declarations: [ ...components, ...containerComponents],
+  providers: [TableService]
 })
 export class TableEditorModule { }

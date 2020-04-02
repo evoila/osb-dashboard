@@ -2,13 +2,13 @@
 
 export class ColumnDefinition{
 
-    public id: string;
+    public queryId: string;
     public name: string;
     public path: any[];
     
-    public constructor(name: string, path: any[]) { 
+    public constructor(queryId: string, name: string, path: any[]) { 
 
-        this.id = this.generateUniqueString();
+        this.queryId = queryId;
         this.name = name;
         this.path = path;
       }

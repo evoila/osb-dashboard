@@ -2,6 +2,7 @@ import { Action } from '@ngrx/store';
 import { ESQuery } from '../../model/es-query';
 import { ESBoolQueryRawResponseMap } from '../../model/es-bool-query-result';
 import { ServiceBinding } from 'app/monitoring/model/service-binding';
+import { ESQuery_Request } from '../../model/es-query-request';
 
 
 
@@ -51,7 +52,7 @@ export class RunQuery implements Action {
 }
 export class RunQuerySuccess implements Action {
   readonly type = RUN_QUERY_SUCCESS;
-  constructor(public payload: ESBoolQueryRawResponseMap) {}
+  constructor(public payload: ESBoolQueryRawResponseMap, public bq_request: ESQuery_Request) {}
 }
 export class RunQueryFail implements Action {
   readonly type = RUN_QUERY_FAIL;

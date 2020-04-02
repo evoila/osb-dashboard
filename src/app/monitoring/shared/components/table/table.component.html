@@ -1,0 +1,33 @@
+
+<div class="table-header">
+  <h4 *ngIf="!is_editor_mode" [(ngModel)]="table.title"> {{tableName}} </h4>
+  <input *ngIf="is_editor_mode" type="text" class="form-control table-name" value="{{tableName}}" [(ngModel)]="table.title" placeholder="insert table name">
+
+</div>
+
+<div *ngIf="!rendering" id="table">
+  <table>
+    <thead>
+      <tr>
+        <th class="header-field" *ngFor="let col_name of table_header;">
+          {{col_name}}
+        </th>
+     </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of table_content;"
+        [ngClass]="{ odd: true, even: false }">
+        <td class="field" *ngFor="let field of row">
+          {{field}}
+        </td>
+     </tr>
+     <tr *ngIf="is_editor_mode">
+        <td class="action-field" *ngFor="let colname of table_header;">
+          <button id="column-delete-button" (click)="delete_column(colname)">
+            <i class="fas fa-minus-circle"></i>
+          </button>
+        </td>
+     </tr>
+    </tbody>   
+  </table>  
+</div>

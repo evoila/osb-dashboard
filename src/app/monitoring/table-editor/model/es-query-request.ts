@@ -1,5 +1,6 @@
 import { CfAuthScope } from "app/monitoring/chart-configurator/model/cfAuthScope"
 import { RawQuery } from "./raw-query";
+import { ESQuery } from "./es-query";
 
 
 export class ESQuery_Request{
@@ -7,10 +8,10 @@ export class ESQuery_Request{
     public appId: string;
     public size: number;
     public authScope: CfAuthScope;
-    public query: RawQuery;
+    public query: ESQuery;
     public from: number;
 
-    public constructor(appId: string, size: number, authScope: CfAuthScope, query: RawQuery) { 
+    public constructor(appId: string, size: number, authScope: CfAuthScope, query: ESQuery) { 
 
         this.appId = appId;
         this.size = size;

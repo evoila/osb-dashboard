@@ -1,5 +1,4 @@
 import { Action } from '@ngrx/store';
-import { Chart } from '../../model/chart';
 import { Table } from '../../model/table';
 
 
@@ -20,6 +19,7 @@ export const LOAD_TABLES_FAIL = '[Table] Load Tables Failed';
 
 export class SaveTable implements Action {
   readonly type = SAVE_TABLE;
+  
   constructor(public payload: Table) { }
 }
 export class SaveTableSuccess implements Action {

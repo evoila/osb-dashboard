@@ -1,118 +1,60 @@
-import { Component, OnInit, Optional, Output, EventEmitter, Injectable } from '@angular/core';
+import { Component, OnInit, Optional, Output, EventEmitter, Input } from '@angular/core';
 import { ColumnDefinition } from '../../model/column-definition';
-import { ColumnBuilderComponent } from '../column-builder/column-builder.component';
-
-import { ESQueryService } from '../../services/es-query.service';
 import { MatTreeFlattener, MatTreeFlatDataSource} from '@angular/material/tree';
 import { FlatTreeControl } from '@angular/cdk/tree';
-import { Observable, of as observableOf, BehaviorSubject } from 'rxjs';
-import { Store } from '@ngrx/store';
-import { ESQuery } from '../../model/es-query';
-import { getQueriesState } from '../../store';
-import { filter, take } from 'rxjs/operators';
+import { Observable, of as observableOf } from 'rxjs';
+import { TableEditorComponent } from '../../containers/table-editor/table-editor.component';
 
 export class FileNode {
   children: FileNode[];
   filename: string;
   type: any;
+  path: any[]; // nodes carry their complete path from object root 
+  selected: boolean;
 }
 export class FileFlatNode {
   constructor(
-     public expandable: boolean, public filename: string, public level: number, public type: any) {}
+     public expandable: boolean, public filename: string, public level: number, public type: any, public path: any[], public selected: boolean) {}
 }
-
-
-/*
-const TREE_DATA = JSON.stringify({
-  Documents: {
-     angular: {
-        src: {
-           compiler: 'ts',
-           core: 'ts'
-        }
-     },
-     material2: {
-        src: {
-           button: 'ts',
-           checkbox: 'ts',
-           input: 'ts'
-        }
-     }
-  }
-});
-@Injectable()
-export class FileDatabase {
-  dataChange = new BehaviorSubject<FileNode[]>([]);
-  get data(): FileNode[] { return this.dataChange.value; }
-  constructor() {
-     this.initialize();
-  }
-  initialize() {
-     const dataObject = JSON.parse(TREE_DATA);   
-     const data = this.buildFileTree(dataObject, 0);
-     this.dataChange.next(data);
-  } 
-  buildFileTree(obj: {[key: string]: any}, level: number): FileNode[] {
-     return Object.keys(obj).reduce<FileNode[]>((accumulator, key) => {
-        const value = obj[key];
-        const node = new FileNode();
-        node.filename = key;
-        if (value != null) {
-           if (typeof value === 'object') {
-              node.children = this.buildFileTree(value, level + 1);
-           } else {
-              node.type = value;
-           }
-        }
-        return accumulator.concat(node);
-     }, []);
-  }
-}
-
-*/
-
 
 @Component({
   selector: 'sb-column-definition',
   templateUrl: './column-definition.component.html',
   styleUrls: ['./column-definition.component.scss']
 })
-export class ColumnDefinitionComponent implements OnInit {
 
+export class ColumnDefinitionComponent implements OnInit {
 
   @Output('column')
   update_column = new EventEmitter<ColumnDefinition>();
+
+  @Input('data')
+  data: Object;
 
 
   treeControl: FlatTreeControl<FileFlatNode>;
   treeFlattener: MatTreeFlattener<FileNode, FileFlatNode>;
   dataSource: MatTreeFlatDataSource<FileNode, FileFlatNode>;
 
-
-  // all selectable datafields list maintained by Grandparent Table Editor Component 
-  fields: Array<string>;
-  cdef_name: string = "";
+  selected_data_key = "";
+  show_column_preview = false;
+  preview_column_data = Array<String>();
+  cdef_name: string = "unnamed";
   cdef_path: any[];
 
   constructor(
-    @Optional() public parent: ColumnBuilderComponent, 
-                private store: Store<ESQuery>,
-                private esQueryService: ESQueryService
-                /*database: FileDatabase*/){
-    
-    this.fields = parent.fields;
-
+    @Optional() public parent: TableEditorComponent
+    ){
 
     this.treeFlattener = new MatTreeFlattener(this.transformer, this._getLevel,
-      this._isExpandable, this._getChildren);
+    this._isExpandable, this._getChildren);
     this.treeControl = new FlatTreeControl<FileFlatNode>(this._getLevel, this._isExpandable);
     this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
-    //database.dataChange.subscribe(data => this.dataSource.data = data);
   }
 
 
  transformer = (node: FileNode, level: number) => {
-    return new FileFlatNode(!!node.children, node.filename, level, node.type);
+    return new FileFlatNode(!!node.children, node.filename, level, node.type, node.path, node.selected);
  }
  private _getLevel = (node: FileFlatNode) => node.level;
  private _isExpandable = (node: FileFlatNode) => node.expandable;
@@ -122,74 +64,77 @@ export class ColumnDefinitionComponent implements OnInit {
 
 
   ngOnInit() {
-
     
-    var testdata3 = {'a' : 'b', 'b': 'v', 'c': {'aso': 'okay', 'ichso': {'asox': 'okay', 'ichsox': ['a', '6', '1', 'ö', 'x']} } };
-    
-    //const keys = this.esQueryService.getKeys(testdata, [])
-    //console.log(keys);
-    //const keys3 = this.esQueryService.getKeys(testdata3, ['c', 'aso'])
-
-    console.log(testdata3);
-    const keys4 = this.esQueryService.buildKeyTree(testdata3);
-    console.log(keys4);
-
-    this.store.select(getQueriesState).pipe(filter(k => !k.queries.running)).pipe(take(1)).subscribe(k => {
-      const esbq_run_result = k.queries.run_result;
-      if (esbq_run_result != null){
-        
-        var data = esbq_run_result.responses;  //[0].hits.total; // + operator converting string to number
-        this.dataSource.data = this.buildFileTree(data, 0);
-      }
-      else{
-        this.dataSource.data = this.buildFileTree({'abbo': 'tanger'}, 0);
-      }
-
-    
-
-    })
+    this.dataSource.data = this.buildFileTree(this.data);
+  
   }
 
 
-
-
-
-  buildFileTree(obj: {[key: string]: any}, level: number): FileNode[] {
+  buildFileTree(obj: {[key: string]: any}, level: number=0, path: any[]=[]): FileNode[] {
     return Object.keys(obj).reduce<FileNode[]>((accumulator, key) => {
        const value = obj[key];
        const node = new FileNode();
        node.filename = key;
+       node.path = path.concat(key);
        if (value != null) {
           if (typeof value === 'object') {
-             node.children = this.buildFileTree(value, level + 1);
+             node.children = this.buildFileTree(value, level + 1, path.concat(key));
           } else {
              node.type = value;
           }
        }
+       
        return accumulator.concat(node);
     }, []);
- }
+  }
 
   public updatePreview(){
-    const col_def = new ColumnDefinition(this.cdef_name, this.cdef_path)
+    this.show_column_preview = false;
+    this.preview_column_data = [];
+    for (var i=0; i<this.parent.raw_data.length; i++){
+      const rec = this.parent.raw_data[i];
+      var value = rec._source;
+      for(var g in this.cdef_path){
+        value = value[this.cdef_path[g]]
+      }
+      this.preview_column_data.push(value.toString()); 
+    }
+    setTimeout(() => {this.show_column_preview = true;})
+  }
+
+
+  // TODO: TAKE RIGHT QUERY ID, not only first one
+  public saveColumn(){
+    const col_def = new ColumnDefinition(Object.keys(this.parent.queries)[0], this.cdef_name, this.cdef_path)
     this.update_column.next(col_def);
+    this.deselect_all();
+    this.show_column_preview = false;
   }
 
 
-  public onGotFocusNameInput(){
+  public onGotFocusNameInput(){  }
+
+  public onLostFocusNameInput(){  }
 
 
+  public select_leaf(node: FileNode){
+    this.deselect_all();
+    node.selected = true;
+    this.cdef_path = node.path;
+    this.selected_data_key = node.filename;
+    this.cdef_name = this.selected_data_key;
+    this.updatePreview();
   }
 
-  public onLostFocusNameInput(){
-
-
+  public select_node(node: FileNode){
+    console.log('selected: ' + node.filename);
   }
-  public select_leaf(){
 
-  }
-  public select_node(){
-    
+
+  private deselect_all(){
+    for (let i = 0; i < this.treeControl.dataNodes.length; i++) {
+      this.treeControl.dataNodes[i].selected = false;
+    }
   }
 
 }

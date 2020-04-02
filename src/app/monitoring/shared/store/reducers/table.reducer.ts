@@ -1,12 +1,9 @@
 import * as fromTableActions from '../actions/table.actions';
-import { SearchResponse } from '../../../model/search-response';
-import { AggregationRequestObject } from '../../../chart-configurator/model/aggregationRequestObject';
-import { QueryAndResponse } from '../../model/query-and-response';
-import { DELETE_TABLE_FAIL } from '../actions/table.actions';
 import { Table } from '../../model/table';
 
 export interface TableModelState {
   tables: Array<Table>;
+  saved_table: Table | null;
   tablesLoaded: boolean;
   tablesLoading: boolean;
   tableSaved: boolean;
@@ -18,6 +15,7 @@ export interface TableModelState {
 
 export const initialState: TableModelState = {
   tables: [],
+  saved_table: null,
   tablesLoading: false,
   tablesLoaded: false,
   tableSaved: false,
@@ -63,6 +61,8 @@ export function reducer(
     case fromTableActions.SAVE_TABLE_SUCCESS: {
       return {
         ...state,
+        saved_table: action.payload,
+        tables: state.tables.concat(action.payload),
         tableSaveing: false,
         tableSaved: true
       };
@@ -70,15 +70,16 @@ export function reducer(
     case fromTableActions.SAVE_TABLE_FAIL: {
       return {
         ...state,
+        saved_table: null,
         tableSaveing: false,
         tableSaved: false
       };
     }
     case fromTableActions.DELETE_TABLE_SUCCESS: {
-      const tables = state.tables.filter(k => k.id != action.payload.id)
+      const newtables = state.tables.filter(k => k.id != action.payload.id)
       return {
         ...state,
-        tables,
+        tables: newtables,
         tableDeleted: true,
         tableDeleting: false
       }
@@ -110,5 +111,6 @@ export const getTableDeleting = (state: TableModelState) => state.tableDeleting;
 
 export const getTableSaveing = (state: TableModelState) => state.tableSaveing;
 export const getTableSaved = (state: TableModelState) => state.tableSaved;
+export const getSavedTable = (state: TableModelState) => state.saved_table;
 
 

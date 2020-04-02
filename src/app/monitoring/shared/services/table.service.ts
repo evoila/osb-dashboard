@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { EndpointService } from './endpoint.service';
 import { CfAuthParameterService } from './cfauth-param.service';
-import { flatMap } from 'rxjs/operators';
+import { flatMap, map } from 'rxjs/operators';
 import { Observable } from 'rxjs/internal/Observable';
 import { Store } from '@ngrx/store';
 import { BindingsState } from '../store/reducers/binding.reducer';
@@ -14,40 +14,36 @@ export class TableService {
   private cfAuthParams: CfAuthParameterService;
   constructor(
     private http: HttpClient,
-    endpoint: EndpointService,
+    private endpoint: EndpointService,
     storeBindings: Store<BindingsState>,
     cfAuthParams: CfAuthParameterService
   ) {
     this.cfAuthParams = cfAuthParams.construct(storeBindings);
-
-  /************************************** 
-   * 
-   *  TODO: insert right endpoints for table service
-   * 
-   * 
-   * 
-   * 
-  */
-  
-    this.url = `${endpoint.getUri()}/......................................`;
+    this.url = `${endpoint.getUri()}/table`;
   }
 
   public getAllTables(): Observable<Array<Table>> {
     return this.cfAuthParams.createCfAuthParameters().pipe(
       flatMap(params => {
-        return this.http.get<Array<Table>>(this.url, { params });
+        return this.http.get<Array<Table>>(this.url + 's', { params });
       })
     );
   }
-  public createTable(table: Table): Observable<Table> {
-    return this.http.put<Table>(this.url, table);
-  }
+  
 
+  public createTable(table: Table): Observable<Table> {
+   
+       return this.http.post<Table>(this.url + 's', table, this.endpoint.httpOptions).pipe(
+         map(data => data));
+       
+
+  }
+  
   public deleteTable(tableId: string): Observable<Table> {
     const customUri = `${this.url}/${tableId}`;
     return this.cfAuthParams.createCfAuthParameters().pipe(
       flatMap(params => {
-        return this.http.delete<Table>(customUri, {params});
+        return this.http.delete<Table>(customUri, { params });
       })
     );
   }

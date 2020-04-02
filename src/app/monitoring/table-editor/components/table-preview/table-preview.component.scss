@@ -2,7 +2,7 @@
 
 .table-preview-frame{
 
-    background-color: #eee;
+    margin: 1.5em 2em;
 
 
 }
@@ -12,4 +12,22 @@ p{
     margin: 2em;
     text-align: center;
 
+}
+
+#b_save_table{
+    padding: 4px 12px;
+    border: 3px solid #ddd;
+    border-radius: 18px;
+    color: $primary-color-light;
+    outline: none;
+    margin: 1em 0.2em;
+}
+
+#b_save_table:hover{
+    color: $success-green;
+    opacity: 0.85;
+}
+#preview-header{
+    margin: 1em 0.5em;
+    color: #888;
 }

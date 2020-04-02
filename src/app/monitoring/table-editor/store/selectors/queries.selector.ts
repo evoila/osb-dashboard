@@ -1,6 +1,7 @@
 import { createSelector } from '@ngrx/store';
 import * as fromQueries from '../reducers/query.reducer';
 import { QueriesState, getQueriesState } from '../reducers/index';
+import { ESQuery } from '../../model/es-query';
 
 
 
@@ -12,6 +13,13 @@ export const getAllQueriesState = createSelector(
 export const getAllQueriesEntities = createSelector(
     getAllQueriesState,
   fromQueries.getQueriesEntities
+);
+
+export const getQuerylById = createSelector(
+  getAllQueriesEntities,
+  (entities: Array<ESQuery>, id: string) => {
+    return entities.filter(k => k.id == id)[0];
+  }
 );
 
 export const getAllQueriesLoaded = createSelector(

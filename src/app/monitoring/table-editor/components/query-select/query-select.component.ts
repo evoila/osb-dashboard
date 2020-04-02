@@ -5,9 +5,8 @@ import { Observable } from 'rxjs/internal/Observable';
 import { GetESQueriesState } from '../../store/reducers/query.reducer';
 import { ESQuery } from '../../model/es-query';
 import { Store } from '@ngrx/store';
-import { tap, filter, take, map } from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
 import { getAllQueriesEntities } from '../../store/selectors/queries.selector';
-import { RawQuery } from '../../model/raw-query';
 @Component({
   selector: 'sb-query-select',
   templateUrl: './query-select.component.html',
@@ -34,33 +33,14 @@ export class QuerySelectComponent implements OnInit {
 
   ngOnInit() {
 
-
-    /*
-    var must_val = [{'match' : { '_index' : '*-logmessages'} }] 
-    var rawquery = new RawQuery([], [], [], must_val)
-    var query1 = new ESQuery(123, 'test query', rawquery)
-    var query2 = new ESQuery(456, 'test query 2', rawquery)
-
-    // dry data test code start
-    this.choosen = this.choosen == -1 || !this.choosen ? 0 : this.choosen;
-    this.queries = [query1, query2]
-    // test code end
-
-    */
-  
-
     this.queries$ = this.store.select(getAllQueriesEntities);
     
     this.queries$.pipe(filter(k => k!!.length > 0)).subscribe((data: Array<ESQuery>) => {
       if (data.length === 0) {
         console.log('no persisted queries found')
       }
-      else{
-        console.log(data.length + ' persisted queries found')
-      }
+      
       this.queries = [...data];
-
-
       this.choosen = data!!.map((query, index) => {
           return { query, index };
         })

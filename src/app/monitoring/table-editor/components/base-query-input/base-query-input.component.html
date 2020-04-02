@@ -2,5 +2,5 @@
   <button *ngIf="true" (click)="showQueryEditor()" class="btn btn-primary create-query">create</button>
   <sb-query-select #queryDropdownSelect [selected]="selected_query_name" (query)="did_select_query($event)"></sb-query-select>
   <sb-appid class="appId" [selected]="XXX" (app)="did_select_scope($event)"></sb-appid>
-  <span id="query-with-binding-test-result" *ngIf="true"><i [ngClass]="{'fas fa-exclamation-circle fail': !valid ,'fas fa-exclamation-circle soft' : valid && hit_count == 0, 'far fa-check-circle': (valid && (hit_count > 0)) }"></i></span> <!-- , 'far fa-question-circle': true -->
+  <span id="query-with-binding-test-result" *ngIf="!validating" title="{{query_result_hint}}"><i [ngClass]="{'fas fa-exclamation-circle fail': !valid ,'fas fa-exclamation-circle soft' : valid && hit_count == 0, 'far fa-check-circle': (valid && (hit_count > 0)) }"></i></span> <!-- , 'far fa-question-circle': true -->
 </div>

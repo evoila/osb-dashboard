@@ -3,7 +3,9 @@
 
 
 export interface ESBoolQueryRawResponseMap {
-  responses: Array<ESBoolQueryResponse>
+  responses: Array<ESBoolQueryResponse>;
+  queryId: string;
+
 }
 
 

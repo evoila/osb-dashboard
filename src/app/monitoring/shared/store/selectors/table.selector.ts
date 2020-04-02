@@ -30,6 +30,11 @@ export const getTableSaved = createSelector(
   fromTableReducer.getTableSaved
 );
 
+export const getSavedTable = createSelector(
+  getTableModelState,
+  fromTableReducer.getSavedTable
+);
+
 export const getTableDeleted = createSelector(
   getTableModelState,
   fromTableReducer.getTableDeleted

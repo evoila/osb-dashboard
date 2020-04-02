@@ -18,12 +18,12 @@
     border: 3px solid $gray-4;
     border-radius: $basic-border-radius;
     background-color: $transparent;
-    color: #c897f3;
+    color: $primary-color;
     
 }
 
 .custom-select.mr-sm-2.query-select:hover{
-    border: 3px solid #dac7ef;
+    border: 3px solid $primary-color-ultra-light;
 }
 
 

@@ -34,12 +34,9 @@ export class SearchService {
 
 
  // BOOLQuery POST /v1/queries/run
-
- public run(query: ESQuery, scope: ServiceBinding): Observable<any>{ //ESBoolQueryRawResponseMap>{
+ public run(bool_query_request: ESQuery_Request): Observable<any>{
   const url = this.endpoint.getUri() + "/queries" + "/run";
-  const authScope = authScopeFromBinding(scope);
-  const boolQueryRequest = new ESQuery_Request(scope.appId, 5, authScope, query.boolQuery);
-  const body = boolQueryRequest.jsonify();
+  const body = bool_query_request.jsonify();
   return this.http.post<ESBoolQueryRawResponseMap>(url, body); 
 }
 

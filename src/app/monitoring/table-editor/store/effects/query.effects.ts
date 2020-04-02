@@ -6,6 +6,9 @@ import { switchMap } from 'rxjs/internal/operators/switchMap';
 import { catchError, map } from 'rxjs/internal/operators';
 import { of } from 'rxjs';
 import { SearchService } from 'app/monitoring/shared/services/search.service';
+import { ESBoolQueryRawResponseMap } from '../../model/es-bool-query-result';
+import { authScopeFromBinding } from 'app/monitoring/chart-configurator/model/cfAuthScope';
+import { ESQuery_Request } from '../../model/es-query-request';
 
 @Injectable()
 export class ESQueriesEffect {
@@ -42,12 +45,23 @@ export class ESQueriesEffect {
   @Effect()
   runQuery$ = this.actions.ofType(queryAction.RUN_QUERY).pipe(
     switchMap((action: queryAction.RunQuery) => {
-      return this.searchService.run(action.payload, action.scope).pipe(
-        map(bool_query_result => new queryAction.RunQuerySuccess(bool_query_result!!)),
+      const authScope = authScopeFromBinding(action.scope);
+      const boolQueryRequest = new ESQuery_Request(action.scope.appId, 5, authScope, action.payload);
+      return this.searchService.run(boolQueryRequest).pipe(
+        map(bool_query_result => new queryAction.RunQuerySuccess(this.addQueryId(bool_query_result, action.payload.id), boolQueryRequest)),
         catchError(error => of(new queryAction.RunQueryFail(error)))
       );
     })
   );
+
+
+
+
+
+  public addQueryId(result: ESBoolQueryRawResponseMap, id: string){
+    result.queryId = id;
+    return result;
+  }
 
 
 

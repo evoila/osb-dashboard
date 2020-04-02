@@ -1,6 +1,8 @@
 
 // this classes attributes need to be adjusted to hold table options in some way
-export class TableOptionsEntity {
+export class TableOptions {
   public id?: string;
-  public name?: string;
+  public: boolean;
+  public description?: string;
+
 }

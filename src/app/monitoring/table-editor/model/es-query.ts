@@ -18,12 +18,12 @@ import { RawQuery } from "./raw-query";
 
 export class ESQuery{
 
-  public id: number;
+  public id: string;
   public name: string;
   public boolQuery: RawQuery;
   
   
-  constructor(id: number, name: string, boolQuery: RawQuery) { 
+  constructor(id: string, name: string, boolQuery: RawQuery) { 
 
     this.id = id;
     this.name = name;

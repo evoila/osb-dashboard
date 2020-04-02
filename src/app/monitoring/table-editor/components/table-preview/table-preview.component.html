@@ -1,5 +1,5 @@
-<div class="table-preview-frame">
-    
-  <button id="b_save_table" (click)="save_table()">save</button>
-
+<div *ngIf="!building" class="table-preview-frame">
+  <h6 id="preview-header">Table Preview:</h6>
+    <sb-table [es_data]="data" [table]="table" [editor_mode]="true" (drop_col)="drop_column($event)"></sb-table>
+    <button id="b_save_table" (click)="save_table()">save table</button>
 </div>

@@ -1,20 +1,13 @@
 // this component represents a single ES Query and the ability to create/select & test it
 
 import { Component, OnInit, Output, EventEmitter, ViewChild} from '@angular/core';
-import { QueryGroupComponent } from '../query-group/query-group.component';
-import { TableEditorComponent } from '../../containers/table-editor/table-editor.component';
-import { tap, filter, take, map } from 'rxjs/operators';
-import { NotificationService, Notification, NotificationType } from '../../../../core/notification.service';
-import { ESQueryService } from '../../services/es-query.service';
+import { filter, take} from 'rxjs/operators';
 import { ServiceBinding } from '../../../model/service-binding';
 import { ESQuery } from '../../model/es-query';
 import { QuerySelectComponent } from '../query-select/query-select.component';
-import { SearchService } from 'app/monitoring/shared/services/search.service';
 import { Store } from '@ngrx/store';
-import { RUN_QUERY, RunQuery } from '../../store/actions/query.action';
-import { getQueryRunResult } from '../../store/reducers/query.reducer';
+import { RunQuery } from '../../store/actions/query.action';
 import { getQueriesState } from '../../store';
-
 
 
 @Component({
@@ -31,27 +24,28 @@ export class BaseQueryInputComponent implements OnInit {
   hit_count: number = 0; 
   // flag indicating if current selected combination of scope and es-query is proofed valid
   valid = false;
+  validating = true;
+  query_result_hint = "";
   // id of this base-query-input row 
   base_query_ui_id: number = 0;
 
 
+  @Output('open-column-definer')
+  open_column_definer = new EventEmitter();
+
+  @Output('close-column-definer')
+  close_column_definer = new EventEmitter();
   
   @Output('open-query-editor')
   open_query_editor = new EventEmitter<number>();
 
   constructor(
-    private store: Store<ESQuery>,
-    private searchService: SearchService,
+    private store: Store<ESQuery>
     
-    //private notificationService: NotificationService
     ) {}
 
   ngOnInit() {
        
-
-
-    
-
 
 
   }
@@ -70,6 +64,9 @@ export class BaseQueryInputComponent implements OnInit {
 
 
   validate_new_selection(){
+    // close col-def-component while we get new data to define columns
+    this.close_column_definer.next();
+    this.validating = true;
     if (this.scope && this.query){
       this.test_query_with_binding(this.query, this.scope)
     }
@@ -78,21 +75,30 @@ export class BaseQueryInputComponent implements OnInit {
  
   test_query_with_binding(query: ESQuery, binding: ServiceBinding){
     
-    console.log('testing query-scope-combi!');
+    //console.log('testing query-scope-combi!');
     
     this.store.dispatch(new RunQuery(query, binding));
     this.store.select(getQueriesState).pipe(filter(k => !k.queries.running)).pipe(take(1)).subscribe(k => {
       var esbq_run_result = k.queries.run_result;
+      this.validating = false;
       if (esbq_run_result != null){
+        
         this.valid = true;
-        this.hit_count = +esbq_run_result.responses[0].hits.total; // + operator converting string to number
-        console.log('hits: ' + this.hit_count);
+        this.query_result_hint = "empty result";
+        // check number of hits -- '+' operator converting string to number
+        this.hit_count = +esbq_run_result.responses[0].hits.total; 
+        //console.log('hits: ' + this.hit_count);
+        if (this.hit_count > 0){
+          this.query_result_hint = "query valid";
+          this.open_column_definer.next();
+        }
+
       }
       else{
         this.valid = false;
+        this.query_result_hint = "query not valid";
       }
-      console.log(esbq_run_result);
-      //console.log(JSON.stringify(esbq_run_result));
+      //console.log(esbq_run_result);
     })
    
 
@@ -123,8 +129,8 @@ export class BaseQueryInputComponent implements OnInit {
 
 
   
-  received_query_editor_result_query(query: ESQuery){
-    console.log('base query 1 received result');
+  receive_query_editor_result_query(query: ESQuery){
+    console.log('base query received result');
     
   }
  

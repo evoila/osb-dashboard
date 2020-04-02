@@ -1,6 +1,7 @@
 import * as fromQueries from '../actions/query.action';
 import { ESQuery } from '../../model/es-query';
 import { ESBoolQueryRawResponseMap } from '../../model/es-bool-query-result';
+import { ESQuery_Request } from '../../model/es-query-request';
 
 export interface GetESQueriesState {
   entities: Array<ESQuery>;
@@ -9,6 +10,7 @@ export interface GetESQueriesState {
   running: boolean;
   // ONLY one result of lastly run bool query
   run_result: ESBoolQueryRawResponseMap | null;
+  bc_request: ESQuery_Request | null;
 }
 
 export const initialState: GetESQueriesState = {
@@ -16,7 +18,8 @@ export const initialState: GetESQueriesState = {
   loaded: false,
   loading: false,
   running: false,
-  run_result: null
+  run_result: null,
+  bc_request: null
 };
 
 export function reducer(
@@ -49,22 +52,26 @@ export function reducer(
     case fromQueries.RUN_QUERY: {
       return {
         ...state,
-        running: true
+        running: true,
+        run_result: null,
+        bc_request: null
       };
     }
     case fromQueries.RUN_QUERY_FAIL: {
       return {
         ...state,
         running: false,
-        run_result: null
-
+        run_result: null,
+        bc_request: null
       };
     }
     case fromQueries.RUN_QUERY_SUCCESS: {
-      const result = action.payload;
+      var result = action.payload;
+      var request = action.bq_request;
       return {
         ...state,
         run_result: result,
+        bc_request: request,
         running: false
       };
     }

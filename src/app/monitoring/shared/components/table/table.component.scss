@@ -1,0 +1,77 @@
+@import '../../../../core/core';
+
+
+#table{
+
+
+
+}
+
+.table-header{
+
+
+}
+
+.form-control.table-name{
+    width: 12em;
+    cursor: pointer;
+    color: $primary-color;
+    margin: 0.7em 0.2em;
+    border: 3px solid #ddd;
+    border-radius: 8px;
+}
+.form-control.table-name:hover{
+    border-color: $primary-color-ultra-light;
+}
+
+.field{
+    display: inline-block;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    padding: 4px 8px;
+    margin: 2px;
+    width: 9em;
+    font-size: 9pt;
+    height: 29px;
+    overflow: scroll;
+    color: #666;
+}
+.header-field{
+    display: inline-block;
+    border: 3px solid #ccc;
+    border-radius: 5px;
+    padding: 4px 8px;
+    margin: 2px;
+    width: 9em;
+    font-size: 9pt;
+    height: 29px;
+    overflow: scroll;
+    color: $primary-color;
+}
+
+.action-field{
+    display: inline-block;
+    border: 3px solid transparent;border-radius: 5px;
+    padding: 4px 8px;
+    margin: 2px;
+    width: 9em;
+    font-size: 9pt;
+    height: 29px;
+    text-align: center;
+    
+}
+
+#column-delete-button{
+    background-color: transparent;
+    outline: none;
+    border: none;
+    color: #ccc;
+    width: 70%;
+    height: 100%;
+    font-size: 11pt;
+}
+#column-delete-button:hover{
+    color: $attention-red-light;
+    opacity: 0.95;  
+}
+
