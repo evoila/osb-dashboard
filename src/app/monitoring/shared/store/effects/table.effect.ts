@@ -32,8 +32,8 @@ export class TableEffect {
   @Effect()
   deleteTable$ = this.actions.ofType(fromTable.DELETE_TABLE).pipe(
     switchMap((action: fromTable.DeleteTable) => {
-      return this.tableService.deleteTable(action.payload).pipe(
-        map(result => new fromTable.DeleteTableSuccess(result)),
+      return this.tableService.deleteTable(action.payload.id!).pipe(
+        map(result => new fromTable.DeleteTableSuccess(action.payload)),
         catchError(error => of(new fromTable.DeleteTableFail()))
       );
     })

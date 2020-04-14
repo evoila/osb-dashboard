@@ -4,6 +4,8 @@ import { ESBoolQueryResponse } from '../../../table-editor/model/es-bool-query-r
 import { ColumnDefinition } from 'app/monitoring/table-editor/model/column-definition';
 
 
+
+
 @Component({
   selector: 'sb-table',
   templateUrl: './table.component.html',
@@ -14,6 +16,9 @@ export class TableComponent implements OnInit {
 
   @Output('drop_col')
   drop_col = new EventEmitter<string>();
+
+  @Output('shift_col')  // [column index, shift direction]
+  shift_col = new EventEmitter<[number, number]>();
 
   @Input('table')
   table: Table;
@@ -78,10 +83,11 @@ export class TableComponent implements OnInit {
   }
 
   public delete_column(colname: string){
-    console.log('DELETING COLUMN: ' + colname);
     this.drop_col.next(colname);
   }
 
-
+  public shift_column(column_index: number, delta: number){
+    this.shift_col.next([column_index, delta]);
+  }
 
 }

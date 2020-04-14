@@ -22,9 +22,15 @@
         </td>
      </tr>
      <tr *ngIf="is_editor_mode">
-        <td class="action-field" *ngFor="let colname of table_header;">
+        <td class="action-field" *ngFor="let colname of table_header; let i = index">
+          <button id="column-shift-button" (click)="shift_column(i, -1)">
+            <i class="fas fa-chevron-left"></i>
+          </button>
           <button id="column-delete-button" (click)="delete_column(colname)">
             <i class="fas fa-minus-circle"></i>
+          </button>
+          <button id="column-shift-button" (click)="shift_column(i, 1)">
+            <i class="fas fa-chevron-right"></i>
           </button>
         </td>
      </tr>

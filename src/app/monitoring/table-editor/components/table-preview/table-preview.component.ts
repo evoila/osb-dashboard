@@ -60,6 +60,24 @@ export class TablePreviewComponent implements OnInit {
     }
   }
 
+
+  public shift_column(shift_info: [number, number] /*[index, delta]*/){
+    this.building = true;
+    var index = shift_info[0];
+    var delta = shift_info[1];
+    if(index == 0 && delta == -1){ // first column becomes last column
+      const first = this.columnDefinitions.splice(0, 1);
+      this.columnDefinitions = this.columnDefinitions.concat(first);
+    }
+    else if(index == this.columnDefinitions.length - 1 && delta == 1){ // last column becomes first column
+      this.columnDefinitions = [this.columnDefinitions.pop()!!].concat(this.columnDefinitions) 
+    }
+    else{ 
+      [this.columnDefinitions[index], this.columnDefinitions[index + delta]] = [this.columnDefinitions[index + delta], this.columnDefinitions[index]];
+    }
+    this.load_table();
+  }
+
   public load_table(){
     this.table = new Table(this.table != null ? this.table.title : "New Table", this.columnDefinitions, Object.values(this.parent.queries))
     // refreshing Table Component by toggleing it with *ngIf --> minimal timeout needed

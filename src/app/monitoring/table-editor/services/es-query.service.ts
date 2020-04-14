@@ -58,7 +58,6 @@ export class ESQueryService {
           map(data => data as ESQuery));
       }
 
-
       
       // building datastructure with only keys
       public buildKeyTree(data: Object, key_path: any[]=[]){
@@ -75,7 +74,7 @@ export class ESQueryService {
       }
 
 
-      // recursive way to get all keys at level specified by key_path
+      // get all keys at level specified by key_path
       public getKeys(data: Object, key_path: any[]){
         if (key_path.length > 0){
           var val = data[key_path[0]];

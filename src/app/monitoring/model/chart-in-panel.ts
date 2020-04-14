@@ -1,8 +1,17 @@
 import { Chart } from '../shared/model/chart';
+import { PanelElement } from '../shared/model/panel-element';
 
-export interface ChartInPanel {
+export class ChartInPanel extends PanelElement {
   readonly id?: string;
   chart: Chart;
-  order: number;
-  size: number;
+  
+
+
+  constructor(chart: Chart, order: number, size: number) { 
+    super(order, size, 'chart');
+    this.chart = chart;
+    
+  }
+
+
 }

@@ -33,8 +33,8 @@ export class SaveTableFail implements Action {
 
 export class DeleteTable implements Action {
   readonly type = DELETE_TABLE;
-  // payload must be an existing table id
-  constructor(public payload: string) { }
+  // payload must be an existing table
+  constructor(public payload: Table) { }
 }
 export class DeleteTableSuccess implements Action {
   readonly type = DELETE_TABLE_SUCCESS;

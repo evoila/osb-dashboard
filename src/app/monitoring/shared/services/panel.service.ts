@@ -23,6 +23,8 @@ export class PanelService {
     this.url = `${endpoint.getUri()}/charting/panel`;
   }
 
+
+  // I think the author of this method ment to name it getAllPanels
   public getAllCharts(): Observable<Array<Panel>> {
     return this.cfAuthParams.createCfAuthParameters().pipe(
       flatMap(params => {
@@ -35,6 +37,7 @@ export class PanelService {
   }
   public updatePanel(panel: Panel): Observable<Panel> {
     const url = this.url + `/${panel.id}`;
+    //console.log(JSON.stringify(panel));
     return this.http.post<Panel>(url, panel);
   }
   public deletePanel(panelId: string): Observable<Panel> {

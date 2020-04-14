@@ -7,13 +7,15 @@ import {
 import { Panel } from '../../../shared/model/panel';
 import { Chart } from '../../../shared/model/chart';
 import { ChartInPanel } from '../../../model/chart-in-panel';
+import { PanelElement } from 'app/monitoring/shared/model/panel-element';
+import { TableInPanel } from 'app/monitoring/model/table-in-panel';
 
 export const getPanelIncreationState = createSelector(
   getPanelState,
   (state: PanelConfiguratorState) => state.panelIncreation
 );
 
-export const getPanelIncreationCharts = createSelector(
+export const getPanelIncreationElements = createSelector(
   getPanelIncreationState,
   getCharts
 );
@@ -32,11 +34,11 @@ export const buildFunctionalPanel = createSelector<
 >(
   getPanelIncreationState,
   (state: PanelIncreationState) => {
-    state.charts;
-    const charts = constructChartInPanel(deconstructCharts(state.charts));
+    state.elements;
+    const elements = constructElement(deconstructElements(state.elements));
     let panel = {
       authScope: state.authScope,
-      charts,
+      elements,
       name: state.name,
       description: state.description
     } as Panel;
@@ -58,15 +60,20 @@ export const getPanelOnEdit = createSelector(
   state => state.onEdit
 );
 
-function deconstructCharts(obj: any): ChartInPanel[] {
+function deconstructElements(obj: any): PanelElement[] {
   return Array.from(new Map(Object.entries(obj))[Symbol.iterator]()).map(
-    k => k[1] as ChartInPanel
+    k => k[1] as PanelElement
   );
 }
-function constructChartInPanel(arr: ChartInPanel[]) {
-  return arr.map((chart, order) => {
-    const size = chart.size ? chart.size : 100;
-    return { order, chart: chart.chart, size } as ChartInPanel;
+function constructElement(arr: PanelElement[]) {
+  return arr.map((element, order) => {
+    const size = element.size ? element.size : 100;
+    if (element.type == 'chart') {
+      return { chart: (element as ChartInPanel).chart, order: order, size: size, type: element.type, id: element.id };
+    }
+    else{
+      return { table: (element as TableInPanel).table, order: order, size: size, type: element.type, id: element.id };
+    }
   });
 }
 

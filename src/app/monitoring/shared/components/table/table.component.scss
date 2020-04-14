@@ -66,7 +66,7 @@
     outline: none;
     border: none;
     color: #ccc;
-    width: 70%;
+    width: 30%;
     height: 100%;
     font-size: 11pt;
 }
@@ -74,4 +74,22 @@
     color: $attention-red-light;
     opacity: 0.95;  
 }
+
+#column-shift-button{
+
+    background-color: transparent;
+    outline: none;
+    border: none;
+    color: #dfdfdf;
+    width: 30%;
+    height: 100%;
+    font-size: 11pt;
+}
+
+#column-shift-button:hover{
+
+    color: $primary-color-light;
+}
+
+
 

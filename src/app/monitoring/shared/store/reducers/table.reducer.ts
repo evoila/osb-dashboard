@@ -37,6 +37,7 @@ export function reducer(
       };
     }
     case fromTableActions.LOAD_TABLES_SUCCESS: {
+      console.log('reducer - LOAD TABLES SUCCESS');
       return {
         ...state,
         tables: action.payload,
@@ -59,10 +60,12 @@ export function reducer(
       };
     }
     case fromTableActions.SAVE_TABLE_SUCCESS: {
+      const tables = state.tables.concat(action.payload);
+      const saved_table = action.payload;
       return {
         ...state,
-        saved_table: action.payload,
-        tables: state.tables.concat(action.payload),
+        saved_table: saved_table,
+        tables: tables,
         tableSaveing: false,
         tableSaved: true
       };
@@ -76,10 +79,14 @@ export function reducer(
       };
     }
     case fromTableActions.DELETE_TABLE_SUCCESS: {
-      const newtables = state.tables.filter(k => k.id != action.payload.id)
+      const tables = state.tables.filter(k => k.id != action.payload.id)
+      console.log(action.payload);
+      console.log(state.tables)
+      console.log(tables.length);
+      console.log(state.tables.length);
       return {
         ...state,
-        tables: newtables,
+        tables: tables,
         tableDeleted: true,
         tableDeleting: false
       }

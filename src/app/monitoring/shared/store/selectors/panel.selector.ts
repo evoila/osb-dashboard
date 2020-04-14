@@ -3,6 +3,7 @@ import { getSharedModuleState, SharedModuleState } from '../reducers/index';
 import { getPanels } from '../reducers/panel.reducer';
 import { PanelVm } from '../../model/panel.vm';
 import { Panel } from '../../model/panel';
+import { PanelElement } from '../../model/panel-element';
 
 export const getPanelState = createSelector(
   getSharedModuleState,
@@ -27,10 +28,13 @@ export const getPanelViewModelById = createSelector(
   getAllPanels,
   (panels, id: string) => {
     const panel = panels.filter(k => k.id == id)[0];
-    if (!panel || !panel.charts) {
+    if (!panel || !panel.elements) {
       return {};
     }
-    const charts: Chart[][] = panel.charts.reduce(
+
+
+    // ATTENTION: elements variable has been of type Charts (not! ChartInPanel) before becoming Panelelement
+    const elements: PanelElement[][] = panel.elements.reduce(
       (prev, next, i, arr) => {
         if (i == 0) {
           return [[next]];
@@ -47,6 +51,6 @@ export const getPanelViewModelById = createSelector(
       },
       [[]]
     );
-    return { ...panel, charts } as PanelVm;
+    return { ...panel, elements } as PanelVm;
   }
 );

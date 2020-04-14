@@ -14,7 +14,7 @@ import { State } from 'app/monitoring/store';
 import { getParams } from '../../store/reducers/index';
 import { Observable, Subject, Subscription, timer } from 'rxjs';
 import { Panel } from '../../shared/model/panel';
-import { SetStateForUpdate, AddChartToPanel, FlushState } from '../../panel-configurator/store/actions/panel-increation.action';
+import { SetStateForUpdate, AddElementToPanel, FlushState } from '../../panel-configurator/store/actions/panel-increation.action';
 import { PanelIncreationState } from 'app/monitoring/panel-configurator/store/reducers/panel-increation.reducer';
 import { Chart } from '../../shared/model/chart';
 import { buildFunctionalPanel } from '../../panel-configurator/store/selectors/panel-increation.selector';
@@ -23,6 +23,10 @@ import { FirePanelAggregationRequest } from '../../shared/store/actions/chart.ac
 import { ChartInPanel } from '../../model/chart-in-panel';
 import { TimeService } from '../../shared/services/time.service';
 import { ShortcutService } from '../../../core/services/shortcut.service';
+import { PanelElement } from 'app/monitoring/shared/model/panel-element';
+import { TableInPanel } from 'app/monitoring/model/table-in-panel';
+import { Table } from 'app/monitoring/shared/model/table';
+import { time } from 'console';
 
 
 
@@ -36,13 +40,13 @@ export class PanelComponent implements OnInit, OnDestroy {
   @ViewChild('container')
   container: ElementRef;
 
-  @ViewChild('chartcontainer')
-  chartcontainer: ElementRef;
+  @ViewChild('elementcontainer')
+  elementcontainer: ElementRef;
 
   @ViewChild('toggleSidePanelEle')
   toggleSidePanelEle: ElementRef;
 
-  // Side Panel that contains Charts that can be dragged and dropped into the Panel
+  // Side Panel that contains Charts and Tables that can be dragged and dropped into the Panel
   sidePanelHidden = true;
 
 
@@ -74,9 +78,9 @@ export class PanelComponent implements OnInit, OnDestroy {
   private saveCounter = 0;
 
 
-  // Flag that is set to true when a User has added a panel
+  // Flag that is set to true when a User has added a Panel
   // to display a Notification Icon
-  public addingChart = false;
+  public addingElement = false;
   // CSS Classes for Notification Icon 
   public addingChartClasses = ["far", "fa-check-square"];
   private redoObject = {} as Panel;
@@ -96,15 +100,23 @@ export class PanelComponent implements OnInit, OnDestroy {
     this.menu['view'] = 'Views:';
     this.menu['viewSettings'] = ['1', '2', '3'];
   }
+
+
+
   ngOnInit() {
+    console.log('panel component ngOnInit()');
     this.registerRouterEvents();
     this.subscription = this.timeRange$.subscribe(k => {
-      if (this.panel && this.panel.charts.length) {
+      console.log('1');
+      //console.log(this.panel);
+      if (this.panel && this.panel.elements.length) {
+        console.log('2');
         this.store.dispatch(new FirePanelAggregationRequest(this.panel, k));
+        console.log('3');
       }
     });
     this.subscriptions.push(this.subscription);
-
+    
     this.shortcut.bindShortcut({
       key: "Escape",
       description: "Cancel the Panel Edit Mode and reverting changes",
@@ -123,11 +135,18 @@ export class PanelComponent implements OnInit, OnDestroy {
         this.subscriptions.push(this.subscription); */
 
     this.setDateRange();
+    
   }
 
   ngOnDestroy() {
     this.subscriptions.forEach(k => k.unsubscribe());
   }
+
+
+  getOnlyCharts(){
+    return this.panel.elements.filter( k => 'chart' in k);
+  }
+
 
   public toggleSidePanel() {
     this.sidePanelHidden = !this.sidePanelHidden;
@@ -151,6 +170,7 @@ export class PanelComponent implements OnInit, OnDestroy {
 
   }
   editPanel() {
+    
     this.store.dispatch(new SetStateForUpdate(this.panel));
     this.router.navigate(['/monitoring/panelconfigurator']);
   }
@@ -170,15 +190,23 @@ export class PanelComponent implements OnInit, OnDestroy {
     this.cdr.reattach();
     console.log("reattatching");
   }
-  drop(event: CdkDragDrop<Chart>) {
+  drop(event: CdkDragDrop<Chart | Table>) {
+    console.log("drop()");
     // attach to Change detection again
     this.cdr.reattach();
-    this.addingChart = true;
+    this.addingElement = true;
     this.store.pipe(select(getPanelById, this.panel.id)).pipe(take(1)).subscribe(k => {
       this.panelStore.dispatch(new SetStateForUpdate(k));
-      this.panelStore.dispatch(new AddChartToPanel(event.item.data));
+      //console.log('event.item.data: ');
+      //console.log(event.item.data);
+      // convert Chart or Table to Panelelement (ChartInPanel or TableInPanel)
+      var p_element : PanelElement;
+      p_element = 'columns' in event.item.data ? new TableInPanel(event.item.data, 0, 0) : new ChartInPanel(event.item.data, 0, 0);
+      //console.log('***********************');
+      //console.log(p_element);
+      this.panelStore.dispatch(new AddElementToPanel(p_element));
       this.panelStore.pipe(select(buildFunctionalPanel)).pipe(take(1)).subscribe(k => {
-        timer(4000, 0).pipe(take(1)).subscribe(k => this.addingChart = false);
+        timer(4000, 0).pipe(take(1)).subscribe(k => this.addingElement = false);
         this.store.dispatch(new UpdatePanel(k));
         this.panelStore.dispatch(new FlushState());
         this.store.pipe(select(getPanelState),
@@ -200,7 +228,9 @@ export class PanelComponent implements OnInit, OnDestroy {
     });
   }
 
+
   registerRouterEvents() {
+    console.log("in registerRouterEvents()");
     this.subscription = this.routerStore
       .select(getParams)
       .pipe(
@@ -210,10 +240,14 @@ export class PanelComponent implements OnInit, OnDestroy {
         ),
         filter(
           (k: any) =>
-            k != undefined && k.charts
+            k != undefined && k.elements
         )
       )
       .subscribe((k: Panel) => {
+        /*console.log('old Panel:');
+        console.log(this.panel);
+        console.log('new Panel:');
+        console.log(k);*/
         this.panel = { ...k };
         this.setDateRange();
       });
@@ -229,16 +263,17 @@ export class PanelComponent implements OnInit, OnDestroy {
     this.setDateRange();
   }
   deleteChart(chart: ChartInPanel) {
-    const charts = this.panel.charts.filter(chartIter => chartIter.id != chart.id);
-    this.panel = { ...this.panel, charts };
+    const elements = this.panel.elements.filter(elementIter => elementIter.id != chart.id);
+    this.panel = { ...this.panel, elements };
   }
-  switchCharts(event: CdkDragDrop<ChartInPanel>) {
-    const chart = this.panel.charts[event.previousIndex];
-    const oldChart = this.panel.charts[event.currentIndex];
-    const charts = [...this.panel.charts];
-    charts[event.currentIndex] = chart;
-    charts[event.previousIndex] = oldChart;
-    this.panel = { ...this.panel, charts };
+  switchElements(event: CdkDragDrop<PanelElement>) {
+    console.log('in switchElements');
+    const element = this.panel.elements[event.previousIndex];
+    const oldElement = this.panel.elements[event.currentIndex];
+    const elements = [...this.panel.elements];
+    elements[event.currentIndex] = element;
+    elements[event.previousIndex] = oldElement;
+    this.panel = { ...this.panel, elements };
   }
 
   toggleEditmode() {
@@ -267,22 +302,32 @@ export class PanelComponent implements OnInit, OnDestroy {
       this.editModeSubject.next(false);
       this.editControlSubject.next('save');
       this.hideToggleSidePanel(false);
-      if (!this.panel.charts.length) {
+      if (!this.panel.elements.length) {
         // If there is no chart left there will be no callback from the 
         // resizing directive --> persist Panel will never be called
         this.persistPanel(true);
       }
     }
   }
-  saveSize(size: number, chart: ChartInPanel) {
-    const charts = this.panel.charts.map(k => chart.id == k.id ? { ...chart, size: size } : k);
-    this.panel = { ...this.panel, charts };
+  saveSize(size: number, element: PanelElement) {
+    var elements = Array<PanelElement>();
+    if ('chart' == element.type){
+      const chart = element as ChartInPanel;
+      elements = this.panel.elements.map(k => chart.id == k.id ? { ...chart, size: size } : k);
+    }
+    else if ('table' == element.type){
+      const table = element as TableInPanel;
+      elements = this.panel.elements.map(k => table.id == k.id ? { ...table, size: size } : k);
+    }
+    
+    this.panel = { ...this.panel, elements };
     this.persistPanel();
   }
   persistPanel(override: boolean = false) {
-    // wait until every chart has been updated
+    console.log('in persistPanel()');
+    // wait until every element has been updated
     this.saveCounter++;
-    if (override || (this.saveCounter === this.panel.charts.length &&
+    if (override || (this.saveCounter === this.panel.elements.length &&
       JSON.stringify(this.panel) !== JSON.stringify(this.redoObject))) {
       this.panelStore.dispatch(new UpdatePanel(this.panel));
       this.redoObject = {} as Panel;

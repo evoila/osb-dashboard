@@ -34,20 +34,20 @@ $text-color-light: $gray-600;
     margin: 0.2em 0 0.2em 0;
     max-width: 86vw;
 }
-.inner-chart-container {
+.inner-element-container {
     width: 100%;
     display: flex;
     flex-direction: row; 
     flex-wrap: wrap;
     justify-content: space-around;
 }
-.chartcontainer {
+.elementcontainer {
     max-width: 86vw;
     flex-grow: 1;
     flex-shrink: 1;
 }
 
-.chartcontainer.active {
+.elementcontainer.active {
      width: 80vw;
 }
 %chart-shared {

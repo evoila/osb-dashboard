@@ -62,10 +62,12 @@ export class SearchService {
     request: Panel,
     range?: { [id: string]: any }
   ): Observable<{ [id: string]: Array<QueryAndResponse> }> {
+    console.log('FIREING AGGREGATION for panel ' + request.id);
     const endpoint = this.endpoint.getUri() + '/panel/aggregation';
     const requestObject = { first: request, second: range };
     return this.http.post<{ [id: string]: Array<QueryAndResponse> }>(endpoint, requestObject).pipe(
       catchError((error: any) => {
+        console.log('AGGREGATION FAILED');
         this.notification.addSelfClosing(
           new Notification(NotificationType.Error, 'aggregation failed!')
         );
