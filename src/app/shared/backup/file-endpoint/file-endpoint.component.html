@@ -43,8 +43,8 @@
       <show-errors [control]="bucket"></show-errors>
       <small id="bucket" class="form-text text-muted">AWS S3 Bucket</small>
     </div>
-    <button *ngIf="update" type="button" class="btn btn-danger" (click)="delete()">Delete</button>
-    <button type="submit" class="btn btn-primary" [disabled]="!form.form.valid">{{submitLabel}}</button>
+    <!-- <button *ngIf="update" type="button" class="btn btn-danger" (click)="delete()">Delete</button>
+    <button type="submit" class="btn btn-primary" [disabled]="!form.form.valid">{{submitLabel}}</button> -->
   </form>
 
   <form #form="ngForm" *ngIf="destination.type == 'SWIFT'" action="#" (ngSubmit)="onSubmit()" ngNativeValidate>
