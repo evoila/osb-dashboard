@@ -68,9 +68,9 @@ export class SearchService {
     return this.http.post<{ [id: string]: Array<QueryAndResponse> }>(endpoint, requestObject).pipe(
       catchError((error: any) => {
         console.log('AGGREGATION FAILED');
-        this.notification.addSelfClosing(
+        /*this.notification.addSelfClosing(
           new Notification(NotificationType.Error, 'aggregation failed!')
-        );
+        );*/
         return observableThrowError(error);
       })
     );

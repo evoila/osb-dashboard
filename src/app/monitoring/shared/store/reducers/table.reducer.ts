@@ -1,5 +1,6 @@
 import * as fromTableActions from '../actions/table.actions';
 import { Table } from '../../model/table';
+import { QueryAndResponse } from '../../model/query-and-response';
 
 export interface TableModelState {
   tables: Array<Table>;
@@ -10,6 +11,11 @@ export interface TableModelState {
   tableSaveing: boolean;
   tableDeleted: boolean;
   tableDeleting: boolean;
+  aggregationResponse: {
+    [id: string]: Array<QueryAndResponse>;
+  };
+  aggregationLoading: boolean;
+  aggregationLoaded: boolean;
   
 }
 
@@ -21,7 +27,10 @@ export const initialState: TableModelState = {
   tableSaved: false,
   tableSaveing: false,
   tableDeleted: false,
-  tableDeleting: false
+  tableDeleting: false,
+  aggregationResponse: {},
+  aggregationLoading: false,
+  aggregationLoaded: false
 };
 
 export function reducer(
@@ -80,10 +89,7 @@ export function reducer(
     }
     case fromTableActions.DELETE_TABLE_SUCCESS: {
       const tables = state.tables.filter(k => k.id != action.payload.id)
-      console.log(action.payload);
-      console.log(state.tables)
-      console.log(tables.length);
-      console.log(state.tables.length);
+    
       return {
         ...state,
         tables: tables,
@@ -120,4 +126,14 @@ export const getTableSaveing = (state: TableModelState) => state.tableSaveing;
 export const getTableSaved = (state: TableModelState) => state.tableSaved;
 export const getSavedTable = (state: TableModelState) => state.saved_table;
 
-
+export const getAggregationsFiredLoaded = (state: TableModelState) =>
+  state.aggregationLoaded;
+export const getAggregationsFiredLoading = (state: TableModelState) =>
+  state.aggregationLoading;
+export const getAggregationResponseAndLoaded = (state: TableModelState) => {
+  return {
+    loaded: state.aggregationLoaded,
+    loading: state.aggregationLoading,
+    results: state.aggregationResponse
+  };
+};

@@ -3,13 +3,24 @@
 
 #table{
 
-
+    overflow: scroll;
+    width: max-content;
+    margin: 0.2em;
 
 }
 
 .table-header{
 
-
+    overflow: scroll;
+    text-align: center;
+    margin-bottom: 0.4em;
+    color: #444;
+    margin-left: 29px;
+    // uncomment for left floating table title header:
+    width: fit-content;
+}
+h6{
+    margin: 0.6em;
 }
 
 .form-control.table-name{
@@ -22,6 +33,30 @@
 }
 .form-control.table-name:hover{
     border-color: $primary-color-ultra-light;
+}
+
+#paginat{
+    text-align: center;
+    width: calc(100% - 29px);
+    margin-left: 29px;
+
+}
+
+#pagin-button{
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    background-color: transparent;
+    width: 26px;
+    height: 30px;
+    color: $primary-color-light;
+    margin: 0.5em;
+    padding: 2px 1px 0px 0px;
+    opacity: 0.68;
+    outline: none;
+}
+
+#pagin-button:hover{
+    opacity: 1.0;
 }
 
 .field{
@@ -46,7 +81,7 @@
     font-size: 9pt;
     height: 29px;
     overflow: scroll;
-    color: $primary-color;
+    color: #666;
 }
 
 .action-field{
@@ -59,6 +94,19 @@
     height: 29px;
     text-align: center;
     
+}
+
+.row-index{
+    display: inline-block;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    padding: 4px 8px;
+    margin: 2px;
+    width: 29px;
+    font-size: 9pt;
+    height: 29px;
+    overflow: scroll;
+    color: #666;
 }
 
 #column-delete-button{

@@ -45,4 +45,22 @@ export const getTableDeleting = createSelector(
   fromTableReducer.getTableDeleting
 );
 
+export const getAggregationResponseAndLoaded = createSelector(
+  getTableModelState,
+  fromTableReducer.getAggregationResponseAndLoaded
+);
+
+export const getAggregationResponseAndLoadedById = createSelector(
+  getAggregationResponseAndLoaded,
+  (state, id) => {
+    if (state && state['results'] && state['results'][id]) {
+      return {
+        results: state['results'][id],
+        loaded: state.loaded,
+        loading: state.loading
+      };
+    }
+  }
+);
+
 

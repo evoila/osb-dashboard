@@ -41,6 +41,9 @@ $text-color-light: $gray-600;
     flex-wrap: wrap;
     justify-content: space-around;
 }
+#p-e-wrapper{
+    overflow-x: auto;
+}
 .elementcontainer {
     max-width: 86vw;
     flex-grow: 1;

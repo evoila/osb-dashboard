@@ -4,3 +4,9 @@
   <sb-appid class="appId" [selected]="XXX" (app)="did_select_scope($event)"></sb-appid>
   <span id="query-with-binding-test-result" *ngIf="!validating" title="{{query_result_hint}}"><i [ngClass]="{'fas fa-exclamation-circle fail': !valid ,'fas fa-exclamation-circle soft' : valid && hit_count == 0, 'far fa-check-circle': (valid && (hit_count > 0)) }"></i></span> <!-- , 'far fa-question-circle': true -->
 </div>
+
+<div id="base-data-list" *ngIf="valid_query_results.length > 0">
+  <p id="base-data-list-header">usable data (query results): </p>
+  <span *ngFor="let q_result of valid_query_results;" (click)="drop_base_data_brick(q_result)"
+  id="base-data-brick" class="btn btn-secondary">{{getQueryNameById(q_result.queryId)}}</span>
+</div>

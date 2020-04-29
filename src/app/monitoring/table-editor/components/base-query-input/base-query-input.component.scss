@@ -9,6 +9,60 @@
     column-gap: 5px;
 }
 
+#base-data-list{
+
+    margin: 2em 1em 0em 1em;
+}
+
+#base-data-list-header{
+    color: #bbb;
+}
+
+#base-data-brick{
+    height: 1.78em;
+    padding: 2px 8px 2px 16px;
+    margin: 0em 0.5em;
+    border-radius: $basic-border-radius;
+    line-height: 1.4em;
+    font-size: 0.7em;
+    border: 0px;
+    box-sizing: border-box;
+    background-color: $special-accent-color-light;
+    cursor: pointer;
+    position: relative;
+}
+#base-data-brick:hover{
+    background-color: $special-accent-color;
+}
+
+#base-data-brick:after{
+    height: 1em;
+    width: 0.5em;
+    padding: 0px;
+    margin-left: 3px;
+    border-radius: $basic-border-radius;
+    line-height: 1.4em;
+    font-size: 1em;
+    box-sizing: border-box;
+    background-color: $transparent;
+    color: $transparent;
+    content: 'x';
+}
+
+#base-data-brick:hover:after{
+    height: 1em;
+    width: 0.5em;
+    padding: 0px;
+    margin-left: 3px;
+    border-radius: $basic-border-radius;
+    line-height: 1.4em;
+    font-size: 1em;
+    box-sizing: border-box;
+    background-color: $transparent;
+    color: $white;
+    content: 'x';
+}
+
 #base-input{
     border-radius: $basic-border-radius;
     border: 3px solid $gray-4;

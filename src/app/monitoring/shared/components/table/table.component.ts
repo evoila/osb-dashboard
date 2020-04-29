@@ -47,6 +47,8 @@ export class TableComponent implements OnInit {
 
   private updateTable(): void {
     // building 2 dim array to carry table data
+    console.log('BUILDING TABLE WITH ES DATA: ');
+    console.log(this.es_data);
     this.table_content = this.build_table(Object.values(this.table.columns), this.es_data)
     this.table_header = this.table_content[0];
     this.table_content.splice(0,1);
@@ -60,6 +62,7 @@ export class TableComponent implements OnInit {
       var col = Array<String>();
       var col_def = columns[i];
       col[0] = col_def.name;
+      console.log(col_def);
       for(var j=0; j<data.length; j++){
         var record = data[j]['_source'];
         col[j+1] = this.get_val(record, col_def.path)

@@ -1,0 +1,17 @@
+
+
+  <div id="element">
+    <span>
+      <aside>
+        <ng-content></ng-content>
+      </aside>
+      <sb-chart *ngIf="isChart && finished_loading" [chart]="element"> </sb-chart>
+      <sb-table *ngIf="!isChart && finished_loading" [table]="element.table" [es_data]="table_es_data" [editor_mode]="false"></sb-table>
+    </span>
+    
+    
+  </div>
+  
+
+
+ 

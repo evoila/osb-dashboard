@@ -79,7 +79,7 @@ export class TablePreviewComponent implements OnInit {
   }
 
   public load_table(){
-    this.table = new Table(this.table != null ? this.table.title : "New Table", this.columnDefinitions, Object.values(this.parent.queries))
+    this.table = new Table(this.table != null ? this.table.title : "Table Name", this.columnDefinitions, Object.values(this.parent.queries))
     // refreshing Table Component by toggleing it with *ngIf --> minimal timeout needed
     setTimeout(() => {this.building = false;})
   }

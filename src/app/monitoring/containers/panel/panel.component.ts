@@ -262,10 +262,17 @@ export class PanelComponent implements OnInit, OnDestroy {
     this.toDateView = date;
     this.setDateRange();
   }
+
+  deleteElement(elem: PanelElement) {
+    const elements = this.panel.elements.filter(elementIter => elementIter.id != elem.id);
+    this.panel = { ...this.panel, elements };
+  }
+/*
   deleteChart(chart: ChartInPanel) {
     const elements = this.panel.elements.filter(elementIter => elementIter.id != chart.id);
     this.panel = { ...this.panel, elements };
-  }
+  } */
+
   switchElements(event: CdkDragDrop<PanelElement>) {
     console.log('in switchElements');
     const element = this.panel.elements[event.previousIndex];
@@ -310,6 +317,7 @@ export class PanelComponent implements OnInit, OnDestroy {
     }
   }
   saveSize(size: number, element: PanelElement) {
+    console.log('SAVING SIZE');
     var elements = Array<PanelElement>();
     if ('chart' == element.type){
       const chart = element as ChartInPanel;

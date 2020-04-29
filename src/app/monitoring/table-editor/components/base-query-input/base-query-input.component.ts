@@ -7,7 +7,9 @@ import { ESQuery } from '../../model/es-query';
 import { QuerySelectComponent } from '../query-select/query-select.component';
 import { Store } from '@ngrx/store';
 import { RunQuery } from '../../store/actions/query.action';
-import { getQueriesState } from '../../store';
+import { getQueriesState, getAllQueriesEntities } from '../../store';
+import { ESBoolQueryResponse, ESBoolQueryRawResponseMap } from '../../model/es-bool-query-result';
+import { ESQuery_Request } from '../../model/es-query-request';
 
 
 @Component({
@@ -26,8 +28,7 @@ export class BaseQueryInputComponent implements OnInit {
   valid = false;
   validating = true;
   query_result_hint = "";
-  // id of this base-query-input row 
-  base_query_ui_id: number = 0;
+  valid_query_results: Array<ESBoolQueryRawResponseMap> = [];
 
 
   @Output('open-column-definer')
@@ -37,7 +38,7 @@ export class BaseQueryInputComponent implements OnInit {
   close_column_definer = new EventEmitter();
   
   @Output('open-query-editor')
-  open_query_editor = new EventEmitter<number>();
+  open_query_editor = new EventEmitter();
 
   constructor(
     private store: Store<ESQuery>
@@ -65,7 +66,9 @@ export class BaseQueryInputComponent implements OnInit {
 
   validate_new_selection(){
     // close col-def-component while we get new data to define columns
-    this.close_column_definer.next();
+    if (this.valid_query_results.length < 1){
+      this.close_column_definer.next();
+    }
     this.validating = true;
     if (this.scope && this.query){
       this.test_query_with_binding(this.query, this.scope)
@@ -74,8 +77,7 @@ export class BaseQueryInputComponent implements OnInit {
   
  
   test_query_with_binding(query: ESQuery, binding: ServiceBinding){
-    
-    //console.log('testing query-scope-combi!');
+  
     
     this.store.dispatch(new RunQuery(query, binding));
     this.store.select(getQueriesState).pipe(filter(k => !k.queries.running)).pipe(take(1)).subscribe(k => {
@@ -91,6 +93,8 @@ export class BaseQueryInputComponent implements OnInit {
         if (this.hit_count > 0){
           this.query_result_hint = "query valid";
           this.open_column_definer.next();
+          this.valid_query_results = this.valid_query_results.concat(esbq_run_result);
+          console.log(esbq_run_result);
         }
 
       }
@@ -102,29 +106,30 @@ export class BaseQueryInputComponent implements OnInit {
     })
    
 
-/*
-    
-    return this.searchService.run(query, binding).pipe(
-      tap((data: any) => {
 
-        
-      })
-    ).subscribe(k => {
-      
-      //var total_hits = k.hits.total;
-      
-      console.log(k);
-    
-    });
-
-*/
-    
   }
 
-  
+  public drop_base_data_brick(result: ESBoolQueryRawResponseMap){
+    
+    const index : number = this.valid_query_results.indexOf(result, 0);
+    if (index > -1) {
+      this.valid_query_results.splice(index, 1);
+      if (this.valid_query_results.length < 1){
+        this.valid = false;
+        this.close_column_definer.next();
+      }
+    }
+  }
+
+
+  public getQueryNameById(id: string){
+    var que : ESQuery = this.queryDropdownSelect.queries!!.filter(k => k.id == id)[0];
+    return que.name;
+  }
+
   showQueryEditor(){
     // event output to parent component (query-group-component) which will forward event to grandparent (table-editor-component) 
-    this.open_query_editor.next(this.base_query_ui_id);
+    this.open_query_editor.next();
   }
 
 
