@@ -5,34 +5,47 @@
     background-color: #fff;
     width: fit-content;
     display: grid;
-    grid-template-columns: 85px 250px 250px 30px;
+    grid-template-columns: 85px 250px 250px 30px 65px;
     column-gap: 5px;
+}
+#get-more-data{
+    cursor: pointer;
+    border: 2px solid #ddd;
+    border-radius: 18px;
+    padding: 3px 10px;
+    margin-left: 18px;
+    color: #aaa;
+}
+
+#get-more-data:hover{
+    color: $primary-color;
 }
 
 #base-data-list{
 
-    margin: 2em 1em 0em 1em;
+    margin: 1.5em 1em 0em 1em;
 }
 
 #base-data-list-header{
     color: #bbb;
+    margin-bottom: 0.5em;
 }
 
 #base-data-brick{
     height: 1.78em;
     padding: 2px 8px 2px 16px;
-    margin: 0em 0.5em;
+    margin: 0em 0.5em 0em 0em;
     border-radius: $basic-border-radius;
     line-height: 1.4em;
     font-size: 0.7em;
     border: 0px;
     box-sizing: border-box;
-    background-color: $special-accent-color-light;
+    background-color: $primary-color-light;
     cursor: pointer;
     position: relative;
 }
 #base-data-brick:hover{
-    background-color: $special-accent-color;
+    background-color: rgb(254, 127, 105);
 }
 
 #base-data-brick:after{
@@ -76,6 +89,17 @@
     
 }
 
+#select_bq_data_button{
+    color: $primary-color-light;
+    border: 2px solid #ccc;
+    border-radius: 18px;
+    outline: none;
+}
+
+#select_bq_data_button:hover{
+    border-color: $primary-color-light;
+}
+
 .btn.btn-primary.create-query{
 
     border-radius: 18px;
@@ -106,4 +130,9 @@
 }
 .fa-check-circle{
     color: rgb(109, 196, 102);
+}
+
+#base-query-header{
+    margin: 0.5em 1em 1em;
+    color: #888;
 }

@@ -10,6 +10,7 @@ import { RunQuery } from '../../store/actions/query.action';
 import { getQueriesState, getAllQueriesEntities } from '../../store';
 import { ESBoolQueryResponse, ESBoolQueryRawResponseMap } from '../../model/es-bool-query-result';
 import { ESQuery_Request } from '../../model/es-query-request';
+import { AppidComponent } from 'app/monitoring/shared/components/appid/appid.component';
 
 
 @Component({
@@ -19,6 +20,7 @@ import { ESQuery_Request } from '../../model/es-query-request';
 })
 export class BaseQueryInputComponent implements OnInit {
   @ViewChild('queryDropdownSelect') queryDropdownSelect: QuerySelectComponent;
+  @ViewChild('appNameDropdownSelect') appNameDropdownSelect: AppidComponent;
 
   scope: ServiceBinding | null = null;
   query: ESQuery | null = null;
@@ -27,8 +29,11 @@ export class BaseQueryInputComponent implements OnInit {
   // flag indicating if current selected combination of scope and es-query is proofed valid
   valid = false;
   validating = true;
+
+  baseInputCollapsed = false;
   query_result_hint = "";
-  valid_query_results: Array<ESBoolQueryRawResponseMap> = [];
+  validated_query_description: string = '';
+  selected_query_descriptions: Array<string> = [];
 
 
   @Output('open-column-definer')
@@ -66,7 +71,7 @@ export class BaseQueryInputComponent implements OnInit {
 
   validate_new_selection(){
     // close col-def-component while we get new data to define columns
-    if (this.valid_query_results.length < 1){
+    if (this.selected_query_descriptions.length < 1){
       this.close_column_definer.next();
     }
     this.validating = true;
@@ -92,9 +97,12 @@ export class BaseQueryInputComponent implements OnInit {
         //console.log('hits: ' + this.hit_count);
         if (this.hit_count > 0){
           this.query_result_hint = "query valid";
-          this.open_column_definer.next();
-          this.valid_query_results = this.valid_query_results.concat(esbq_run_result);
-          console.log(esbq_run_result);
+          
+          var appID = k.queries.bc_request!!.appId;
+          var q_scope = this.appNameDropdownSelect.serviceBindings!!.filter(k => k.appId == appID)[0].appName;
+          this.validated_query_description = this.getQueryNameById(esbq_run_result.queryId).concat(" x ").concat(q_scope);
+          
+          
         }
 
       }
@@ -109,12 +117,15 @@ export class BaseQueryInputComponent implements OnInit {
 
   }
 
-  public drop_base_data_brick(result: ESBoolQueryRawResponseMap){
+  public drop_base_data_brick(result_name: string){
     
-    const index : number = this.valid_query_results.indexOf(result, 0);
+
+  //TODO: update data array in table editor component after deleting certain base-query-data-parts 
+
+    const index : number = this.selected_query_descriptions.indexOf(result_name, 0);
     if (index > -1) {
-      this.valid_query_results.splice(index, 1);
-      if (this.valid_query_results.length < 1){
+      this.selected_query_descriptions.splice(index, 1);
+      if (this.selected_query_descriptions.length < 1){
         this.valid = false;
         this.close_column_definer.next();
       }
@@ -139,8 +150,16 @@ export class BaseQueryInputComponent implements OnInit {
     
   }
  
-  
+  select_query_result(){
+    this.selected_query_descriptions = this.selected_query_descriptions.concat(this.validated_query_description);
+    this.open_column_definer.next();
+    this.baseInputCollapsed = true;
+  }
 
 
+
+  decollapse_base_query_input(){
+    this.baseInputCollapsed = false;
+  }
 
 }

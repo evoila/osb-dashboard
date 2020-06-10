@@ -41,4 +41,6 @@ export class TableService {
         return this.http.delete<Table>(customUri, this.endpoint.httpOptions).pipe(
           map(data => data));
   }
+
+  
 }

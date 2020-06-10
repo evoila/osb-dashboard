@@ -5,7 +5,6 @@ import { ColumnDefinition } from 'app/monitoring/table-editor/model/column-defin
 
 
 
-
 @Component({
   selector: 'sb-table',
   templateUrl: './table.component.html',
@@ -19,7 +18,10 @@ export class TableComponent implements OnInit {
 
   @Output('shift_col')  // [column index, shift direction]
   shift_col = new EventEmitter<[number, number]>();
-
+/*
+  @Output('rename_col')
+  rename_col = new EventEmitter<string>();
+*/
   @Input('table')
   table: Table;
 
@@ -47,8 +49,8 @@ export class TableComponent implements OnInit {
 
   private updateTable(): void {
     // building 2 dim array to carry table data
-    console.log('BUILDING TABLE WITH ES DATA: ');
-    console.log(this.es_data);
+    //console.log('BUILDING TABLE WITH ES DATA: ');
+    //console.log(this.es_data);
     this.table_content = this.build_table(Object.values(this.table.columns), this.es_data)
     this.table_header = this.table_content[0];
     this.table_content.splice(0,1);

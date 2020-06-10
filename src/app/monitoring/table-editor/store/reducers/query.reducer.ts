@@ -11,6 +11,7 @@ export interface GetESQueriesState {
   // ONLY one result of lastly run bool query
   run_result: ESBoolQueryRawResponseMap | null;
   bc_request: ESQuery_Request | null;
+  
 }
 
 export const initialState: GetESQueriesState = {

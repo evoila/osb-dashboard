@@ -88,6 +88,7 @@ export class ColumnDefinitionComponent implements OnInit {
     }, []);
   }
 
+  /*
   public updatePreview(){
     this.show_column_preview = false;
     this.preview_column_data = [];
@@ -101,11 +102,11 @@ export class ColumnDefinitionComponent implements OnInit {
     }
     setTimeout(() => {this.show_column_preview = true;})
   }
+*/
 
-
-  // TODO: TAKE RIGHT QUERY ID, not only first one
+  // TODO: DELETE COLUMNDEFINITION's QUERY_ID FIELD - it's not used and doesn't make sense 
   public saveColumn(){
-    const col_def = new ColumnDefinition(Object.keys(this.parent.queries)[0], this.cdef_name, this.cdef_path)
+    const col_def = new ColumnDefinition(this.parent.validated_scoped_selected_queries[0].query.id, this.cdef_name, this.cdef_path)
     this.update_column.next(col_def);
     this.deselect_all();
     this.show_column_preview = false;
@@ -123,7 +124,7 @@ export class ColumnDefinitionComponent implements OnInit {
     this.cdef_path = node.path;
     this.selected_data_key = node.filename;
     this.cdef_name = this.selected_data_key;
-    this.updatePreview();
+    this.saveColumn();
   }
 
   public select_node(node: FileNode){

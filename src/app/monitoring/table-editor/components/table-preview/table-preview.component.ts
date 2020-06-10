@@ -33,7 +33,7 @@ export class TablePreviewComponent implements OnInit {
 
 
   public save_table(){
-    const tab = new Table(this.table.title, this.columnDefinitions, Object.values(this.parent.queries));
+    const tab = new Table(this.table.title, this.columnDefinitions, this.parent.validated_scoped_selected_queries);
     this.store.dispatch(new SaveTable(tab));
     this.store.select(getTableModelState).pipe(filter(k=> k.saved_table != null)).pipe(take(1)).subscribe(k=> {
         var tab = k.saved_table;
@@ -79,7 +79,7 @@ export class TablePreviewComponent implements OnInit {
   }
 
   public load_table(){
-    this.table = new Table(this.table != null ? this.table.title : "Table Name", this.columnDefinitions, Object.values(this.parent.queries))
+    this.table = new Table(this.table != null ? this.table.title : "Table Name", this.columnDefinitions, this.parent.validated_scoped_selected_queries)
     // refreshing Table Component by toggleing it with *ngIf --> minimal timeout needed
     setTimeout(() => {this.building = false;})
   }

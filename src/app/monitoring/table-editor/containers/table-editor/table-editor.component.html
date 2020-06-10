@@ -3,7 +3,6 @@
   <h4 id="title">Table Editor</h4>
 
   <div *ngIf="!saved" id="creation-div">
-    <h6 id="base-query-header">Get Data from Elastic Search:</h6>
     
     <sb-base-query-input #baseQuery1 id="single-query" (open-column-definer)="open_column_definer()" (close-column-definer)="close_column_definer()" (open-query-editor)="open_query_editor($event)"></sb-base-query-input>
 
