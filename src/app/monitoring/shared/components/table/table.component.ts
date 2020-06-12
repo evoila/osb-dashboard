@@ -95,4 +95,14 @@ export class TableComponent implements OnInit {
     this.shift_col.next([column_index, delta]);
   }
 
+
+  saveColumnWidth(size: number, column: number) {
+    console.log('SAVING COLUMN WIDTH HERE');
+  }
+
+
+
+
+
+
 }

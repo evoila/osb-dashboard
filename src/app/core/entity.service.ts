@@ -10,7 +10,7 @@ export class EntityService {
 
   protected setCustomHeader(key: string, value: string) {
     this.httpService.setCustomHeader(key, value);
-  }
+  } 
 
   protected get(url: string): Observable<{} | any> {
     return this.httpService
