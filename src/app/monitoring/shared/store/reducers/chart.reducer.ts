@@ -86,7 +86,7 @@ export function reducer(
       const charts = state.charts.filter(k => k.id != action.payload.id)
       return {
         ...state,
-        charts,
+        charts: charts,
         chartDeleted: true,
         chartDeleting: false,
         chartNotDeletable: false

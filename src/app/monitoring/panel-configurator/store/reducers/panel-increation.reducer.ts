@@ -2,18 +2,21 @@ import { CfAuthScope } from '../../../chart-configurator/model/cfAuthScope';
 import * as fromPanelIncreation from '../actions/panel-increation.action';
 import * as uuid from 'uuid';
 import { ChartInPanel } from '../../../model/chart-in-panel';
+import { PanelElement } from 'app/monitoring/shared/model/panel-element';
+import { element } from 'protractor';
+import { TableInPanel } from 'app/monitoring/model/table-in-panel';
 
 
 export interface PanelIncreationState {
   id?: string;
-  charts: { [id: string]: ChartInPanel };
+  elements: { [id: string]: PanelElement };
   name: string;
   description: string;
   authScope: CfAuthScope;
   onEdit: boolean;
 }
 export const initialState: PanelIncreationState = {
-  charts: {},
+  elements: {},
   name: '',
   description: '',
   authScope: {} as CfAuthScope,
@@ -25,14 +28,16 @@ export function reducer(
   action: fromPanelIncreation.PanelIncreationAction
 ) {
   switch (action.type) {
-    case fromPanelIncreation.ADD_CHART_TO_PANEL: {
+    case fromPanelIncreation.ADD_ELEMENT_TO_PANEL: {
+      // element is a TableInPanel or a ChartInPanel
+     const added_element = action.payload;
       return {
         ...state,
-        charts: { ...state.charts, [uuid.v4()]: { oreder: undefined, chart: action.payload, size: undefined } }
+        elements: { ...state.elements, [uuid.v4()]: added_element }
       };
     }
-    case fromPanelIncreation.DELETE_CHART_IN_PANEL: {
-      const charts = { ...state.charts };
+    case fromPanelIncreation.DELETE_ELEMENT_IN_PANEL: {
+      const charts = { ...state.elements };
       delete charts[action.payload];
       return {
         ...state,
@@ -61,9 +66,16 @@ export function reducer(
       return initialState;
     }
     case fromPanelIncreation.SET_STATE_FOR_UPDATE: {
-      const { id, authScope, charts, name, description } = action.payload
-      // deconstruct from ChartsInPanel Datatype to normal Chart Datatype
-      const newCharts = charts.reduce<{ [id: string]: ChartInPanel }>(
+      const { id, authScope, elements, name, description } = action.payload
+      //console.log(id, authScope, elements, name, description);
+      // deconstruct from PanelElement Datatype to normal Datatype [ Chart | TABLE ]
+      /*
+
+      
+
+       */
+
+      const newElements = elements.reduce<{ [id: string]: PanelElement }>(
         (prev, curr, index, arr) => {
           if (index == 0) {
             return { [uuid.v4()]: curr }
@@ -71,10 +83,12 @@ export function reducer(
           return { ...prev, [uuid.v4()]: curr }
         }, {}
       )
+      //console.log('Panel Increation Action SET_STATE_FOR_UPDATE new elements:');
+      //console.log(newElements);
       return {
         id,
         authScope,
-        charts: newCharts,
+        elements: newElements,
         name,
         description,
         onEdit: true
@@ -84,4 +98,4 @@ export function reducer(
   return state;
 }
 
-export const getCharts = (state: PanelIncreationState) => state.charts;
+export const getCharts = (state: PanelIncreationState) => state.elements;

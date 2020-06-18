@@ -2,12 +2,18 @@ import { Component, OnInit, Output, EventEmitter, ElementRef, ViewChild } from '
 import { Store } from '@ngrx/store';
 import { ChartModelState } from '../../../shared/store/reducers/chart.reducer';
 import { LoadCharts, DeleteChart } from '../../../shared/store/actions/chart.actions';
-import { Observable, Subscription, Subject } from 'rxjs';
-import { getCharts, getChartDeletingState } from '../../../shared/store/selectors/chart.selector';
+import { Observable } from 'rxjs';
+import { getCharts, getChartModelState } from '../../../shared/store/selectors/chart.selector';
 import { Chart } from '../../../shared/model/chart';
 import { CdkDragEnd, CdkDragStart } from '@angular/cdk/drag-drop';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { filter, take, takeUntil } from 'rxjs/operators';
+import { TableModelState } from 'app/monitoring/shared/store/reducers/table.reducer';
+import { LoadTables, DeleteTable } from 'app/monitoring/shared/store/actions/table.actions';
+import { Table } from 'app/monitoring/shared/model/table';
+import { getTables, getTableModelState } from 'app/monitoring/shared/store/selectors/table.selector';
+import { PanelElement } from 'app/monitoring/shared/model/panel-element';
+import { filter, take } from 'rxjs/operators';
+import { SharedModuleState } from 'app/monitoring/shared/store/reducers';
 
 
 @Component({
@@ -25,13 +31,12 @@ export class AddChartSidepanelComponent implements OnInit {
   @ViewChild('confirmModal')
   deleteChartConfirmModal: ElementRef;
 
-  @ViewChild('chartNotDeletableModal')
-  chartNotDeletableModal: ElementRef;
-
-
-
+  
   charts$: Observable<Array<Chart>>;
-  private ngUnsubscribe: Subject<void> = new Subject<void>();
+  tables$: Observable<Array<Table>>;
+
+  charts_loaded = false;
+  tables_loaded = false;
   
   // popup pane to confirm actions like chart deletion etc
   private modal: NgbModalRef | null = null;
@@ -39,19 +44,31 @@ export class AddChartSidepanelComponent implements OnInit {
   private modal2: NgbModalRef | null = null;
 
   // reference for the modal to fullfill deletion and show attributes 
-  private chartToDelete; // value is read in html
+  private chartToDelete: Chart | null = null; // value is read in html
+  // reference for the modal to fullfill deletion and show attributes 
+  private tableToDelete: Table | null = null; // value is read in html
 
-  constructor(private chartStore: Store<ChartModelState>, private modalService: NgbModal) { }
+  constructor(private sahredStore: Store<SharedModuleState>, private chartStore: Store<ChartModelState>, private tableStore: Store<TableModelState>, private modalService: NgbModal) { }
 
   ngOnInit() {
-    this.chartStore.dispatch(new LoadCharts());
-    this.charts$ = this.chartStore.select(getCharts);
+    
+    /* 
+    PROBLEM:  LOADING CHARTS HERE leads to undefined (unexisting) TABLEMODELSTATE 
+    even though tablemodel state has been normal and defined before
+    */
+    //this.chartStore.dispatch(new LoadCharts());
+    this.tableStore.dispatch(new LoadTables());
+    this.loadSidebar();
+    
   }
 
-  ngOnDestroy() {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+  loadSidebar(){
+    this.tables$ = this.tableStore.select(getTables);
+    this.charts$ = this.chartStore.select(getCharts);
+  
+    
   }
+
 
   end(event: CdkDragEnd) {
     console.log('fire');
@@ -66,29 +83,28 @@ export class AddChartSidepanelComponent implements OnInit {
   deleteChart(chart: Chart) {
    
     this.chartStore.dispatch(new DeleteChart(chart.id!!));
+    this.modal!!.close();
+    
+  }
 
-    this.chartStore.select(getChartDeletingState).pipe(filter(k => k.chartDeleting), take(1)).subscribe((ka) => {
-      this.chartStore.select(getChartDeletingState).pipe(filter(k => !k.chartDeleting), take(1)).subscribe(deleteSate => {
-        if(!deleteSate.chartDeleted && deleteSate.chartNotDeletable) {
-          // chart not deletable, beacuse it's used in panel
-          this.modal!!.close();
-          this.modal2 = this.modalService.open(this.chartNotDeletableModal, { size: 'lg' });
-        }
-        else if(deleteSate.chartDeleted && !deleteSate.chartNotDeletable){
-          // chart deleted successfully
-          this.modal!!.close();
-        }
-      });
-      
-    });
-
-    //
+  deleteTable(table: Table) {
+    this.tableStore.dispatch(new DeleteTable(table));
+    this.modal!!.close();
+    this.loadSidebar();
   }
 
 
 
   confirmChartDeletion(chart: Chart) {
     this.chartToDelete = chart;
+    this.tableToDelete = null;
+    this.modal = this.modalService.open(this.deleteChartConfirmModal, { size: 'lg' });
+  }
+
+  confirmTableDeletion(table: Table) {
+    this.tableToDelete = table;
+    this.chartToDelete = null;
+    console.log('delete table here !!');
     this.modal = this.modalService.open(this.deleteChartConfirmModal, { size: 'lg' });
   }
 }

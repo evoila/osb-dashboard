@@ -1,18 +1,18 @@
-<div class="card">
+<div class="card chartcard">
   <div class="card-body">
     <div>
       <div *ngIf="chartView && chartView.data" style="height: 400px; max-width: 100%;">
-        <aside>
+        <!--<aside>
           <ng-content></ng-content>
 
-        </aside>
+        </aside>-->
         <canvas sb-chart-dir height="100" class="chart" [data]="chartView.data" [labelsArray]="chartView.labels"
           [seriesArray]="chartView.series" [updateData$]="updateData$" [type]="chartView.type"
           [options]="chartView.options"></canvas>
       </div>
       <div style="height: 300px; width: 100%" *ngIf="!chartView">
         <div style="width: 10%; margin: 95px auto;">
-          <span>Bitte warten...</span>
+          <span>loading...</span>
         </div>
       </div>
       <div style="height: 300px; width: 100%; padding-top: 50px;"

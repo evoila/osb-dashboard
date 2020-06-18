@@ -12,7 +12,8 @@ const routes: Routes = [
   {
     path: 'options/:id',
     component: OptionsComponent
-  },
+  }
+  
 ];
 @NgModule({
   imports: [RouterModule.forChild(routes)],

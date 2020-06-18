@@ -8,8 +8,9 @@
     grid-auto-flow: column;
     align-items: start;
     padding: 8px;
-    margin: 0px;
-    border: 2px solid $gray-5;
+    margin: 0.4em 0.2em 0.0em 0.2em;
+    /* width: 100%; */
+    border: 3px solid #ddd;
     border-radius: 5px;//$basic-border-radius;
 }
 .form-group-x{

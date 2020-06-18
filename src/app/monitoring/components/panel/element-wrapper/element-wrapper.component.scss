@@ -1,0 +1,50 @@
+
+@import '../../../../core/core';
+
+#element{
+    max-width: 100%;
+    overflow: scroll;
+    //display: felx;
+    flex-direction: column;
+    border: solid #e1e1e1;
+    border-width: 3px;
+    border-radius: 5px;
+    margin: 0.2em 0.2em 0.0em 0.2em;
+}
+
+:host ::ng-deep aside i {
+    cursor: pointer;
+    margin: 0.5em 0.5em 0em 0.5em;
+    color: #888;
+    opacity: 0.65;
+}
+:host ::ng-deep aside .drag-handle {
+    cursor: pointer;
+    display: inline-block;
+    width: fit-content;
+    color: $primary-color;
+}
+
+:host ::ng-deep aside .fas.fa-trash {
+    color: $attention-red;
+}
+
+
+
+:host ::ng-deep aside *:hover{
+    /* background-color: rgb(201, 209, 219); */
+    //font-size: 110%;
+    opacity: 0.9;
+}
+:host ::ng-deep aside * {
+    margin: 0 0.25rem 0 0;
+}
+
+:host ::ng-deep aside{
+    float: right;
+    margin-left: -30px;
+    position: relative;
+    z-index: 5;
+}
+
+

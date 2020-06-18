@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { HttpModule } from '@angular/http'; //not compatible with angular 8 !!
 import * as monShared from './monitoring/shared/shared.module';
 
 import {
@@ -42,7 +42,7 @@ export function buildBuildTargetService(): BuildTargetService {
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
-    HttpModule,
+    HttpModule, //not compatible since angular 8 !!
     HttpClientModule,
     monShared.SharedModule.forRoot(),
 

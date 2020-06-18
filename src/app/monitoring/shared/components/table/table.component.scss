@@ -1,0 +1,162 @@
+@import '../../../../core/core';
+
+
+#table{
+
+    overflow: scroll;
+    width: max-content;
+    margin: 0.2em;
+
+}
+
+.table-header{
+
+    overflow: scroll;
+    text-align: center;
+    margin-bottom: 0.4em;
+    color: #444;
+    margin-left: 29px;
+    // uncomment for left floating table title header:
+    width: fit-content;
+}
+h6{
+    margin: 0.6em;
+}
+
+.form-control.table-name{
+    width: 12em;
+    cursor: pointer;
+    color: $primary-color;
+    margin: 0.7em 0.2em;
+    border: 3px solid #ddd;
+    border-radius: 8px;
+}
+.form-control.table-name:hover{
+    border-color: $primary-color-ultra-light;
+}
+
+
+.form-control.column-name{
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    color: $primary-color;
+    margin: 0em;
+    padding: 0em;
+    outline: none;
+    border-width: 0px;
+    font-size: 10pt;
+    text-align: center;
+}
+.form-control.column-name:hover{
+    //border-color: $primary-color-ultra-light;
+}
+
+
+
+#paginat{
+    text-align: center;
+    width: calc(100% - 29px);
+    margin-left: 29px;
+
+}
+
+#pagin-button{
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    background-color: transparent;
+    width: 26px;
+    height: 30px;
+    color: $primary-color-light;
+    margin: 0.5em;
+    padding: 2px 1px 0px 0px;
+    opacity: 0.68;
+    outline: none;
+}
+
+#pagin-button:hover{
+    opacity: 1.0;
+}
+
+.field{
+    display: inline-block;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    padding: 4px 8px;
+    margin: 2px;
+    width: 9em;
+    font-size: 9pt;
+    height: 29px;
+    overflow: scroll;
+    color: #666;
+}
+.header-field{
+    display: inline-block;
+    border: 3px solid #ccc;
+    border-radius: 5px;
+    padding: 4px 8px;
+    margin: 2px;
+    width: 9em;
+    font-size: 9pt;
+    height: 29px;
+    overflow: scroll;
+    color: #666;
+}
+
+.action-field{
+    display: inline-block;
+    border: 3px solid transparent;border-radius: 5px;
+    padding: 4px 8px;
+    margin: 2px;
+    width: 9em;
+    font-size: 9pt;
+    height: 29px;
+    text-align: center;
+    
+}
+
+.row-index{
+    display: inline-block;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    padding: 4px 8px;
+    margin: 2px;
+    width: 29px;
+    font-size: 9pt;
+    height: 29px;
+    overflow: scroll;
+    color: #666;
+}
+
+#column-delete-button{
+    background-color: transparent;
+    outline: none;
+    border: none;
+    color: #ccc;
+    width: 30%;
+    height: 100%;
+    font-size: 11pt;
+}
+#column-delete-button:hover{
+    color: $attention-red-light;
+    opacity: 0.95;  
+}
+
+#column-shift-button{
+
+    background-color: transparent;
+    outline: none;
+    border: none;
+    color: #dfdfdf;
+    width: 30%;
+    height: 100%;
+    font-size: 11pt;
+}
+
+#column-shift-button:hover{
+
+    color: $primary-color-light;
+}
+
+
+

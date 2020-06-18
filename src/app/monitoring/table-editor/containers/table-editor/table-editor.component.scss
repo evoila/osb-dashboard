@@ -1,0 +1,85 @@
+@import '../../../../core/core';
+
+.frame{
+
+    margin-top: 5em;
+}
+
+#title{
+    margin: 1.5em;
+}
+.query-group{
+    
+}
+.col-def-component{
+
+
+}
+
+.preview{
+
+}
+
+
+
+
+#single-query{
+    display: inline-block;
+    align-self: center;
+    margin: 1em 1.5em;
+}
+
+#after-save-div{
+    margin: 0.5em 2em;
+}
+
+#save-succ-hint{
+    color: #666;
+    margin: 1em 0.3em;
+}
+
+#save-succ-hint-detail{
+    color: #888;
+    margin: 1em 0.3em;
+}
+
+
+#button_reset_table_editor{
+
+    padding: 4px 12px;
+    border: 3px solid #ddd;
+    border-radius: 18px;
+    color: $primary-color-light;
+    outline: none;
+}
+
+#button_reset_table_editor:hover{
+    color: $secondary-color-light;
+    opacity: 0.85;
+}
+
+
+
+
+// no button here yet to open another base query input line
+
+/*
+#add-query{
+    color: #fff;
+    width: 32px;
+    height: 32px;
+    text-align: center;
+    border-radius: 18px;
+    border: none;
+    cursor: pointer;
+    margin: 10px;
+    background-color: #ddd;
+    outline: none;
+}
+
+#add-query:hover{
+    background-color:#afcbff;
+}
+*/
+
+

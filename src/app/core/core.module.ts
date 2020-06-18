@@ -26,10 +26,12 @@ import { WizardStepComponent } from './wizard/wizard-step/wizard-step.component'
 import { FocusDirective } from './wizard';
 import { CustomEndpointService } from './custom-endpoint.service';
 import { HttpGetParamsService } from './services/http-get-params.service';
+//import { HttpClient } from '@angular/common/http';
 
 export function coreHttpFactory(backend: XHRBackend) {
   return new CoreHttpService(backend);
 }
+
 
 const components = [
   HomeComponent,

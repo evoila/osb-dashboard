@@ -6,7 +6,6 @@ import { SearchRequest } from '../../model/search-request';
 import { SearchResponse } from '../../model/search-response';
 import { Response } from '@angular/http/src/static_response';
 import { NotificationType, NotificationService, Notification } from 'app/core';
-
 import { catchError, map } from 'rxjs/operators';
 import { Field } from 'app/monitoring/aggregation-editor/model/field';
 import { AggregationRequestObject } from 'app/monitoring/chart-configurator/model/aggregationRequestObject';
@@ -14,6 +13,14 @@ import { Panel } from '../model/panel';
 import { QueryAndResponse } from '../model/query-and-response';
 import { ElasticContextQuery } from '../model/elastic-context-query';
 import { LogDataModel } from '../../model/log-data-model';
+import { ESQuery } from 'app/monitoring/table-editor/model/es-query';
+import { ServiceBinding } from 'app/monitoring/model/service-binding';
+import { ESQuery_Request } from 'app/monitoring/table-editor/model/es-query-request';
+import { CfAuthScope, authScopeFromBinding } from 'app/monitoring/chart-configurator/model/cfAuthScope';
+import { environment } from 'environments/runtime-environment';
+import { ESBoolQueryRawResponseMap } from 'app/monitoring/table-editor/model/es-bool-query-result';
+
+
 
 @Injectable()
 export class SearchService {
@@ -23,6 +30,19 @@ export class SearchService {
     private http: HttpClient,
     private notification: NotificationService
   ) { }
+
+
+
+ // BOOLQuery POST /v1/queries/run
+ public run(bool_query_request: ESQuery_Request): Observable<any>{
+  const url = this.endpoint.getUri() + "/queries" + "/run";
+  const body = bool_query_request.jsonify();
+  return this.http.post<ESBoolQueryRawResponseMap>(url, body); 
+}
+
+
+
+
   public getSearchResults(
     request: SearchRequest
   ): Observable<SearchResponse | Response> {
@@ -42,13 +62,15 @@ export class SearchService {
     request: Panel,
     range?: { [id: string]: any }
   ): Observable<{ [id: string]: Array<QueryAndResponse> }> {
+    console.log('FIREING AGGREGATION for panel ' + request.id);
     const endpoint = this.endpoint.getUri() + '/panel/aggregation';
     const requestObject = { first: request, second: range };
     return this.http.post<{ [id: string]: Array<QueryAndResponse> }>(endpoint, requestObject).pipe(
       catchError((error: any) => {
-        this.notification.addSelfClosing(
+        console.log('AGGREGATION FAILED');
+        /*this.notification.addSelfClosing(
           new Notification(NotificationType.Error, 'aggregation failed!')
-        );
+        );*/
         return observableThrowError(error);
       })
     );

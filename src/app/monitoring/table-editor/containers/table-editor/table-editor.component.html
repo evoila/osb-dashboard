@@ -1,0 +1,28 @@
+<div class="frame">
+
+  <h4 id="title">Table Editor</h4>
+
+  <div *ngIf="!saved" id="creation-div">
+    
+    <sb-base-query-input #baseQuery1 id="single-query" (open-column-definer)="open_column_definer()" (close-column-definer)="close_column_definer()" (open-query-editor)="open_query_editor($event)"></sb-base-query-input>
+
+    <sb-query-editor *ngIf="query_editor_visible" (save-new-query)="received_query_from_q_editor($event)" (close-query-editor)="close_query_editor_component()" class="query-editor"></sb-query-editor>
+
+    <sb-column-definition #columdDefine *ngIf="col_def_component_visible" [data]="data" (column)="update_column($event)" class="col-def-component"> </sb-column-definition>
+
+    <sb-table-preview *ngIf="col_def_component_visible" class="preview"></sb-table-preview>
+  
+  </div>
+  
+
+  <div *ngIf="saved" id="after-save-div">
+    <h6 id="save-succ-hint">New table '{{saved_table_name}}' has been successfully created!</h6>
+    <p id="save-succ-hint-detail">You can select it in each panels element bar on the right side.</p>
+    <button id="button_reset_table_editor" (click)="reset_table_editor()">create another Table</button>
+  </div>
+  
+  
+  
+</div>
+
+

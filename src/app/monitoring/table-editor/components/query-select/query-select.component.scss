@@ -1,0 +1,38 @@
+@import '../../../../core/core';
+
+.box{
+    display: grid;
+    grid-template-columns: 0px 240px;
+    grid-gap: 0.6em;
+    border-radius: $basic-border-radius;;
+    cursor: pointer;
+}
+
+
+.custom-select.mr-sm-2.query-select{   // select element with normal binding selected
+    cursor: pointer;
+    justify-self: stretch;
+    padding-left: 60px;
+    padding-top: 4px;
+    width: 240px;
+    border: 3px solid $gray-4;
+    border-radius: $basic-border-radius;
+    background-color: $transparent;
+    color: $primary-color;
+    
+}
+
+.custom-select.mr-sm-2.query-select:hover{
+    border: 3px solid $primary-color-ultra-light;
+}
+
+
+#placeholder {
+    color: $gray-3;
+    font-size: 1em;
+    margin: 0rem;
+    margin-left: 4px;
+    margin-top: 0.44rem;
+    width: 35px;
+    height: fit-content;
+}

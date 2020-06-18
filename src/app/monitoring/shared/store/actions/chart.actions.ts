@@ -79,7 +79,12 @@ export class FirePanelAggregationRequest implements Action {
   constructor(
     public payload: Panel,
     public range?: { [id: string]: any }
-  ) { }
+  ) { 
+    console.log('FirePanelAggregationRequest panel payload');
+    console.log(payload);
+    console.log('FirePanelAggregationRequest range');
+    console.log(range);
+  }
 }
 export class FireAggregationRequestSuccess implements Action {
   readonly type = FIRE_AGGREGATION_REQUEST_SUCCESS;

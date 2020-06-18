@@ -1,11 +1,11 @@
 import { Action } from '@ngrx/store';
-import { Chart } from '../../../shared/model/chart';
 import { CfAuthScope } from '../../../chart-configurator/model/cfAuthScope';
 import { Panel } from '../../../shared/model/panel';
+import { PanelElement } from 'app/monitoring/shared/model/panel-element';
 
-export const ADD_CHART_TO_PANEL = '[Panel Configurator] Add Chart to Panel';
-export const DELETE_CHART_IN_PANEL =
-  '[Panel Configurator] Delete Chart in Panel';
+export const ADD_ELEMENT_TO_PANEL = '[Panel Configurator] Add Element to Panel';
+export const DELETE_ELEMENT_IN_PANEL =
+  '[Panel Configurator] Delete Element in Panel';
 
 export const SET_NAME = '[Panel Configurator] Set Name';
 export const SET_DESCRIPTION = '[Panel Configurator] Set Description';
@@ -16,12 +16,12 @@ export const SET_STATE_FOR_UPDATE = '[Panel Configurator] Set State for Update';
 
 
 
-export class AddChartToPanel implements Action {
-  readonly type = ADD_CHART_TO_PANEL;
-  constructor(public payload: Chart) { }
+export class AddElementToPanel implements Action {
+  readonly type = ADD_ELEMENT_TO_PANEL;
+  constructor(public payload: PanelElement) { }
 }
-export class DeleteChartInPanel implements Action {
-  readonly type = DELETE_CHART_IN_PANEL;
+export class DeleteElementInPanel implements Action {
+  readonly type = DELETE_ELEMENT_IN_PANEL;
   constructor(public payload: string) { }
 }
 export class SetName implements Action {
@@ -45,8 +45,8 @@ export class SetStateForUpdate implements Action {
 }
 
 export type PanelIncreationAction =
-  | AddChartToPanel
-  | DeleteChartInPanel
+  | AddElementToPanel
+  | DeleteElementInPanel
   | SetName
   | SetDescription
   | FlushState

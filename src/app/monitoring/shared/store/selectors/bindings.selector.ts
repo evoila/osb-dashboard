@@ -1,7 +1,5 @@
 import { createSelector } from '@ngrx/store';
-
 import * as fromBindings from '../reducers/binding.reducer';
-
 import { SharedModuleState, getSharedModuleState } from '../reducers/index';
 import {
   SpaceAndOrg,

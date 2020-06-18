@@ -6,8 +6,8 @@ import { Server } from '../../../core/extension-url';
 @Injectable()
 export class EndpointService {
   private readonly prefix = "/v1";
-  private baseUrl =
-    'https://osb-log-metric-dashboard-backend.cf.dev.eu-de-central.msh.host';
+  private baseUrl = 
+   'https://osb-log-metric-dashboard-backend.cf.dev.eu-de-central.msh.host';
   // private baseUrl = 'http://localhost';
   private authToken = environment.token;
   public readonly httpOptions = {

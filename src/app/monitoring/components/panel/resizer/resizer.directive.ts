@@ -195,6 +195,7 @@ export class ResizerDirective implements AfterViewInit, OnDestroy {
     chart.style.display = "flex";
   }
   private setChartSize(size: number) {
+    console.log('setChartSize(' + size + ')');
     this.renderer.setStyle(this.el.nativeElement, 'flex-basis', `${size}%`);
     //this.el.nativeElement.style.cssText = `flex-basis: ${size}%;`;
   }

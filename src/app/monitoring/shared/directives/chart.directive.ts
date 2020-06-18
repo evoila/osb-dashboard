@@ -219,9 +219,9 @@ export class ChartDirective implements OnInit, OnChanges, OnDestroy {
     }
 
     this.initFlag = true;
-    console.log(ctx);
-    console.log(data);
-    console.log(options);
+    //console.log(ctx);
+    //console.log(data);
+    //console.log(options);
     return new ChartJs(ctx, {
       type: this.type,
       data: data as ChartData,
