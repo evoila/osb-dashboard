@@ -120,7 +120,7 @@ export class SingleViewEditorComponent implements OnInit {
           return Object.keys(k).length > 0 && k.name && k.type;
         }),
         switchMap((chart: Chart) => {
-          return this.authParamService.createCfAuthScope().pipe(
+          return this.authParamService.createAuthScope().pipe(
             take(1),
             map((authScope: CfAuthScope) => {
               return { ...chart, authScope };
