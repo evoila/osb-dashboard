@@ -3,7 +3,7 @@ import { NgModule, LOCALE_ID } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http'; //not compatible with angular 8 !!
 import * as monShared from './monitoring/shared/shared.module';
-
+ 
 import {
   SchemaFormModule,
   WidgetRegistry,

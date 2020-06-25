@@ -28,7 +28,6 @@ export class CoreHttpClientService {
   private accessToken: string | undefined;
 
 
-  // Extending the HttpClient through the Angular DI.
   public constructor(public http: HttpClient) {
     
     this.accessToken = authToken;

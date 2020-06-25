@@ -68,25 +68,6 @@ export class CoreHttpService extends Http {
   }
 
 
-/* ATTEMPT TO TRANSFORM request method 
-  public request(req: HttpRequest<any>, options?: HttpParamsOptions): Observable<HttpEvent<any>> {
-    if (this.accessToken) {
-      req.headers.set('Authorization', this.accessToken);
-    } else {
-      req.headers.delete('Authorization');
-      
-    }
-
-    this.customHeaders.forEach((values: string[], name: string) => {
-        req.headers.set(name, values);
-    });
- 
-    req.headers.set('Content-Type', "application/json");
-
-    const optionz = { body: req.body, headers: req.headers }
-    return this.httpc.request(req);
-  }
-*/
   public formatError<T>(error: Response | any): Observable<T> {
     let errMsg: string;
 
