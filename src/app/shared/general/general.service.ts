@@ -1,20 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-
-import { CoreHttpService } from '../../core/core-http.service';
-
 import { environment } from 'environments/runtime-environment';
-import { EntityService } from 'app/core';
+
+import { HttpClient } from '@angular/common/http';
 
 const serviceInstanceId = environment.serviceInstanceId;
 const endpoint = environment.baseUrls.serviceBrokerUrl;
 @Injectable()
-export class GeneralService extends EntityService {
+export class GeneralService {
   GENERAL_BASEURL: string;
 
-  constructor(protected readonly httpService: CoreHttpService) {
-    super(httpService);
+  constructor(private readonly http: HttpClient) {
     this.GENERAL_BASEURL = endpoint + '/custom/v2/manage/';
   }
 
@@ -22,12 +19,12 @@ export class GeneralService extends EntityService {
     return serviceInstanceId;
   }
 
-  public loadAll(): Observable<{} | any> {
-    return this.all(this.GENERAL_BASEURL + 'service_instances/' + serviceInstanceId);
+  public loadAll(): Observable<any> {
+    return this.http.get(this.GENERAL_BASEURL + 'service_instances/' + serviceInstanceId);
   }
 
-  public customLoadAll(path: String): Observable<{} | any> {
-    return this.all(this.GENERAL_BASEURL + path);
+  public customLoadAll(path: String): Observable<any> {
+    return this.http.get(this.GENERAL_BASEURL + path);
   }
 
 }

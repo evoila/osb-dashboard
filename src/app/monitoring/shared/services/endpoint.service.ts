@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
 import { environment } from 'environments/runtime-environment';
-import { Server } from '../../../core/extension-url';
+import { CustomEndpointService } from 'app/core/custom-endpoint.service';
 
 @Injectable()
-export class EndpointService {
+export class EndpointService extends CustomEndpointService {
   private readonly prefix = "/v1";
-  private baseUrl = 
-   'https://osb-log-metric-dashboard-backend.cf.dev.eu-de-central.msh.host';
   // private baseUrl = 'http://localhost';
   private authToken = environment.token;
   public readonly httpOptions = {
@@ -16,15 +14,8 @@ export class EndpointService {
     })
   };
 
-  constructor() {}
-  public getUri(): string {
-    const matchingEnvs: Array<Server> = environment.customEndpoints.filter(
-      (k: Server) => k.identifier === 'log-metric-backend'
-    );
-    if (matchingEnvs.length > 0) {
-      return matchingEnvs[0].url + this.prefix;
-    } else {
-      return this.baseUrl;
-    }
+  constructor() {
+    super();
+    this.baseUrl = 'https://osb-log-metric-dashboard-backend.cf.dev.eu-de-central.msh.host';
   }
 }
