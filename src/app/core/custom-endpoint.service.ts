@@ -7,6 +7,7 @@ import { Server } from './extension-url';
 })
 export class CustomEndpointService {
 
+  protected baseUrl = "";
   constructor() { }
 
   public getUri(identifier: string): string | null {
@@ -15,7 +16,8 @@ export class CustomEndpointService {
       .filter((k: Server) => k.identifier === identifier);
     if (matchingEnvs.length > 0) {
       return matchingEnvs[0].url;
-    } 
-    return null;
+    } else {
+      return this.baseUrl ? this.baseUrl : null;
+    }
   }
 }

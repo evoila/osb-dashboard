@@ -3,10 +3,10 @@ import { CommonModule } from '@angular/common';
 import { XHRBackend } from '@angular/http';
 
 import { HomeComponent } from './';
-import { CoreHttpService, InlineLoaderDirective } from './';
+import { InlineLoaderDirective } from './';
 import { NotificationBannerComponent } from './notification-banner/notification-banner.component';
 import { RouterModule } from '@angular/router';
-import { NotificationService, EntityService } from './';
+import { NotificationService } from './';
 import { ShowErrorsComponent } from './show-errors/show-errors.component';
 
 import { SidebarLayoutComponent } from './sidebar/sidebar-layout/sidebar-layout.component';
@@ -26,11 +26,10 @@ import { WizardStepComponent } from './wizard/wizard-step/wizard-step.component'
 import { FocusDirective } from './wizard';
 import { CustomEndpointService } from './custom-endpoint.service';
 import { HttpGetParamsService } from './services/http-get-params.service';
-//import { HttpClient } from '@angular/common/http';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptorService } from './token-interceptor.service';
 
-export function coreHttpFactory(backend: XHRBackend) {
-  return new CoreHttpService(backend);
-}
+
 
 
 const components = [
@@ -63,12 +62,11 @@ export class CoreModule {
       ngModule: CoreModule,
       providers: [
         {
-          provide: CoreHttpService,
-          useFactory: coreHttpFactory,
-          deps: [XHRBackend]
+          provide: HTTP_INTERCEPTORS,
+          useClass: TokenInterceptorService,
+          multi: true
         },
         NotificationService,
-        EntityService,
         WindowService,
         CustomEndpointService,
         HttpGetParamsService
