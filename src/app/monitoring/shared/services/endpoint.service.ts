@@ -14,6 +14,9 @@ export class EndpointService extends CustomEndpointService {
     })
   };
 
+  public getUri(){
+    return super.getUri("log-metric-backend");
+  }
   constructor() {
     super();
     this.baseUrl = 'https://osb-log-metric-dashboard-backend.cf.dev.eu-de-central.msh.host';
