@@ -46,6 +46,7 @@
   },
   "private": true,
   "dependencies": {
+    "@angular-devkit/build-angular": "^0.1000.0",
     "@angular/animations": "9.1.11",
     "@angular/cdk": "^7.2.0",
     "@angular/common": "9.1.11",
@@ -88,7 +89,6 @@
     "zone.js": "^0.10.3"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.10.0",
     "@angular/cli": "8.3.28",
     "@angular/compiler-cli": "9.1.11",
     "@types/chart.js": "^2.7.2",
