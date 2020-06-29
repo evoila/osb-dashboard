@@ -14,7 +14,7 @@ export class LogFilterComponent implements OnInit {
   @Output('update')
   update = new EventEmitter<Array<[string, string]>>();
   
-  public filters: Array<[string, string]> = [];
+  public filters: Array<[string, string]> = []; //.
   public topics: Array<string> = [];
   public topic: string;
   public value: string;

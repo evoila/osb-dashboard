@@ -4,7 +4,7 @@
 .sidebar-layout {
   margin-top: 0.1em;
 }
-:host /deep/ .sidebar-nav-flex {
+:host ::ng-deep .sidebar-nav-flex {
   width: 100%;
 }
 .sidebar {
