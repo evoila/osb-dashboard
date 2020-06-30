@@ -8,7 +8,9 @@ import { TableEditorRoutingModule } from './table-editor-routing.module'
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { reducers, effects } from './store';
-import { MatTreeModule, MatIconModule, MatButtonModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTreeModule } from '@angular/material/tree';
 import { TableService } from '../shared/services/table.service';
 
 @NgModule({

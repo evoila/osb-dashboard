@@ -11,7 +11,7 @@ import { ConfiguratorRoutingModule } from './configurator-routing.module';
 import { componentsDeclarations } from './components/index';
 import { containerComponents } from './containers';
 import { BottomSheetAggregationSheet } from './components/data-aggrgation-components/aggregation-list/aggregation-list.component';
-import { MatBottomSheetModule } from '@angular/material';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { AggregationEditorModule } from '../aggregation-editor/aggregation-editor.module';
 import {
   NgbAccordionModule,
