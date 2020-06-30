@@ -7,7 +7,7 @@ import { MonacoEditorModule, NgxMonacoEditorConfig } from 'ngx-monaco-editor';
 import { NgbTimepickerModule } from './components/timepicker/timepicker.module';
 
 import {
-  StoreRouterConnectingModule.forRoot(),
+  StoreRouterConnectingModule,
   RouterStateSerializer
 } from '@ngrx/router-store';
 
@@ -85,7 +85,7 @@ export const bootstrapDeps = [
     StoreModule.forRoot(reducers, { metaReducers }),
     EffectsModule.forRoot([]),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
-    StoreRouterConnectingModule,
+    StoreRouterConnectingModule.forRoot(),
     StoreModule.forFeature('sharedmodule', sharedReducer),
     EffectsModule.forFeature(sharedEffects),
     NgbTimepickerModule
