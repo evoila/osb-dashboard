@@ -7,7 +7,7 @@ import { MonacoEditorModule, NgxMonacoEditorConfig } from 'ngx-monaco-editor';
 import { NgbTimepickerModule } from './components/timepicker/timepicker.module';
 
 import {
-  StoreRouterConnectingModule,
+  StoreRouterConnectingModule.forRoot(),
   RouterStateSerializer
 } from '@ngrx/router-store';
 
