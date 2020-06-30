@@ -1,6 +1,5 @@
 import { Directive, ElementRef } from '@angular/core';
-import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
-import { Input } from '@angular/core';
+import { Input, OnInit } from '@angular/core';
 import { Chart } from 'chart.js';
 import { Observable } from 'rxjs';
 

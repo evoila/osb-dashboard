@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BindingService } from '../../services/binding.service';
-import { Actions, Effect } from '@ngrx/effects';
+import { Actions, Effect, ofType } from '@ngrx/effects';
 import * as bindingAction from '../actions/binding.action';
 import { switchMap } from 'rxjs/internal/operators/switchMap';
 
@@ -12,7 +12,7 @@ import { LoadBindingsFail } from '../actions/binding.action';
 @Injectable()
 export class BindingsEffect {
   @Effect()
-  loadBindings$ = this.actions.ofType(bindingAction.LOAD_BINDINGS).pipe(
+  loadBindings$ = this.actions.pipe(ofType(bindingAction.LOAD_BINDINGS),
     switchMap(() => {
       return this.bindingService.getBindings().pipe(
         map(bindings => new bindingAction.LoadBindingsSuccess(bindings!!)),

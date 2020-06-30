@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Actions, Effect } from '@ngrx/effects';
+import { Actions, Effect, ofType } from '@ngrx/effects';
 import * as fromChart from '../actions/chart.actions';
 import { ChartService } from '../../services/chart.service';
 import { switchMap, map, catchError, mergeMap, concatMap } from 'rxjs/operators';
@@ -12,7 +12,7 @@ import { QueryAndResponse } from '../../model/query-and-response';
 @Injectable()
 export class ChartEffect {
   @Effect()
-  loadCharts$ = this.actions.ofType(fromChart.LOAD_CHARTS).pipe(
+  loadCharts$ = this.actions.pipe(ofType(fromChart.LOAD_CHARTS),
     switchMap(action => {
       return this.chartService.getAllCharts().pipe(
         map(result => new fromChart.LoadChartsSuccess(result)),
@@ -23,7 +23,7 @@ export class ChartEffect {
 
 
   @Effect()
-  saveChart$ = this.actions.ofType(fromChart.SAVE_CHART).pipe(
+  saveChart$ = this.actions.pipe(ofType(fromChart.SAVE_CHART),
     switchMap((action: fromChart.SaveChart) => {
       return this.chartService.createChart(action.payload).pipe(
         map(result => new fromChart.SaveChartSuccess(result)),
@@ -33,7 +33,7 @@ export class ChartEffect {
   );
 
   @Effect()
-  deleteChart$ = this.actions.ofType(fromChart.DELETE_CHART).pipe(
+  deleteChart$ = this.actions.pipe(ofType(fromChart.DELETE_CHART),
     switchMap((action: fromChart.DeleteChart) => {
       return this.chartService.deleteChart(action.payload).pipe(
         map(result => new fromChart.DeleteChartSuccess(result)),
@@ -49,8 +49,8 @@ export class ChartEffect {
     })
   )
   @Effect()
-  firePanelAggregationRequest$ = this.actions.ofType(fromChart.FIRE_PANEL_AGGREGATION_REQUEST).
-    pipe(
+  firePanelAggregationRequest$ = this.actions.
+    pipe(ofType(fromChart.FIRE_PANEL_AGGREGATION_REQUEST),
       // use concatMap to maintain order
       concatMap((action: fromChart.FirePanelAggregationRequest) => {
         return this.searchService.firePanelAggregation(action.payload, action.range).pipe(
@@ -61,8 +61,7 @@ export class ChartEffect {
     );
   @Effect()
   fireAggregationRequest$ = this.actions
-    .ofType(fromChart.FIRE_AGGREGATION_REQUEST)
-    .pipe(
+    .pipe(ofType(fromChart.FIRE_AGGREGATION_REQUEST),
       /* Merge Map here to have multiple innersubscription
       we want to fire a huge amount of requests in the same time
       switchMap would ignore all of them except the last */

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Actions, Effect } from '@ngrx/effects';
+import { Actions, Effect, ofType } from '@ngrx/effects';
 import * as fromTable from '../actions/table.actions';
 import { TableService } from '../../services/table.service';
 
@@ -10,7 +10,7 @@ import { of } from 'rxjs';
 @Injectable()
 export class TableEffect {
   @Effect()
-  loadTables$ = this.actions.ofType(fromTable.LOAD_TABLES).pipe(
+  loadTables$ = this.actions.pipe(ofType(fromTable.LOAD_TABLES),
     switchMap(action => {
       return this.tableService.getAllTables().pipe(
         map(result => new fromTable.LoadTablesSuccess(result)),
@@ -20,7 +20,7 @@ export class TableEffect {
   );
 
   @Effect()
-  saveTable$ = this.actions.ofType(fromTable.SAVE_TABLE).pipe(
+  saveTable$ = this.actions.pipe(ofType(fromTable.SAVE_TABLE),
     switchMap((action: fromTable.SaveTable) => {
       return this.tableService.createTable(action.payload).pipe(
         map(result => new fromTable.SaveTableSuccess(result)),
@@ -30,7 +30,7 @@ export class TableEffect {
   );
 
   @Effect()
-  deleteTable$ = this.actions.ofType(fromTable.DELETE_TABLE).pipe(
+  deleteTable$ = this.actions.pipe(ofType(fromTable.DELETE_TABLE),
     switchMap((action: fromTable.DeleteTable) => {
       return this.tableService.deleteTable(action.payload.id!).pipe(
         map(result => new fromTable.DeleteTableSuccess(action.payload)),

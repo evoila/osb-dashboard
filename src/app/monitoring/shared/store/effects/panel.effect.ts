@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Actions, Effect } from '@ngrx/effects';
+import { Actions, Effect, ofType } from '@ngrx/effects';
 import { PanelService } from '../../services/panel.service';
 import { map, catchError, switchMap } from 'rxjs/operators';
 import {
@@ -19,7 +19,7 @@ import {
 @Injectable()
 export class PanelEffect {
   @Effect()
-  loadPanel$ = this.actions.ofType(LOAD_PANELS).pipe(
+  loadPanel$ = this.actions.pipe(ofType(LOAD_PANELS),
     switchMap(action =>
       this.panelService.getAllCharts().pipe(
         map(result => new LoadPanelsSuccess(result)),
@@ -29,7 +29,7 @@ export class PanelEffect {
   );
 
   @Effect()
-  savePanel$ = this.actions.ofType(SAVE_PANEL).pipe(
+  savePanel$ = this.actions.pipe(ofType(SAVE_PANEL),
     switchMap((action: SavePanel) =>
       this.panelService.createChart(action.payload).pipe(
         map(k => new SavePanelSuccess()),
@@ -39,7 +39,7 @@ export class PanelEffect {
   );
 
   @Effect()
-  updatePanel$ = this.actions.ofType(UPDATE_PANEL).pipe(
+  updatePanel$ = this.actions.pipe(ofType(UPDATE_PANEL),
     switchMap((action: UpdatePanel) =>
       this.panelService.updatePanel(action.payload).pipe(
         map(k => new SavePanelSuccess()),
@@ -49,7 +49,7 @@ export class PanelEffect {
   )
 
   @Effect()
-  deletePanel$ = this.actions.ofType(DELETE_PANEL).pipe(
+  deletePanel$ = this.actions.pipe(ofType(DELETE_PANEL),
     switchMap((action: DeletePanel) =>
       this.panelService.deletePanel(action.payload).pipe(
         map(k => new SavePanelSuccess()),

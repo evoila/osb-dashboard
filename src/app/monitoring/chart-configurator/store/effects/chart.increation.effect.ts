@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Actions, Effect } from '@ngrx/effects';
+import { Actions, Effect, ofType } from '@ngrx/effects';
 import { SearchService } from '../../../shared/services/search.service';
 import * as chartIncActions from '../actions/chart.increation.action';
 import { switchMap, map, catchError } from 'rxjs/operators';
@@ -12,8 +12,7 @@ import { CheckAggregationResult } from '../actions/chart.increation.action';
 export class ChartIncreationEffect {
   @Effect()
   fireAggregationRequest$ = this.actions
-    .ofType(chartIncActions.FIRE_AGGREGATIONS)
-    .pipe(
+    .pipe(ofType(chartIncActions.FIRE_AGGREGATIONS),
       switchMap((k: chartIncActions.FireAggregations) => {
         return this.searchService
           .fireAggregation(this.objToAray(k.payload, false))
@@ -39,8 +38,7 @@ export class ChartIncreationEffect {
 
   @Effect()
   checkAggregationResult$ = this.actions
-    .ofType(chartIncActions.CHECK_AGGREGATION_RESULT)
-    .pipe(
+    .pipe(ofType(chartIncActions.CHECK_AGGREGATION_RESULT),
       map((aggRes: CheckAggregationResult) => {
         const returnValue = this.objToAray(aggRes.request, true)
           .map((k, index) => {

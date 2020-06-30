@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { NavigateToOptions } from 'app/monitoring/chart-configurator/store';
 import * as routerAction from '../actions/router.action';
 import * as fromStore from '../index';
-import { Actions, Effect } from '@ngrx/effects';
+import { Actions, Effect, ofType } from '@ngrx/effects';
 import { map, switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router/';
 import { LoadAggregations } from '../actions/aggregation.action';
@@ -16,8 +16,7 @@ import { Store } from '@ngrx/store';
 export class RouterEffect {
   @Effect()
   navigateToOptions$ = this.actions
-    .ofType(routerAction.NAVIGATE_TO_OPTIONS)
-    .pipe(
+    .pipe(ofType(routerAction.NAVIGATE_TO_OPTIONS),
       map((action: NavigateToOptions) => action.payload),
       map(k => {
         this.router.navigate(['monitoring/configurator/options/' + k]);
@@ -26,8 +25,7 @@ export class RouterEffect {
     );
   @Effect()
   navigateToAggregations$ = this.actions
-    .ofType(routerAction.NAVIGATE_TO_AGGREGATIONS)
-    .pipe(
+    .pipe(ofType(routerAction.NAVIGATE_TO_AGGREGATIONS),
       map(k => {
         this.router.navigate(['monitoring/configurator/aggregations']);
       }),

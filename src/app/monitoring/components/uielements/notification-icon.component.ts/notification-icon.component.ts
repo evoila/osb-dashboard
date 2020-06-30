@@ -1,5 +1,4 @@
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
-import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
+import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
     selector: 'sb-notification-icon',

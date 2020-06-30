@@ -26,12 +26,13 @@ export class InlineLoaderDirective {
   }
 
   private createChild() {
-    const c = this.renderer.createElement(null, 'span'); // need to use span as div is illegal, e.g. in buttons
-    this.renderer.setElementClass(c, 'loader', true);
-    this.renderer.setElementClass(c, 'loader-inline', true);
+
+    const c = this.renderer.appendChild(null, this.renderer.createElement('span')); // need to use span as div is illegal, e.g. in buttons
+    this.renderer.addClass(c, 'loader');
+    this.renderer.addClass(c, 'loader-inline');
 
     if (this.loaderColor === 'white') {
-      this.renderer.setElementClass(c, 'loader-white', true);
+      this.renderer.addClass(c, 'loader-white');
     }
     return c;
   }

@@ -1,5 +1,5 @@
 import { Injectable, OnInit } from '@angular/core';
-import { Effect, Actions } from '@ngrx/effects';
+import { Effect, Actions, ofType } from '@ngrx/effects';
 import * as fromOptionsToolbox from '../actions/options.toolbox.action';
 import { Store } from '@ngrx/store';
 import { withLatestFrom, switchMap } from 'rxjs/operators';
@@ -48,7 +48,8 @@ export class OptionsToolboxEffect implements OnInit {
 
 
   @Effect()
-  disabledAnimations$ = this.actions.ofType(fromOptionsToolbox.SET_ANIMATION_DISABLED).pipe(this.latestFromStore(),
+  disabledAnimations$ = this.actions.pipe(ofType(fromOptionsToolbox.SET_ANIMATION_DISABLED), 
+  this.latestFromStore(),
     this.loadAndDispatch((optionsEntity, data) => {
       return {
         ...optionsEntity,
@@ -62,7 +63,7 @@ export class OptionsToolboxEffect implements OnInit {
 
 
   @Effect()
-  setAnimation$ = this.actions.ofType(fromOptionsToolbox.SET_ANIMATION).pipe(
+  setAnimation$ = this.actions.pipe(ofType(fromOptionsToolbox.SET_ANIMATION),
     this.latestFromStore(),
     this.loadAndDispatch((optionsEntity, data) => {
       // has to be set because spread-operator on undefined will cause an runtime error
@@ -99,8 +100,7 @@ export class OptionsToolboxEffect implements OnInit {
 
   @Effect()
   setLedgendPosition$ = this.actions
-    .ofType(fromOptionsToolbox.SET_LEDGEND_POSITION)
-    .pipe(
+    .pipe(ofType(fromOptionsToolbox.SET_LEDGEND_POSITION),
       this.latestFromStore(),
       this.loadAndDispatch((optionsEntity, data) => {
         const ledgendObject = this.initializeIfNotSet(optionsEntity, 'legend');
@@ -120,8 +120,7 @@ export class OptionsToolboxEffect implements OnInit {
 
   @Effect()
   setTitleDisabled$ = this.actions.
-    ofType(fromOptionsToolbox.SET_TITLE_DISABLED).
-    pipe(
+    pipe(ofType(fromOptionsToolbox.SET_TITLE_DISABLED),
       this.latestFromStore(),
       this.loadAndDispatch((optionsEntity, data) => {
         const titleObject = this.initializeIfNotSet(optionsEntity, 'title');
@@ -142,8 +141,7 @@ export class OptionsToolboxEffect implements OnInit {
 
   @Effect()
   setTitlePosition$ = this.actions.
-    ofType(fromOptionsToolbox.SET_TITLE_POSITION).
-    pipe(
+    pipe(ofType(fromOptionsToolbox.SET_TITLE_POSITION),
       this.latestFromStore(),
       this.loadAndDispatch((optionsEntity, data) => {
         const titleObject = this.initializeIfNotSet(optionsEntity, 'title');
@@ -163,8 +161,7 @@ export class OptionsToolboxEffect implements OnInit {
 
   @Effect()
   setTitle$ = this.actions.
-    ofType(fromOptionsToolbox.SET_TITLE).
-    pipe(
+    pipe(ofType(fromOptionsToolbox.SET_TITLE),
       this.latestFromStore(),
       this.loadAndDispatch((optionsEntity, data) => {
         const titleObject = this.initializeIfNotSet(optionsEntity, 'title');
