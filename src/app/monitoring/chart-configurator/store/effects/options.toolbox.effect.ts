@@ -83,8 +83,7 @@ export class OptionsToolboxEffect implements OnInit {
   /*---- Ledgends ----*/
   @Effect()
   setLedgendDisabled$ = this.actions
-    .ofType(fromOptionsToolbox.SET_LEDGEND_DISABLED)
-    .pipe(
+    .pipe(ofType(fromOptionsToolbox.SET_LEDGEND_DISABLED),
       this.latestFromStore(),
       this.loadAndDispatch((optionsEntity, data) => {
         const ledgendObject = this.initializeIfNotSet(optionsEntity, 'legend');

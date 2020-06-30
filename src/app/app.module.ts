@@ -31,7 +31,6 @@ import { SharedModule } from './shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthenticationInterceptor } from './core/services/authentication.interceptor';
-import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 
 export function buildBuildTargetService(): BuildTargetService {
@@ -62,9 +61,7 @@ export function buildBuildTargetService(): BuildTargetService {
 
     ...buildTarget.coreModules,
 
-    AppRoutingModule,
-
-    AngularFontAwesomeModule
+    AppRoutingModule
   ],
   providers: [
     { provide: BuildTargetService, useFactory: buildBuildTargetService },

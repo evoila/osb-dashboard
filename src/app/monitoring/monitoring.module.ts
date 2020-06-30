@@ -18,7 +18,6 @@ import * as fromBootstrap from '@ng-bootstrap/ng-bootstrap';
 import { DateFormatPipe } from './pipes/date-format.pipe';
 import { ChartComponent } from './chart/chart/chart.component';
 import { services } from './services';
-import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 import { reducers, CustomSerializer } from './store';
 
@@ -77,7 +76,6 @@ export const bootstrapDeps = [
     NouisliderModule,
     FormsModule,
     ...bootstrapDeps,
-    AngularFontAwesomeModule,
     MonacoEditorModule.forRoot(monacoEditorConfig),
     CoreModule,
     DragDropModule,
@@ -99,7 +97,7 @@ export const bootstrapDeps = [
     ...components,
     ...containerComponents,
     ElementWrapperComponent,
-    
+
   ],
   providers: [
     ...services,
