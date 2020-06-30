@@ -3,7 +3,7 @@ import { NgModule, LOCALE_ID } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http'; //not compatible with angular 8 !!
 import * as monShared from './monitoring/shared/shared.module';
- 
+
 import {
   SchemaFormModule,
   WidgetRegistry,
@@ -31,7 +31,8 @@ import { SharedModule } from './shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthenticationInterceptor } from './core/services/authentication.interceptor';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
+
 
 export function buildBuildTargetService(): BuildTargetService {
   return new BuildTargetService(buildTarget);
@@ -63,7 +64,7 @@ export function buildBuildTargetService(): BuildTargetService {
 
     AppRoutingModule,
 
-    FontAwesomeModule
+    AngularFontAwesomeModule
   ],
   providers: [
     { provide: BuildTargetService, useFactory: buildBuildTargetService },
