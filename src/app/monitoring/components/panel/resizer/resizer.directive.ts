@@ -1,6 +1,6 @@
 import { Directive, ElementRef, Input, ViewChild, Inject, OnInit, AfterViewInit, Output, EventEmitter, OnDestroy, Renderer2 } from '@angular/core';
 import { ChartInPanel } from '../../../model/chart-in-panel';
-import { DOCUMENT } from '@angular/platform-browser';
+import { DOCUMENT } from '@angular/common';
 import { timer, Observable, Subscription } from 'rxjs';
 import { take, map } from 'rxjs/operators';
 

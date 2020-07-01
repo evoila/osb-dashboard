@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Effect, Actions } from '@ngrx/effects';
+import { Effect, Actions, ofType } from '@ngrx/effects';
 
 import * as optionActions from '../actions/options.action';
 import { map, switchMap, catchError, take } from 'rxjs/internal/operators';
@@ -31,7 +31,7 @@ export class OptionsEffects {
   } as OptionsRequestObject;
 
   @Effect()
-  loadOptions$ = this.actions.ofType(optionActions.LOAD_OPTIONS).pipe(
+  loadOptions$ = this.actions.pipe(ofType(optionActions.LOAD_OPTIONS),
     switchMap((chartType: optionActions.LoadOptions) => {
       return this.optionsStore.select(getBindingsSpaceAndOrg).pipe(
         take(1),

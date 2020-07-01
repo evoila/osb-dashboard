@@ -11,6 +11,7 @@ import {
 
 import * as fromRouter from '@ngrx/router-store';
 import { query } from '@angular/animations';
+import { Injectable } from "@angular/core";
 
 export interface State {
   routerReducer: fromRouter.RouterReducerState<RouterStateUrl>;
@@ -46,6 +47,7 @@ export const getParamByName = name => {
   );
 };
 
+@Injectable()
 export class CustomSerializer
   implements fromRouter.RouterStateSerializer<RouterStateUrl> {
   serialize(routerState: RouterStateSnapshot): RouterStateUrl {

@@ -26,6 +26,7 @@
               "src/favicon.ico"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss"
             ],
             "scripts": []
@@ -81,6 +82,7 @@
             "tsConfig": "src/tsconfig.spec.json",
             "scripts": [],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss"
             ],
             "assets": [
@@ -359,7 +361,6 @@
       }
     },
     "monitoring-e2e": {
-      
       "root": "e2e",
       "sourceRoot": "e2e",
       "projectType": "application",
@@ -367,7 +368,7 @@
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
-            "deployUrl": "/app/",            
+            "deployUrl": "/app/",
             "protractorConfig": "./protractor.conf.js",
             "devServerTarget": "monitoring:serve"
           }
@@ -887,5 +888,8 @@
     "@schematics/angular:directive": {
       "prefix": "sb"
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }

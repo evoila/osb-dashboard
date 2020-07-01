@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ESQueryService } from '../../services/es-query.service';
-import { Actions, Effect } from '@ngrx/effects';
+import { Actions, Effect, ofType } from '@ngrx/effects';
 import * as queryAction from '../actions/query.action';
 import { switchMap } from 'rxjs/internal/operators/switchMap';
 import { catchError, map } from 'rxjs/internal/operators';
@@ -21,7 +21,7 @@ export class ESQueriesEffect {
 
 
   @Effect()
-  loadQueries$ = this.actions.ofType(queryAction.LOAD_QUERIES).pipe(
+  loadQueries$ = this.actions.pipe(ofType(queryAction.LOAD_QUERIES),
     switchMap(() => {
       return this.esQueryService.getESQueries().pipe(
         map(queries => new queryAction.LoadQueriesSuccess(queries!!)),
@@ -32,7 +32,7 @@ export class ESQueriesEffect {
 
 
   @Effect()
-  saveQuery$ = this.actions.ofType(queryAction.SAVE_QUERY).pipe(
+  saveQuery$ = this.actions.pipe(ofType(queryAction.SAVE_QUERY),
     switchMap((action: queryAction.SaveQuery) => {
       return this.esQueryService.createESQuery(action.payload).pipe(
         map(query => new queryAction.SaveQuerySuccess(query!!)),
@@ -43,7 +43,7 @@ export class ESQueriesEffect {
 
 
   @Effect()
-  runQuery$ = this.actions.ofType(queryAction.RUN_QUERY).pipe(
+  runQuery$ = this.actions.pipe(ofType(queryAction.RUN_QUERY),
     switchMap((action: queryAction.RunQuery) => {
       const authScope = authScopeFromBinding(action.scope);
       const boolQueryRequest = new ESQuery_Request(action.scope.appId, 10, authScope, action.payload);

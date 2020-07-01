@@ -8,11 +8,7 @@ import {
 } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Aggregation } from '../../../model/aggregation';
-import {
-  MatBottomSheet,
-  MatBottomSheetRef,
-  MAT_BOTTOM_SHEET_DATA
-} from '@angular/material';
+import { MatBottomSheet, MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 import { Store } from '@ngrx/store';
 import { DeleteAggregation, EditAggregation, SetChartAggregations, getChartIncreationAggregationState } from 'app/monitoring/chart-configurator/store';
 import { AggregationState } from '../../../store/reducers/aggregation.reducer';

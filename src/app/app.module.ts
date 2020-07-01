@@ -1,14 +1,8 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, LOCALE_ID } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http'; //not compatible with angular 8 !!
-import * as monShared from './monitoring/shared/shared.module';
+import { BrowserModule } from "@angular/platform-browser";
+import { NgModule, LOCALE_ID } from "@angular/core";
+import { FormsModule } from "@angular/forms";
 
-import {
-  SchemaFormModule,
-  WidgetRegistry,
-  DefaultWidgetRegistry
-} from 'ngx-schema-form';
+import * as monShared from "./monitoring/shared/shared.module";
 
 import {
   NgbDropdownModule,
@@ -18,19 +12,19 @@ import {
   NgbModalModule,
   NgbPopoverModule,
   NgbTabsetModule
-} from '@ng-bootstrap/ng-bootstrap';
+} from "@ng-bootstrap/ng-bootstrap";
 
-import { buildTarget } from 'environments/target';
+import { buildTarget } from "environments/target";
 
-import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app-routing.module';
-import { CoreModule } from './core/core.module';
+import { AppComponent } from "./app.component";
+import { AppRoutingModule } from "./app-routing.module";
+import { CoreModule } from "./core/core.module";
 
-import { BuildTargetService } from 'app/shared';
-import { SharedModule } from './shared/shared.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthenticationInterceptor } from './core/services/authentication.interceptor';
+import { BuildTargetService } from "app/shared";
+import { SharedModule } from "./shared/shared.module";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
+import { AuthenticationInterceptor } from "./core/services/authentication.interceptor";
 
 export function buildBuildTargetService(): BuildTargetService {
   return new BuildTargetService(buildTarget);
@@ -42,7 +36,6 @@ export function buildBuildTargetService(): BuildTargetService {
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
-    HttpModule, //not compatible since angular 8 !!
     HttpClientModule,
     monShared.SharedModule.forRoot(),
 
@@ -53,8 +46,6 @@ export function buildBuildTargetService(): BuildTargetService {
     NgbPopoverModule.forRoot(),
     NgbTypeaheadModule.forRoot(),
     NgbTabsetModule.forRoot(),
-
-    SchemaFormModule.forRoot(),
     CoreModule.forRoot(),
     SharedModule,
 
@@ -64,7 +55,6 @@ export function buildBuildTargetService(): BuildTargetService {
   ],
   providers: [
     { provide: BuildTargetService, useFactory: buildBuildTargetService },
-    { provide: WidgetRegistry, useClass: DefaultWidgetRegistry },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthenticationInterceptor,
@@ -73,4 +63,4 @@ export function buildBuildTargetService(): BuildTargetService {
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
