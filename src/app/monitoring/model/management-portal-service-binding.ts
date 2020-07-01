@@ -1,5 +1,5 @@
 import { KcAuthScope } from "../chart-configurator/model/kcAuthScope";
-import { ServiceBinding } from "./service-binding";
+import { ServiceBinding, BindingSpecials } from "./service-binding";
 
 export interface ManagementPortalServiceBinding extends ServiceBinding{
     bindingId: string | null;
@@ -13,5 +13,10 @@ export interface ManagementPortalServiceBinding extends ServiceBinding{
     partner: string;
     customer: string;
 
+  }
+
+  export interface PartnerAndCustomer extends BindingSpecials{
+    partner: string;
+    customer: string;
   }
   

@@ -128,9 +128,7 @@ export class LiveLogsComponent implements OnInit, OnDestroy {
 
     let searchRequest = {
       appName: this.scope.appName,
-      //space: this.scope.space,
-      //orgId: this.scope.organization_guid,
-      authScope: authScopeFromBinding(this.scope, 'cf'),
+      authScope: authScopeFromBinding(this.scope),
       docSize: {
         from: 0,
         size: this.size

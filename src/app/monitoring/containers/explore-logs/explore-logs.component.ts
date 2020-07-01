@@ -156,9 +156,7 @@ export class ExploreLogsComponent implements OnInit, OnDestroy {
 
     let searchRequest = {
       appName: this.scope.appName,
-      authScope: authScopeFromBinding(this.scope as ServiceBinding,'cf'),
-      //space: this.scope.space,
-      //orgId: this.scope.organization_guid,
+      authScope: authScopeFromBinding(this.scope as ServiceBinding),
       filter: this.filter,
       docSize: {
         from,

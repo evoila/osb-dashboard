@@ -11,7 +11,9 @@ export interface ServiceBinding {
 
 }
 
-export interface SpaceAndOrg {
-  space: string;
-  org: string;
+
+// this is a superclass for either SpaceAndOrg or PartnerAndCustomer
+export interface BindingSpecials {
+  
+
 }

@@ -11,28 +11,18 @@ export interface CfAuthScope extends AuthScope {
   
 }
 
-export function authScopeFromBinding(binding: ServiceBinding, type: string = "cf"): AuthScope {
+export function authScopeFromBinding(binding: ServiceBinding): AuthScope {
   //binding.organization_guid
-  if (type == 'cf'){
-    return {
-      type,
-      serviceInstanceId: environment.serviceInstanceId,
-      orgId: binding.organization_guid,
-      spaceId: binding.space,
-      
-    } as CfAuthScope
+  if (binding.type == 'servicebroker'){
+    return  binding.authScope as CfAuthScope;
   }
-  else if (type == 'kc'){
-    return {
-      type,
-      serviceInstanceId: environment.serviceInstanceId,
-      partnerId: binding.organization_guid,
-      customerId: binding.space,
-    } as KcAuthScope
+  else if (binding.type == 'managementportal'){
+    return  binding.authScope as KcAuthScope;
   }
   else{ // unknown
+    // throw error here!
     return {
-      type,
+      type: 'unknown',
       serviceInstanceId: environment.serviceInstanceId,
       partnerId: '',
       customerId: '',

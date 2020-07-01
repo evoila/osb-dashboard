@@ -201,13 +201,24 @@ export class SearchLogsComponent implements OnInit {
     });
   }
 
+/*
+  export class SearchRequest {
+    public range?: TimeRange;
+    public appId?: string;
+    public appName: string;
+    public authScope: AuthScope;
+    public docSize?: DocSize;
+    public query?: string;
+    public filter: [Map<string, any>]
+}
+
+*/
+
   private buildSearchRequest(from = 0, initialRequest: boolean): SearchRequest {
 
     let searchRequest = {
       appName: this.scope.appName,
-      //space: this.scope.space,
-      //orgId: this.scope.organization_guid,
-      authScope: authScopeFromBinding(this.scope, 'cf'),
+      authScope: authScopeFromBinding(this.scope),
       query: this.query,
       docSize: {
         from,

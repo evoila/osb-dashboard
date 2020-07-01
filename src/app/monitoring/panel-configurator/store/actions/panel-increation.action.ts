@@ -37,7 +37,7 @@ export class FlushState implements Action {
   readonly type = FLUSH_STATE;
 }
 export class SetAuthScope implements Action {
-  readonly type = SET_AUTH_SCOPE;
+   readonly type = SET_AUTH_SCOPE;
   constructor(public payload: AuthScope) { }
 }
 export class SetStateForUpdate implements Action {

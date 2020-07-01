@@ -16,7 +16,7 @@ import {
 import { of } from 'rxjs/internal/observable/of';
 import { Store } from '@ngrx/store';
 
-import { getBindingsSpaceAndOrg} from '../../../shared/store/selectors/bindings.selector';
+import { getServiceBrokerBindingsSpaceAndOrg} from '../../../shared/store/selectors/bindings.selector';
 import { CfAuthScope } from '../../model/cfAuthScope';
 
 
@@ -40,7 +40,7 @@ export class OptionsEffects {
   @Effect()
   loadOptions$ = this.actions.pipe(ofType(optionActions.LOAD_OPTIONS),
     switchMap((chartType: optionActions.LoadOptions) => {
-      return this.optionsStore.select(getBindingsSpaceAndOrg).pipe(
+      return this.optionsStore.select(getServiceBrokerBindingsSpaceAndOrg).pipe(
         take(1),
         switchMap(bindings => {
           

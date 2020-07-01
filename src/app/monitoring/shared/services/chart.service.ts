@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { EndpointService } from './endpoint.service';
-import { CfAuthParameterService } from './cfauth-param.service';
+import { AuthParameterService } from './auth-param.service';
 import { flatMap } from 'rxjs/operators';
 import { Observable } from 'rxjs/internal/Observable';
 import { Chart } from '../model/chart';
@@ -11,12 +11,12 @@ import { BindingsState } from '../store/reducers/binding.reducer';
 @Injectable()
 export class ChartService {
   private readonly url: string;
-  private cfAuthParams: CfAuthParameterService;
+  private cfAuthParams: AuthParameterService;
   constructor(
     private http: HttpClient,
     endpoint: EndpointService,
     storeBindings: Store<BindingsState>,
-    cfAuthParams: CfAuthParameterService
+    cfAuthParams: AuthParameterService
   ) {
     this.cfAuthParams = cfAuthParams.construct(storeBindings);
     this.url = `${endpoint.getUri()}/charting/charts`;

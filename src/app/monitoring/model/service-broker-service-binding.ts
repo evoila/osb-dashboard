@@ -1,7 +1,7 @@
-import { ServiceBinding } from "./service-binding";
+import { ServiceBinding, BindingSpecials } from "./service-binding";
 import { CfAuthScope } from "../chart-configurator/model/cfAuthScope";
 
-export interface ManagementPortalServiceBinding extends ServiceBinding{
+export interface ServiceBrokerServiceBinding extends ServiceBinding{
     bindingId: string | null;
     appName: string;
     appId: string;
@@ -13,4 +13,9 @@ export interface ManagementPortalServiceBinding extends ServiceBinding{
     organization: string;
     space: string;
 
+  }
+
+  export interface SpaceAndOrg extends BindingSpecials {
+    space: string;
+    org: string;
   }
