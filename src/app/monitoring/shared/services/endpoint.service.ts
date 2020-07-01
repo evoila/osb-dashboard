@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import { HttpHeaders } from '@angular/common/http';
-import { environment } from 'environments/runtime-environment';
-import { CustomEndpointService } from 'app/core/custom-endpoint.service';
+import { Injectable } from "@angular/core";
+import { HttpHeaders } from "@angular/common/http";
+import { environment } from "environments/runtime-environment";
+import { CustomEndpointService } from "app/core/custom-endpoint.service";
 
 @Injectable()
 export class EndpointService extends CustomEndpointService {
@@ -14,11 +14,12 @@ export class EndpointService extends CustomEndpointService {
     })
   };
 
-  public getUri(){
-    return super.getUri("log-metric-backend");
+  public getUri() {
+    return super.getUri("log-metric-backend") + this.prefix;
   }
   constructor() {
     super();
-    this.baseUrl = 'https://osb-log-metric-dashboard-backend.cf.dev.eu-de-central.msh.host';
+    this.baseUrl =
+      "https://osb-log-metric-dashboard-backend.cf.dev.eu-de-central.msh.host";
   }
 }
