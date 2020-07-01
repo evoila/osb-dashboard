@@ -23,7 +23,7 @@ export class ChartService {
   }
 
   public getAllCharts(): Observable<Array<Chart>> {
-    return this.cfAuthParams.createCfAuthParameters().pipe(
+    return this.cfAuthParams.createAuthParameters().pipe(
       flatMap(params => {
         return this.http.get<Array<Chart>>(this.url, { params });
       })
@@ -35,7 +35,7 @@ export class ChartService {
 
   public deleteChart(chartId: string): Observable<Chart> {
     const customUri = `${this.url}/${chartId}`;
-    return this.cfAuthParams.createCfAuthParameters().pipe(
+    return this.cfAuthParams.createAuthParameters().pipe(
       flatMap(params => {
         return this.http.delete<Chart>(customUri, {params});
       })

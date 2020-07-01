@@ -18,6 +18,7 @@ import {
   animate,
   transition
 } from '@angular/animations';
+import { authScopeFromBinding } from 'app/monitoring/chart-configurator/model/cfAuthScope';
 
 @Component({
   selector: 'sb-search-logs',
@@ -204,8 +205,9 @@ export class SearchLogsComponent implements OnInit {
 
     let searchRequest = {
       appName: this.scope.appName,
-      space: this.scope.space,
-      orgId: this.scope.organization_guid,
+      //space: this.scope.space,
+      //orgId: this.scope.organization_guid,
+      authScope: authScopeFromBinding(this.scope, 'cf'),
       query: this.query,
       docSize: {
         from,

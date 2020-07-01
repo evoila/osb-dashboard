@@ -22,6 +22,7 @@ import { Router } from '@angular/router';
 import { LoadPanels, UpdatePanel, DeletePanel } from '../../../shared/store/actions/panel.action';
 import { ShortcutService } from '../../../../core/services/shortcut.service';
 import { PanelElement } from 'app/monitoring/shared/model/panel-element';
+import { AuthScope } from 'app/monitoring/chart-configurator/model/authScope';
 
 @Component({
   selector: 'sb-panel-editor',
@@ -34,7 +35,7 @@ export class PanelEditorComponent implements OnInit {
   public name: string;
   public description: string;
   public onEdit: boolean;
-  public authScope: CfAuthScope;
+  public authScope: AuthScope;
 
 
   private subscriptions: Array<Subscription> = [];
@@ -66,7 +67,7 @@ export class PanelEditorComponent implements OnInit {
       this.onEdit = k;
     });
     this.charts$.subscribe(k => console.log(k));
-    this.cfAuthParams.createCfAuthScope().subscribe(k => (this.authScope = k));
+    this.cfAuthParams.createAuthScope().subscribe(k => (this.authScope = k));
 
     const sub = this.shortcut.bindShortcut({
       key: "Enter",

@@ -88,7 +88,7 @@ export class AddDataComponent implements OnInit {
     }
 
     this.authParamService
-      .createCfAuthScope()
+      .createAuthScope()
       .pipe(take(1))
       .subscribe(authScope => {
         let scopedAggregation = {

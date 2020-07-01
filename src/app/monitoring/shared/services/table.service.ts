@@ -23,7 +23,7 @@ export class TableService {
   }
 
   public getAllTables(): Observable<Array<Table>> {
-    return this.cfAuthParams.createCfAuthParameters().pipe(
+    return this.cfAuthParams.createAuthParameters().pipe(
       flatMap(params => {
         return this.http.get<Array<Table>>(this.url, { params });
       })

@@ -9,6 +9,7 @@ import * as moment from 'moment/moment';
 import { TimeService } from '../../shared/services/time.service';
 import { ShortcutService } from '../../../core/services/shortcut.service';
 import { HighlightingAndHits } from '../../components/log-messages/log-list/log-list.component';
+import { authScopeFromBinding } from 'app/monitoring/chart-configurator/model/cfAuthScope';
 
 @Component({
   selector: 'sb-live-logs',
@@ -127,8 +128,9 @@ export class LiveLogsComponent implements OnInit, OnDestroy {
 
     let searchRequest = {
       appName: this.scope.appName,
-      space: this.scope.space,
-      orgId: this.scope.organization_guid,
+      //space: this.scope.space,
+      //orgId: this.scope.organization_guid,
+      authScope: authScopeFromBinding(this.scope, 'cf'),
       docSize: {
         from: 0,
         size: this.size

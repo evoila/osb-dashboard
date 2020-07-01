@@ -17,6 +17,8 @@ import { Observable } from 'rxjs/internal/Observable';
 import { ChartConfiguratorModule } from '../../chart-configurator/chart-configurator.module';
 import { getBindingsLoadingState } from '../store/selectors/bindings.selector';
 import { timer } from 'rxjs';
+import { AuthScope } from 'app/monitoring/chart-configurator/model/authScope';
+import { KcAuthScope } from 'app/monitoring/chart-configurator/model/kcAuthScope';
 
 @Injectable({ providedIn: ChartConfiguratorModule })
 export class CfAuthParameterService {
@@ -24,27 +26,47 @@ export class CfAuthParameterService {
   private store: Store<BindingsState>;
 
 
-  public createCfAuthParameters(): Observable<HttpParams> {
-    return this.createCfAuthScope().pipe(
-      map((authScope: CfAuthScope) =>
+  public createAuthParameters(): Observable<HttpParams> {
+    
+    return this.createAuthScope().pipe(
+      map((authScope: AuthScope) =>
         this.paramService.convertParams(authScope)
       )
     );
   }
 
-  public createCfAuthScope(): Observable<CfAuthScope> {
+  public createAuthScope(): Observable<AuthScope> {
     const { serviceInstanceId } = environment;
 
-    return this.orgAndSpace$.pipe(
-      map(orgAndSpace => {
-        return {
-          type: 'cf',
-          orgId: orgAndSpace.org,
-          spaceId: orgAndSpace.space,
-          serviceInstanceId
-        } as CfAuthScope;
-      })
-    );
+    // ATTENTION: HARDCODED TYPE HERE --> WHERE TO GET IT FROM ?
+    const type = 'cf';
+    if (type == 'cf'){
+      return this.orgAndSpace$.pipe(
+        map(orgAndSpace => {
+          return {
+            type: 'cf',
+            orgId: orgAndSpace.org,
+            spaceId: orgAndSpace.space,
+            serviceInstanceId
+          } as CfAuthScope;
+        })
+      );
+    }
+
+    else{
+      return this.orgAndSpace$.pipe(
+        map(orgAndSpace => {
+          return {
+            type: 'kc',
+            customerId: orgAndSpace.org,
+            partnerId: orgAndSpace.space,
+            serviceInstanceId
+          } as KcAuthScope;
+        })
+      );
+    }
+    
+    
   }
 
   public construct(store: Store<BindingsState>) {

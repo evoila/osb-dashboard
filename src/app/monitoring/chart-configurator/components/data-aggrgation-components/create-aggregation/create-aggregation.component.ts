@@ -79,7 +79,7 @@ export class CreateAggregationComponent implements OnInit {
 
   triggerPreview(aggregation: any) {
     this.authParamService
-      .createCfAuthScope()
+      .createAuthScope()
       .pipe(take(1))
       .subscribe(authScope => {
         let scopedAggregation = {

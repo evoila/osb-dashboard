@@ -24,7 +24,7 @@ export class PanelService {
   }
 
   public getAllCharts(): Observable<Array<Panel>> {
-    return this.cfAuthParams.createCfAuthParameters().pipe(
+    return this.cfAuthParams.createAuthParameters().pipe(
       flatMap(params => {
         return this.http.get<Array<Panel>>(this.url, { params });
       })

@@ -26,7 +26,7 @@ export class AggregationService {
   }
 
   public getAllAggregations(chartType: string): Observable<Array<Aggregation>> {
-    return this.authParamService.createCfAuthParameters().pipe(
+    return this.authParamService.createAuthParameters().pipe(
       flatMap(param => {
         const params = param.append('chartType', chartType);
         return this.http.get<Array<Aggregation>>(this.url, { params });

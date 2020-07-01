@@ -16,18 +16,25 @@ import {
 import { of } from 'rxjs/internal/observable/of';
 import { Store } from '@ngrx/store';
 
-import { getBindingsSpaceAndOrg } from '../../../shared/store/selectors/bindings.selector';
+import { getBindingsSpaceAndOrg} from '../../../shared/store/selectors/bindings.selector';
+import { CfAuthScope } from '../../model/cfAuthScope';
+
 
 @Injectable()
 export class OptionsEffects {
   // Mocked entitis until Binding Service ist part of the ngrx-Store Concept
   private readonly mockedSpace = 'servicebroker-dev';
   private readonly mockedOrg = 'a6cec6a0-f163-4601-a573-484c9743bfa6';
-
+  
   private request = {
-    serviceInstanceId: environment.serviceInstanceId,
-    space: this.mockedSpace,
-    org: this.mockedOrg
+    chartType: '',
+    authScope: {
+      type: 'cf',
+      serviceInstanceId: environment.serviceInstanceId,
+      orgId: this.mockedOrg,
+      spaceId: this.mockedSpace
+    }  as CfAuthScope
+    
   } as OptionsRequestObject;
 
   @Effect()
@@ -36,8 +43,9 @@ export class OptionsEffects {
       return this.optionsStore.select(getBindingsSpaceAndOrg).pipe(
         take(1),
         switchMap(bindings => {
-          this.request.space = bindings.space;
-          this.request.org = bindings.org;
+          
+          (this.request.authScope as CfAuthScope).spaceId = bindings.space;
+          (this.request.authScope as CfAuthScope).orgId = bindings.org;
 
           this.request.chartType = chartType.payload;
           return this.optionService.getOptions(this.request).pipe(

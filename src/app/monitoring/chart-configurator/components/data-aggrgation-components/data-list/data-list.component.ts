@@ -49,7 +49,7 @@ export class DataListComponent implements OnInit {
   pushAggregation(aggregation: Aggregation, id: string) {
 
     this.authParamService
-      .createCfAuthScope()
+      .createAuthScope()
       .pipe(take(1))
       .subscribe(authScope => {
         const aggregationRq = {
