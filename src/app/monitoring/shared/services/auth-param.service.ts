@@ -99,6 +99,9 @@ OLD LOGIC OF CONSTRUCT METHOD ONLY SUITABLE FOR CF SERVICEBROKER BINDINGS
 */
 
   public construct(store: Store<BindingsState>) {
+    /* This is a custom constructor function which is needed because dependency injection of the store fails because
+    the store is not part of this shared module. So code that uses this service, has to use this function in order
+    to access the store and retrieve data */
     if (!this.store) {
       this.store = store;
       store.select(getBindingsLoadingState).pipe(
@@ -119,7 +122,6 @@ OLD LOGIC OF CONSTRUCT METHOD ONLY SUITABLE FOR CF SERVICEBROKER BINDINGS
               else if (bindings[0].type == "managementportal"){
                 this.bindingSpecials$ = store.select(getManagementPortalBindingsPartnerAndCustomer);
               }
-              return this;
             }
           });
         });
