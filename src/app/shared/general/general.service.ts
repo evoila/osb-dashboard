@@ -1,18 +1,29 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { CoreHttpService } from 'app/core/core-http.service';
-import { EntityService } from 'app/core/entity.service';
-
 import { environment } from 'environments/runtime-environment';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
-export class GeneralService extends EntityService {
+export class GeneralService {
   MANAGE_BASE_URL: string;
 
-  constructor(protected readonly httpService: CoreHttpService) {     
-    super(httpService);
+  constructor(private readonly http: HttpClient) {
     this.MANAGE_BASE_URL = environment.baseUrls.serviceBrokerUrl + '/custom/v2/manage/';
+  }
+
+
+  protected pagingAndSortingHandler(pagingAndSorting: any): string {
+    var resultString: string = '';
+
+    if (pagingAndSorting == null || pagingAndSorting.length == 0) {
+      return resultString;
+    }
+
+    resultString += '?size=' + pagingAndSorting.pageSize;
+    resultString += '&page=' + (pagingAndSorting.page - 1);
+
+    return resultString;
   }
 
   public getServiceInstanceId(): string {
@@ -28,19 +39,19 @@ export class GeneralService extends EntityService {
     if (entityRel)
       url += '/' + entityRel;
 
-    return this.patch(url, entity);
+    return this.http.patch(url, entity);
   }
-  
+
   public loadServiceInstance(): Observable<{} | any> {
-    return this.get(this.MANAGE_BASE_URL + 'service_instances/' + environment.serviceInstanceId);
+    return this.http.get(this.MANAGE_BASE_URL + 'service_instances/' + environment.serviceInstanceId);
   }
 
   public customLoadAll(path: string, pagingAndSorting?: any): Observable<{} | any> {
-    return this.all(this.MANAGE_BASE_URL + path + this.pagingAndSortingHandler(pagingAndSorting));
+    return this.http.get(this.MANAGE_BASE_URL + path + this.pagingAndSortingHandler(pagingAndSorting));
   }
 
   public customSave(path: string, entity: any): Observable<{} | any> {
-    return this.post(this.MANAGE_BASE_URL + path, entity);
+    return this.http.post(this.MANAGE_BASE_URL + path, entity);
   }
 
 }

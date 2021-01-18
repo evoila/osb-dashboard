@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { EntityService } from 'app/core';
 import { Chart } from './model/chart';
 
-import { DragDropModule } from '@angular/cdk/drag-drop';
 import { PanelService } from './panel.service';
 import { environment } from '../../environments/runtime-environment';
 import { Router, NavigationEnd } from '@angular/router';
@@ -37,7 +35,6 @@ export class MonitoringComponent implements OnInit {
   ];
 
   constructor(
-    private entityService: EntityService,
     private panelService: PanelService,
     private router: Router,
     private activatedRoute: ActivatedRoute
@@ -77,7 +74,7 @@ export class MonitoringComponent implements OnInit {
           iconClass: 'fa fa-plus'
         }
         this.menu[0].links = [...this.menu[0].links, link];
-        //directing to the first panel 
+        //directing to the first panel
         const firstLink = this.menu[0].links[0]['href'];
         if (!linkEvent) {
           this.router.navigate(['monitoring/' + firstLink]);

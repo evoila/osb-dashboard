@@ -1,11 +1,11 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { XHRBackend } from '@angular/http';
 
-import { CoreHttpService, InlineLoaderDirective } from './';
+
+import { InlineLoaderDirective } from './';
 import { NotificationBannerComponent } from './notification-banner/notification-banner.component';
 import { RouterModule } from '@angular/router';
-import { NotificationService, EntityService } from './';
+import { NotificationService} from './';
 
 import { SidebarLayoutComponent } from './sidebar/sidebar-layout/sidebar-layout.component';
 import { SidebarNavComponent, SidebarLinkNotActiveFilterPipe } from './sidebar/sidebar-nav/sidebar-nav.component';
@@ -27,9 +27,6 @@ import { ShowErrorsComponent } from './show-errors/show-errors.component';
 import { JsonFormSchemaComponent } from './json-form-schema/json-form-schema.component';
 import { Bootstrap4FrameworkModule } from 'angular6-json-schema-form';
 
-export function coreHttpFactory(backend: XHRBackend) {
-  return new CoreHttpService(backend);
-}
 
 const components = [
   NotificationBannerComponent,
@@ -66,13 +63,8 @@ export class CoreModule {
   public static forRoot(): ModuleWithProviders {
     return {
       ngModule: CoreModule,
-      providers: [{
-          provide: CoreHttpService,
-          useFactory: coreHttpFactory,
-          deps: [XHRBackend]
-        },
+      providers: [
         NotificationService,
-        EntityService,
         WindowService,
         CustomEndpointService,
         FormSchemaService,

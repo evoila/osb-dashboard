@@ -1,29 +1,26 @@
 import { Injectable } from '@angular/core';
 import { Observable, interval, Subject } from 'rxjs';
 import { exhaustMap, map, filter, take, timeout } from 'rxjs/operators';
-import { EntityService } from './entity.service';
-import { CoreHttpService } from './core-http.service';
 import { PollingTask, PollingStatus } from './domain/polling-task';
 
 import { environment } from 'environments/runtime-environment';
+import { HttpClient } from '@angular/common/http';
 
 const endpoint = environment.baseUrls.serviceBrokerUrl;
 @Injectable()
-export class TaskPollingService extends EntityService {
+export class TaskPollingService {
   readonly BASEURL = endpoint + '/custom/v2/manage/service_instances';
   private readonly TIMEOUT = 600000;
   private readonly SUCCESS_STATE = "succeeded";
   private readonly FAILURE_STATE = "failed"
-  private readonly INTERVAL = 2000;  
+  private readonly INTERVAL = 2000;
   taskList: { [key:string]:PollingTask; } = {};
   taskListChange: Subject<{ [key:string]:PollingTask; }> = new Subject<{ [key:string]:PollingTask; }>();
 
-  constructor(protected readonly httpService: CoreHttpService) {
-    super(httpService);
-  }
+  constructor(private http: HttpClient) {}
 
   public lastOperation(): Observable<{} | any> {
-    return this.get(this.BASEURL + '/' + environment.serviceInstanceId + '/last_operation');
+    return this.http.get(this.BASEURL + '/' + environment.serviceInstanceId + '/last_operation');
   }
 
   pollState(name: string, stateField: string, descriptionField: string, successState?: string,
@@ -37,8 +34,8 @@ export class TaskPollingService extends EntityService {
 
     if (!timeoutPeriod)
       timeoutPeriod = this.TIMEOUT;
-    
-    let id = this.randomId(); 
+
+    let id = this.randomId();
     this.addPollingOperation(id, PollingStatus.RUNNING, name, "Operation started");
     interval(this.INTERVAL).pipe(
       exhaustMap((val: number, index: number) => {
@@ -57,19 +54,19 @@ export class TaskPollingService extends EntityService {
           currentPollingState = PollingStatus.FAILED;
           isTerminated = true;
         }
-              
+
         this.updatePollingOperation(id, currentPollingState, result[descriptionField]);
-            
+
         return isTerminated;
       }),
       take(1),
       timeout(timeoutPeriod)
     ).subscribe(
       result => {
-        this.updatePollingOperation(id, PollingStatus.SUCCEEDED, result[descriptionField]);        
+        this.updatePollingOperation(id, PollingStatus.SUCCEEDED, result[descriptionField]);
       },
       error => {
-        this.updatePollingOperation(id, PollingStatus.FAILED, error);        
+        this.updatePollingOperation(id, PollingStatus.FAILED, error);
       }
     );
   }

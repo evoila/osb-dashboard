@@ -1,7 +1,7 @@
+import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
 import {
@@ -30,8 +30,7 @@ export function buildBuildTargetService(): BuildTargetService {
     BrowserAnimationsModule,
     RouterModule,
     FormsModule,
-    HttpModule,
-
+    HttpClientModule,
     NgbDropdownModule,
     NgbCollapseModule,
     NgbTooltipModule,
@@ -39,7 +38,7 @@ export function buildBuildTargetService(): BuildTargetService {
     NgbPopoverModule,
     NgbTypeaheadModule,
     NgbTabsetModule,
-    
+
     CoreModule.forRoot(),
     SharedModule,
 

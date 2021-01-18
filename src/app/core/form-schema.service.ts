@@ -1,25 +1,23 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { EntityService } from './entity.service';
-import { CoreHttpService } from './core-http.service';
 
 import { environment } from 'environments/runtime-environment';
 
 @Injectable()
-export class FormSchemaService extends EntityService {
+export class FormSchemaService {
   MANAGE_BASE_URL: string;
 
-  constructor(protected readonly httpService: CoreHttpService) {    
-    super(httpService);
+  constructor(private http: HttpClient) {
     this.MANAGE_BASE_URL = environment.baseUrls.serviceBrokerUrl + '/custom/v2/manage/';
   }
 
   public loadFormSchema(schemaName: string): Observable<{} | any> {
-    return this.get(this.MANAGE_BASE_URL + 'formSchema/' + environment.serviceInstanceId + '/' + schemaName);
+    return this.http.get(this.MANAGE_BASE_URL + 'formSchema/' + environment.serviceInstanceId + '/' + schemaName);
   }
 
   public loadFormSchemaValues(): Observable<{} | any> {
-    return this.get(this.MANAGE_BASE_URL + 'service_instances/' + environment.serviceInstanceId);
+    return this.http.get(this.MANAGE_BASE_URL + 'service_instances/' + environment.serviceInstanceId);
   }
 
   public filterSchema(result: any, instanceGroup: string, elements: Array<string>) : any {
