@@ -12,11 +12,11 @@
     "noImplicitThis": true,
     "noUnusedParameters": false,
     "noUnusedLocals": true,
-    "target": "es2015",
+    "target": "es5",
     "lib": [
       "es2016",
       "dom"
     ],
-    "module": "esnext"
+    "module": "commonjs"
   }
 }

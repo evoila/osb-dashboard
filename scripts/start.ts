@@ -1,8 +1,6 @@
 /* tslint:disable:no-console */
-
-import * as program from '../node_modules/commander';
-
 import { ChildProcessManager } from './child-process-manager';
+import * as program from '../node_modules/commander';
 import * as spawn from 'cross-spawn';
 
 const children = new ChildProcessManager();
