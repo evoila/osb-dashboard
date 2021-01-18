@@ -96,7 +96,7 @@
     "open-iconic": "^1.1.1",
     "rxjs": "^6.3.3",
     "tempusdominus-bootstrap-4": "5.1.2",
-    "tslib": "^2.1.0",
+    "tslib": "1.1.0",
     "yarn": "^1.5.0",
     "z-schema": "^3.24.1",
     "zone.js": "^0.9.1"
