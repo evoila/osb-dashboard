@@ -51,8 +51,8 @@ const components = [
   imports: [
     CommonModule,
     RouterModule,
-    NgbCollapseModule.forRoot(),
-    NgbDropdownModule.forRoot(),
+    NgbCollapseModule,
+    NgbDropdownModule,
     Bootstrap4FrameworkModule
   ],
   declarations: [components],
@@ -60,7 +60,7 @@ const components = [
   providers: []
 })
 export class CoreModule {
-  public static forRoot(): ModuleWithProviders {
+  public static forRoot(): ModuleWithProviders<CoreModule> {
     return {
       ngModule: CoreModule,
       providers: [

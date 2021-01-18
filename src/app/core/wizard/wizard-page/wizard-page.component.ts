@@ -26,10 +26,10 @@ export class WizardPageComponent implements OnInit, AfterViewInit {
   @Output() readonly onCommit: EventEmitter<any> = new EventEmitter<any>(false);
   @Output() readonly onActivate: EventEmitter<any> = new EventEmitter(false);
 
-  @ContentChild(FocusDirective, {static: false}) focusElement: FocusDirective;
-  @ContentChild(NgForm, {static: false}) form: NgForm;
+  @ContentChild(FocusDirective) focusElement: FocusDirective;
+  @ContentChild(NgForm) form: NgForm;
 
-  @ContentChild(WizardPageSubmitButtonComponent, {static: false}) submitButton: WizardPageSubmitButtonComponent;
+  @ContentChild(WizardPageSubmitButtonComponent) submitButton: WizardPageSubmitButtonComponent;
 
   constructor(public readonly element: ElementRef) {
   }
