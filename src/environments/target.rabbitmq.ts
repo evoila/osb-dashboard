@@ -18,7 +18,7 @@ export const buildTarget: BuildTarget = {
     // canLoad guard and rely on the CanActivate guard alone.
     {
       path: 'rabbitmq',
-      loadChildren: 'app/rabbitmq/rabbitmq.module#RabbitMQModule',
+      loadChildren: () => import('./../app/rabbitmq/rabbitmq.module').then(m => m.RabbitMQModule),
       data: {
         skipPreload: true // register module is seldomly needed, save these few kbs
       }

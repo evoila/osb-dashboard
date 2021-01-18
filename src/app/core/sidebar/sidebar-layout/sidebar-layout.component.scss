@@ -1,10 +1,9 @@
-
-@import '../../core';
+@import "../../core";
 
 .sidebar-layout {
   margin-top: $toolbar-height;
 }
-:host /deep/ .sidebar-nav-flex {
+:host ::ng-deep .sidebar-nav-flex {
   width: 100%;
 }
 .sidebar {
@@ -13,7 +12,7 @@
   top: $navbar-height;
   display: flex;
   z-index: $bars-z-index;
-  background-color: hsla(0,0%,100%,.95);
+  background-color: hsla(0, 0%, 100%, 0.95);
   overflow-x: hidden; // do not allow text to overflow into main content area
 
   @include media-breakpoint-down(sm) {
@@ -35,7 +34,6 @@
     // affecting the .sidebar-layout-top-row
     padding-right: $sidebar-border-width;
   }
-
 }
 
 .content {
@@ -43,4 +41,3 @@
     padding-left: $sidebar-width;
   }
 }
-

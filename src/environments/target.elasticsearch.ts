@@ -18,7 +18,7 @@ export const buildTarget: BuildTarget = {
     // canLoad guard and rely on the CanActivate guard alone.
     {
       path: 'elasticsearch',
-      loadChildren: 'app/elasticsearch/elasticsearch.module#ElasticsearchModule',
+      loadChildren: () => import('./../app/elasticsearch/elasticsearch.module').then(m => m.ElasticsearchModule),
       data: {
         skipPreload: true // register module is seldomly needed, save these few kbs
       }

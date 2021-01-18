@@ -12,7 +12,7 @@
     "noImplicitThis": true,
     "noUnusedParameters": false,
     "noUnusedLocals": true,
-    "target": "es5",
+    "target": "es2015",
     "lib": [
       "es2016",
       "dom"

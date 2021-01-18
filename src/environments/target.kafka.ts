@@ -18,7 +18,7 @@ export const buildTarget: BuildTarget = {
     // canLoad guard and rely on the CanActivate guard alone.
     {
       path: 'kafka',
-      loadChildren: 'app/kafka/kafka.module#KafkaModule',
+      loadChildren: () => import('./../app/kafka/kafka.module').then(m => m.KafkaModule),
       data: {
         skipPreload: true // register module is seldomly needed, save these few kbs
       }

@@ -18,7 +18,7 @@ export const buildTarget: BuildTarget = {
     // canLoad guard and rely on the CanActivate guard alone.
     {
       path: 'cassandra',
-      loadChildren: 'app/cassandra/cassandra.module#CassandraModule',
+      loadChildren: () => import('./../app/cassandra/cassandra.module').then(m => m.CassandraModule),
       data: {
         skipPreload: true // register module is seldomly needed, save these few kbs
       }

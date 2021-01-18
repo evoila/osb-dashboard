@@ -1,3 +1,4 @@
+
 import { BuildTarget } from './build-target';
 
 /**
@@ -18,7 +19,8 @@ export const buildTarget: BuildTarget = {
     // canLoad guard and rely on the CanActivate guard alone.
     {
       path: 'mysql',
-      loadChildren: 'app/mysql/mysql.module#MysqlModule',
+      loadChildren: () => import('./../app/mysql/mysql.module').then(m => m.MysqlModule),
+
       data: {
         skipPreload: true // register module is seldomly needed, save these few kbs
       }

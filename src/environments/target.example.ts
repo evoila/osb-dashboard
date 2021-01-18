@@ -17,7 +17,7 @@ export const buildTarget: BuildTarget = {
     //  If you want to preload a module and guard against unauthorized access, drop the canLoad guard and rely on the CanActivate guard alone.
     {
       path: 'example',
-      loadChildren: 'app/example/example.module#ExampleModule',
+      loadChildren: () => import('./../app/example/example.module').then(m => m.ExampleModule),
       data: {
         skipPreload: true // register module is seldomly needed, save these few kbs
       }

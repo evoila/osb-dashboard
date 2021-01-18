@@ -1,4 +1,0 @@
-enum ChartType {
-    elastic,
-    prometheus
-}
