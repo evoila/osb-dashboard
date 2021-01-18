@@ -74,7 +74,6 @@
     "@angular/core": "8.2.14",
     "@angular/flex-layout": "^7.0.0-beta.22",
     "@angular/forms": "8.2.14",
-    "@angular/http": "9.0.1",
     "@angular/material": "^7.2.0",
     "@angular/platform-browser": "8.2.14",
     "@angular/platform-browser-dynamic": "8.2.14",
@@ -90,6 +89,7 @@
     "lodash-es": "^4.17.11",
     "moment": "^2.22.1",
     "ng2-nouislider": "^1.7.13",
+
     "ngx-monaco-editor": "^6.0.0",
     "nouislider": "^9.1.0",
     "npm": "^6.8.0",
