@@ -1221,7 +1221,7 @@
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
-            "deployUrl": "/app/",            
+            "deployUrl": "/app/",
             "protractorConfig": "./protractor.conf.js",
             "devServerTarget": "monitoring:serve"
           }
@@ -1236,7 +1236,7 @@
           }
         }
       }
-    }, 
+    },
     "postgresql": {
       "root": "",
       "sourceRoot": "src",
@@ -1505,7 +1505,7 @@
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
-            "deployUrl": "/app/",            
+            "deployUrl": "/app/",
             "protractorConfig": "./protractor.conf.js",
             "devServerTarget": "rabbitmq:serve"
           }
@@ -1653,7 +1653,7 @@
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
-            "deployUrl": "/app/",            
+            "deployUrl": "/app/",
             "protractorConfig": "./protractor.conf.js",
             "devServerTarget": "redis:serve"
           }
@@ -1670,7 +1670,6 @@
       }
     }
   },
-  
   "defaultProject": "example",
   "schematics": {
     "@schematics/angular:component": {
@@ -1680,5 +1679,8 @@
     "@schematics/angular:directive": {
       "prefix": "sb"
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }

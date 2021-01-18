@@ -11,7 +11,7 @@
       "dom"
     ],
     "outDir": "../out-tsc/app",
-    "target": "es5",
+    "target": "es2015",
     "module": "esnext",
     "baseUrl": "",
     "types": []
@@ -21,6 +21,7 @@
     "polyfills.ts"
   ],
   "include": [
-    "src/**/*.d.ts"
+    "src/**/*.d.ts",
+    "src/**/*.ts",
   ]
 }
