@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -18,6 +18,8 @@ import { CoreModule } from './core/core.module';
 import { BuildTargetService } from 'app/shared';
 import { SharedModule } from './shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { APP_BASE_HREF } from '@angular/common';
+import { AuthenticationInterceptor } from './core/services/authentication.interceptor';
 
 export function buildBuildTargetService(): BuildTargetService {
   return new BuildTargetService(buildTarget);
@@ -47,7 +49,15 @@ export function buildBuildTargetService(): BuildTargetService {
     AppRoutingModule,
   ],
   providers: [
-    { provide: BuildTargetService, useFactory: buildBuildTargetService }
+    { provide: BuildTargetService, useFactory: buildBuildTargetService },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthenticationInterceptor,
+      multi: true
+    },
+    { provide: APP_BASE_HREF,
+      useValue: '/app/'
+    }
   ],
   bootstrap: [AppComponent]
 })
