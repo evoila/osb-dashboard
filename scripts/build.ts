@@ -2,7 +2,7 @@
 const { ChildProcessManager } = require('./child-process-manager');
 const { Command } = require('commander');
 const {spawn} = require('cross-spawn');
-const { fs } = require('fs');
+const fs = require('fs');
 
 
 const children = new ChildProcessManager();
