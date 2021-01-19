@@ -63,7 +63,8 @@
     "ci:postgresql": "yarn run tslint && yarn run test && yarn run build:postgresql && yarn run e2e:postgresql",
     "ci:rabbitmq": "yarn run tslint && yarn run test && yarn run build:rabbitmq && yarn run e2e:rabbitmq",
     "ci:redis": "yarn run tslint && yarn run test && yarn run build:redis && yarn run e2e:redis",
-    "privateci": "fly -t ci execute -c ./../ci/build.yml -i repo=./../ -x"
+    "privateci": "fly -t ci execute -c ./../ci/build.yml -i repo=./../ -x",
+    "postinstall": "ngcc"
   },
   "private": true,
   "dependencies": {
