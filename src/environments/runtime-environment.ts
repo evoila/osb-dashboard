@@ -8,14 +8,15 @@ if (!injectedEnv) {
   // tslint:disable-next-line:no-console
   console.warn('DASHBOARD DEFAULT DEVELOPMENT ENV ACTIVE - DID YOU FORGET TO INJECT A RUNTIME ENV?');
   seedEnv = {
-    serviceInstanceId: 'DD69H8D3-7876-4056-A0EE-DE8D3498259T',
-    token: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJmOTY0YmZkMzQ2NzY0NDZkOGM3OWE3NDdhNDg1MTM3MSIsInN1YiI6IjY2NTFkOTgwLTYxOWYtNGY4NS04NGRjLTg5YzA4NTQ2NWMyNiIsInNjb3BlIjpbImNsb3VkX2NvbnRyb2xsZXIucmVhZCIsInBhc3N3b3JkLndyaXRlIiwiY2xvdWRfY29udHJvbGxlci53cml0ZSIsIm9wZW5pZCIsInVhYS51c2VyIl0sImNsaWVudF9pZCI6ImNmIiwiY2lkIjoiY2YiLCJhenAiOiJjZiIsImdyYW50X3R5cGUiOiJwYXNzd29yZCIsInVzZXJfaWQiOiI2NjUxZDk4MC02MTlmLTRmODUtODRkYy04OWMwODU0NjVjMjYiLCJvcmlnaW4iOiJtZXNoZmVkIiwidXNlcl9uYW1lIjoiYTFkNTYyN2ItYTgwNC00YjVjLTk0ZTYtMDA3OGQ0ZTQ1ODQ1IiwiZW1haWwiOiJqaGV5bEBldm9pbGEuZGUiLCJyZXZfc2lnIjoiMmJhNDY0OGEiLCJpYXQiOjE1NDEyNTIxMzMsImV4cCI6MTY0MTI1MjczMywiaXNzIjoiaHR0cHM6Ly91YWEuY2YuZGV2LmV1LWRlLWNlbnRyYWwubXNoLmhvc3Qvb2F1dGgvdG9rZW4iLCJ6aWQiOiJ1YWEiLCJhdWQiOlsiY2xvdWRfY29udHJvbGxlciIsInBhc3N3b3JkIiwiY2YiLCJ1YWEiLCJvcGVuaWQiXX0.aIlWoJcl1wbuCMjfgbm_mhk6MF7ur_6wrKEwpjYmhUY',
+    serviceInstanceId: 'f0c34eaf-2171-4334-85a6-e88acf4820f8',
+    token: 'Bearer eyJhbGciOiJSUzI1NiIsImprdSI6Imh0dHBzOi8vdWFhLmNmLmV2b2lsYS5pby90b2tlbl9rZXlzIiwia2lkIjoia2V5LTEiLCJ0eXAiOiJKV1QifQ.eyJqdGkiOiJjM2FjZTFhM2RkNjU0NzY1Yjg1NzRjM2NmYTcwNzhmMCIsInN1YiI6ImZhNzhhNTQ2LTJkMGMtNGEyOC1hZDVmLWZiOGJkYjlmZGZmMSIsInNjb3BlIjpbImNsb3VkX2NvbnRyb2xsZXJfc2VydmljZV9wZXJtaXNzaW9ucy5yZWFkIiwib3BlbmlkIl0sImNsaWVudF9pZCI6Im9zYi1wb3N0Z3Jlc3FsLTEyLmNmLmV2b2lsYS5pbyIsImNpZCI6Im9zYi1wb3N0Z3Jlc3FsLTEyLmNmLmV2b2lsYS5pbyIsImF6cCI6Im9zYi1wb3N0Z3Jlc3FsLTEyLmNmLmV2b2lsYS5pbyIsImdyYW50X3R5cGUiOiJhdXRob3JpemF0aW9uX2NvZGUiLCJ1c2VyX2lkIjoiZmE3OGE1NDYtMmQwYy00YTI4LWFkNWYtZmI4YmRiOWZkZmYxIiwib3JpZ2luIjoiRXZvaWxhU1NPIiwidXNlcl9uYW1lIjoiamhleWxAZXZvaWxhLmRlIiwiZW1haWwiOiJqaGV5bEBldm9pbGEuZGUiLCJhdXRoX3RpbWUiOjE2MTExNDMzMDIsInJldl9zaWciOiI5YjcwNDYyZiIsImlhdCI6MTYxMTE0MzMwMywiZXhwIjoxNjExMTg2NTAzLCJpc3MiOiJodHRwczovL3VhYS5jZi5ldm9pbGEuaW8vb2F1dGgvdG9rZW4iLCJ6aWQiOiJ1YWEiLCJhdWQiOlsib3BlbmlkIiwib3NiLXBvc3RncmVzcWwtMTIuY2YuZXZvaWxhLmlvIiwiY2xvdWRfY29udHJvbGxlcl9zZXJ2aWNlX3Blcm1pc3Npb25zIl19.IuGY1qCJrVscXBt5quCM7f1j8MNFqQb8PiPSdXW9QLqrqzK5taw5kp3Rrn5VO8lJ0eWd6wBhLZzEXLVq17Rt48SWR7tvNNYfDwpbCzDH01_rJ_HTTBZIa6u7P8P-bDgpMd_iKQDKx5NJ_NQJE7B1EIQMbUIgCRiyiz1yNgFpP5dEJoHxkoJue-_-TlcbQif6PT0Pg4wEOFQpwDJWJligL6J6RO0dPh8y7lJJA1h6SRsrzsD8x_YQbRvuUQcZYBe1PKCYxDzSKg-KjbwlUgQwzDoBmM3Lyim_J-GPBQ_P_rcF4-LZGlwopFgnwEw5AKnhp5j5ni0Oi_SIeYwE911SoA',
     baseUrls: {
-      serviceBrokerUrl: 'http://localhost:8080',
+      serviceBrokerUrl: 'https://osb-postgresql-12.cf.evoila.io',
     },
     customEndpoints: [
-      {"url":"http:\/\/localhost:8090","identifier":"log-metric-backend"},
-      {"url":"http:\/\/localhost:8081","identifier":"osb-backup-manager"}
+      {"url":"http://localhost:8090","identifier":"log-metric-backend"},
+      {"url":"https://osb-backup-manager.cf.evoila.io","identifier":"osb-backup-manager"},
+      {"url":"https://osb-autoscaler-core.cf.evoila.io","identifier":"osb-autoscaler-core"}
     ],
     ui: {
       title: 'Service Broker Panel',

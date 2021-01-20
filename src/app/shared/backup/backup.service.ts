@@ -9,7 +9,8 @@ export class BackupService {
   BACKUP_BASEURL: string;
 
   constructor(private readonly http: HttpClient,
-    protected readonly customEndpointService: CustomEndpointService) {
+    customEndpointService: CustomEndpointService) {
+    this.BACKUP_BASEURL = customEndpointService.getUri('osb-backup-manager') as string;
   }
 
   public getServiceInstance(): string {
