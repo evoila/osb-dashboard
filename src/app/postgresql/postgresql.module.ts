@@ -8,6 +8,7 @@ import { PostgresqlRoutingModule } from './postgresql-routing.module';
 import { PostgresqlUsersAndDatabasesComponent } from './postgresql-users-and-databases/postgresql-users-and-databases.component';
 import { PostgresqlSettingsComponent } from './postgresql-settings/postgresql-settings.component';
 import { PgpoolSettingsComponent } from './pgpool-settings/pgpool-settings.component';
+import { UserAndDatabseModalsComponent } from './user-and-databse-modals/user-and-databse-modals.component';
 
 @NgModule({
   imports: [
@@ -16,6 +17,6 @@ import { PgpoolSettingsComponent } from './pgpool-settings/pgpool-settings.compo
     CoreModule,
     PostgresqlRoutingModule
   ],
-  declarations: [PostgresqlComponent, PostgresqlUsersAndDatabasesComponent, PostgresqlSettingsComponent, PgpoolSettingsComponent]
+  declarations: [PostgresqlComponent, PostgresqlUsersAndDatabasesComponent, PostgresqlSettingsComponent, PgpoolSettingsComponent, UserAndDatabseModalsComponent]
 })
 export class PostgresqlModule { }

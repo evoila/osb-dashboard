@@ -1,0 +1,27 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">
+      {{ modalSettings.description }}
+    </h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">{{ modalSettings.modalBody }}</div>
+
+  <div class="modal-footer">
+    <button
+      *ngFor="let button of modalSettings.buttons"
+      type="button"
+      [ngClass]="button.classes"
+      (click)="closeOrDismiss(button.isDismiss, modal, button.result)"
+    >
+      {{ button.text }}
+    </button>
+  </div>
+</ng-template>

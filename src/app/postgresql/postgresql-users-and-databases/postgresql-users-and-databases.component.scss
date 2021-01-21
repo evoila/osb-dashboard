@@ -1,0 +1,35 @@
+.container {
+  padding-top: 20px;
+}
+.fa-trash-alt,
+.fa-user-minus {
+  color: #dc3545 !important;
+}
+.table-names2 {
+  width: 80%;
+}
+.table-names3 {
+  width: 55%;
+}
+.table-interactions {
+  width: 20%;
+}
+.form-check-label {
+  padding: 0 0 0 20px;
+}
+.form-check-input {
+  padding: 0 0 0 10px;
+}
+.checkbox-w_labels {
+  margin-left: 20px;
+}
+td {
+  vertical-align: middle;
+}
+.flexbox {
+  display: flex;
+  justify-content: space-between;
+}
+.flexbox * {
+  padding: 2px;
+}

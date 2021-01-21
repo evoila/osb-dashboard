@@ -1,4 +1,122 @@
-<div class="section-content">
+<!-- <div class="section-content">
   <h4>Configuration of Users and Databases</h4>
   <sb-json-form-schema [form-layout]="formLayout" [form-elements]="formElements" [instance-group-name]="instanceGroupName"></sb-json-form-schema>
 </div>
+ -->
+<!-- <ul ngbNav #nav="ngbNav" class="nav-tabs">
+  <li ngbNavItem>
+    <a ngbNavLink>Databases</a>
+    <ng-template ngbNavContent><!-- Add component here later on-->
+<!--</ng-template>
+   </li>
+  <li ngbNavItem>
+    <a ngbNavLink>Users</a>
+    <ng-template ngbNavContent><!-- Add component here later on-->
+<!-- </ng-template>
+  </li>
+</ul>
+-->
+<div class="container">
+  <div>
+    <h3>Databases</h3>
+    <button type="button" class="btn btn-link" (click)="addDatabase()">
+      Add Database
+    </button>
+    <div class="alert alert-warning" *ngIf="!(databases && databases.length)">
+      There is no database yet. Don't panic, create one!
+    </div>
+    <table class="table" *ngIf="databases && databases.length">
+      <tbody>
+        <tr *ngFor="let database of databases; let i = index">
+          <td *ngIf="!database.inEdit" class="table-names2">
+            {{ database.name }}
+          </td>
+          <td *ngIf="database.inEdit" class="table-names2">
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="database.name"
+              placeholder="Input Databasename here"
+            />
+          </td>
+
+          <td class="table-interaction">
+            <button type="button" class="btn btn-link">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button
+              type="button"
+              class="btn btn-link"
+              (click)="deleteDatabase(i)"
+            >
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div>
+    <h3>Users</h3>
+    <button type="button" class="btn btn-link" (click)="addUser()">
+      Add User
+    </button>
+    <div class="alert alert-warning" *ngIf="!(users && users.length)">
+      There is no user yet. Don't panic, create one!
+    </div>
+    <table class="table" *ngIf="users && users.length">
+      <tbody>
+        <tr *ngFor="let user of users">
+          <td *ngIf="!user.inEdit" class=".table-names3">
+            {{ user.username }}
+          </td>
+          <td *ngIf="user.inEdit" class="table-names3">
+            <div class="flexbox">
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="user.username"
+                placeholder="Username"
+                style="width: 49%"
+              />
+              <input
+                type="password"
+                class="form-control"
+                [(ngModel)]="user.password"
+                placeholder="Password"
+                style="width: 49%"
+              />
+            </div>
+          </td>
+
+          <td>
+            <span *ngIf="!user.inEdit">{{ isAdmin(user.admin) }}</span>
+            <div class="checkbox-w_labels">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                [(ngModel)]="user.isAdmin"
+                *ngIf="user.inEdit"
+              />
+              <label *ngIf="user.inEdit" class="form-check-lable">Admin</label>
+            </div>
+          </td>
+
+          <td class="table-interactions">
+            <button type="button" class="btn btn-link">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button type="button" class="btn btn-link">
+              <i class="fas fa-user-minus"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <button type="button" class="btn btn-danger mr-2">Discard</button>
+  <button type="button" class="btn btn-primary">Save</button>
+</div>
+
+<sb-user-and-databse-modals [open$]="modalSubject">
+</sb-user-and-databse-modals>
