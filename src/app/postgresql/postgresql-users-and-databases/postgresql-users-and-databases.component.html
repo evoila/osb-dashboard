@@ -32,16 +32,23 @@
             {{ database.name }}
           </td>
           <td *ngIf="database.inEdit" class="table-names2">
-            <input
+            <div class="flexbox">
+              <input
               type="text"
-              class="form-control"
+              class="form-control ip"
               [(ngModel)]="database.name"
-              placeholder="Input Databasename here"
+              placeholder="insert database name" 
+              
             />
+            <button type="button" class="btn btn-link" (click)="manageDBUsers(i)">
+              <i class="fas fa-user-plus" style="color: green"></i>
+            </button>
+            </div>
+            
           </td>
 
           <td class="table-interaction">
-            <button type="button" class="btn btn-link">
+            <button type="button" class="btn btn-link" (click)="editDatabase(i)">
               <i class="fas fa-edit"></i>
             </button>
             <button
@@ -66,7 +73,7 @@
     </div>
     <table class="table" *ngIf="users && users.length">
       <tbody>
-        <tr *ngFor="let user of users">
+        <tr *ngFor="let user of users; let i = index">
           <td *ngIf="!user.inEdit" class=".table-names3">
             {{ user.username }}
           </td>
@@ -74,16 +81,16 @@
             <div class="flexbox">
               <input
                 type="text"
-                class="form-control"
+                class="form-control ip"
                 [(ngModel)]="user.username"
-                placeholder="Username"
+                placeholder="username"
                 style="width: 49%"
               />
               <input
                 type="password"
-                class="form-control"
+                class="form-control ip"
                 [(ngModel)]="user.password"
-                placeholder="Password"
+                placeholder="password"
                 style="width: 49%"
               />
             </div>
@@ -103,19 +110,19 @@
           </td>
 
           <td class="table-interactions">
-            <button type="button" class="btn btn-link">
+            <button type="button" class="btn btn-link" (click)="editUser(i)">
               <i class="fas fa-edit"></i>
             </button>
             <button type="button" class="btn btn-link">
-              <i class="fas fa-user-minus"></i>
+              <i class="fas fa-user-minus" (click)="deleteUser(i)"></i>
             </button>
           </td>
         </tr>
       </tbody>
     </table>
   </div>
-  <button type="button" class="btn btn-danger mr-2">Discard</button>
-  <button type="button" class="btn btn-primary">Save</button>
+  <button type="button" class="btn btn-danger mr-2" (click)="cancelAll()">Discard</button>
+  <button type="button" class="btn btn-primary" (click)="save()">Save</button>
 </div>
 
 <sb-user-and-databse-modals [open$]="modalSubject">

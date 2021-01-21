@@ -90,15 +90,30 @@ export class PostgresqlUsersAndDatabasesComponent implements OnInit {
   addDatabase() {
     this.databases.push({ name: "", users: [], inEdit: true });
   }
+  editDatabase(index: number) {
+    const db = this.databases[index];
+    this.databases[index] = {  ...db,  name_original: db.name, users_original: db.users, inEdit: true };
+  }
+
   addUser() {
     this.users.push({ password: "", username: "", admin: false, inEdit: true });
   }
+  editUser(index: number) {
+    const user = this.users[index];
+    this.users[index] = {  ...user,  password_original: user.password, username_original: user.username, admin_original: user.admin, inEdit: true };   
+  }
+
+  manageDBUsers(index){
+    const info = "display model/template/component SHOWING ALL CURRENT USERS &  select element offering available users to add or remove for this db";
+    alert(info);
+    console.log(info); 
+  }
+
   deleteDatabase(index: number) {
-    // Todo add Modal later on
     const modalSetting = {
       open: true,
       description: "Delete Database",
-      modalBody: "Are you sure you want to delete this database?",
+      modalBody: "Are you sure to delete database " + this.databases[index].name + " ?" ,
       buttons: [
         {
           text: "cancel",
@@ -124,6 +139,40 @@ export class PostgresqlUsersAndDatabasesComponent implements OnInit {
     this.modalSubject.next(modalSetting);
   }
 
+
+  deleteUser(index: number) {
+  
+    const modalSetting = {
+      open: true,
+      description: "Delete User ",
+      modalBody: "Are you sure to delete user " + this.users[index].username + " ?",
+      buttons: [
+        {
+          text: "cancel",
+          isDismiss: true,
+          result: "cancel",
+          classes: ["btn", "btn-primary"],
+        } as ModalButton,
+        {
+          text: "delete",
+          isDismiss: false,
+          result: "delete",
+          classes: ["btn", "btn-danger"],
+        } as ModalButton,
+      ],
+      resultSubject: new Subject<string>(),
+    } as ModalSettings;
+    this.modalSubscription = modalSetting.resultSubject.subscribe((k) => {
+      if (k === "delete") {
+        this.users.splice(index, 1);
+      }
+      this.modalSubscription.unsubscribe();
+    });
+    this.modalSubject.next(modalSetting);
+
+  }
+
+
   save() {
     // clean out edit datastructure, since server would reject it
     this.databases = this.databases.map((k) => {
@@ -132,5 +181,39 @@ export class PostgresqlUsersAndDatabasesComponent implements OnInit {
     this.users = this.users.map((k) => {
       return { username: k.username, password: k.password, admin: k.admin };
     });
+    // send it
+    console.log(this.databases, this.users)
+    // ..
+    // ..
+
   }
+
+  cancelAll(){
+    // remove edit data garbage ( and reset UI )
+    this.databases = this.databases.map((k) => {
+      // ternary field wise (more checks)
+      return { 
+        name: k.inEdit ? k.name_original : k.name, 
+        users: k.inEdit ? k.users_original : k.users 
+      };
+    });
+    this.users = this.users.map((k) => {
+      // ternary obj wise (more code)
+      return k.inEdit ? { 
+        username:  k.username_original, 
+        password: k.password_original, 
+        admin: k.admin_original 
+      } : 
+      { 
+        username:  k.username, 
+        password: k.password, 
+        admin: k.admin
+      };
+    });
+  }
+
+
+  
+
+
 }
