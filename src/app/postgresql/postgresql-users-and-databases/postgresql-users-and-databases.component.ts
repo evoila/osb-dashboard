@@ -112,7 +112,10 @@ export class PostgresqlUsersAndDatabasesComponent implements OnInit {
         this.databases.splice(index, 1);
       } else if (k === "discard") {
         const db = this.databases[index];
-        this.databases[index] = { name: db.nameOld, users: db.usersOld };
+        this.databases[index] = {
+          name: db.nameOriginal,
+          users: db.usersOriginal,
+        };
       }
       this.modalSubscription.unsubscribe();
     });
