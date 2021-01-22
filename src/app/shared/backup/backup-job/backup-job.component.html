@@ -42,29 +42,29 @@
         </tr>
         <tr>
           <th>Error Message</th>
-          <td>{{agentExecutionReponse.value.error_message}}</td>
+          <td>{{(agentExecutionReponse.value.error_message + '').replaceAll('echo ', '')}}</td>
         </tr>
         <tr>
           <th>Pre-Backup Log</th>
           <td>
             <code>
-                    {{agentExecutionReponse.value.pre_backup_check_log}}
-                  </code>
+                {{(agentExecutionReponse.value.pre_backup_check_log + '').replaceAll('echo ', '')}}
+            </code>
           </td>
         </tr>
         <tr>
           <th>Pre-Backup Error Log</th>
           <td>
             <code>
-                    {{agentExecutionReponse.value.pre_backup_check_errorlog}}
-                  </code>
+                {{(agentExecutionReponse.value.pre_backup_check_errorlog + '').replaceAll('echo ', '')}}
+            </code>
           </td>
         </tr>
         <tr>
           <th>Pre-Backup Log</th>
           <td>
             <code>
-                {{agentExecutionReponse.value.pre_backup_lock_log}}
+                {{(agentExecutionReponse.value.pre_backup_lock_log + '').replaceAll('echo ', '')}}
               </code>
           </td>
         </tr>
@@ -72,7 +72,7 @@
           <th>Pre-Backup Error Log</th>
           <td>
             <code>
-                {{agentExecutionReponse.value.pre_backup_lock_errorlog}}
+                {{(agentExecutionReponse.value.pre_backup_lock_errorlog.backup_log + '').replaceAll('echo ', '')}}
               </code>
           </td>
         </tr>
@@ -80,7 +80,7 @@
           <th>Backup Log</th>
           <td>
             <code>
-                {{agentExecutionReponse.value.backup_log}}
+                {{(agentExecutionReponse.value.backup_log.backup_log + '').replaceAll('echo ', '')}}
               </code>
           </td>
         </tr>
@@ -88,15 +88,15 @@
           <th>Backup Error Log</th>
           <td>
             <code>
-                {{agentExecutionReponse.value.backup_errorlog}}
-              </code>
+                {{(agentExecutionReponse.value.backup_errorlog + '').replaceAll('echo ', '')}}
+            </code>
           </td>
         </tr>
         <tr>
           <th>Post-Backup Cleanup Log</th>
           <td>
             <code>
-                {{agentExecutionReponse.value.backup_cleanup_log}}
+                {{(agentExecutionReponse.value.backup_cleanup_log + '').replaceAll('echo ', '')}}
               </code>
           </td>
         </tr>
@@ -104,7 +104,7 @@
           <th>Post-Backup Cleanup Error Log</th>
           <td>
             <code>
-                {{agentExecutionReponse.value.backup_cleanup_errorlog}}
+                {{(agentExecutionReponse.value.backup_cleanup_errorlog + '').replaceAll('echo ', '')}}
               </code>
           </td>
         </tr>
@@ -112,7 +112,7 @@
           <th>Post-Backup Unlock Log</th>
           <td>
             <code>
-                {{agentExecutionReponse.value.post_backup_unlock_log}}
+                {{(agentExecutionReponse.value.post_backup_unlock_log + '').replaceAll('echo ', '')}}
               </code>
           </td>
         </tr>
@@ -120,7 +120,7 @@
           <th>Post-restore Unlock Error Log</th>
           <td>
             <code>
-                {{agentExecutionReponse.value.post_restore_unlock_errorlog}}
+                {{(agentExecutionReponse.value.post_restore_unlock_errorlog + '').replaceAll('echo ', '')}}
               </code>
           </td>
         </tr>
