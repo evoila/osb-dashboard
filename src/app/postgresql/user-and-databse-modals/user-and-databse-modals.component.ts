@@ -23,7 +23,6 @@ export interface ModalSettings {
   resultSubject: Subject<string>;
 }
 
-
 @Component({
   selector: "sb-user-and-databse-modals",
   templateUrl: "./user-and-databse-modals.component.html",
@@ -33,7 +32,6 @@ export class UserAndDatabseModalsComponent implements OnInit, OnDestroy {
   @Input() open$: Observable<ModalSettings>;
   subscription: Subscription;
   modalSettings: ModalSettings;
-
 
   constructor(private modalService: NgbModal) {}
 

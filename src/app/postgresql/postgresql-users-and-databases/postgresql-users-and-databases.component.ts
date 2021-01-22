@@ -1,3 +1,10 @@
+import {
+  Notification,
+  NotificationType,
+  NotificationService,
+} from "./../../core/notification.service";
+
+import { TaskPollingService } from "app/core/task-polling.service";
 import { ModalButton } from "./../user-and-databse-modals/user-and-databse-modals.component";
 import { Subject, Subscription } from "rxjs";
 import { Component, OnInit } from "@angular/core";
@@ -12,60 +19,6 @@ import { ModalSettings } from "../user-and-databse-modals/user-and-databse-modal
 export class PostgresqlUsersAndDatabasesComponent implements OnInit {
   readonly formElements: Array<string> = ["databases", "users"];
   readonly instanceGroupName: string = "postgres";
-  readonly formLayout = [
-    {
-      key: "databases",
-      type: "array",
-      items: [
-        {
-          type: "div",
-          displayFlex: true,
-          items: [
-            {
-              key: "databases[].name",
-            },
-            {
-              key: "databases[].users",
-              items: [
-                {
-                  type: "string",
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    },
-    {
-      key: "users",
-      type: "array",
-      items: [
-        {
-          type: "div",
-          displayFlex: true,
-          "flex-direction": "row",
-          items: [
-            {
-              key: "users[].admin",
-              flex: "1 1 50px",
-            },
-            {
-              key: "users[].username",
-              flex: "4 4 200px",
-              notitle: true,
-              placeholder: "Username",
-            },
-            {
-              key: "users[].password",
-              flex: "4 4 200px",
-              notitle: true,
-              placeholder: "Password",
-            },
-          ],
-        },
-      ],
-    },
-  ];
 
   public databases: Array<any>;
   public users: Array<any>;
@@ -75,7 +28,11 @@ export class PostgresqlUsersAndDatabasesComponent implements OnInit {
   public modalSubject: Subject<ModalSettings> = new Subject<ModalSettings>();
   private modalSubscription: Subscription;
 
-  constructor(private generalService: GeneralService) {}
+  constructor(
+    private generalService: GeneralService,
+    readonly taskPolling: TaskPollingService,
+    readonly notificationService: NotificationService
+  ) {}
 
   ngOnInit() {
     this.generalService.loadServiceInstance().subscribe((res) => {
@@ -92,7 +49,12 @@ export class PostgresqlUsersAndDatabasesComponent implements OnInit {
   }
   editDatabase(index: number) {
     const db = this.databases[index];
-    this.databases[index] = {  ...db,  name_original: db.name, users_original: db.users, inEdit: true };
+    this.databases[index] = {
+      ...db,
+      nameOriginal: db.name,
+      usersOriginal: db.users,
+      inEdit: true,
+    };
   }
 
   addUser() {
@@ -100,20 +62,28 @@ export class PostgresqlUsersAndDatabasesComponent implements OnInit {
   }
   editUser(index: number) {
     const user = this.users[index];
-    this.users[index] = {  ...user,  password_original: user.password, username_original: user.username, admin_original: user.admin, inEdit: true };   
+    this.users[index] = {
+      ...user,
+      passwordOriginal: user.password,
+      usernameOriginal: user.username,
+      adminOriginal: user.admin,
+      inEdit: true,
+    };
   }
 
-  manageDBUsers(index){
-    const info = "display model/template/component SHOWING ALL CURRENT USERS &  select element offering available users to add or remove for this db";
+  manageDBUsers(index) {
+    const info =
+      "display model/template/component SHOWING ALL CURRENT USERS &  select element offering available users to add or remove for this db";
     alert(info);
-    console.log(info); 
+    console.log(info);
   }
 
   deleteDatabase(index: number) {
     const modalSetting = {
       open: true,
       description: "Delete Database",
-      modalBody: "Are you sure to delete database " + this.databases[index].name + " ?" ,
+      modalBody:
+        "Are you sure to delete database " + this.databases[index].name + " ?",
       buttons: [
         {
           text: "cancel",
@@ -130,22 +100,31 @@ export class PostgresqlUsersAndDatabasesComponent implements OnInit {
       ],
       resultSubject: new Subject<string>(),
     } as ModalSettings;
+    if (this.databases[index].inEdit && this.databases[index].nameOriginal) {
+      modalSetting.description = "Discard Editing";
+      modalSetting.modalBody = "Are you sure you will discard your changes?";
+      modalSetting.buttons[0].text = "continue editing";
+      modalSetting.buttons[1].text = "discard";
+      modalSetting.buttons[1].result = "discard";
+    }
     this.modalSubscription = modalSetting.resultSubject.subscribe((k) => {
       if (k === "delete") {
         this.databases.splice(index, 1);
+      } else if (k === "discard") {
+        const db = this.databases[index];
+        this.databases[index] = { name: db.nameOld, users: db.usersOld };
       }
       this.modalSubscription.unsubscribe();
     });
     this.modalSubject.next(modalSetting);
   }
 
-
   deleteUser(index: number) {
-  
     const modalSetting = {
       open: true,
       description: "Delete User ",
-      modalBody: "Are you sure to delete user " + this.users[index].username + " ?",
+      modalBody:
+        "Are you sure to delete user " + this.users[index].username + " ?",
       buttons: [
         {
           text: "cancel",
@@ -162,16 +141,28 @@ export class PostgresqlUsersAndDatabasesComponent implements OnInit {
       ],
       resultSubject: new Subject<string>(),
     } as ModalSettings;
+    if (this.users[index].inEdit && this.users[index].usernameOriginal) {
+      modalSetting.description = "Discard Editing";
+      modalSetting.modalBody = "Are you sure you will discard your changes?";
+      modalSetting.buttons[0].text = "continue editing";
+      modalSetting.buttons[1].text = "discard";
+      modalSetting.buttons[1].result = "discard";
+    }
     this.modalSubscription = modalSetting.resultSubject.subscribe((k) => {
       if (k === "delete") {
         this.users.splice(index, 1);
+      } else if (k == "discard") {
+        const u = this.users[index];
+        this.users[index] = {
+          username: u.usernameOriginal,
+          password: u.passwordOriginal,
+          admin: u.adminOriginal,
+        };
       }
       this.modalSubscription.unsubscribe();
     });
     this.modalSubject.next(modalSetting);
-
   }
-
 
   save() {
     // clean out edit datastructure, since server would reject it
@@ -182,38 +173,39 @@ export class PostgresqlUsersAndDatabasesComponent implements OnInit {
       return { username: k.username, password: k.password, admin: k.admin };
     });
     // send it
-    console.log(this.databases, this.users)
-    // ..
-    // ..
-
+    console.log(this.databases, this.users);
+    const url = "/custom/v2/manage/service_instances/";
+    const payload = {
+      postgres: {
+        users: this.users,
+        databases: this.databases,
+      },
+    };
+    this.generalService.saveOneWithTaskPolling(payload);
   }
 
-  cancelAll(){
+  cancelAll() {
     // remove edit data garbage ( and reset UI )
     this.databases = this.databases.map((k) => {
       // ternary field wise (more checks)
-      return { 
-        name: k.inEdit ? k.name_original : k.name, 
-        users: k.inEdit ? k.users_original : k.users 
+      return {
+        name: k.inEdit ? k.name_original : k.name,
+        users: k.inEdit ? k.users_original : k.users,
       };
     });
     this.users = this.users.map((k) => {
       // ternary obj wise (more code)
-      return k.inEdit ? { 
-        username:  k.username_original, 
-        password: k.password_original, 
-        admin: k.admin_original 
-      } : 
-      { 
-        username:  k.username, 
-        password: k.password, 
-        admin: k.admin
-      };
+      return k.inEdit
+        ? {
+            username: k.username_original,
+            password: k.password_original,
+            admin: k.admin_original,
+          }
+        : {
+            username: k.username,
+            password: k.password,
+            admin: k.admin,
+          };
     });
   }
-
-
-  
-
-
 }
