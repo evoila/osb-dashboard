@@ -189,17 +189,17 @@ export class PostgresqlUsersAndDatabasesComponent implements OnInit {
     this.databases = this.databases.map((k) => {
       // ternary field wise (more checks)
       return {
-        name: k.inEdit ? k.name_original : k.name,
-        users: k.inEdit ? k.users_original : k.users,
+        name: k.inEdit ? k.nameOriginal : k.name,
+        users: k.inEdit ? k.usersOriginal : k.users,
       };
     });
     this.users = this.users.map((k) => {
       // ternary obj wise (more code)
       return k.inEdit
         ? {
-            username: k.username_original,
-            password: k.password_original,
-            admin: k.admin_original,
+            username: k.usernameOriginal,
+            password: k.passworOoriginal,
+            admin: k.adminOriginal,
           }
         : {
             username: k.username,
