@@ -201,7 +201,7 @@ export class PostgresqlUsersAndDatabasesComponent implements OnInit {
       return k.inEdit
         ? {
             username: k.usernameOriginal,
-            password: k.passworOoriginal,
+            password: k.passworOriginal,
             admin: k.adminOriginal,
           }
         : {
