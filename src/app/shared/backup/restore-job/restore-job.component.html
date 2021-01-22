@@ -55,85 +55,89 @@
         </tr>
         <tr>
           <th>Error Message</th>
-          <td>{{agentExecutionReponse.value.error_message}}</td>
+          <td>
+            <code *ngIf="agentExecutionReponse.value.error_message">
+              {{(agentExecutionReponse.value.error_message + '').replaceAll('echo ', '')}}
+            </code>
+          </td>
         </tr>
         <tr>
           <th>Pre-restore Log</th>
           <td>
-            <code>
-                    {{agentExecutionReponse.value.pre_restore_check_log}}
-                  </code>
+            <code *ngIf="agentExecutionReponse.value.pre_restore_check_log">
+                {{(agentExecutionReponse.value.pre_restore_check_log + '').replaceAll('echo ', '')}}
+            </code>
           </td>
         </tr>
         <tr>
           <th>Pre-restore Error Log</th>
           <td>
-            <code>
-                    {{agentExecutionReponse.value.pre_restore_check_errorlog}}
-                  </code>
+            <code *ngIf="agentExecutionReponse.value.pre_restore_check_errorlog">
+                {{(agentExecutionReponse.value.pre_restore_check_errorlog + '').replaceAll('echo ', '')}}
+            </code>
           </td>
         </tr>
         <tr>
           <th>Pre-restore Log</th>
           <td>
-            <code>
-                {{agentExecutionReponse.value.pre_restore_lock_log}}
+            <code *ngIf="agentExecutionReponse.value.pre_restore_lock_log">
+                {{(agentExecutionReponse.value.pre_restore_lock_log + '').replaceAll('echo ', '')}}
               </code>
           </td>
         </tr>
         <tr>
           <th>Pre-restore Error Log</th>
           <td>
-            <code>
-                {{agentExecutionReponse.value.pre_restore_lock_errorlog}}
-              </code>
+            <code *ngIf="agentExecutionReponse.value.pre_restore_lock_errorlog">
+                {{(agentExecutionReponse.value.pre_restore_lock_errorlog + '').replaceAll('echo ', '')}}
+            </code>
           </td>
         </tr>
         <tr>
           <th>Restore Log</th>
           <td>
-            <code>
-                {{agentExecutionReponse.value.restore_log}}
+            <code *ngIf="agentExecutionReponse.value.restore_log">
+                {{(agentExecutionReponse.value.restore_log + '').replaceAll('echo ', '')}}
               </code>
           </td>
         </tr>
         <tr>
           <th>Restore Error Log</th>
           <td>
-            <code>
-                {{agentExecutionReponse.value.restore_errorlog}}
+            <code *ngIf="agentExecutionReponse.value.restore_errorlog">
+                {{(agentExecutionReponse.value.restore_errorlog + '').replaceAll('echo ', '')}}
               </code>
           </td>
         </tr>
         <tr>
           <th>Post-restore Cleanup Log</th>
           <td>
-            <code>
-                {{agentExecutionReponse.value.restore_cleanup_log}}
+            <code *ngIf="agentExecutionReponse.value.restore_cleanup_log">
+                {{(agentExecutionReponse.value.restore_cleanup_log + '').replaceAll('echo ', '')}}
               </code>
           </td>
         </tr>
         <tr>
           <th>Post-restore Cleanup Error Log</th>
           <td>
-            <code>
-                {{agentExecutionReponse.value.restore_cleanup_errorlog}}
+            <code *ngIf="agentExecutionReponse.value.restore_cleanup_errorlog">
+                {{(agentExecutionReponse.value.restore_cleanup_errorlog + '').replaceAll('echo ', '')}}
               </code>
           </td>
         </tr>
         <tr>
           <th>Post-restore Unlock Log</th>
           <td>
-            <code>
-                {{agentExecutionReponse.value.post_restore_unlock_log}}
+            <code *ngIf="agentExecutionReponse.value.post_restore_unlock_log">
+                {{(agentExecutionReponse.value.post_restore_unlock_log + '').replaceAll('echo ', '')}}
               </code>
           </td>
         </tr>
         <tr>
           <th>Post-restore Unlock Error Log</th>
           <td>
-            <code>
-                {{agentExecutionReponse.value.post_restore_unlock_errorlog}}
+            <code *ngIf="agentExecutionReponse.value.post_restore_unlock_errorlog">
+                {{(agentExecutionReponse.value.post_restore_unlock_errorlog + '').replaceAll('echo ', '')}}
               </code>
           </td>
         </tr>
