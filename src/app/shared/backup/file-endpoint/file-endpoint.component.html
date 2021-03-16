@@ -20,43 +20,44 @@
 
     <div class="form-group">
       <label for="endpoint">Endpoint</label>
-      <input type="text" placeholder="start with http:// or https://" class="form-control" id="endpoint" name="endpoint" #endpoint="ngModel" [(ngModel)]="destination.endpoint"
+      <input type="text" class="form-control" id="endpoint" name="endpoint" #endpoint="ngModel" [(ngModel)]="destination.endpoint"
         required>
+        <small id="endpoint" class="form-text text-muted">Add protocol prefix http:// or https://</small>
       <show-errors [control]="endpoint"></show-errors>
     </div>
 
 
     <div class="form-group">
-      <label for="authKey">Auth Secret</label>
+      <label for="authKey">Authentication Key</label>
       <input type="text" class="form-control" name="authKey" #authKey="ngModel" [(ngModel)]="destination.authKey"
         required>
       <show-errors [control]="authKey"></show-errors>
-      <small id="username" class="form-text text-muted">Auth Secret</small>
+      
     </div>
     <div class="form-group">
-      <label for="authSecret">Auth Key</label>
+      <label for="authSecret">Authentication Secret</label>
       <input type="password" class="form-control" name="authSecret" #authSecret="ngModel" [(ngModel)]="destination.authSecret"
         required>
       <show-errors [control]="authSecret"></show-errors>
-      <small id="password" class="form-text text-muted">Auth Secret</small>
+      
     </div>
     <div class="form-group">
       <label for="Region">Region</label>
-      <input type="text" value="" placeholder="optional region identifier for AWS" class="form-control" id="region" name="region" #region="ngModel" [(ngModel)]="destination.region"
+      <input type="text" value="" placeholder="optional region identifier" class="form-control" id="region" name="region" #region="ngModel" [(ngModel)]="destination.region"
         >
       <!--<select class="form-control" [(ngModel)]="destination.region" name="size" required>
         <option *ngFor="let region of regions" [value]="region.value">{{ region.key }}</option>
       </select>
       -->
       <show-errors [control]="region"></show-errors>
-      <small id="projectName" class="form-text text-muted">Region is optional</small>
+      
     </div>
     <div class="form-group">
       <label for="bucket">Bucket</label>
       <input type="bucket" class="form-control" name="bucket" #bucket="ngModel" [(ngModel)]="destination.bucket"
         required>
       <show-errors [control]="bucket"></show-errors>
-      <small id="bucket" class="form-text text-muted">AWS S3 Bucket</small>
+      <small id="bucket" class="form-text text-muted">S3 Bucket Name</small>
     </div>
     <button *ngIf="update" type="button" class="btn btn-danger" (click)="delete(content)">Delete</button>
     <button type="submit" class="btn btn-primary" [disabled]="!form.form.valid">{{submitLabel}}</button>
