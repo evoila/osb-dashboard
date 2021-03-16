@@ -128,6 +128,13 @@ export class FileEndpointComponent implements OnInit {
 
     
     if (!this.validated) {
+
+      // assure optional region value is at least an empty string if unset
+      if (!this.destination['region']){
+          this.destination['region'] = "";
+      }
+      
+      // valite endpoint contains https:// or http://
       if (!this.check_endpoint_protocol(this.destination)){
         this.nService.add(new Notification(NotificationType.Warning, 'Please set an endpoint beginning with http:// or https://'));
         return
