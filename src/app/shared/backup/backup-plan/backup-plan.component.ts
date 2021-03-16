@@ -96,4 +96,11 @@ export class BackupPlanComponent implements OnInit {
   private redirect(): void {
     this.router.navigate(["/backup/backup-plans"]);
   }
+
+  get_cron_info_tooltip(){
+    
+    return '\nsyntax\t\t\t\t\t\tmeans\n----------------------------------------------------\n\"0 0 * * * *\"\t\t\t\tthe top of every hour of every day.\n\"*/10 * * * * *\"\t\t\t\tevery ten seconds.\n\"0 0 8-10 * * *\"\t\t\t\t8, 9 and 10 o\'clock of every day.\n\"0 0/30 8-10 * * *\"\t\t\t\t8:00, 8:30, 9:00, 9:30 and 10 o\'clock every day.\n\"0 0 9-17 * * MON-FRI\"\t\t\t\ton the hour nine-to-five weekdays\n\"0 0 0 25 12 ?\"\t\t\t\tevery Christmas Day at midnight\n'
+    
+  }
+
 }
