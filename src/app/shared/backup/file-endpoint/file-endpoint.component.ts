@@ -110,7 +110,6 @@ export class FileEndpointComponent implements OnInit {
 
   check_endpoint_protocol(destination): boolean {
     
-    console.log(destination['endpoint']);
     if (destination['endpoint']){
       if (destination['endpoint'].length == 0){
         // no endpoint set
@@ -123,7 +122,6 @@ export class FileEndpointComponent implements OnInit {
       return false;
     }
     return false;
-  
     }
     
   onSubmit(): void {
