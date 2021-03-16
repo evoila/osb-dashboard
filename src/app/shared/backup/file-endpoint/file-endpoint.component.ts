@@ -88,7 +88,10 @@ export class FileEndpointComponent implements OnInit {
         this.update = true;        
         this.backupService.loadOne(this.ENTITY, params['fileEndpointId']) 
           .subscribe(
-            (destination: any) => { this.destination = destination },
+            (destination: any) => { 
+              this.destination = destination;
+              console.log(destination);
+            },
           );        
       }
     });
@@ -105,10 +108,34 @@ export class FileEndpointComponent implements OnInit {
     });
   }
 
-
+  check_endpoint_protocol(destination): boolean {
+    
+    console.log(destination['endpoint']);
+    if (destination['endpoint']){
+      if (destination['endpoint'].length == 0){
+        // no endpoint set
+        return false;
+      }else if (destination['endpoint'].includes('http://') || destination['endpoint'].includes('https://')){
+        // endpoint with at least one http or https set
+        return true;
+      }
+       // endpoint without protocol set
+      return false;
+    }
+    return false;
+  
+    }
+    
   onSubmit(): void {
+
+    
     if (!this.validated) {
+      if (!this.check_endpoint_protocol(this.destination)){
+        this.nService.add(new Notification(NotificationType.Warning, 'Please set an endpoint beginning with http:// or https://'));
+        return
+      }
       this.backupService.validate(this.ENTITY, this.destination)
+      
         .subscribe({
           next: (d) => {
             this.validated = true;
