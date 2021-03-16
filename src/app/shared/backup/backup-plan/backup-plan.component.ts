@@ -8,6 +8,8 @@ import {
 } from "../../../core/notification.service";
 import { GeneralService } from "app/shared/general/general.service";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { sample } from "rxjs/operators";
+import { sampleSize } from "lodash";
 
 @Component({
   selector: "sb-backup-plan",
@@ -99,8 +101,9 @@ export class BackupPlanComponent implements OnInit {
 
   get_cron_info_tooltip(){
     
-    return '\nsyntax\t\t\t\t\t\tmeans\n----------------------------------------------------\n\"0 0 * * * *\"\t\t\t\tthe top of every hour of every day.\n\"*/10 * * * * *\"\t\t\t\tevery ten seconds.\n\"0 0 8-10 * * *\"\t\t\t\t8, 9 and 10 o\'clock of every day.\n\"0 0/30 8-10 * * *\"\t\t\t\t8:00, 8:30, 9:00, 9:30 and 10 o\'clock every day.\n\"0 0 9-17 * * MON-FRI\"\t\t\t\ton the hour nine-to-five weekdays\n\"0 0 0 25 12 ?\"\t\t\t\tevery Christmas Day at midnight\n'
-    
+    let rules = 'syntax\t\tmeans\t\texample\t\t\texplanation\n--------------------------------------------------------------------------------\n*\t\t\tmatch any\t\t\"* * * * * *\"\t\tdo always\n*/x\t\t\tevery x\t\t\"*/5 * * * * *\"\t\tdo every five seconds\n?\t\t\tno spec\t\t\"0 0 0 25 12 ?\"\t\tdo every Christmas Day\n'
+    let examples =  '\nsyntax\t\t\t\t\tmeans\n--------------------------------------------------------------------------------\n\"0 0 * * * *\"\t\t\t\tthe top of every hour of every day.\n\"*/10 * * * * *\"\t\t\t\tevery ten seconds.\n\"0 0 8-10 * * *\"\t\t\t\t8, 9 and 10 o\'clock of every day.\n\"0 0/30 8-10 * * *\"\t\t\t8:00, 8:30, 9:00, 9:30 and 10 o\'clock every day.\n\"0 0 9-17 * * MON-FRI\"\t\ton the hour nine-to-five weekdays\n\"0 0 0 25 12 ?\"\t\t\t\tevery Christmas Day at midnight\n'
+    return rules + examples;
   }
 
 }
