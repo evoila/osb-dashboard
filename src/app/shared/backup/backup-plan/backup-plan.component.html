@@ -8,13 +8,13 @@
     <div class="form-group">
       <span>
         <label for="name">Paused</label>
-        <input type="checkbox" class="form-control" id="paused" name="paused" #paused="ngModel" [(ngModel)]="plan.paused">
+        <input type="checkbox" class="simple-check" id="paused" name="paused" #paused="ngModel" [(ngModel)]="plan.paused">
       </span>
     </div>
     <div class="form-group">
       <span>
         <label for="name">Compression</label>
-        <input type="checkbox" class="form-control" id="compression" name="compression" #compression="ngModel"
+        <input type="checkbox" class="simple-check" id="compression" name="compression" #compression="ngModel"
           [(ngModel)]="plan.compression">
       </span>
       </div>
@@ -28,10 +28,10 @@
       <show-errors [control]="frequency"></show-errors>
       <small id="frequency" class="form-text text-muted">A cron string describes how often the backup is executed.
       </small>
-      <small id="frequency" class="form-text text-muted">For example
-        <pre style="display: inline">* * */5 * * *</pre>
-        for every 5 hours
-      </small>
+      <!--<small id="frequency" class="form-text text-muted">For example
+         <pre style="display: inline">* * */5 * * *
+        for every 5 hours</pre> 
+      </small>-->
     </div>
     <div class="form-group">
       <label for="items">Items</label>
@@ -45,7 +45,7 @@
       <small id="items" class="form-text text-muted">Select the items, which should be backed up.</small>
     </div>
     <div class="row">
-      <!--<div class="col-md-6">
+      <div class="col-md-6">
         <div class="form-group">
           <label for="retentionPeriod">Retention Period</label>
           <input type="number" class="form-control" name="retentionPeriod" #retentionPeriod="ngModel" [(ngModel)]="plan.retentionPeriod"
@@ -68,7 +68,7 @@
           <show-errors [control]="retentionStyle"></show-errors>
         </div>
       </div>
-    -->
+    
       <div class="col-md-12">
       </div>
     </div>
