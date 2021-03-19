@@ -6,25 +6,32 @@
       <show-errors [control]="name"></show-errors>
     </div>
     <div class="form-group">
-      <label for="name">Paused</label>
-      <input type="checkbox" class="form-control" id="paused" name="paused" #paused="ngModel" [(ngModel)]="plan.paused">
+      <span>
+        <label for="name">Paused</label>
+        <input type="checkbox" class="simple-check" id="paused" name="paused" #paused="ngModel" [(ngModel)]="plan.paused">
+      </span>
     </div>
     <div class="form-group">
-      <label for="name">Compression</label>
-      <input type="checkbox" class="form-control" id="compression" name="compression" #compression="ngModel"
-        [(ngModel)]="plan.compression">
-    </div>
+      <span>
+        <label for="name">Compression</label>
+        <input type="checkbox" class="simple-check" id="compression" name="compression" #compression="ngModel"
+          [(ngModel)]="plan.compression">
+      </span>
+      </div>
     <div class="form-group">
-      <label for="frequency">Frequency</label>
+      <span>
+        <label for="frequency">Frequency</label> 
+        <span id="crontooltip" title={{get_cron_info_tooltip()}}><i class="far fa-question-circle"></i></span>
+      </span>
       <input type="text" class="form-control" id="frequency" name="frequency" #frequency="ngModel" [(ngModel)]="plan.frequency"
         required>
       <show-errors [control]="frequency"></show-errors>
       <small id="frequency" class="form-text text-muted">A cron string describes how often the backup is executed.
       </small>
-      <small id="frequency" class="form-text text-muted">For example
-        <pre style="display: inline">* * */5 * * *</pre>
-        for every 5 hours
-      </small>
+      <!--<small id="frequency" class="form-text text-muted">For example
+         <pre style="display: inline">* * */5 * * *
+        for every 5 hours</pre> 
+      </small>-->
     </div>
     <div class="form-group">
       <label for="items">Items</label>
@@ -54,22 +61,23 @@
           <select class="form-control" id="retentionStyle" name="retentionStyle" #retentionStyle="ngModel" [(ngModel)]="plan.retentionStyle"
             required>
             <option value="ALL">ALL</option>
-            <option value="DAYS">DAYS</option>
-            <option value="HOURS">HOURS</option>
+            <!--<option value="DAYS">DAYS</option>
+            <option value="HOURS">HOURS</option>-->
             <option value="FILES">FILES</option>
           </select>
           <show-errors [control]="retentionStyle"></show-errors>
         </div>
       </div>
+    
       <div class="col-md-12">
       </div>
     </div>
     <div class="form-group">
       <label for="fileDestination">File Destination</label>
-      <select class="form-control" id="fileDestination" name="fileDestination" #fileDestination="ngModel" [(ngModel)]="plan.fileDestination"
+      <select class="form-control" *ngIf="displayFiledestinationSelect"  id="fileDestination" name="fileDestination" #fileDestination="ngModel" [(ngModel)]="plan.fileDestination"
         required>
-        <option *ngFor="let d of destinationList" [ngValue]="d">
-          {{d.name}}
+        <option *ngFor="let d of destinationList" [ngValue]="d" [selected]="true"> <!-- [value]="---"  [value]="filedestinationInitialVal"     formControlName="fdest"-->
+          {{d.endpoint}}
         </option>
       </select>
       <show-errors [control]="fileDestination"></show-errors>
@@ -87,7 +95,9 @@
       </button>
     </div>
     <div class="modal-body">
-      <p><strong>Are you sure you want to delete this Backup Plan?</strong></p>
+      <p><strong>Attention </strong><span><i style="color: red;" class="fas fa-exclamation-triangle"></i></span></p>
+      <p><strong>Are you sure you want to delete this Backup Plan? </strong> </p>
+      <p>Backups stored with this plan can not be restored!</p>
       <p>All information associated to this backup plan will be permanently deleted.</p>
     </div>
     <div class="modal-footer">

@@ -42,6 +42,7 @@ export class FileEndpointListComponent implements OnInit {
     .loadAll('fileDestinations', this.pagination)
       .subscribe((destinations: any) => {
         this.destinations = destinations.content;
+        //console.log(this.destinations);
       })
   }
 }
