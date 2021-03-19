@@ -125,4 +125,20 @@
       <button type="button" class="btn btn-danger" (click)="modal.close('Ok click')">Ok</button>
     </div>
   </ng-template>
+
+  <ng-template #notdeletablecontent let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Not Deletable</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&nbsp;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p><strong>This Endpoint can't be deleted.</strong></p>
+      <p>At least one Backup Plan uses this Endpoint.</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-danger" (click)="modal.close('Ok click')">Ok</button>
+    </div>
+  </ng-template>
 </div>

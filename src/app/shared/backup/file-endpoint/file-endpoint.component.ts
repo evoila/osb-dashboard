@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { BackupService } from '../backup.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationService, Notification, NotificationType } from '../../../core/notification.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { BackupPlan } from '../domain/backup-plan';
 
 @Component({
   selector: 'sb-file-endpoint',
@@ -75,6 +76,10 @@ export class FileEndpointComponent implements OnInit {
   validated = false;
   submitLabel = 'Validate';
 
+  @ViewChild('notdeletablecontent')
+  not_deletable_modal: ElementRef;
+  backupPlans: BackupPlan[];
+
   constructor(protected readonly backupService: BackupService,
     protected readonly route: ActivatedRoute,
     protected readonly router: Router,
@@ -92,20 +97,59 @@ export class FileEndpointComponent implements OnInit {
               this.destination = destination;
               console.log(destination);
             },
-          );        
+          );    
+        // need to load als plans as well
+        // for the case the user wants to delete the fileendpoint this controller is about
+        // we have to check if this fileendpoint is used by a plan. This works best if the list of plans is alredy in memory
+        // other option would be to catch the 409 error thrown by server, but that is not as straight forward as this aproach
+        this.backupService
+          .loadAll("backupPlans", 0) // passing a zero as pagination value, which is not really tested in all cenarios
+          .subscribe((backupPlans: any) => {
+            this.backupPlans = backupPlans.content;
+        });
+
       }
     });
   }
 
   delete(content): void {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+
+
+    if(this.endpointIsUsedByAnyPlan()){
+      this.modalService.open(this.not_deletable_modal, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+          console.log("user has been informed that endpoint deletion is not possible")
+      })
+    }
+    else{
+      this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.backupService.deleteOne(this.ENTITY, this.destination)
-      .subscribe((plan: any) => {
-        this.redirect();
-      });
-    }, (reason) => {
-      // we do nothing here, because user does not want to delete entity
+    .subscribe((plan: any) => {
+      console.log("plan after successful deletion: ");
+      console.log(plan);
+      this.redirect();
     });
+    
+    
+  }, (reason) => {
+    // we do nothing here, because user does not want to delete entity
+  });
+    }
+
+
+  }
+
+
+  endpointIsUsedByAnyPlan(): boolean{
+    let veto = false;
+    this.backupPlans.forEach(plan => {
+      const planDestID = plan['fileDestination']['id'];
+      if (planDestID === (this.destination.id)){
+        veto = true;
+        return;
+      }
+      
+    });
+    return veto;
   }
 
   check_endpoint_protocol(destination): boolean {
