@@ -10,6 +10,7 @@ import { GeneralService } from "app/shared/general/general.service";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { sample } from "rxjs/operators";
 import { sampleSize } from "lodash";
+import { FormBuilder, FormGroup } from "@angular/forms";
 
 @Component({
   selector: "sb-backup-plan",
@@ -19,11 +20,19 @@ import { sampleSize } from "lodash";
 export class BackupPlanComponent implements OnInit {
   readonly ENTITY: string = "backupPlans";
   plan: any = {};
-  destinationList: any = [];
+  destinationList: any = [''];
   itemList: any = [];
   update = false;
+  // to manage file destination select value gets displayed correctly when loading the form to edit a plan
+  filedestinationInitialVal = ""
+  displayFiledestinationSelect = false
+  /*form = this.formBuilder.group({
+    fdest: ['']
+  })
+  */
 
   constructor(
+    private formBuilder: FormBuilder,
     protected readonly backupService: BackupService,
     protected readonly generalService: GeneralService,
     protected readonly route: ActivatedRoute,
@@ -33,9 +42,10 @@ export class BackupPlanComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.backupService.loadAll("fileDestinations").subscribe((result: any) => {
-      this.destinationList = result.content;
-    });
+
+    
+    
+    this.fetchDestinations();
 
     this.generalService
       .customLoadAll(
@@ -52,10 +62,34 @@ export class BackupPlanComponent implements OnInit {
           .loadOne(this.ENTITY, params["planId"])
           .subscribe((plan: any) => {
             this.plan = plan;
+            
+            
           });
       }
     });
   }
+
+  fetchDestinations(){
+    this.backupService.loadAll("fileDestinations").subscribe((result: any) => {
+      this.destinationList = result.content;
+    
+      this.plan.fileDestination = this.destinationList[0].endpoint;
+      
+      // set select drop down chosen value by hand 
+      this.filedestinationInitialVal = this.destinationList.length ? this.destinationList[0].name : '';
+      setTimeout(() => {
+        this.displayFiledestinationSelect = true
+      }, 100);
+      
+      console.log(this.destinationList);
+      console.log(this.destinationList[0].name);
+      
+      //this.form.get('fdest').setValue(this.filedestinationInitialVal);
+      
+      
+    });
+  }
+
 
   delete(content): void {
     this.modalService
