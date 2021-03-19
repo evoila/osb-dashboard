@@ -72,6 +72,9 @@ export class BackupPlanComponent implements OnInit {
   fetchDestinations(){
     this.backupService.loadAll("fileDestinations").subscribe((result: any) => {
       this.destinationList = result.content;
+      // showing destinations select as soon as dests are loaded
+      this.displayFiledestinationSelect = true
+      // unfortunately not able yet to set selected option programatically
     
       //this.plan.fileDestination = this.destinationList[0].endpoint;
       
