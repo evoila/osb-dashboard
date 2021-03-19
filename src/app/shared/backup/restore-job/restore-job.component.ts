@@ -81,6 +81,9 @@ export class RestoreJobComponent implements OnInit {
     });
   }
 
+  get_restore_tooltip(){
+    return this.isRestoreButtonDisabled ? "associated backup plan has been deleted" : "restore now";
+  }
   
 
 

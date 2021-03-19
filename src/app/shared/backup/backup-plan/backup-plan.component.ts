@@ -11,6 +11,7 @@ import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { sample } from "rxjs/operators";
 import { sampleSize } from "lodash";
 import { FormBuilder, FormGroup } from "@angular/forms";
+import cron from 'cron-validate';
 
 @Component({
   selector: "sb-backup-plan",
@@ -62,8 +63,7 @@ export class BackupPlanComponent implements OnInit {
           .loadOne(this.ENTITY, params["planId"])
           .subscribe((plan: any) => {
             this.plan = plan;
-            
-            
+            console.log(this.plan);
           });
       }
     });
@@ -80,9 +80,6 @@ export class BackupPlanComponent implements OnInit {
       setTimeout(() => {
         this.displayFiledestinationSelect = true
       }, 100);
-      
-      console.log(this.destinationList);
-      console.log(this.destinationList[0].name);
       
       //this.form.get('fdest').setValue(this.filedestinationInitialVal);
       
@@ -108,7 +105,31 @@ export class BackupPlanComponent implements OnInit {
       );
   }
 
+  isCronSyntaxValid() : boolean{
+    if (this.plan.frequency != undefined){
+      const cronResult = cron(this.plan.frequency);
+    
+      if (cronResult.isValid()) {
+          // !cronResult.isError()
+          // valid code
+          return true;
+      } else {
+          // error code
+          return false;
+      }
+    }
+    return false;
+  }
+
   onSubmit(): void {
+
+    if (!this.isCronSyntaxValid()){
+      this.notificationService.addSelfClosing(
+        new Notification(NotificationType.Info, "Cron String Not Valid: please check your cron syntax to declare backup frequncy")
+      );
+      return;
+    }
+
     const id = this.update ? this.plan.id : null;
     this.plan.serviceInstance = this.backupService.getServiceInstance();
     this.backupService.saveOne(this.plan, this.ENTITY, id).subscribe({
