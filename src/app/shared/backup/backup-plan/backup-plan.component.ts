@@ -73,14 +73,14 @@ export class BackupPlanComponent implements OnInit {
     this.backupService.loadAll("fileDestinations").subscribe((result: any) => {
       this.destinationList = result.content;
     
-      this.plan.fileDestination = this.destinationList[0].endpoint;
+      //this.plan.fileDestination = this.destinationList[0].endpoint;
       
       // set select drop down chosen value by hand 
-      this.filedestinationInitialVal = this.destinationList.length ? this.destinationList[0].name : '';
+      /*this.filedestinationInitialVal = this.destinationList.length ? this.destinationList[0].name : '';
       setTimeout(() => {
         this.displayFiledestinationSelect = true
       }, 100);
-      
+      */
       //this.form.get('fdest').setValue(this.filedestinationInitialVal);
       
       
