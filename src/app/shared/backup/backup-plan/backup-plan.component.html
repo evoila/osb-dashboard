@@ -76,7 +76,7 @@
       <label for="fileDestination">File Destination</label>
       <select class="form-control" *ngIf="displayFiledestinationSelect"  id="fileDestination" name="fileDestination" #fileDestination="ngModel" [(ngModel)]="plan.fileDestination"
         required>
-        <option *ngFor="let d of destinationList" [ngValue]="d" [selected]="true"> <!-- [value]="---"  [value]="filedestinationInitialVal"     formControlName="fdest"-->
+        <option *ngFor="let d of destinationList" [ngValue]="d" > <!-- [selected]="true" [value]="---"  [value]="filedestinationInitialVal"     formControlName="fdest"-->
           {{d.endpoint}}
         </option>
       </select>
