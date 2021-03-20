@@ -114,7 +114,8 @@ export class FileEndpointComponent implements OnInit {
 
   delete(content): void {
 
-
+    console.log("attempting to delete fileendpoint");
+    
     if(this.endpointIsUsedByAnyPlan()){
       this.modalService.open(this.not_deletable_modal, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
           console.log("user has been informed that endpoint deletion is not possible")
@@ -134,7 +135,6 @@ export class FileEndpointComponent implements OnInit {
     // we do nothing here, because user does not want to delete entity
   });
     }
-
 
   }
 
