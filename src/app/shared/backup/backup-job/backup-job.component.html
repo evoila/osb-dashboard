@@ -42,37 +42,39 @@
         </tr>
         <tr>
           <th>Error Message</th>
-          <td>{{agentExecutionReponse.value.error_message}}</td>
+          <code *ngIf="agentExecutionReponse.value.error_message">
+            <td>{{(agentExecutionReponse.value.error_message + '').replaceAll('echo', '')}}</td>
+          </code>
         </tr>
         <tr>
           <th>Pre-Backup Log</th>
           <td>
-            <code>
-                    {{agentExecutionReponse.value.pre_backup_check_log}}
-                  </code>
+            <code *ngIf="agentExecutionReponse.value.pre_backup_check_log">
+                {{(agentExecutionReponse.value.pre_backup_check_log + '').replaceAll('echo', '')}}
+            </code>
           </td>
         </tr>
         <tr>
           <th>Pre-Backup Error Log</th>
           <td>
-            <code>
-                    {{agentExecutionReponse.value.pre_backup_check_errorlog}}
-                  </code>
+            <code *ngIf="agentExecutionReponse.value.pre_backup_check_errorlog">
+                {{(agentExecutionReponse.value.pre_backup_check_errorlog + '').replaceAll('echo', '')}}
+            </code>
           </td>
         </tr>
         <tr>
           <th>Pre-Backup Log</th>
           <td>
-            <code>
-                {{agentExecutionReponse.value.pre_backup_lock_log}}
+            <code *ngIf="agentExecutionReponse.value.pre_backup_lock_log">
+                {{(agentExecutionReponse.value.pre_backup_lock_log)}}
               </code>
           </td>
         </tr>
         <tr>
           <th>Pre-Backup Error Log</th>
           <td>
-            <code>
-                {{agentExecutionReponse.value.pre_backup_lock_errorlog}}
+            <code *ngIf="agentExecutionReponse.value.pre_backup_lock_errorlog.backup_log">
+                {{(agentExecutionReponse.value.pre_backup_lock_errorlog.backup_log + '').replaceAll('echo ', '')}}
               </code>
           </td>
         </tr>
@@ -80,23 +82,23 @@
           <th>Backup Log</th>
           <td>
             <code>
-                {{agentExecutionReponse.value.backup_log}}
-              </code>
+                {{agentExecutionReponse.value.backup_log.backup_log}}
+            </code>
           </td>
         </tr>
         <tr>
           <th>Backup Error Log</th>
           <td>
             <code>
-                {{agentExecutionReponse.value.backup_errorlog}}
-              </code>
+                {{(agentExecutionReponse.value.backup_errorlog + '').replaceAll('echo ', '')}}
+            </code>
           </td>
         </tr>
         <tr>
           <th>Post-Backup Cleanup Log</th>
           <td>
             <code>
-                {{agentExecutionReponse.value.backup_cleanup_log}}
+                {{(agentExecutionReponse.value.backup_cleanup_log + '').replaceAll('echo ', '')}}
               </code>
           </td>
         </tr>
@@ -104,7 +106,7 @@
           <th>Post-Backup Cleanup Error Log</th>
           <td>
             <code>
-                {{agentExecutionReponse.value.backup_cleanup_errorlog}}
+                {{(agentExecutionReponse.value.backup_cleanup_errorlog + '').replaceAll('echo ', '')}}
               </code>
           </td>
         </tr>
@@ -112,15 +114,15 @@
           <th>Post-Backup Unlock Log</th>
           <td>
             <code>
-                {{agentExecutionReponse.value.post_backup_unlock_log}}
+                {{(agentExecutionReponse.value.post_backup_unlock_log + '').replaceAll('echo ', '')}}
               </code>
           </td>
         </tr>
         <tr>
           <th>Post-restore Unlock Error Log</th>
           <td>
-            <code>
-                {{agentExecutionReponse.value.post_restore_unlock_errorlog}}
+            <code *ngIf="agentExecutionReponse.value.post_restore_unlock_errorlog">
+                {{(agentExecutionReponse.value.post_restore_unlock_errorlog + '').replaceAll('echo ', '')}}
               </code>
           </td>
         </tr>
