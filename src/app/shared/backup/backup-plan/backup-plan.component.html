@@ -17,22 +17,40 @@
         <input type="checkbox" class="simple-check" id="compression" name="compression" #compression="ngModel"
           [(ngModel)]="plan.compression">
       </span>
-      </div>
-    <div class="form-group">
-      <span>
-        <label for="frequency">Frequency</label> 
-        <span id="crontooltip" title={{get_cron_info_tooltip()}}><i class="far fa-question-circle"></i></span>
-      </span>
-      <input type="text" class="form-control" id="frequency" name="frequency" #frequency="ngModel" [(ngModel)]="plan.frequency"
-        required>
-      <show-errors [control]="frequency"></show-errors>
-      <small id="frequency" class="form-text text-muted">A cron string describes how often the backup is executed.
-      </small>
-      <!--<small id="frequency" class="form-text text-muted">For example
-         <pre style="display: inline">* * */5 * * *
-        for every 5 hours</pre> 
-      </small>-->
     </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <span>
+            <label for="frequency">Frequency</label> 
+            <span id="crontooltip" title={{get_cron_info_tooltip()}}><i class="far fa-question-circle"></i></span>
+          </span>
+          <input type="text" class="form-control" id="frequency" name="frequency" #frequency="ngModel" [(ngModel)]="plan.frequency"
+            required>
+          <show-errors [control]="frequency"></show-errors>
+          <small id="frequency" class="form-text text-muted">A cron string describes execution frequency.
+          </small>
+          <!--<small id="frequency" class="form-text text-muted">For example
+             <pre style="display: inline">* * */5 * * *
+            for every 5 hours</pre> 
+          </small>-->
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="timezones">Timezone</label>
+          <select class="form-control" id="timezones" name="timezones" #timezone="ngModel" [(ngModel)]="plan.timezone" required>
+            <option *ngFor="let i of timezoneStringList" [ngValue]="i">
+              {{i}}
+            </option>
+          </select>
+          <show-errors [control]="timezones"></show-errors>
+          <small id="timezones" class="form-text text-muted">Select the appropriate timezone.</small>
+        </div>
+      </div>
+    </div>
+   
     <div class="form-group">
       <label for="items">Items</label>
       <select class="form-control" id="items" name="items" #items="ngModel" [(ngModel)]="plan.items" multiple size="6"
