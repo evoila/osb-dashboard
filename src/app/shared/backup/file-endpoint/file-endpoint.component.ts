@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { BackupService } from '../backup.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationService, Notification, NotificationType } from '../../../core/notification.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { BackupPlan } from '../domain/backup-plan';
 
 @Component({
   selector: 'sb-file-endpoint',
@@ -75,6 +76,10 @@ export class FileEndpointComponent implements OnInit {
   validated = false;
   submitLabel = 'Validate';
 
+  @ViewChild('notdeletablecontent')
+  not_deletable_modal: ElementRef;
+  backupPlans: BackupPlan[];
+
   constructor(protected readonly backupService: BackupService,
     protected readonly route: ActivatedRoute,
     protected readonly router: Router,
@@ -88,27 +93,98 @@ export class FileEndpointComponent implements OnInit {
         this.update = true;        
         this.backupService.loadOne(this.ENTITY, params['fileEndpointId']) 
           .subscribe(
-            (destination: any) => { this.destination = destination },
-          );        
+            (destination: any) => { 
+              this.destination = destination;
+              console.log(destination);
+            },
+          );    
+        // need to load als plans as well
+        // for the case the user wants to delete the fileendpoint this controller is about
+        // we have to check if this fileendpoint is used by a plan. This works best if the list of plans is alredy in memory
+        // other option would be to catch the 409 error thrown by server, but that is not as straight forward as this aproach
+        this.backupService
+          .loadAll("backupPlans", 0) // passing a zero as pagination value, which is not really tested in all cenarios
+          .subscribe((backupPlans: any) => {
+            this.backupPlans = backupPlans.content;
+        });
+
       }
     });
   }
 
   delete(content): void {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+
+    console.log("attempting to delete fileendpoint");
+    
+    if(this.endpointIsUsedByAnyPlan()){
+      this.modalService.open(this.not_deletable_modal, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+          console.log("user has been informed that endpoint deletion is not possible")
+      })
+    }
+    else{
+      this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.backupService.deleteOne(this.ENTITY, this.destination)
-      .subscribe((plan: any) => {
-        this.redirect();
-      });
-    }, (reason) => {
-      // we do nothing here, because user does not want to delete entity
+    .subscribe((plan: any) => {
+      console.log("plan after successful deletion: ");
+      console.log(plan);
+      this.redirect();
     });
+    
+    
+  }, (reason) => {
+    // we do nothing here, because user does not want to delete entity
+  });
+    }
+
   }
 
 
+  endpointIsUsedByAnyPlan(): boolean{
+    let veto = false;
+    this.backupPlans.forEach(plan => {
+      const planDestID = plan['fileDestination']['id'];
+      if (planDestID === (this.destination.id)){
+        veto = true;
+        return;
+      }
+      
+    });
+    return veto;
+  }
+
+  check_endpoint_protocol(destination): boolean {
+    
+    if (destination['endpoint']){
+      if (destination['endpoint'].length == 0){
+        // no endpoint set
+        return false;
+      }else if (destination['endpoint'].includes('http://') || destination['endpoint'].includes('https://')){
+        // endpoint with at least one http or https set
+        return true;
+      }
+       // endpoint without protocol set
+      return false;
+    }
+    return false;
+    }
+    
   onSubmit(): void {
+
+    
     if (!this.validated) {
+
+      // assure optional region value is at least an empty string if unset
+      if (!this.destination['region']){
+          this.destination['region'] = "";
+      }
+      
+      // valite endpoint contains https:// or http://
+      if (!this.check_endpoint_protocol(this.destination)){
+        this.nService.add(new Notification(NotificationType.Warning, 'Please set an endpoint beginning with http:// or https://'));
+        return
+      }
       this.backupService.validate(this.ENTITY, this.destination)
+      
         .subscribe({
           next: (d) => {
             this.validated = true;
