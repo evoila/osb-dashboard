@@ -32,7 +32,7 @@
           <small id="frequency" class="form-text text-muted">A cron string describes execution frequency.
           </small>
           <!--<small id="frequency" class="form-text text-muted">For example
-             <pre style="display: inline">* * */5 * * *
+             <pre style="display: inline">0 0 0/5 * * *
             for every 5 hours</pre> 
           </small>-->
         </div>
@@ -45,7 +45,6 @@
               {{i}}
             </option>
           </select>
-          <show-errors [control]="timezones"></show-errors>
           <small id="timezones" class="form-text text-muted">Select the appropriate timezone.</small>
         </div>
       </div>
