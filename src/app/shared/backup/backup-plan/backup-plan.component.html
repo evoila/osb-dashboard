@@ -91,10 +91,9 @@
     </div>
     <div class="form-group">
       <label for="fileDestination">File Destination</label>
-      <select class="form-control" *ngIf="displayFiledestinationSelect"  id="fileDestination" name="fileDestination" #fileDestination="ngModel" [(ngModel)]="plan.fileDestination"
-        required>
+      <select class="form-control" *ngIf="displayFiledestinationSelect" value="Europe/Berlin"  id="fileDestination" name="fileDestination" #fileDestination="ngModel" [(ngModel)]="plan.fileDestination" required> <!--required -->
         <option *ngFor="let d of destinationList" [ngValue]="d" > <!-- [selected]="true" [value]="---"  [value]="filedestinationInitialVal"     formControlName="fdest"-->
-          {{d.endpoint}}
+          {{d.name}}
         </option>
       </select>
       <!--<show-errors [control]="fileDestination"></show-errors>-->

@@ -21,10 +21,10 @@ import cron from 'cron-validate';
 export class BackupPlanComponent implements OnInit {
   readonly ENTITY: string = "backupPlans";
   plan: any = {};
-  destinationList: any = [''];
+  destinationList: any = [];
   itemList: any = [];
   update = false;
-  // to manage file destination select value gets displayed correctly when loading the form to edit a plan
+  // to manage file destination select value gets displayed correctly when displaying the form to edit a plan
   filedestinationInitialVal = ""
   displayFiledestinationSelect = true
   
@@ -561,7 +561,7 @@ export class BackupPlanComponent implements OnInit {
     "US/Samoa"
   ];
   
-  
+  // attempt to fill filedest field programmatically
   /*form = this.formBuilder.group({
     fdest: ['']
   })
@@ -605,6 +605,7 @@ export class BackupPlanComponent implements OnInit {
   fetchDestinations(){
     this.backupService.loadAll("fileDestinations").subscribe((result: any) => {
       this.destinationList = result.content;
+      
       /* UNDER CONSTRUCTION to solve problem that filedestination select elemnt is not filled when editing plans*/
       // showing destinations select as soon as dests are loaded
       //this.displayFiledestinationSelect = true
@@ -659,6 +660,8 @@ export class BackupPlanComponent implements OnInit {
   }
 
   onSubmit(): void {
+
+    
 
     if (!this.isCronSyntaxValid()){
       this.notificationService.addSelfClosing(
