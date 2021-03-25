@@ -18,7 +18,7 @@ export const buildTarget: BuildTarget = {
     // canLoad guard and rely on the CanActivate guard alone.
     {
       path: 'lbaas',
-      loadChildren: 'app/lbaas/lbaas.module#LBaasModule',
+      loadChildren: () => import('./../app/lbaas/lbaas.module').then(m => m.LBaasModule),
       data: {
         skipPreload: true // register module is seldomly needed, save these few kbs
       }

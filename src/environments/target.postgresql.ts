@@ -1,3 +1,4 @@
+
 import { BuildTarget } from './build-target';
 
 /**
@@ -18,7 +19,7 @@ export const buildTarget: BuildTarget = {
     // canLoad guard and rely on the CanActivate guard alone.
     {
       path: 'postgresql',
-      loadChildren: 'app/postgresql/postgresql.module#PostgresqlModule',
+      loadChildren: () => import('./../app/postgresql/postgresql.module').then(m => m.PostgresqlModule),
       data: {
         skipPreload: true // register module is seldomly needed, save these few kbs
       }

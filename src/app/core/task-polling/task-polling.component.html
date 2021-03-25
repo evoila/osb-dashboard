@@ -1,15 +1,49 @@
-<li ngbDropdown class="nav-item dropdown">
-  <button class="btn btn-link nav-link dropdown-toggle" id="dropdownConfig" ngbDropdownToggle>
-    <i *ngIf="tasksRunning" class="fa fa-circle-notch fa-spin" style="color:#fff;"></i>
-    <i *ngIf="!tasksRunning" class="fa fa-tasks" style="color:#fff;"></i>
+<li
+  ngbDropdown
+  class="nav-item dropdown"
+  display="dynamic"
+  placement="{{ dropdownPlacement$ | async }}"
+>
+  <button
+    class="btn btn-link nav-link dropdown-toggle"
+    id="dropdownConfig"
+    ngbDropdownToggle
+  >
+    <i
+      *ngIf="tasksRunning"
+      class="fa fa-circle-notch fa-spin"
+      style="color: #fff"
+    ></i>
+    <i *ngIf="!tasksRunning" class="fa fa-tasks" style="color: #fff"></i>
   </button>
-  <div ngbDropdownMenu aria-labelledby="dropdownConfig" class="p-3" style="width: 250px;">
-    <ng-container *ngFor="let task of taskList | keyvalue; let lastItem = last;">
+  <div
+    ngbDropdownMenu
+    aria-labelledby="dropdownConfig"
+    class="p-3"
+    style="width: 250px"
+  >
+    <ng-container *ngFor="let task of taskList | keyvalue; let lastItem = last">
       <p class="task-polling-item">
-        <i *ngIf="task.value.status == 'RUNNING'" class="fa fa-circle-notch fa-spin fa-space"></i>
-        <i *ngIf="task.value.status == 'SUCCEEDED'" class="fa fa-check fa-space" aria-hidden="true"></i>
-        <i *ngIf="task.value.status == 'FAILED'" class="fa fa-exclamation-circle fa-space" aria-hidden="true"></i>
-        <b>{{task.value.name}} ({{task.value.endDate | date: 'dd.MM.yyy - hh:mm'}}):</b> {{task.value.operation}}
+        <i
+          *ngIf="task.value.status == 'RUNNING'"
+          class="fa fa-circle-notch fa-spin fa-space"
+        ></i>
+        <i
+          *ngIf="task.value.status == 'SUCCEEDED'"
+          class="fa fa-check fa-space"
+          aria-hidden="true"
+        ></i>
+        <i
+          *ngIf="task.value.status == 'FAILED'"
+          class="fa fa-exclamation-circle fa-space"
+          aria-hidden="true"
+        ></i>
+        <b
+          >{{ task.value.name }} ({{
+            task.value.endDate | date: "dd.MM.yyy - hh:mm"
+          }}):</b
+        >
+        {{ task.value.operation }}
       </p>
       <div *ngIf="!lastItem" class="dropdown-divider"></div>
     </ng-container>

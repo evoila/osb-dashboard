@@ -1,47 +1,63 @@
 <div class="section-content">
-  <form>
+  <form >
+    
+  </form>
+  <form #form="ngForm" *ngIf="destination.type == 'S3'" action="#" (ngSubmit)="onSubmit()" ngNativeValidate>
+
     <div class="form-group">
       <label for="name">Name</label>
       <input type="text" class="form-control" id="name" name="name" #name="ngModel" [(ngModel)]="destination.name"
         required>
       <show-errors [control]="name"></show-errors>
     </div>
+    
     <div class="form-group">
       <label for="name">Destination Types</label>
       <select class="form-control" [(ngModel)]="destination.type" name="type" required>
         <option *ngFor="let type of destinationTypes" [value]="type">{{ type }}</option>
       </select>
     </div>
-  </form>
-  <form #form="ngForm" *ngIf="destination.type == 'S3'" action="#" (ngSubmit)="onSubmit()" ngNativeValidate>
+
     <div class="form-group">
-      <label for="authKey">AWS Secret</label>
+      <label for="endpoint">Endpoint</label>
+      <input type="text" class="form-control" id="endpoint" name="endpoint" #endpoint="ngModel" [(ngModel)]="destination.endpoint"
+        required>
+        <small id="endpoint" class="form-text text-muted">Add protocol prefix http:// or https://</small>
+      <show-errors [control]="endpoint"></show-errors>
+    </div>
+
+
+    <div class="form-group">
+      <label for="authKey">Authentication Key</label>
       <input type="text" class="form-control" name="authKey" #authKey="ngModel" [(ngModel)]="destination.authKey"
         required>
       <show-errors [control]="authKey"></show-errors>
-      <small id="username" class="form-text text-muted">AWS Secret</small>
+      
     </div>
     <div class="form-group">
-      <label for="authSecret">AWS SecretKey</label>
+      <label for="authSecret">Authentication Secret</label>
       <input type="password" class="form-control" name="authSecret" #authSecret="ngModel" [(ngModel)]="destination.authSecret"
         required>
       <show-errors [control]="authSecret"></show-errors>
-      <small id="password" class="form-text text-muted">AWS SecretKey</small>
+      
     </div>
     <div class="form-group">
       <label for="Region">Region</label>
-      <select class="form-control" [(ngModel)]="destination.region" name="size" required>
+      <input type="text" value="" placeholder="optional region identifier" class="form-control" id="region" name="region" #region="ngModel" [(ngModel)]="destination.region"
+        >
+      <!--<select class="form-control" [(ngModel)]="destination.region" name="size" required>
         <option *ngFor="let region of regions" [value]="region.value">{{ region.key }}</option>
       </select>
-      <show-errors [control]="projectName"></show-errors>
-      <small id="projectName" class="form-text text-muted">Openstack Project name</small>
+      -->
+      <show-errors [control]="region"></show-errors>
+      
     </div>
     <div class="form-group">
       <label for="bucket">Bucket</label>
       <input type="bucket" class="form-control" name="bucket" #bucket="ngModel" [(ngModel)]="destination.bucket"
         required>
       <show-errors [control]="bucket"></show-errors>
-      <small id="bucket" class="form-text text-muted">AWS S3 Bucket</small>
+      <small id="bucket" class="form-text text-muted">S3 Bucket Name</small>
     </div>
     <button *ngIf="update" type="button" class="btn btn-danger" (click)="delete(content)">Delete</button>
     <button type="submit" class="btn btn-primary" [disabled]="!form.form.valid">{{submitLabel}}</button>
@@ -106,6 +122,22 @@
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancel</button>
+      <button type="button" class="btn btn-danger" (click)="modal.close('Ok click')">Ok</button>
+    </div>
+  </ng-template>
+
+  <ng-template #notdeletablecontent let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Not Deletable</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&nbsp;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p><strong>This Endpoint can't be deleted.</strong></p>
+      <p>At least one Backup Plan uses this Endpoint.</p>
+    </div>
+    <div class="modal-footer">
       <button type="button" class="btn btn-danger" (click)="modal.close('Ok click')">Ok</button>
     </div>
   </ng-template>

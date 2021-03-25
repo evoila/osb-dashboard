@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
+import { Component, OnInit } from '@angular/core';
 
 import { BuildTargetService, ModuleSupport } from 'app/shared';
 import { GeneralService } from './shared/general/general.service';
@@ -27,7 +26,7 @@ export class AppComponent implements OnInit {
   constructor(private readonly notifications: NotificationService,
     private readonly generalService: GeneralService,
     buildTarget: BuildTargetService) {
-      
+
     this.dynamicModuleSupport = buildTarget.dynamicModuleSupport;
     this.sharedModuleSupport = buildTarget.sharedModuleSupport;
     this.moduleSupport = buildTarget.moduleSupport;

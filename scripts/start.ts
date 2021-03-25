@@ -1,9 +1,9 @@
+
 /* tslint:disable:no-console */
+const { ChildProcessManager } = require('./child-process-manager');
+const { Command } = require('commander');
 
-import * as program from '../node_modules/commander';
-
-import { ChildProcessManager } from './child-process-manager';
-import * as spawn from 'cross-spawn';
+const {spawn} = require('cross-spawn')
 
 const children = new ChildProcessManager();
 
@@ -36,11 +36,13 @@ function serve(buildTarget: string, cb) {
   });
 }
 
+const program = new Command();
 program
   .version('0.0.1')
   .option('-t, --target <env>', 'Build Target (angular-cli environment)')
   .parse(process.argv);
 
-serve(program['target'], (code) => {
+
+serve(program.opts()['target'], (code) => {
   process.exit(code);
 });

@@ -34,7 +34,7 @@ export class BuildTarget {
   /**
    * Eagerly loaded core modules (delivered on first page load)
    */
-  coreModules: (Type<any> | ModuleWithProviders)[];
+  coreModules: (Type<any>)[];
 
   /**
    * Enable/disable shared module support

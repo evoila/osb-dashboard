@@ -1,18 +1,39 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import {
+  Notification,
+  NotificationService,
+  NotificationType,
+} from "./../../core/notification.service";
+import { TaskPollingService } from "app/core/task-polling.service";
+import { Injectable } from "@angular/core";
+import { Observable } from "rxjs";
 
-import { CoreHttpService } from 'app/core/core-http.service';
-import { EntityService } from 'app/core/entity.service';
+import { environment } from "environments/runtime-environment";
+import { HttpClient } from "@angular/common/http";
 
-import { environment } from 'environments/runtime-environment';
-
-@Injectable()
-export class GeneralService extends EntityService {
+@Injectable({ providedIn: "root" })
+export class GeneralService {
   MANAGE_BASE_URL: string;
 
-  constructor(protected readonly httpService: CoreHttpService) {     
-    super(httpService);
-    this.MANAGE_BASE_URL = environment.baseUrls.serviceBrokerUrl + '/custom/v2/manage/';
+  constructor(
+    private readonly http: HttpClient,
+    readonly taskPolling: TaskPollingService,
+    readonly notificationService: NotificationService
+  ) {
+    this.MANAGE_BASE_URL =
+      environment.baseUrls.serviceBrokerUrl + "/custom/v2/manage/";
+  }
+
+  protected pagingAndSortingHandler(pagingAndSorting: any): string {
+    var resultString: string = "";
+
+    if (pagingAndSorting == null || pagingAndSorting.length == 0) {
+      return resultString;
+    }
+
+    resultString += "?size=" + pagingAndSorting.pageSize;
+    resultString += "&page=" + (pagingAndSorting.page - 1);
+
+    return resultString;
   }
 
   public getServiceInstanceId(): string {
@@ -24,23 +45,56 @@ export class GeneralService extends EntityService {
   }
 
   public saveOne(entity: any, entityRel?: string): Observable<{} | any> {
-    let url = this.MANAGE_BASE_URL + 'service_instances/' + environment.serviceInstanceId;
-    if (entityRel)
-      url += '/' + entityRel;
+    let url =
+      this.MANAGE_BASE_URL +
+      "service_instances/" +
+      environment.serviceInstanceId;
+    if (entityRel) url += "/" + entityRel;
 
-    return this.patch(url, entity);
+    return this.http.patch(url, entity);
   }
-  
+  public saveOneWithTaskPolling(entity: any, entityRel?: string) {
+    this.saveOne(entity).subscribe({
+      next: (d) => {
+        this.taskPolling.pollState("Updating Service", "state", "description");
+        this.notificationService.addSelfClosing(
+          new Notification(
+            NotificationType.Info,
+            "Starting Service Instance Update"
+          )
+        );
+      },
+      error: (e) => {
+        this.notificationService.addSelfClosing(
+          new Notification(
+            NotificationType.Error,
+            "Error Updating Service Instance"
+          )
+        );
+      },
+    });
+  }
+
   public loadServiceInstance(): Observable<{} | any> {
-    return this.get(this.MANAGE_BASE_URL + 'service_instances/' + environment.serviceInstanceId);
+    return this.http.get(
+      this.MANAGE_BASE_URL +
+        "service_instances/" +
+        environment.serviceInstanceId
+    );
   }
 
-  public customLoadAll(path: string, pagingAndSorting?: any): Observable<{} | any> {
-    return this.all(this.MANAGE_BASE_URL + path + this.pagingAndSortingHandler(pagingAndSorting));
+  public customLoadAll(
+    path: string,
+    pagingAndSorting?: any
+  ): Observable<{} | any> {
+    return this.http.get(
+      this.MANAGE_BASE_URL +
+        path +
+        this.pagingAndSortingHandler(pagingAndSorting)
+    );
   }
 
   public customSave(path: string, entity: any): Observable<{} | any> {
-    return this.post(this.MANAGE_BASE_URL + path, entity);
+    return this.http.post(this.MANAGE_BASE_URL + path, entity);
   }
-
 }

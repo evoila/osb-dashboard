@@ -18,7 +18,7 @@ export const buildTarget: BuildTarget = {
     // canLoad guard and rely on the CanActivate guard alone.
     {
       path: 'autoscaler',
-      loadChildren: 'app/auto-scaler/auto-scaler.module#AutoScalerModule',
+      loadChildren: () => import('./../app/auto-scaler/auto-scaler.module').then(m => m.AutoScalerModule),
       data: {
         skipPreload: true // register module is seldomly needed, save these few kbs
       }

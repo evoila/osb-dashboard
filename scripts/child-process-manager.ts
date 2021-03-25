@@ -1,19 +1,24 @@
 
 import { ChildProcess } from 'child_process';
 
+enum signals {
+  SIGINT = "SIGINT",
+  SIGTERM = "SIGTERM"
+}
+
 
 /**
  * Keeps track of spawned child processes and forwards parent process signals
  * received by the parent process.
  */
-export class ChildProcessManager {
+class ChildProcessManager {
   private readonly childs: ChildProcess[] = [];
 
   constructor() {
     // cleanup when parent process exts
     process.on('exit', () => this.cleanup());
-    process.on('SIGINT', () => this.cleanup('SIGINT')); // catch ctrl-c
-    process.on('SIGTERM', () => this.cleanup('SIGTERM')); // catch kill
+    process.on('SIGINT', () => this.cleanup(signals.SIGINT)); // catch ctrl-c
+    process.on('SIGTERM', () => this.cleanup(signals.SIGTERM)); // catch kill
   }
 
   register(child: ChildProcess) {
@@ -32,7 +37,11 @@ export class ChildProcessManager {
     }
   }
 
-  cleanup(signal = 'SIGTERM') {
+  cleanup(signal = signals.SIGTERM) {
     this.childs.forEach(x => x.kill(signal));
   }
 }
+
+module.exports.ChildProcessManager = ChildProcessManager;
+
+

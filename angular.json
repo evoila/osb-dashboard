@@ -11,6 +11,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "aot": true,
             "deployUrl": "/app/",
             "outputPath": "dist/auto-scaler",
             "index": "src/index.html",
@@ -34,6 +35,12 @@
           },
           "configurations": {
             "auto-scaler": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "fileReplacements": [
                 {
                   "replace": "src/environments/target.ts",
@@ -42,6 +49,12 @@
               ]
             },
             "production": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -136,6 +149,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "aot": true,
             "outputPath": "dist/cassandra",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -157,6 +171,12 @@
           },
           "configurations": {
             "cassandra": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "fileReplacements": [
                 {
                   "replace": "src/environments/target.ts",
@@ -165,6 +185,12 @@
               ]
             },
             "production": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -257,6 +283,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "aot": true,
             "outputPath": "dist/example",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -278,6 +305,12 @@
           },
           "configurations": {
             "example": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "fileReplacements": [
                 {
                   "replace": "src/environments/target.ts",
@@ -286,6 +319,12 @@
               ]
             },
             "production": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -378,6 +417,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "aot": true,
             "deployUrl": "/app/",
             "outputPath": "dist/kafka",
             "index": "src/index.html",
@@ -400,6 +440,12 @@
           },
           "configurations": {
             "kafka": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "fileReplacements": [
                 {
                   "replace": "src/environments/target.ts",
@@ -408,6 +454,12 @@
               ]
             },
             "production": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -501,6 +553,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "aot": true,
             "deployUrl": "/app/",
             "outputPath": "dist/mysql",
             "index": "src/index.html",
@@ -523,6 +576,12 @@
           },
           "configurations": {
             "elasticsearch": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "fileReplacements": [
                 {
                   "replace": "src/environments/target.ts",
@@ -531,6 +590,12 @@
               ]
             },
             "production": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -624,6 +689,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "aot": true,
             "deployUrl": "/app/",
             "outputPath": "dist/mysql",
             "index": "src/index.html",
@@ -646,6 +712,12 @@
           },
           "configurations": {
             "mysql": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "fileReplacements": [
                 {
                   "replace": "src/environments/target.ts",
@@ -654,6 +726,12 @@
               ]
             },
             "production": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -747,6 +825,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "aot": true,
             "deployUrl": "/app/",
             "outputPath": "dist/lbaas",
             "index": "src/index.html",
@@ -769,6 +848,12 @@
           },
           "configurations": {
             "lbaas": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "fileReplacements": [
                 {
                   "replace": "src/environments/target.ts",
@@ -777,6 +862,12 @@
               ]
             },
             "production": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -870,6 +961,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "aot": true,
             "deployUrl": "/app/",
             "outputPath": "dist/mongodb",
             "index": "src/index.html",
@@ -892,6 +984,12 @@
           },
           "configurations": {
             "mongodb": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "fileReplacements": [
                 {
                   "replace": "src/environments/target.ts",
@@ -900,6 +998,12 @@
               ]
             },
             "production": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -993,6 +1097,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "aot": true,
             "deployUrl": "/app/",
             "outputPath": "dist/monitoring",
             "index": "src/index.html",
@@ -1021,6 +1126,12 @@
           },
           "configurations": {
             "monitoring": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "fileReplacements": [
                 {
                   "replace": "src/environments/target.ts",
@@ -1029,6 +1140,12 @@
               ]
             },
             "production": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -1104,7 +1221,7 @@
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
-            "deployUrl": "/app/",            
+            "deployUrl": "/app/",
             "protractorConfig": "./protractor.conf.js",
             "devServerTarget": "monitoring:serve"
           }
@@ -1119,7 +1236,7 @@
           }
         }
       }
-    }, 
+    },
     "postgresql": {
       "root": "",
       "sourceRoot": "src",
@@ -1128,6 +1245,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "aot": true,
             "deployUrl": "/app/",
             "outputPath": "dist/postgresql",
             "index": "src/index.html",
@@ -1150,6 +1268,12 @@
           },
           "configurations": {
             "postgresql": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "fileReplacements": [
                 {
                   "replace": "src/environments/target.ts",
@@ -1158,6 +1282,12 @@
               ]
             },
             "production": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -1251,6 +1381,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "aot": true,
             "deployUrl": "/app/",
             "outputPath": "dist/rabbitmq",
             "index": "src/index.html",
@@ -1279,6 +1410,12 @@
           },
           "configurations": {
             "rabbitmq": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "fileReplacements": [
                 {
                   "replace": "src/environments/target.ts",
@@ -1287,6 +1424,12 @@
               ]
             },
             "production": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -1362,7 +1505,7 @@
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
-            "deployUrl": "/app/",            
+            "deployUrl": "/app/",
             "protractorConfig": "./protractor.conf.js",
             "devServerTarget": "rabbitmq:serve"
           }
@@ -1386,6 +1529,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "aot": true,
             "deployUrl": "/app/",
             "outputPath": "dist/redis",
             "index": "src/index.html",
@@ -1414,6 +1558,12 @@
           },
           "configurations": {
             "redis": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "fileReplacements": [
                 {
                   "replace": "src/environments/target.ts",
@@ -1422,6 +1572,12 @@
               ]
             },
             "production": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -1497,7 +1653,7 @@
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
-            "deployUrl": "/app/",            
+            "deployUrl": "/app/",
             "protractorConfig": "./protractor.conf.js",
             "devServerTarget": "redis:serve"
           }
@@ -1514,15 +1670,17 @@
       }
     }
   },
-  
   "defaultProject": "example",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "sb",
-      "styleext": "scss"
+      "style": "scss"
     },
     "@schematics/angular:directive": {
       "prefix": "sb"
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }

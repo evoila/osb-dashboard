@@ -1,9 +1,9 @@
 /* tslint:disable:no-console */
-import * as spawn from 'cross-spawn';
-import * as program from 'commander';
-import * as fs from 'fs';
+const { ChildProcessManager } = require('./child-process-manager');
+const { Command } = require('commander');
+const {spawn} = require('cross-spawn');
+const fs = require('fs');
 
-import { ChildProcessManager } from './child-process-manager';
 
 const children = new ChildProcessManager();
 const isRunningInCi = !!process.env['TARGET'];
@@ -78,6 +78,7 @@ function compile(buildTarget: string, analyze: boolean, cb) {
 function main(target: string, analyze: boolean) {
   compile(target, analyze, process.exit);
 }
+const program = new Command();
 
 program
   .version('0.0.1')
@@ -85,4 +86,4 @@ program
   .option('--analyze', 'generate analyzable output')
   .parse(process.argv);
 
-main(program['target'], program['analyze']);
+main(program.opts()['target'], program.opts()['analyze']);

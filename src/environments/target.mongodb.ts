@@ -18,7 +18,8 @@ export const buildTarget: BuildTarget = {
     // canLoad guard and rely on the CanActivate guard alone.
     {
       path: 'mongodb',
-      loadChildren: 'app/mongodb/mongodb.module#MongoDbModule',
+      loadChildren: () => import('./../app/mongodb/mongodb.module').then(m => m.MongoDbModule),
+      //loadChildren: 'app/mongodb/mongodb.module#MongoDbModule',
       data: {
         skipPreload: true // register module is seldomly needed, save these few kbs
       }

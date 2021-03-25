@@ -1,46 +1,80 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
   <a class="navbar-brand" href="#">Management UI</a>
-  <button class="navbar-toggler" type="button" (click)="isNavbarCollapsed = !isNavbarCollapsed" data-toggle="collapse"
-    data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+  <button
+    class="navbar-toggler"
+    type="button"
+    (click)="isNavbarCollapsed = !isNavbarCollapsed"
+    data-toggle="collapse"
+    data-target="#navbarTogglerDemo02"
+    aria-controls="navbarTogglerDemo02"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
     <span class="navbar-toggler-icon"></span>
   </button>
-  <div [ngbCollapse]="isNavbarCollapsed" class="collapse navbar-collapse" id="navbarTogglerDemo02">
+  <div
+    [ngbCollapse]="isNavbarCollapsed"
+    class="collapse navbar-collapse"
+    id="navbarTogglerDemo02"
+  >
     <ul class="navbar-nav mr-auto">
       <li class="nav-item" *ngIf="dynamicModuleSupport.autoscaler">
-        <a class="nav-link" routerLink="/autoscaler" routerLinkActive="active">Auto Scaler</a>
+        <a class="nav-link" routerLink="/autoscaler" routerLinkActive="active"
+          >Auto Scaler</a
+        >
       </li>
       <li class="nav-item" *ngIf="dynamicModuleSupport.cassandra">
-        <a class="nav-link" routerLink="/cassandra" routerLinkActive="active">Configuration</a>
+        <a class="nav-link" routerLink="/cassandra" routerLinkActive="active"
+          >Configuration</a
+        >
       </li>
       <li class="nav-item" *ngIf="dynamicModuleSupport.kafka">
-        <a class="nav-link" routerLink="/kafka" routerLinkActive="active">Configuration</a>
+        <a class="nav-link" routerLink="/kafka" routerLinkActive="active"
+          >Configuration</a
+        >
       </li>
       <li class="nav-item" *ngIf="dynamicModuleSupport.lbaas">
-        <a class="nav-link" routerLink="/lbaas" routerLinkActive="active">Configuration</a>
-      </li>
-      <li class="nav-item" *ngIf="dynamicModuleSupport.monitoring">
-        <a class="nav-link" routerLink="/monitoring" routerLinkActive="active">Monitoring</a>
+        <a class="nav-link" routerLink="/lbaas" routerLinkActive="active"
+          >Configuration</a
+        >
       </li>
       <li class="nav-item" *ngIf="dynamicModuleSupport.mysql">
-        <a class="nav-link" routerLink="/mysql" routerLinkActive="active">Configuration</a>
+        <a class="nav-link" routerLink="/mysql" routerLinkActive="active"
+          >Configuration</a
+        >
       </li>
       <li class="nav-item" *ngIf="dynamicModuleSupport.postgresql">
-        <a class="nav-link" routerLink="/postgresql" routerLinkActive="active">Configuration</a>
+        <a class="nav-link" routerLink="/postgresql" routerLinkActive="active"
+          >Configuration</a
+        >
       </li>
       <li class="nav-item" *ngIf="dynamicModuleSupport.elasticsearch">
-        <a class="nav-link" routerLink="/elasticsearch" routerLinkActive="active">Elasticsearch</a>
+        <a
+          class="nav-link"
+          routerLink="/elasticsearch"
+          routerLinkActive="active"
+          >Elasticsearch</a
+        >
       </li>
       <li class="nav-item" *ngIf="dynamicModuleSupport.rabbitmq">
-        <a class="nav-link" routerLink="/rabbitmq" routerLinkActive="active">Rabbitmq</a>
+        <a class="nav-link" routerLink="/rabbitmq" routerLinkActive="active"
+          >Rabbitmq</a
+        >
       </li>
       <li class="nav-item" *ngIf="dynamicModuleSupport.redis">
-        <a class="nav-link" routerLink="/redis" routerLinkActive="active">Redis</a>
+        <a class="nav-link" routerLink="/redis" routerLinkActive="active"
+          >Redis</a
+        >
       </li>
       <li class="nav-item" *ngIf="sharedModuleSupport.backup">
-        <a class="nav-link" routerLink="/backup" routerLinkActive="active">Backup</a>
+        <a class="nav-link" routerLink="/backup" routerLinkActive="active"
+          >Backup</a
+        >
       </li>
       <li class="nav-item" *ngIf="sharedModuleSupport.serviceKeys">
-        <a class="nav-link" routerLink="/service-keys" routerLinkActive="active">Service Keys</a>
+        <a class="nav-link" routerLink="/service-keys" routerLinkActive="active"
+          >Service Keys</a
+        >
       </li>
     </ul>
     <ul class="nav navbar-nav ml-auto">
@@ -52,5 +86,9 @@
 </nav>
 <main class="flex-fill">
   <router-outlet></router-outlet>
-  <sb-notification-banner *ngIf="notification" [notification]="notification" (close)="closeNotification()"></sb-notification-banner>
+  <sb-notification-banner
+    *ngIf="notification"
+    [notification]="notification"
+    (close)="closeNotification()"
+  ></sb-notification-banner>
 </main>

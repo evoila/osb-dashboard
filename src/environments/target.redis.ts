@@ -18,7 +18,7 @@ export const buildTarget: BuildTarget = {
     // canLoad guard and rely on the CanActivate guard alone.
     {
       path: 'redis',
-      loadChildren: 'app/redis/redis.module#RedisModule',
+      loadChildren: () => import('./../app/redis/redis.module').then(m => m.RedisModule),
       data: {
         skipPreload: true // register module is seldomly needed, save these few kbs
       }
