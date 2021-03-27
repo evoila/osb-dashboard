@@ -107,7 +107,7 @@
       <small id="container_name" class="form-text text-muted">OpenStack Swift Container Name</small>
     </div>
     <button type="button" *ngIf="update" class="btn btn-danger" (click)="delete(content)">Delete</button>
-    <button type="submit" class="btn btn-primary" [disabled]="!form.form.valid">{{submitLabel}}</button>
+    <button type="submit" class="btn btn-primary" >{{submitLabel}}</button> <!-- [disabled]="!form.form.valid || submitButtonLocked"  THIS IS NOT WORKING BECAUSE OF REACTIVE FORM CONTROL-->
   </form>
   <ng-template #content let-modal>
     <div class="modal-header">

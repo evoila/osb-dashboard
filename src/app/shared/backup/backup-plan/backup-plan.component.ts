@@ -561,11 +561,6 @@ export class BackupPlanComponent implements OnInit {
     "US/Samoa"
   ];
   
-  // attempt to fill filedest field programmatically
-  /*form = this.formBuilder.group({
-    fdest: ['']
-  })
-  */
 
   constructor(
     private formBuilder: FormBuilder,
@@ -579,8 +574,6 @@ export class BackupPlanComponent implements OnInit {
 
   ngOnInit() {
 
-    this.fetchDestinations();
-
     this.generalService
       .customLoadAll(
         "backup/" + this.generalService.getServiceInstanceId() + "/items"
@@ -590,15 +583,26 @@ export class BackupPlanComponent implements OnInit {
       });
 
     this.route.params.subscribe((params) => {
+      /* EDITING A PLAN */
       if (params["planId"] && params["planId"] != "new") {
         this.update = true;
         this.backupService
           .loadOne(this.ENTITY, params["planId"])
           .subscribe((plan: any) => {
             this.plan = plan;
-            console.log(this.plan);
+            //console.log(this.plan);
           });
       }
+      else{
+        /* CREATING NEW PLAN */
+        // default values for new empty plan form
+        this.plan.retentionStyle = "FILES";
+        this.plan.timezone = "Europe/Berlin";
+      }
+
+      // important to fetch thes at last 
+      this.fetchDestinations();
+
     });
   }
 
@@ -606,20 +610,7 @@ export class BackupPlanComponent implements OnInit {
     this.backupService.loadAll("fileDestinations").subscribe((result: any) => {
       this.destinationList = result.content;
       
-      /* UNDER CONSTRUCTION to solve problem that filedestination select elemnt is not filled when editing plans*/
-      // showing destinations select as soon as dests are loaded
-      //this.displayFiledestinationSelect = true
-      
-      // unfortunately not able yet to set selected option programatically
-    
-      //this.plan.fileDestination = this.destinationList[0].endpoint;
-      // set select drop down chosen value by hand 
-      /*this.filedestinationInitialVal = this.destinationList.length ? this.destinationList[0].name : '';
-      setTimeout(() => {
-        this.displayFiledestinationSelect = true
-      }, 100);
-      */
-      //this.form.get('fdest').setValue(this.filedestinationInitialVal);
+      this.plan.fileDestination = this.destinationList[0];
       
     });
   }
@@ -660,8 +651,6 @@ export class BackupPlanComponent implements OnInit {
   }
 
   onSubmit(): void {
-
-    
 
     if (!this.isCronSyntaxValid()){
       this.notificationService.addSelfClosing(

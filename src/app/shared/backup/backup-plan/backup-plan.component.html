@@ -1,5 +1,5 @@
 <div class="section-content">
-  <form #form="ngForm" action="#" (ngSubmit)="onSubmit()" ngNativeValidate>
+  <form #form="ngForm" action="#" (ngSubmit)="onSubmit()" id="planform" ngNativeValidate>
     <div class="form-group">
       <label for="name">Name</label>
       <input type="text" class="form-control" id="name" name="name" #name="ngModel" [(ngModel)]="plan.name" required>
@@ -64,7 +64,7 @@
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
-          <label for="retentionPeriod">Retention Period</label>
+          <label for="retentionPeriod">Retention Value</label>
           <input type="number" class="form-control" name="retentionPeriod" #retentionPeriod="ngModel" [(ngModel)]="plan.retentionPeriod"
             required>
           <show-errors [control]="retentionPeriod"></show-errors>
@@ -76,7 +76,7 @@
         <div class="form-group">
           <label for="retentionStyle">Retention Style</label>
           <select class="form-control" id="retentionStyle" name="retentionStyle" #retentionStyle="ngModel" [(ngModel)]="plan.retentionStyle"
-            required>
+            required> 
             <!--<option value="ALL">ALL</option>
             <option value="DAYS">DAYS</option>
             <option value="HOURS">HOURS</option>-->
@@ -100,7 +100,7 @@
       <small id="fileDestination" class="form-text text-muted">Select the file destination where the backups are
         stored.</small>
     </div>
-    <button type="button" *ngIf="update" class="btn btn-danger" (click)="delete(content)">Delete</button>
+    <button type="button" *ngIf="update" class="btn btn-danger" id="delPlanButton" (click)="delete(content)">Delete</button>
     <button type="submit" class="btn btn-primary" [disabled]="!form.form.valid">Submit</button>
   </form>
   <ng-template #content let-modal>

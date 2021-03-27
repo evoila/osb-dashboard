@@ -12,7 +12,7 @@ import { BackupPlan } from '../domain/backup-plan';
 })
 export class FileEndpointComponent implements OnInit {
   readonly ENTITY: string = 'fileDestinations';
-  destinationTypes = ['S3', 'SWIFT'];
+  destinationTypes = ['S3']; // 'SWIFT'
   // https://docs.aws.amazon.com/de_de/general/latest/gr/rande.html#s3_region
   regions = [{
     key: 'USA East (Ohio)',
@@ -75,6 +75,7 @@ export class FileEndpointComponent implements OnInit {
   update = false;
   validated = false;
   submitLabel = 'Validate';
+  submitButtonLocked = false;
 
   @ViewChild('notdeletablecontent')
   not_deletable_modal: ElementRef;
@@ -125,7 +126,7 @@ export class FileEndpointComponent implements OnInit {
       this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.backupService.deleteOne(this.ENTITY, this.destination)
     .subscribe((plan: any) => {
-      console.log("plan after successful deletion: ");
+      console.log("fileendpoint deletion response:");
       console.log(plan);
       this.redirect();
     });
@@ -170,9 +171,16 @@ export class FileEndpointComponent implements OnInit {
     
   onSubmit(): void {
 
-    
-    if (!this.validated) {
+    if (this.submitButtonLocked){
+      return;
+    }
 
+    // actively disbale validate/submit button as long as request has led to a response
+    this.submitButtonLocked = true;
+    this.submitLabel = 'Validating..';
+
+    if (!this.validated) {
+      /* VALIDATE */
       // assure optional region value is at least an empty string if unset
       if (!this.destination['region']){
           this.destination['region'] = "";
@@ -181,24 +189,32 @@ export class FileEndpointComponent implements OnInit {
       // valite endpoint contains https:// or http://
       if (!this.check_endpoint_protocol(this.destination)){
         this.nService.add(new Notification(NotificationType.Warning, 'Please set an endpoint beginning with http:// or https://'));
+        this.submitButtonLocked = false;
+        this.submitLabel = 'Validate';
         return
       }
       this.backupService.validate(this.ENTITY, this.destination)
       
         .subscribe({
           next: (d) => {
+            this.submitButtonLocked = false;
             this.validated = true;
             this.submitLabel = 'Submit';
           },
           error: (e) => {
-            this.nService.add(new Notification(NotificationType.Warning, 'Could not verify your account credentials.'));
+            this.submitButtonLocked = false;
+            this.submitLabel = 'Validate';
+            this.nService.add(new Notification(NotificationType.Warning, e.error));
           }
         });
     } else {
+      /* SUBMIT */
+      this.submitLabel = 'Submitting';
       const id = this.update ? this.destination.id : null;
       this.destination.serviceInstance = this.backupService.getServiceInstance();
       this.backupService.saveOne(this.destination, this.ENTITY, id)
         .subscribe((destination: any) => {
+          this.submitLabel = 'Success';
           this.redirect();
         });
     }
