@@ -119,6 +119,18 @@
               <arguments>install</arguments>
             </configuration>
           </execution>
+          <execution>
+            <phase>test</phase>
+            <id>yarn audit</id>
+            <goals>
+              <goal>yarn</goal>
+            </goals>
+            <configuration>
+              <arguments>audit</arguments>
+              <arguments>--level high</arguments>
+            </configuration>
+          </execution>
+
           <!--<execution>
             <phase>process-resources</phase>
             <id>yarn upgrade</id>
