@@ -2,7 +2,7 @@
   <form >
     
   </form>
-  <form #form="ngForm" *ngIf="destination.type == 'S3'" action="#" (ngSubmit)="onSubmit()" ngNativeValidate>
+  <form #form="ngForm" *ngIf="destination.type == 'S3'" id="feform" action="#" (ngSubmit)="onSubmit()" ngNativeValidate>
 
     <div class="form-group">
       <label for="name">Name</label>
@@ -59,7 +59,7 @@
       <show-errors [control]="bucket"></show-errors>
       <small id="bucket" class="form-text text-muted">S3 Bucket Name</small>
     </div>
-    <button *ngIf="update" type="button" class="btn btn-danger" (click)="delete(content)">Delete</button>
+    <button *ngIf="update" type="button" class="btn btn-danger fe-delbut" (click)="delete(content)">Delete</button>
     <button type="submit" class="btn btn-primary" [disabled]="!form.form.valid">{{submitLabel}}</button>
   </form>
 
@@ -106,8 +106,8 @@
       <show-errors [control]="container_name"></show-errors>
       <small id="container_name" class="form-text text-muted">OpenStack Swift Container Name</small>
     </div>
-    <button type="button" *ngIf="update" class="btn btn-danger" (click)="delete(content)">Delete</button>
-    <button type="submit" class="btn btn-primary" [disabled]="!form.form.valid">{{submitLabel}}</button>
+    <button type="button" *ngIf="update" class="btn btn-danger fe-delbut" (click)="delete(content)">Delete</button>
+    <button type="submit" class="btn btn-primary" >{{submitLabel}}</button> <!-- [disabled]="!form.form.valid || submitButtonLocked"  THIS IS NOT WORKING BECAUSE OF REACTIVE FORM CONTROL-->
   </form>
   <ng-template #content let-modal>
     <div class="modal-header">
