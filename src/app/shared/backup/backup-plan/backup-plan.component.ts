@@ -590,7 +590,7 @@ export class BackupPlanComponent implements OnInit {
           .loadOne(this.ENTITY, params["planId"])
           .subscribe((plan: any) => {
             this.plan = plan;
-            //console.log(this.plan);
+            this.fetchDestinations();
           });
       }
       else{
@@ -598,19 +598,32 @@ export class BackupPlanComponent implements OnInit {
         // default values for new empty plan form
         this.plan.retentionStyle = "FILES";
         this.plan.timezone = "Europe/Berlin";
+        this.fetchDestinations();
       }
-
-      // important to fetch thes at last 
-      this.fetchDestinations();
-
     });
   }
 
   fetchDestinations(){
     this.backupService.loadAll("fileDestinations").subscribe((result: any) => {
       this.destinationList = result.content;
+      // we want to load the plans filedestination into the filedestination select dropdown
+      // and link the chosen select option to the plan obj model we pass to the server
+
+      // find out if we are editing a plan
+      if (this.plan['id'] != undefined) {
+        // looping through all available file destinations
+        this.destinationList.forEach(dest => {
+          // and detecting which one belongs to our plan we are editing
+          if(dest.id == this.plan.fileDestination.id){
+            // this line writes the exact same value to fileDestination field
+            // which it already has, because it's the plans filedestination
+            // in order to make the form behave smoothly in all situations this is necessary 
+             this.plan.fileDestination = dest;
+          }
+        });
+      }
       
-      this.plan.fileDestination = this.destinationList[0];
+
       
     });
   }
