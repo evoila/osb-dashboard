@@ -1,135 +1,280 @@
 <div class="section-content">
-  <form >
-    
-  </form>
-  <form #form="ngForm" *ngIf="destination.type == 'S3'" id="feform" action="#" (ngSubmit)="onSubmit()" ngNativeValidate>
-
+  <form></form>
+  <form
+    #form="ngForm"
+    *ngIf="destination.type == 'S3'"
+    id="feform"
+    action="#"
+    (ngSubmit)="onSubmit()"
+    ngNativeValidate
+  >
     <div class="form-group">
       <label for="name">Name</label>
-      <input type="text" class="form-control" id="name" name="name" #name="ngModel" [(ngModel)]="destination.name"
-        required>
+      <input
+        type="text"
+        class="form-control"
+        id="name"
+        name="name"
+        #name="ngModel"
+        [(ngModel)]="destination.name"
+        required
+      />
       <show-errors [control]="name"></show-errors>
     </div>
-    
+
     <div class="form-group">
       <label for="name">Destination Types</label>
-      <select class="form-control" [(ngModel)]="destination.type" name="type" required>
-        <option *ngFor="let type of destinationTypes" [value]="type">{{ type }}</option>
+      <select
+        class="form-control"
+        [(ngModel)]="destination.type"
+        name="type"
+        required
+      >
+        <option *ngFor="let type of destinationTypes" [value]="type">
+          {{ type }}
+        </option>
       </select>
     </div>
 
     <div class="form-group">
       <label for="endpoint">Endpoint</label>
-      <input type="text" class="form-control" id="endpoint" name="endpoint" #endpoint="ngModel" [(ngModel)]="destination.endpoint"
-        required>
-        <small id="endpoint" class="form-text text-muted">Add protocol prefix http:// or https://</small>
+      <input
+        type="text"
+        class="form-control"
+        id="endpoint"
+        name="endpoint"
+        #endpoint="ngModel"
+        [(ngModel)]="destination.endpoint"
+        required
+      />
+      <small id="endpoint" class="form-text text-muted"
+        >Add protocol prefix http:// or https://</small
+      >
       <show-errors [control]="endpoint"></show-errors>
     </div>
 
-
     <div class="form-group">
       <label for="authKey">Authentication Key</label>
-      <input type="text" class="form-control" name="authKey" #authKey="ngModel" [(ngModel)]="destination.authKey"
-        required>
+      <input
+        type="text"
+        class="form-control"
+        name="authKey"
+        #authKey="ngModel"
+        [(ngModel)]="destination.authKey"
+        required
+      />
       <show-errors [control]="authKey"></show-errors>
-      
     </div>
     <div class="form-group">
       <label for="authSecret">Authentication Secret</label>
-      <input type="password" class="form-control" name="authSecret" #authSecret="ngModel" [(ngModel)]="destination.authSecret"
-        required>
+      <input
+        type="password"
+        class="form-control"
+        name="authSecret"
+        #authSecret="ngModel"
+        [(ngModel)]="destination.authSecret"
+        required
+      />
       <show-errors [control]="authSecret"></show-errors>
-      
     </div>
     <div class="form-group">
       <label for="Region">Region</label>
-      <input type="text" value="" placeholder="optional region identifier" class="form-control" id="region" name="region" #region="ngModel" [(ngModel)]="destination.region"
-        >
+      <input
+        type="text"
+        value=""
+        placeholder="optional region identifier"
+        class="form-control"
+        id="region"
+        name="region"
+        #region="ngModel"
+        [(ngModel)]="destination.region"
+      />
       <!--<select class="form-control" [(ngModel)]="destination.region" name="size" required>
         <option *ngFor="let region of regions" [value]="region.value">{{ region.key }}</option>
       </select>
       -->
       <show-errors [control]="region"></show-errors>
-      
     </div>
     <div class="form-group">
       <label for="bucket">Bucket</label>
-      <input type="bucket" class="form-control" name="bucket" #bucket="ngModel" [(ngModel)]="destination.bucket"
-        required>
+      <input
+        [readonly]="update"
+        type="bucket"
+        class="form-control"
+        name="bucket"
+        #bucket="ngModel"
+        [(ngModel)]="destination.bucket"
+        required
+      />
       <show-errors [control]="bucket"></show-errors>
       <small id="bucket" class="form-text text-muted">S3 Bucket Name</small>
     </div>
-    <button *ngIf="update" type="button" class="btn btn-danger fe-delbut" (click)="delete(content)">Delete</button>
-    <button type="submit" class="btn btn-primary" [disabled]="!form.form.valid">{{submitLabel}}</button>
+    <button
+      *ngIf="update"
+      type="button"
+      class="btn btn-danger fe-delbut"
+      (click)="delete(content)"
+    >
+      Delete
+    </button>
+    <button type="submit" class="btn btn-primary" [disabled]="!form.form.valid">
+      {{ submitLabel }}
+    </button>
   </form>
 
-  <form #form="ngForm" *ngIf="destination.type == 'SWIFT'" action="#" (ngSubmit)="onSubmit()" ngNativeValidate>
+  <form
+    #form="ngForm"
+    *ngIf="destination.type == 'SWIFT'"
+    action="#"
+    (ngSubmit)="onSubmit()"
+    ngNativeValidate
+  >
     <div class="form-group">
       <label for="authUrl">Authentication URL</label>
-      <input type="text" class="form-control" name="authUrl" #authUrl="ngModel" [(ngModel)]="destination.authUrl"
-        required>
+      <input
+        type="text"
+        class="form-control"
+        name="authUrl"
+        #authUrl="ngModel"
+        [(ngModel)]="destination.authUrl"
+        required
+      />
       <show-errors [control]="authUrl"></show-errors>
-      <small id="authUrl" class="form-text text-muted">OpenStack API Keystone URL</small>
+      <small id="authUrl" class="form-text text-muted"
+        >OpenStack API Keystone URL</small
+      >
     </div>
     <div class="form-group">
       <label for="username">Username</label>
-      <input type="text" class="form-control" name="username" #username="ngModel" [(ngModel)]="destination.username"
-        required>
+      <input
+        type="text"
+        class="form-control"
+        name="username"
+        #username="ngModel"
+        [(ngModel)]="destination.username"
+        required
+      />
       <show-errors [control]="username"></show-errors>
-      <small id="username" class="form-text text-muted">Openstack Service Username</small>
+      <small id="username" class="form-text text-muted"
+        >Openstack Service Username</small
+      >
     </div>
     <div class="form-group">
       <label for="password">Password</label>
-      <input type="password" class="form-control" name="password" #password="ngModel" [(ngModel)]="destination.password"
-        required>
+      <input
+        type="password"
+        class="form-control"
+        name="password"
+        #password="ngModel"
+        [(ngModel)]="destination.password"
+        required
+      />
       <show-errors [control]="password"></show-errors>
-      <small id="password" class="form-text text-muted">Openstack Service password</small>
+      <small id="password" class="form-text text-muted"
+        >Openstack Service password</small
+      >
     </div>
     <div class="form-group">
       <label for="domain">Domain</label>
-      <input type="domain" class="form-control" name="domain" #domain="ngModel" [(ngModel)]="destination.domain"
-        required>
+      <input
+        type="domain"
+        class="form-control"
+        name="domain"
+        #domain="ngModel"
+        [(ngModel)]="destination.domain"
+        required
+      />
       <show-errors [control]="domain"></show-errors>
-      <small id="domain" class="form-text text-muted">Openstack Project Domain</small>
+      <small id="domain" class="form-text text-muted"
+        >Openstack Project Domain</small
+      >
     </div>
     <div class="form-group">
       <label for="project_name">Project</label>
-      <input type="project_name" class="form-control" name="project_name" #project_name="ngModel" [(ngModel)]="destination.project_name"
-        required>
+      <input
+        type="project_name"
+        class="form-control"
+        name="project_name"
+        #project_name="ngModel"
+        [(ngModel)]="destination.project_name"
+        required
+      />
       <show-errors [control]="project_name"></show-errors>
-      <small id="project_name" class="form-text text-muted">Openstack Project Name</small>
+      <small id="project_name" class="form-text text-muted"
+        >Openstack Project Name</small
+      >
     </div>
     <div class="form-group">
       <label for="container_name">Container Name</label>
-      <input type="container_name" class="form-control" name="container_name" #container_name="ngModel" [(ngModel)]="destination.container_name"
-        required>
+      <input
+        type="container_name"
+        class="form-control"
+        name="container_name"
+        #container_name="ngModel"
+        [(ngModel)]="destination.container_name"
+        required
+      />
       <show-errors [control]="container_name"></show-errors>
-      <small id="container_name" class="form-text text-muted">OpenStack Swift Container Name</small>
+      <small id="container_name" class="form-text text-muted"
+        >OpenStack Swift Container Name</small
+      >
     </div>
-    <button type="button" *ngIf="update" class="btn btn-danger fe-delbut" (click)="delete(content)">Delete</button>
-    <button type="submit" class="btn btn-primary" >{{submitLabel}}</button> <!-- [disabled]="!form.form.valid || submitButtonLocked"  THIS IS NOT WORKING BECAUSE OF REACTIVE FORM CONTROL-->
+    <button
+      type="button"
+      *ngIf="update"
+      class="btn btn-danger fe-delbut"
+      (click)="delete(content)"
+    >
+      Delete
+    </button>
+    <button type="submit" class="btn btn-primary">{{ submitLabel }}</button>
+    <!-- [disabled]="!form.form.valid || submitButtonLocked"  THIS IS NOT WORKING BECAUSE OF REACTIVE FORM CONTROL-->
   </form>
   <ng-template #content let-modal>
     <div class="modal-header">
       <h4 class="modal-title" id="modal-basic-title">Delete Entity</h4>
-      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <button
+        type="button"
+        class="close"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+      >
         <span aria-hidden="true">&nbsp;</span>
       </button>
     </div>
     <div class="modal-body">
       <p><strong>Are you sure you want to delete this Endpoint?</strong></p>
-      <p>All information associated to this endpoint will be permanently deleted.</p>
+      <p>
+        All information associated to this endpoint will be permanently deleted.
+      </p>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancel</button>
-      <button type="button" class="btn btn-danger" (click)="modal.close('Ok click')">Ok</button>
+      <button
+        type="button"
+        class="btn btn-outline-secondary"
+        (click)="modal.dismiss('cancel click')"
+      >
+        Cancel
+      </button>
+      <button
+        type="button"
+        class="btn btn-danger"
+        (click)="modal.close('Ok click')"
+      >
+        Ok
+      </button>
     </div>
   </ng-template>
 
   <ng-template #notdeletablecontent let-modal>
     <div class="modal-header">
       <h4 class="modal-title" id="modal-basic-title">Not Deletable</h4>
-      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <button
+        type="button"
+        class="close"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+      >
         <span aria-hidden="true">&nbsp;</span>
       </button>
     </div>
@@ -138,7 +283,13 @@
       <p>At least one Backup Plan uses this Endpoint.</p>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-danger" (click)="modal.close('Ok click')">Ok</button>
+      <button
+        type="button"
+        class="btn btn-danger"
+        (click)="modal.close('Ok click')"
+      >
+        Ok
+      </button>
     </div>
   </ng-template>
 </div>
