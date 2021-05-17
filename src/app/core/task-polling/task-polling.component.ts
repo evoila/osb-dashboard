@@ -14,6 +14,7 @@ import { ViewInformationService } from "../sidebar";
 export class TaskPollingComponent implements OnInit {
   tasksExist: boolean = false;
   tasksRunning: boolean = false;
+  taskErrorHint: boolean = false;
   taskList: { [key: string]: PollingTask } = {};
   dropdownPlacement$: Observable<string>;
 
@@ -37,7 +38,17 @@ export class TaskPollingComponent implements OnInit {
       this.taskList = newTaskList;
       this.checkIfTasksExistAndRunning(this.taskList);
     });
+    // indicating a task critical state the user should recognize
+    this.taskPollingService.taskListHint.subscribe((flag) => {
+      this.taskErrorHint = true;
+      
+    });
   }
+
+  tasklistTapped(){
+    this.taskErrorHint = false;
+  }
+
 
   checkIfTasksExistAndRunning(taskList: { [key: string]: PollingTask }): void {
     this.tasksRunning = false;
