@@ -2,7 +2,25 @@
   <form >
     
   </form>
-  <form #form="ngForm" *ngIf="destination.type == 'S3'" action="#" (ngSubmit)="onSubmit()" ngNativeValidate>
+  
+
+  <!-- FORM FOR 'AWS S3' DESTINATION TYPE -->
+  
+  <form #form="ngForm" *ngIf="destination.type == 'AWS S3'" action="#" (ngSubmit)="onSubmit()" ngNativeValidate>
+  
+  
+  
+  </form>
+  
+  
+  
+  
+  
+  
+  
+  <!-- FORM FOR 'CUSTOM S3' DESTINATION TYPE -->
+  
+  <form #form="ngForm" *ngIf="destination.type == 'CUSTOM S3'" action="#" (ngSubmit)="onSubmit()" ngNativeValidate>
 
     <div class="form-group">
       <label for="name">Name</label>
@@ -63,6 +81,9 @@
     <button type="submit" class="btn btn-primary" [disabled]="!form.form.valid">{{submitLabel}}</button>
   </form>
 
+
+
+  <!-- FORM FOR 'SWIFT' DESTINATION TYPE -->
   <form #form="ngForm" *ngIf="destination.type == 'SWIFT'" action="#" (ngSubmit)="onSubmit()" ngNativeValidate>
     <div class="form-group">
       <label for="authUrl">Authentication URL</label>

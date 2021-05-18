@@ -12,7 +12,7 @@ import { BackupPlan } from '../domain/backup-plan';
 })
 export class FileEndpointComponent implements OnInit {
   readonly ENTITY: string = 'fileDestinations';
-  destinationTypes = ['S3', 'SWIFT'];
+  destinationTypes = ['AWS S3', 'Custom S3', 'SWIFT'];
   // https://docs.aws.amazon.com/de_de/general/latest/gr/rande.html#s3_region
   regions = [{
     key: 'USA East (Ohio)',
