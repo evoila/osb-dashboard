@@ -13,6 +13,7 @@ import { BackupPlan } from '../domain/backup-plan';
 export class FileEndpointComponent implements OnInit {
   readonly ENTITY: string = 'fileDestinations';
   destinationTypes = ['AWS S3', 'Custom S3', 'SWIFT'];
+  userActionDescriptor = ""
   // https://docs.aws.amazon.com/de_de/general/latest/gr/rande.html#s3_region
   regions = [{
     key: 'USA East (Ohio)',
@@ -70,7 +71,7 @@ export class FileEndpointComponent implements OnInit {
     value: 'sa-east-1'
   }];
   destination: any = {
-    type: 'S3'
+    type: 'AWS S3'
   };
   update = false;
   validated = false;
@@ -90,7 +91,8 @@ export class FileEndpointComponent implements OnInit {
     this.route.params.subscribe(params => {
       console.log(params['fileEndpointId']);
       if (params['fileEndpointId'] && (params['fileEndpointId'] != 'new')) {
-        this.update = true;        
+        this.update = true;
+        this.userActionDescriptor = "Edit";     
         this.backupService.loadOne(this.ENTITY, params['fileEndpointId']) 
           .subscribe(
             (destination: any) => { 
@@ -108,6 +110,9 @@ export class FileEndpointComponent implements OnInit {
             this.backupPlans = backupPlans.content;
         });
 
+      }
+      else{
+        this.userActionDescriptor = "Create"; 
       }
     });
   }
@@ -154,6 +159,8 @@ export class FileEndpointComponent implements OnInit {
 
   check_endpoint_protocol(destination): boolean {
     
+
+
     if (destination['endpoint']){
       if (destination['endpoint'].length == 0){
         // no endpoint set
@@ -178,11 +185,14 @@ export class FileEndpointComponent implements OnInit {
           this.destination['region'] = "";
       }
       
-      // valite endpoint contains https:// or http://
-      if (!this.check_endpoint_protocol(this.destination)){
-        this.nService.add(new Notification(NotificationType.Warning, 'Please set an endpoint beginning with http:// or https://'));
-        return
+      if(this.destination['type'] == 'Custom S3'){
+        // valite endpoint contains https:// or http://
+        if (!this.check_endpoint_protocol(this.destination)){
+          this.nService.add(new Notification(NotificationType.Warning, 'Please set an endpoint beginning with http:// or https://'));
+          return
+        }
       }
+      
       this.backupService.validate(this.ENTITY, this.destination)
       
         .subscribe({
