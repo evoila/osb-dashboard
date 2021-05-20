@@ -1,4 +1,6 @@
-<li
+<span style="display: flex;">
+  <span *ngIf="taskErrorHint" style="color: red; height: min-content;margin-top: 0.5em;"> error </span>
+  <li
   ngbDropdown
   class="nav-item dropdown"
   display="dynamic"
@@ -7,6 +9,7 @@
   <button
     class="btn btn-link nav-link dropdown-toggle"
     id="dropdownConfig"
+    (click)="tasklistTapped()"
     ngbDropdownToggle
   >
     <i
@@ -54,3 +57,7 @@
     </p>
   </div>
 </li>
+
+
+</span>
+
