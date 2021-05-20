@@ -1,8 +1,60 @@
 <div class="section-content">
+  <h3> {{userActionDescriptor}}  Endpoint </h3>
+  <p></p>
   <form >
-    
+    <div class="form-group">
+      <label for="name">Destination Type</label>
+      <select class="form-control" [(ngModel)]="destination.type" name="type" required>
+        <option *ngFor="let type of destinationTypes" [value]="type">{{ type }}</option>
+      </select>
+    </div>
   </form>
-  <form #form="ngForm" *ngIf="destination.type == 'S3'" action="#" (ngSubmit)="onSubmit()" ngNativeValidate>
+  
+  
+  <!-- FORM FOR 'AWS S3' DESTINATION TYPE -->
+  
+  <form #form="ngForm" *ngIf="destination.type == 'AWS S3'" action="#" (ngSubmit)="onSubmit()" ngNativeValidate>
+    
+    <div class="form-group">
+      <label for="authKey">AWS Secret</label>
+      <input type="text" class="form-control" name="authKey" #authKey="ngModel" [(ngModel)]="destination.authKey" required>
+      <show-errors [control]="authKey"></show-errors>
+      <small id="username" class="form-text text-muted">AWS Secret</small>
+    </div>
+    <div class="form-group">
+      <label for="authSecret">AWS SecretKey</label>
+      <input type="password" class="form-control" name="authSecret" #authSecret="ngModel" [(ngModel)]="destination.authSecret" required>
+      <show-errors [control]="authSecret"></show-errors>
+      <small id="password" class="form-text text-muted">AWS SecretKey</small>
+    </div>
+    <div class="form-group">
+      <label for="Region">Region</label>
+      <select class="form-control" [(ngModel)]="destination.region" name="size" required>
+        <option *ngFor="let region of regions" [value]="region.value">{{ region.key }}</option>
+      </select>
+      <show-errors [control]="projectName"></show-errors>
+      <small id="projectName" class="form-text text-muted">AWS Region</small>
+    </div>
+    <div class="form-group">
+      <label for="bucket">Bucket</label>
+      <input type="bucket" class="form-control" name="bucket" #bucket="ngModel" [(ngModel)]="destination.bucket" required>
+      <show-errors [control]="bucket"></show-errors>
+      <small id="bucket" class="form-text text-muted">AWS S3 Bucket</small>
+    </div>
+    <button *ngIf="update" type="button" class="btn btn-danger" (click)="delete()">Delete</button>
+    <button type="submit" class="btn btn-primary" [disabled]="!form.form.valid">{{submitLabel}}</button>
+  
+  </form>
+  
+  
+  
+  
+  
+  
+  
+  <!-- FORM FOR 'CUSTOM S3' DESTINATION TYPE -->
+  
+  <form #form="ngForm" *ngIf="destination.type == 'Custom S3'" action="#" (ngSubmit)="onSubmit()" ngNativeValidate>
 
     <div class="form-group">
       <label for="name">Name</label>
@@ -11,12 +63,6 @@
       <show-errors [control]="name"></show-errors>
     </div>
     
-    <div class="form-group">
-      <label for="name">Destination Types</label>
-      <select class="form-control" [(ngModel)]="destination.type" name="type" required>
-        <option *ngFor="let type of destinationTypes" [value]="type">{{ type }}</option>
-      </select>
-    </div>
 
     <div class="form-group">
       <label for="endpoint">Endpoint</label>
@@ -63,6 +109,9 @@
     <button type="submit" class="btn btn-primary" [disabled]="!form.form.valid">{{submitLabel}}</button>
   </form>
 
+
+
+  <!-- FORM FOR 'SWIFT' DESTINATION TYPE -->
   <form #form="ngForm" *ngIf="destination.type == 'SWIFT'" action="#" (ngSubmit)="onSubmit()" ngNativeValidate>
     <div class="form-group">
       <label for="authUrl">Authentication URL</label>
