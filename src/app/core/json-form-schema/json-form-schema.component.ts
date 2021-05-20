@@ -49,7 +49,7 @@ export class JsonFormSchemaComponent implements OnInit {
     this.generalService.saveOne(payload).subscribe({
       next: (d) => {
         this.taskPolling.pollState("Updating Service", "state", "description");
-        this.notificationService.addSelfClosing(new Notification(NotificationType.Info, 'Starting Service Instance Update'));
+        this.notificationService.addSelfClosing(new Notification(NotificationType.Info, 'Starting Service Instance Update - Observe Status In Task List (Top Right Corner)'));
       },
       error: (e) => {
         this.notificationService.addSelfClosing(new Notification(NotificationType.Error, 'Error Updating Service Instance'));

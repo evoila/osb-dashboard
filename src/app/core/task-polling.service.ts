@@ -16,6 +16,7 @@ export class TaskPollingService {
   private readonly INTERVAL = 2000;
   taskList: { [key:string]:PollingTask; } = {};
   taskListChange: Subject<{ [key:string]:PollingTask; }> = new Subject<{ [key:string]:PollingTask; }>();
+  taskListHint: Subject< boolean> = new Subject<boolean>();
 
   constructor(private http: HttpClient) {}
 
@@ -63,7 +64,8 @@ export class TaskPollingService {
       timeout(timeoutPeriod)
     ).subscribe(
       result => {
-        this.updatePollingOperation(id, PollingStatus.SUCCEEDED, result[descriptionField]);
+        
+        this.updatePollingOperation(id, result[stateField], "Task Result: ".concat(result[descriptionField]));
       },
       error => {
         this.updatePollingOperation(id, PollingStatus.FAILED, error);
@@ -84,6 +86,9 @@ export class TaskPollingService {
   }
 
   updatePollingOperation(id: string, status: PollingStatus, operation: string): void {
+    if(status.toLowerCase() == "failed"){
+      this.taskListHint.next(true);
+    }
     this.taskList[id].operation = operation;
     this.taskList[id].status = status;
     this.taskList[id].endDate = new Date();
