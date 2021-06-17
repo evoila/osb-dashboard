@@ -9,7 +9,6 @@ import { KafkaRoutingModule } from './kafka-routing.module';
 import { KafkaUsersComponent } from './kafka-users/kafka-users.component';
 import { KafkaSettingsComponent } from './kafka-settings/kafka-settings.component';
 import { ZookeeperSettingsComponent } from './zookeeper-settings/zookeeper-settings.component';
-import { Log4jSettingsComponent } from './log4j-settings/log4j-settings.component';
 
 @NgModule({
   imports: [
@@ -19,6 +18,6 @@ import { Log4jSettingsComponent } from './log4j-settings/log4j-settings.componen
     KafkaRoutingModule,
     Bootstrap4FrameworkModule
   ],
-  declarations: [KafkaComponent, KafkaUsersComponent, KafkaSettingsComponent, Log4jSettingsComponent, ZookeeperSettingsComponent]
+  declarations: [KafkaComponent, KafkaUsersComponent, KafkaSettingsComponent, ZookeeperSettingsComponent]
 })
 export class KafkaModule { }
