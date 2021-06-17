@@ -18,13 +18,14 @@ export class KafkaUsersComponent implements OnInit {
           "displayFlex": true,
           "flex-direction": "row",
           "items": [
-            {
+            { "type": "text",
               "key": "users[].username",
               "flex": "4 4 200px",
               "notitle": true,
               "placeholder": "Username"
             },
             {
+              "type": "password",
               "key": "users[].password",
               "flex": "4 4 200px",
               "notitle": true,
