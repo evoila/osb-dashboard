@@ -4,7 +4,6 @@ import { KafkaComponent } from './kafka.component';
 import { KafkaUsersComponent } from './kafka-users/kafka-users.component';
 import { KafkaSettingsComponent } from './kafka-settings/kafka-settings.component';
 import { ZookeeperSettingsComponent } from './zookeeper-settings/zookeeper-settings.component';
-import { Log4jSettingsComponent } from './log4j-settings/log4j-settings.component';
 
 export const ROUTES = [
   {
@@ -17,9 +16,6 @@ export const ROUTES = [
       },{
         path: 'kafka-users',
         component: KafkaUsersComponent,
-      },{
-        path: 'log4j-settings',
-        component: Log4jSettingsComponent
       },{
         path: 'zookeeper-settings',
         component: ZookeeperSettingsComponent
