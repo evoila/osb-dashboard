@@ -9,7 +9,7 @@ import { KafkaRoutingModule } from './kafka-routing.module';
 import { KafkaUsersComponent } from './kafka-users/kafka-users.component';
 import { KafkaSettingsComponent } from './kafka-settings/kafka-settings.component';
 import { ZookeeperSettingsComponent } from './zookeeper-settings/zookeeper-settings.component';
-import { Log4jSettingsComponent } from './log4j-setting/log4j-settings.component';
+import { Log4jSettingsComponent } from './log4j-settings/log4j-settings.component';
 
 @NgModule({
   imports: [
