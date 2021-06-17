@@ -7,6 +7,9 @@ const { spawn } = require("cross-spawn");
 const children = new ChildProcessManager();
 
 function serve(buildTarget: string, cb) {
+  console.log(buildTarget);
+  console.log(buildTarget);
+
   const target = process.env["TARGET"] || "development";
   const aot = process.env["AOT"] || "false";
   const prod = target !== "development";

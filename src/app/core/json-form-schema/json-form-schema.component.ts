@@ -40,6 +40,7 @@ export class JsonFormSchemaComponent implements OnInit {
         if (this.formLayout)
           this.jsonSchema.layout = this.formLayout;
     });
+    console.log("this yes oninit");
   }
 
   public save($event: any): void {
@@ -55,5 +56,7 @@ export class JsonFormSchemaComponent implements OnInit {
         this.notificationService.addSelfClosing(new Notification(NotificationType.Error, 'Error Updating Service Instance'));
       }
     });
+
+    console.log("this yes save!");
   }
 }
