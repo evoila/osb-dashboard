@@ -10,7 +10,7 @@ if (!injectedEnv) {
     "DASHBOARD DEFAULT DEVELOPMENT ENV ACTIVE - DID YOU FORGET TO INJECT A RUNTIME ENV?"
   );
   seedEnv = {
-    serviceInstanceId: "5ba75f78-4c1a-4292-a862-f2293f2091fc",
+    serviceInstanceId: "fd38b550-517d-4022-83a7-12abaf1b4124",
     token:
       "Bearer nah",
     baseUrls: {
