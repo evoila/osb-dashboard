@@ -73,6 +73,7 @@ export class KafkaUsersComponent implements OnInit {
             {
               "type" : "array",
               "key" : "users[].cluster_acls",
+              "maxItems" : 1,
               "items" : [
                 {
                   "type": "text",
