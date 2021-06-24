@@ -9,8 +9,22 @@ import { ServiceKeysService } from '../service-keys.service';
 })
 export class ServiceKeyListComponent implements OnInit {
   readonly ENTITY = 'servicekeys';
+  // every service key has a name, params are depending service type
+  newServiceKey = {'name': '', 'params': {}};
   serviceKeys: [any];
-  isLoading = false;  
+  isLoading = false;
+  showServiceKeyCreationForm = false;
+  serviceKeyCreationHint = "";
+
+
+  /*TEST VARIABLES START*/
+
+  readonly formElements: Array<string> = ["config"];
+  readonly instanceGroupName: string = "zookeeper";
+
+ /*TEST VARIABLES START*/
+
+  
   constructor(protected readonly service: ServiceKeysService,
     protected readonly nService: NotificationService) { }
 
@@ -19,13 +33,28 @@ export class ServiceKeyListComponent implements OnInit {
   }
 
   loadKeys(): void {
+    console.log();
     this.service.loadAll(this.ENTITY)
       .subscribe((keys_page: any) => {
         this.serviceKeys = keys_page.content;
       });
   }
 
+
+  toggleServiceKeyCreationForm(): void{
+    this.showServiceKeyCreationForm = !this.showServiceKeyCreationForm;
+    this.serviceKeyCreationHint = "";
+  }
+
+ 
+
   create(): void {
+    this.serviceKeyCreationHint = "";
+    if(this.newServiceKey.name == ''){
+      this.serviceKeyCreationHint = "Give it a name";
+    }
+    
+    /* KEY CREATION CODE
     this.isLoading = true;
     this.service.saveOne({}, this.ENTITY)
       .subscribe({
@@ -38,6 +67,8 @@ export class ServiceKeyListComponent implements OnInit {
           this.nService.add(new Notification(NotificationType.Warning, 'Could not generate new Service Key'));
         }
       });
+      */
+
   }
 
 }

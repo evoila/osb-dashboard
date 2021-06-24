@@ -28,11 +28,19 @@ export class JsonFormSchemaComponent implements OnInit {
     readonly taskPolling: TaskPollingService) { }
 
   ngOnInit() {
+
+    
+    this.formSchemaService.loadFormSchemaValues().subscribe(result => {
+        console.log("loadFormSchemaValues() :: " );
+        console.log(result);
+    });
+
     this.formSchemaService.loadFormSchemaValues().pipe(
       map(data => data.parameters[this.instanceGroupName]),
       switchMap((params, i) => this.formSchemaService.loadFormSchema('update').pipe(map(formSchema => { return { formSchema, params } }))),
       map((k: { formSchema, params }) => {
         const formSchema = this.formSchemaService.filterSchema(k.formSchema, this.instanceGroupName, this.formElements);
+        
         return { params: k.params, formSchema }
       }), map(k => { return { ...this.jsonSchema, data: k.params, schema: k.formSchema } })
     ).subscribe(result => {
