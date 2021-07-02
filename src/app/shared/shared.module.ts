@@ -25,6 +25,13 @@ import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { RestorePointListComponent } from './backup/restore-point-list/restore-point-list.component';
 import { ServiceKeyListComponent } from './service-keys/service-key-list/service-key-list.component';
 import { NotificationComponent } from './notification/notification.component';
+import { NotificationConfigurationOverviewComponent } from './notification/notification-configuration-overview/notification-configuration-overview.component';
+import { SmtpConfigurationOverviewComponent } from './notification/smtp-configuration-overview/smtp-configuration-overview.component';
+import { NotificationBackupPlanOverviewComponent } from './notification/notification-backup-plan-overview/notification-backup-plan-overview.component';
+import { NotificationConfigurationComponent } from './notification/notification-configuration/notification-configuration.component';
+import { SmtpConfigurationComponent } from './notification/smtp-configuration/smtp-configuration.component';
+import { OsbListComponent } from './osb-list/osb-list.component';
+import { NotificationConfigurationRecentOverviewComponent } from './notification/notification-configuration-recent-overview/notification-configuration-recent-overview.component';
 
 const components = [
   GeneralComponent,
@@ -41,7 +48,14 @@ const components = [
   RestoreListComponent,
   FileEndpointComponent,
   FileEndpointListComponent,
-  NotificationComponent
+  NotificationComponent,
+  NotificationConfigurationOverviewComponent,
+  SmtpConfigurationOverviewComponent,
+  NotificationBackupPlanOverviewComponent,
+  NotificationConfigurationComponent,
+  SmtpConfigurationComponent,
+  OsbListComponent,
+  NotificationConfigurationRecentOverviewComponent
 ]
 
 @NgModule({
@@ -53,7 +67,9 @@ const components = [
     CoreModule,
     NgbPaginationModule
   ],
-  declarations: [...components, ServiceKeyListComponent, NotificationComponent],
+  declarations: [...components,
+    ServiceKeyListComponent
+  ],
   exports: [components],
   providers: [BackupService, GeneralService, ServiceKeysService]
 })

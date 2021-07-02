@@ -16,6 +16,7 @@ import { BackupJobComponent } from './backup/backup-job/backup-job.component';
 import { RestorePointListComponent } from './backup/restore-point-list/restore-point-list.component';
 import { ServiceKeyListComponent } from './service-keys/service-key-list/service-key-list.component';
 import { NotificationComponent } from './notification/notification.component';
+import { NotificationConfigurationOverviewComponent } from './notification/notification-configuration-overview/notification-configuration-overview.component';
 
 
 export const ROUTES = [{
@@ -84,7 +85,13 @@ export const ROUTES = [{
 },
 {
   path: 'notification',
-  component: NotificationComponent
+  component: NotificationComponent,
+  children: [
+    {
+      path: '',
+      component: NotificationConfigurationOverviewComponent
+    }
+  ]
 }
 ];
 
