@@ -71,6 +71,11 @@
           >Backup</a
         >
       </li>
+      <li class="nav-item" *ngIf="sharedModuleSupport.notification">
+        <a class="nav-link" routerLink="/notification" routerLinkActive="active"
+          >Notification</a
+        >
+      </li>
       <li class="nav-item" *ngIf="sharedModuleSupport.serviceKeys">
         <a class="nav-link" routerLink="/service-keys" routerLinkActive="active"
           >Service Keys</a

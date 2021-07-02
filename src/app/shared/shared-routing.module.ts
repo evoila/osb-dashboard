@@ -15,56 +15,57 @@ import { RestoreListComponent } from './backup/restore-list/restore-list.compone
 import { BackupJobComponent } from './backup/backup-job/backup-job.component';
 import { RestorePointListComponent } from './backup/restore-point-list/restore-point-list.component';
 import { ServiceKeyListComponent } from './service-keys/service-key-list/service-key-list.component';
+import { NotificationComponent } from './notification/notification.component';
 
 
 export const ROUTES = [{
   path: '',
-  component: GeneralComponent 
+  component: GeneralComponent
 },
 {
   path: 'backup',
   component: BackupComponent,
   children: [{
-      path: '',
-      component: BackupDashboardComponent,
-      pathMatch: 'full'
-    },
-    {
-      path: 'backup-plans',
-      component: BackupPlanListComponent
-    },
-    {
-      path: 'backup-plans/:planId',
-      component: BackupPlanComponent
-    },
-    {
-      path: 'backup-jobs',
-      component: BackupJobListComponent
-    },
-    {
-      path: 'backup-jobs/:jobId',
-      component: BackupJobComponent
-    },
-    {
-      path: 'file-endpoints',
-      component: FileEndpointListComponent
-    },
-    {
-      path: 'file-endpoints/:fileEndpointId',
-      component: FileEndpointComponent
-    },
-    {
-      path: 'restore-points/:filter',
-      component: RestorePointListComponent
-    },
-    {
-      path: 'restore-jobs',
-      component: RestoreListComponent
-    },
-    {
-      path: 'restore-jobs/:restoreId',
-      component: RestoreJobComponent
-    },
+    path: '',
+    component: BackupDashboardComponent,
+    pathMatch: 'full'
+  },
+  {
+    path: 'backup-plans',
+    component: BackupPlanListComponent
+  },
+  {
+    path: 'backup-plans/:planId',
+    component: BackupPlanComponent
+  },
+  {
+    path: 'backup-jobs',
+    component: BackupJobListComponent
+  },
+  {
+    path: 'backup-jobs/:jobId',
+    component: BackupJobComponent
+  },
+  {
+    path: 'file-endpoints',
+    component: FileEndpointListComponent
+  },
+  {
+    path: 'file-endpoints/:fileEndpointId',
+    component: FileEndpointComponent
+  },
+  {
+    path: 'restore-points/:filter',
+    component: RestorePointListComponent
+  },
+  {
+    path: 'restore-jobs',
+    component: RestoreListComponent
+  },
+  {
+    path: 'restore-jobs/:restoreId',
+    component: RestoreJobComponent
+  },
   ]
 },
 {
@@ -80,6 +81,10 @@ export const ROUTES = [{
       component: ServiceKeysDetailComponent
     }
   ]
+},
+{
+  path: 'notification',
+  component: NotificationComponent
 }
 ];
 

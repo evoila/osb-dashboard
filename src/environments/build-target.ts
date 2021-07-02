@@ -19,6 +19,7 @@ export class ModuleSupport {
   general: boolean;
   backup: boolean;
   serviceKeys: boolean;
+  notification: boolean;
 }
 
 export interface ModuleRouteData {

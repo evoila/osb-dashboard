@@ -61,6 +61,15 @@
       <a routerLink="/backup" class="btn btn-primary">Configure Backup</a>
     </div>
   </div>
+  <div class="card" *ngIf="sharedModuleSupport.notification">
+    <div class="card-body">
+      <h5 class="card-title">Notification</h5>
+      <p class="card-text">You can configure notifications which will trigger on scheduled backups, so that E-Mails will be sent 
+        on certain events (SUCCESS, FAILED, etc.) with information about the Service Broker and why the event happened.
+      </p>
+      <a routerLink="/notification" class="btn btn-primary">Configure Notification</a>
+    </div>
+  </div>
   <div class="card" *ngIf="sharedModuleSupport.management">
     <div class="card-body">
       <h5 class="card-title">Management</h5>

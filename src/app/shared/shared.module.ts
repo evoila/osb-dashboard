@@ -24,6 +24,7 @@ import { BackupJobComponent } from './backup/backup-job/backup-job.component';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { RestorePointListComponent } from './backup/restore-point-list/restore-point-list.component';
 import { ServiceKeyListComponent } from './service-keys/service-key-list/service-key-list.component';
+import { NotificationComponent } from './notification/notification.component';
 
 const components = [
   GeneralComponent,
@@ -39,7 +40,8 @@ const components = [
   RestoreJobComponent,
   RestoreListComponent,
   FileEndpointComponent,
-  FileEndpointListComponent  
+  FileEndpointListComponent,
+  NotificationComponent
 ]
 
 @NgModule({
@@ -51,7 +53,7 @@ const components = [
     CoreModule,
     NgbPaginationModule
   ],
-  declarations: [...components, ServiceKeyListComponent],
+  declarations: [...components, ServiceKeyListComponent, NotificationComponent],
   exports: [components],
   providers: [BackupService, GeneralService, ServiceKeysService]
 })

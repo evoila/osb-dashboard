@@ -3,7 +3,7 @@ import { Route, RouterModule } from '@angular/router';
 
 import { buildTarget } from 'environments/target';
 
-import { BackupComponent, ServiceKeysComponent, GeneralComponent } from './shared';
+import { BackupComponent, ServiceKeysComponent, GeneralComponent, NotificationComponent } from './shared';
 
 
 // needs to be exported for AOT
@@ -20,6 +20,10 @@ export const ROUTES: Route[] = [
   {
     path: 'backup',
     component: BackupComponent
+  },
+  {
+    path: 'notification',
+    component: NotificationComponent
   },
   {
     path: 'service-keys',

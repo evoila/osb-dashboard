@@ -10,7 +10,8 @@ export const buildTarget: BuildTarget = {
   sharedModules: {
     general: true,
     backup: true,
-    serviceKeys: true
+    serviceKeys: true,
+    notification: true
   },
   extensionModules: [
     // https://angular.io/docs/ts/latest/guide/router.html#!#preload-canload
