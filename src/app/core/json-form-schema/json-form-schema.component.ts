@@ -17,6 +17,10 @@ export class JsonFormSchemaComponent implements OnInit {
   @Input("instance-group-name") instanceGroupName: string;
   @Input("form-elements") formElements: Array<string>;
   @Input("form-layout") formLayout: Array<any>;
+  // this component queries 'update' or 'create' parameters (of bosh deployment application.yml)
+  // 'update' is used by default, if a component want's to get instance update parameters the input *param-type* can be unset
+  // if a component wants to display a form showing binding create parameters, the input *param-type* has to be set to 'create'
+  @Input("param-type") paramType : string;
   public jsonSchema: EnrichedJsonSchema = {
     schema: { schema: {} },
     data: {}
@@ -29,18 +33,18 @@ export class JsonFormSchemaComponent implements OnInit {
 
   ngOnInit() {
 
-    
     this.formSchemaService.loadFormSchemaValues().subscribe(result => {
         console.log("loadFormSchemaValues() :: " );
         console.log(result);
     });
-
+    // deciding which endpoint to call to get binding create parameters or instance update parameters
+    let parameters_type = this.paramType == 'create' ? "binding/create" : "instance/update";
     this.formSchemaService.loadFormSchemaValues().pipe(
       map(data => data.parameters[this.instanceGroupName]),
-      switchMap((params, i) => this.formSchemaService.loadFormSchema('update').pipe(map(formSchema => { return { formSchema, params } }))),
+      
+      switchMap((params, i) => this.formSchemaService.loadFormSchema(parameters_type + "/parameters").pipe(map(formSchema => { return { formSchema, params } }))),
       map((k: { formSchema, params }) => {
         const formSchema = this.formSchemaService.filterSchema(k.formSchema, this.instanceGroupName, this.formElements);
-        
         return { params: k.params, formSchema }
       }), map(k => { return { ...this.jsonSchema, data: k.params, schema: k.formSchema } })
     ).subscribe(result => {

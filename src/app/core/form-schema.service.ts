@@ -31,6 +31,12 @@ export class FormSchemaService {
     console.log("instanceGroup: " + instanceGroup);
     console.log("elements: " + elements);
 
+
+    if(instanceGroup == undefined || elements == undefined){
+      // nothing to filter, return schema as is - someone wants all parameters
+      return result;
+    }
+
     let filteredInstanceGroup = result.schema.properties[instanceGroup];
 
     if (filteredInstanceGroup != null) {

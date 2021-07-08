@@ -16,15 +16,10 @@ export class ServiceKeyListComponent implements OnInit {
   showServiceKeyCreationForm = false;
   serviceKeyCreationHint = "";
 
-
-  /*TEST VARIABLES START*/
-
-  readonly formElements: Array<string> = ["config"];
-  readonly instanceGroupName: string = "zookeeper";
-
- /*TEST VARIABLES START*/
-
+ 
+  readonly parameterType: string = "create";
   
+
   constructor(protected readonly service: ServiceKeysService,
     protected readonly nService: NotificationService) { }
 
@@ -34,6 +29,7 @@ export class ServiceKeyListComponent implements OnInit {
 
   loadKeys(): void {
     console.log();
+    
     this.service.loadAll(this.ENTITY)
       .subscribe((keys_page: any) => {
         this.serviceKeys = keys_page.content;

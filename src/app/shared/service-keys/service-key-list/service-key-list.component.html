@@ -10,16 +10,16 @@
 
       <div class="skc-form" *ngIf="showServiceKeyCreationForm">
       
-        <input type="text" class="form-control" placeholder="Service Key Name" id="sk_name" name="sk_name" #sk_name="ngModel" [(ngModel)]="newServiceKey.name" required>
+        <!--<input type="text" class="form-control" placeholder="Service Key Name" id="sk_name" name="sk_name" #sk_name="ngModel" [(ngModel)]="newServiceKey.name" required>
         
-        <p></p>
+        <p></p>-->
 
-        <sb-json-form-schema [form-elements]="formElements" [instance-group-name]="instanceGroupName"></sb-json-form-schema>
+        <sb-json-form-schema [param-type]="parameterType"></sb-json-form-schema>
 
 
         <p id="skc-hint" *ngIf="serviceKeyCreationHint.length" >{{serviceKeyCreationHint}}</p>
 
-        <div class="csk-form-submit-group">
+        <div class="csk-form-submit-group" *ngIf="false">
           <p>
             <a class="btn btn-secondary" (click)="toggleServiceKeyCreationForm()" role="button"
             style="color: #fff">Cancel</a>
