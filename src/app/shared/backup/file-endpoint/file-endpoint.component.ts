@@ -119,7 +119,7 @@ export class FileEndpointComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log("NG ON INIT");
+
     this.route.params.subscribe(params => {
       //console.log(params['fileEndpointId']);
       // check if we have update or create mode
@@ -132,9 +132,9 @@ export class FileEndpointComponent implements OnInit {
             (destination: any) => { 
               this.destination = destination;
               if (this.destination.type == 'S3'){
-                  // detect if this is an "AWS S3" or "Custom AWS" FileEdpoint from Users perspective
-                  // difference is that "Custom AWS" has an 'endpoint' field
-                  this.destination['type'] = this.destination['endpoint'] ? 'Custom S3' : 'AWS S3';
+                  // detect if this is an "AWS S3" or "Custom AWS" FileEdpoint from users perspective
+                  // aws-s3 endpoints ALWAYS have the same 'endpoint' field
+                  this.destination['type'] = this.destination['endpoint'] == this.AWS_S3_ENDPOINT_URL ? 'AWS S3' : 'Custom S3';
               }
             },
           );    
