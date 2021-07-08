@@ -15,9 +15,13 @@ import { BackupPlan } from "../domain/backup-plan";
   styleUrls: ["./file-endpoint.component.scss"],
 })
 export class FileEndpointComponent implements OnInit {
+
   readonly ENTITY: string = 'fileDestinations';
+  readonly AWS_S3_ENDPOINT_URL: string = "https://s3.amazonaws.com";
+
   destinationTypes = ['AWS S3', 'Custom S3', 'SWIFT'];
-  userActionDescriptor = ""
+  
+  userActionDescriptor = "";
   // https://docs.aws.amazon.com/de_de/general/latest/gr/rande.html#s3_region
   regions = [
     {
@@ -249,11 +253,21 @@ export class FileEndpointComponent implements OnInit {
       }
       destination_copy.serviceInstance = this.backupService.getServiceInstance();
     
+
+
+      /* ad const endpoint string for aws-s3 type */
+      if(destination_copy['type'] == 'AWS S3'){
+         destination_copy['endpoint'] = this.AWS_S3_ENDPOINT_URL;
+      }
+
+      /* modify type to fit backend */
       if(destination_copy['type'] == 'Custom S3' || destination_copy['type'] == 'AWS S3'){
         // transform "Custom S3" to "S3" (right before validation)
         // backend doesn't know 'Custom S3'
         destination_copy['type'] = 'S3';
       }
+
+      
       
   
       this.backupService.validate(this.ENTITY, destination_copy)
