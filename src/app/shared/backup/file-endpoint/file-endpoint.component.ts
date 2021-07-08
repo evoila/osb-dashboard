@@ -115,15 +115,21 @@ export class FileEndpointComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      console.log(params['fileEndpointId']);
+      //console.log(params['fileEndpointId']);
+      // check if we have update or create mode
       if (params['fileEndpointId'] && (params['fileEndpointId'] != 'new')) {
         this.update = true;
-        this.userActionDescriptor = "Edit";     
+        this.userActionDescriptor = "Edit";
+
         this.backupService.loadOne(this.ENTITY, params['fileEndpointId']) 
           .subscribe(
             (destination: any) => { 
               this.destination = destination;
-              console.log(destination);
+              if (this.destination.type == 'S3'){
+                  // detect if this is an "AWS S3" or "Custom AWS" FileEdpoint from Users perspective
+                  // difference is that "Custom AWS" has an 'endpoint' field
+                  this.destination['type'] = this.destination['endpoint'] ? 'Custom S3' : 'AWS S3';
+              }
             },
           );    
         // need to load als plans as well
@@ -137,6 +143,7 @@ export class FileEndpointComponent implements OnInit {
           });
       }
       else{
+        // create mode
         this.userActionDescriptor = "Create"; 
       }
     });
@@ -240,10 +247,10 @@ export class FileEndpointComponent implements OnInit {
       }
       destination_copy.serviceInstance = this.backupService.getServiceInstance();
     
-      if(destination_copy['type'] == 'Custom S3'){
-        // transform "Custom S3" to "AWS S3" (right before validation)
+      if(destination_copy['type'] == 'Custom S3' || destination_copy['type'] == 'AWS S3'){
+        // transform "Custom S3" to "S3" (right before validation)
         // backend doesn't know 'Custom S3'
-        destination_copy['type'] = 'AWS S3';
+        destination_copy['type'] = 'S3';
       }
       
   
