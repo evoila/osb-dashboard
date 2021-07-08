@@ -114,6 +114,7 @@ export class FileEndpointComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    console.log("NG ON INIT");
     this.route.params.subscribe(params => {
       //console.log(params['fileEndpointId']);
       // check if we have update or create mode
@@ -144,6 +145,7 @@ export class FileEndpointComponent implements OnInit {
       }
       else{
         // create mode
+        this.update = false;
         this.userActionDescriptor = "Create"; 
       }
     });

@@ -4,7 +4,7 @@
   <form >
     <div class="form-group">
       <label for="name">Destination Type</label>
-      <select class="form-control" [(ngModel)]="destination.type" name="type" disabled="update" required>
+      <select class="form-control" [(ngModel)]="destination.type" name="type" [disabled]="update" required>
         <option *ngFor="let type of destinationTypes" [value]="type">{{ type }}</option>
       </select>
     </div>
