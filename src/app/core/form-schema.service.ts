@@ -14,13 +14,16 @@ export class FormSchemaService {
   }
 
   public loadFormSchema(schemaName: string): Observable<{} | any> {
-    console.log("FORM SCHEMA SERVICE LOADING SCHEMA BY NAME: " + schemaName);
     return this.http.get(this.MANAGE_BASE_URL + 'formSchema/' + environment.serviceInstanceId + '/' + schemaName);
   }
 
+  // update
   public loadFormSchemaValues(): Observable<{} | any> {
-    console.log("FORM SCHEMA SERVICE LOADING SCHEMA VALUES for INSTANCE " + environment.serviceInstanceId);
     return this.http.get(this.MANAGE_BASE_URL + 'service_instances/' + environment.serviceInstanceId);
+  }
+  // create  
+  public loadFormSchemaBindingValues(binding_ID): Observable<{} | any> {
+    return this.http.get(this.MANAGE_BASE_URL + 'service_instances/' + environment.serviceInstanceId + '/service_bindings/' + binding_ID);
   }
 
   public filterSchema(result: any, instanceGroup: string, elements: Array<string>) : any {
@@ -31,11 +34,6 @@ export class FormSchemaService {
     console.log("instanceGroup: " + instanceGroup);
     console.log("elements: " + elements);
 
-
-    if(instanceGroup == undefined || elements == undefined){
-      // nothing to filter, return schema as is - someone wants all parameters
-      return result;
-    }
 
     let filteredInstanceGroup = result.schema.properties[instanceGroup];
 

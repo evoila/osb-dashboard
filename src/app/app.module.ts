@@ -30,6 +30,7 @@ import { SharedModule } from "./shared/shared.module";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { APP_BASE_HREF } from "@angular/common";
 import { AuthenticationInterceptor } from "./core/services/authentication.interceptor";
+import { JsonFormSchemaComponent } from "./core/json-form-schema/json-form-schema.component";
 
 export function buildBuildTargetService(): BuildTargetService {
   return new BuildTargetService(buildTarget);
@@ -44,7 +45,6 @@ export function buildBuildTargetService(): BuildTargetService {
     FormsModule,
     HttpClientModule,
     NgbModule,
-
     CoreModule.forRoot(),
     SharedModule,
 

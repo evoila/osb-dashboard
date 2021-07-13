@@ -48,7 +48,7 @@ const components = [
   FocusDirective,
   WizardPageSubmitButtonComponent,
   TaskPollingComponent,
-  JsonFormSchemaComponent,
+  JsonFormSchemaComponent
 ];
 
 @NgModule({

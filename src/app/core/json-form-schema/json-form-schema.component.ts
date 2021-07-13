@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 import { map, switchMap } from 'rxjs/operators';
-
+import { ServiceKeysService } from 'app/shared/service-keys/service-keys.service';
 import { EnrichedJsonSchema } from 'app/core/domain/json-schema';
 import { NotificationService, Notification, NotificationType } from 'app/core/notification.service';
 import { TaskPollingService } from 'app/core/task-polling.service';
@@ -26,17 +26,19 @@ export class JsonFormSchemaComponent implements OnInit {
     data: {}
   };
 
-  constructor(readonly generalService: GeneralService,
+  constructor(
+    protected readonly skservice: ServiceKeysService,
+    readonly generalService: GeneralService,
     readonly notificationService: NotificationService,
     readonly formSchemaService: FormSchemaService,
     readonly taskPolling: TaskPollingService) { }
 
   ngOnInit() {
 
-    this.formSchemaService.loadFormSchemaValues().subscribe(result => {
+    /*this.formSchemaService.loadFormSchemaValues().subscribe(result => {
         console.log("loadFormSchemaValues() :: " );
         console.log(result);
-    });
+    });*/
     // deciding which endpoint to call to get binding create parameters or instance update parameters
     let parameters_type = this.paramType == 'create' ? "binding/create" : "instance/update";
     this.formSchemaService.loadFormSchemaValues().pipe(
@@ -55,17 +57,56 @@ export class JsonFormSchemaComponent implements OnInit {
   }
 
   public save($event: any): void {
+
+    var create_mode = this.paramType == 'create' ? true : false;
+    if (create_mode){
+      this.createServiceKey();
+    }
+    else{
+      this.updateAnyThing();
+    }
+
+  }
+
+
+
+createServiceKey(){
+  // service key creation
+  console.log("will create service key");
+  
+  let key_parameters = this.jsonSchema.data;
+  console.log(key_parameters);
+  this.skservice.saveOne(key_parameters, "servicekeys")
+  .subscribe({
+    next: (d) => {
+            
+      this.notificationService.add(new Notification(NotificationType.Warning, 'Creating new Service Key.'));
+      //this.loadKeys();
+    },
+    error: (e) => {
+      this.notificationService.add(new Notification(NotificationType.Warning, 'Could not generate new Service Key'));
+    }
+  });
+}
+
+
+updateAnyThing(){
+    // normal config update 
     let payload = {};
     payload[this.instanceGroupName] = this.jsonSchema.data;
-
     this.generalService.saveOne(payload).subscribe({
-      next: (d) => {
-        this.taskPolling.pollState("Updating Service", "state", "description");
-        this.notificationService.addSelfClosing(new Notification(NotificationType.Info, 'Starting Service Instance Update - Observe Status In Task List (Top Right Corner)'));
-      },
-      error: (e) => {
-        this.notificationService.addSelfClosing(new Notification(NotificationType.Error, 'Error Updating Service Instance'));
-      }
+        next: (d) => {
+          this.taskPolling.pollState("Updating Service", "state", "description");
+          this.notificationService.addSelfClosing(new Notification(NotificationType.Info, 'Starting Service Instance Update - Observe Status In Task List (Top Right Corner)'));
+        },
+        error: (e) => {
+          this.notificationService.addSelfClosing(new Notification(NotificationType.Error, 'Error Updating Service Instance'));
+        }
     });
-  }
+}
+
+
+
+
+
 }

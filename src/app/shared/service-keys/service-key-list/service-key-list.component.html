@@ -14,7 +14,10 @@
         
         <p></p>-->
 
-        <sb-json-form-schema [param-type]="parameterType"></sb-json-form-schema>
+        <!--<sb-json-form-schema [param-type]="parameterType"></sb-json-form-schema>-->
+
+        <json-schema-form loadExternalAssets="false" [schema]="jsonSchema.schema" [layout]="jsonSchema.layout" [(data)]="jsonSchema.data" framework="bootstrap-4" (onSubmit)="createKey($event)">
+        </json-schema-form>
 
 
         <p id="skc-hint" *ngIf="serviceKeyCreationHint.length" >{{serviceKeyCreationHint}}</p>

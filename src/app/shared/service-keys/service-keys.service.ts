@@ -25,7 +25,7 @@ export class ServiceKeysService {
   }
 
   public saveOne(entity: any, entityRel: string, id?: string): Observable<{} | any> {
-    return this.http.post(this.BACKUP_BASEURL + '/' + entityRel  + '/' + serviceInstanceId, {});
+    return this.http.post(this.BACKUP_BASEURL + '/' + entityRel  + '/' + serviceInstanceId, entity ?? {});
   }
 
 }

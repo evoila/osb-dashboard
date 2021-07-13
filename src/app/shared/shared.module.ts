@@ -24,6 +24,10 @@ import { BackupJobComponent } from './backup/backup-job/backup-job.component';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { RestorePointListComponent } from './backup/restore-point-list/restore-point-list.component';
 import { ServiceKeyListComponent } from './service-keys/service-key-list/service-key-list.component';
+import { JsonFormSchemaComponent } from 'app/core/json-form-schema/json-form-schema.component';
+import { FormSchemaService } from 'app/core/form-schema.service';
+import { Bootstrap4FrameworkModule } from 'angular6-json-schema-form';
+
 
 const components = [
   GeneralComponent,
@@ -39,7 +43,7 @@ const components = [
   RestoreJobComponent,
   RestoreListComponent,
   FileEndpointComponent,
-  FileEndpointListComponent  
+  FileEndpointListComponent
 ]
 
 @NgModule({
@@ -49,10 +53,11 @@ const components = [
     RouterModule,
     SharedRoutingModule,
     CoreModule,
-    NgbPaginationModule
+    NgbPaginationModule,
+    Bootstrap4FrameworkModule
   ],
   declarations: [...components, ServiceKeyListComponent],
   exports: [components],
-  providers: [BackupService, GeneralService, ServiceKeysService]
+  providers: [BackupService, GeneralService, ServiceKeysService, FormSchemaService]
 })
 export class SharedModule { }

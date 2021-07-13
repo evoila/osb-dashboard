@@ -53,6 +53,7 @@ export class GeneralService {
 
     return this.http.patch(url, entity);
   }
+  
   public saveOneWithTaskPolling(entity: any, entityRel?: string) {
     this.saveOne(entity).subscribe({
       next: (d) => {
