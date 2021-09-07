@@ -102,13 +102,12 @@
         <td>
           <code
             *ngIf="
-              agentExecutionReponse.value.pre_backup_lock_errorlog.backup_log
+              agentExecutionReponse.value.pre_backup_lock_errorlog
             "
           >
             {{
               (
-                agentExecutionReponse.value.pre_backup_lock_errorlog
-                  .backup_log + ""
+                agentExecutionReponse.value.pre_backup_lock_errorlog + ""
               ).replaceAll("echo ", "")
             }}
           </code>
