@@ -17,6 +17,8 @@ import { RestorePointListComponent } from './backup/restore-point-list/restore-p
 import { ServiceKeyListComponent } from './service-keys/service-key-list/service-key-list.component';
 import { NotificationComponent } from './notification/notification.component';
 import { NotificationConfigurationOverviewComponent } from './notification/notification-configuration-overview/notification-configuration-overview.component';
+import { SmtpConfigurationOverviewComponent } from './notification/smtp-configuration-overview/smtp-configuration-overview.component';
+import { NotificationBackupPlanOverviewComponent } from './notification/notification-backup-plan-overview/notification-backup-plan-overview.component';
 
 
 export const ROUTES = [{
@@ -90,6 +92,14 @@ export const ROUTES = [{
     {
       path: '',
       component: NotificationConfigurationOverviewComponent
+    },
+    {
+      path: 'smtp',
+      component: SmtpConfigurationOverviewComponent
+    },
+    {
+      path: 'backup-plans',
+      component: NotificationBackupPlanOverviewComponent
     }
   ]
 }

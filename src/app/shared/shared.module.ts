@@ -30,12 +30,20 @@ import { SmtpConfigurationOverviewComponent } from './notification/smtp-configur
 import { NotificationBackupPlanOverviewComponent } from './notification/notification-backup-plan-overview/notification-backup-plan-overview.component';
 import { NotificationConfigurationComponent } from './notification/notification-configuration/notification-configuration.component';
 import { SmtpConfigurationComponent } from './notification/smtp-configuration/smtp-configuration.component';
-import { OsbListComponent } from './osb-list/osb-list.component';
 import { NotificationConfigurationRecentOverviewComponent } from './notification/notification-configuration-recent-overview/notification-configuration-recent-overview.component';
+import {
+  ListComponent,
+  ListItemComponent,
+  ListItemButtonComponent,
+  ListItemPrimitiveComponent,
+  ListItemRouterlinkComponent
+} from './components/list';
+import { ListItemDirective } from './components/list/directives/list-item.directive';
 
 const components = [
   GeneralComponent,
   ServiceKeysComponent,
+  ServiceKeyListComponent,
   ServiceKeysDetailComponent,
   BackupComponent,
   BackupDashboardComponent,
@@ -54,8 +62,16 @@ const components = [
   NotificationBackupPlanOverviewComponent,
   NotificationConfigurationComponent,
   SmtpConfigurationComponent,
-  OsbListComponent,
-  NotificationConfigurationRecentOverviewComponent
+  NotificationConfigurationRecentOverviewComponent,
+  ListComponent,
+  ListItemComponent,
+  ListItemRouterlinkComponent,
+  ListItemButtonComponent,
+  ListItemPrimitiveComponent
+]
+
+const directives = [
+  ListItemDirective
 ]
 
 @NgModule({
@@ -67,10 +83,18 @@ const components = [
     CoreModule,
     NgbPaginationModule
   ],
-  declarations: [...components,
-    ServiceKeyListComponent
+  declarations: [
+    ...components,
+    ...directives
   ],
-  exports: [components],
-  providers: [BackupService, GeneralService, ServiceKeysService]
+  exports: [
+    ...components,
+    ...directives
+  ],
+  providers: [
+    BackupService,
+    GeneralService,
+    ServiceKeysService
+  ]
 })
 export class SharedModule { }
