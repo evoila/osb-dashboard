@@ -12,7 +12,7 @@ export const buildTarget: BuildTarget = {
     general: true,
     backup: true,
     serviceKeys: true,
-    notification: false
+    notification: true
   },
   extensionModules: [
     // https://angular.io/docs/ts/latest/guide/router.html#!#preload-canload
