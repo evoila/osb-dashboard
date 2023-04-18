@@ -91,7 +91,7 @@
     "moment": "^2.22.1",
     "ng2-nouislider": "^1.7.13",
     "nouislider": "^9.1.0",
-    "npm": "^6.8.0",
+    "npm": "^9.6.4",
     "open-iconic": "^1.1.1",
     "rxjs": "^6.3.3",
     "tempusdominus-bootstrap-4": "5.1.2",
@@ -102,7 +102,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.1002.1",
-    "@angular/cli": "10.2.1",
+    "@angular/cli": "15.2.6",
     "@angular/compiler-cli": "10.2.4",
     "@types/chart.js": "^2.7.2",
     "@types/jasmine": "~2.8.3",
