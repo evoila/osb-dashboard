@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { SMTPConfig } from '../notification.model';
+import { NotificationService } from '../notification.service';
 
 @Component({
   selector: 'sb-smtp-configuration-overview',
@@ -7,9 +10,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SmtpConfigurationOverviewComponent implements OnInit {
 
-  constructor() { }
+  public smtpConfigs: Observable<SMTPConfig[]>;
+
+  constructor(public notificationService: NotificationService) { }
 
   ngOnInit(): void {
+    this.smtpConfigs = this.notificationService.getAllSMTPConfigs();
   }
-
 }

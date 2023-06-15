@@ -22,32 +22,39 @@ export class NotificationService {
     // Notification
 
     public getAllNotificationConfigs(): Observable<EmailNotificationConfig[]> {
-        return this.http.get<EmailNotificationConfig[]>(`${this.NOTIFICATION_BASEURL}/emailNotification/byInstance/${this.getServiceInstance()}`);
+        return this.http.get<EmailNotificationConfig[]>(
+            `${this.NOTIFICATION_BASEURL}/emailNotification/byInstance/${this.getServiceInstance()}`);
     }
 
     public getNotificationConfig(id: string): Observable<EmailNotificationConfig> {
-        return this.http.get<EmailNotificationConfig>(`${this.NOTIFICATION_BASEURL}/emailNotification/${id}`);
+        return this.http.get<EmailNotificationConfig>(
+            `${this.NOTIFICATION_BASEURL}/emailNotification/${id}`);
     }
 
     public postNotificationConfig(config: EmailNotificationConfig): Observable<EmailNotificationConfig> {
-        return this.http.post<EmailNotificationConfig>(`${this.NOTIFICATION_BASEURL}/emailNotification`, config);
+        return this.http.post<EmailNotificationConfig>(
+            `${this.NOTIFICATION_BASEURL}/emailNotification`, config);
     }
 
     public deleteNotificationConfig(id: string): Observable<any> {
-        return this.http.delete(`${this.NOTIFICATION_BASEURL}/emailNotification/${id}`);
+        return this.http.delete(
+            `${this.NOTIFICATION_BASEURL}/emailNotification/${id}`);
     }
 
     // SMTP
 
     public getAllSMTPConfigs(): Observable<SMTPConfig[]> {
-        return this.http.get<SMTPConfig[]>(`${this.NOTIFICATION_BASEURL}/SMTPConfiguration`);
+        return this.http.get<SMTPConfig[]>(
+            `${this.NOTIFICATION_BASEURL}/SMTPConfiguration`);
     }
 
     public postSMTPConfig(config: SMTPConfig): Observable<SMTPConfig> {
-        return this.http.post<SMTPConfig>(`${this.NOTIFICATION_BASEURL}/SMTPConfiguration`, config);
+        return this.http.post<SMTPConfig>(
+            `${this.NOTIFICATION_BASEURL}/SMTPConfiguration`, config);
     }
 
     public deleteSMTPConfig(id: string): Observable<any> {
-        return this.http.delete(`${this.NOTIFICATION_BASEURL}/SMTPConfiguration/${id}`);
+        return this.http.delete(
+            `${this.NOTIFICATION_BASEURL}/SMTPConfiguration/${id}`);
     }
 }

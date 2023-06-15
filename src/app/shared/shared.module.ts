@@ -39,6 +39,7 @@ import {
   ListItemRouterlinkComponent
 } from './components/list';
 import { ListItemDirective } from './components/list/directives/list-item.directive';
+import { NotificationService } from './notification/notification.service';
 
 const components = [
   GeneralComponent,
@@ -94,7 +95,8 @@ const directives = [
   providers: [
     BackupService,
     GeneralService,
-    ServiceKeysService
+    ServiceKeysService,
+    NotificationService
   ]
 })
 export class SharedModule { }
