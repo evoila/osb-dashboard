@@ -8,7 +8,7 @@ import { SidebarEntry } from 'app/core/sidebar';
 })
 export class KafkaComponent implements OnInit {
   menu: SidebarEntry[] = [{
-    name: 'Kafka',
+    name: 'Configuration',
     isCollapsible: false,
     links: [{
         name: 'Settings',
@@ -17,10 +17,6 @@ export class KafkaComponent implements OnInit {
       },{
       name: 'Users',
       href: '/kafka/kafka-users',
-      iconClass: 'fas fa-tachometer-alt'
-    },{
-      name: 'Log4j',
-      href: 'log4j-settings',
       iconClass: 'fas fa-tachometer-alt'
     }]
   },

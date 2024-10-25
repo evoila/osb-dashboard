@@ -102,13 +102,12 @@
         <td>
           <code
             *ngIf="
-              agentExecutionReponse.value.pre_backup_lock_errorlog.backup_log
+              agentExecutionReponse.value.pre_backup_lock_errorlog
             "
           >
             {{
               (
-                agentExecutionReponse.value.pre_backup_lock_errorlog
-                  .backup_log + ""
+                agentExecutionReponse.value.pre_backup_lock_errorlog + ""
               ).replaceAll("echo ", "")
             }}
           </code>
@@ -127,7 +126,7 @@
         <td>
           <code>
             {{
-              (agentExecutionReponse.value.backup_errorlog + "").replaceAll(
+              (agentExecutionReponse.value.backup_error_log + "").replaceAll(
                 "echo ",
                 ""
               )
@@ -154,7 +153,7 @@
           <code>
             {{
               (
-                agentExecutionReponse.value.backup_cleanup_errorlog + ""
+                agentExecutionReponse.value.backup_cleanup_error_log + ""
               ).replaceAll("echo ", "")
             }}
           </code>
