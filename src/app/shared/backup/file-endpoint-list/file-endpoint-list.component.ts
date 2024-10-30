@@ -20,6 +20,8 @@ export class FileEndpointListComponent implements OnInit {
     boundaryLinks: true
   };
   
+  readonly AWS_S3_ENDPOINT_URL: string = "https://s3.amazonaws.com";
+  
   constructor(protected readonly backupService: BackupService) { }
 
   ngOnInit() {

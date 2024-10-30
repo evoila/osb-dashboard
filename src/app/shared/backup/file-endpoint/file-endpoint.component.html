@@ -2,13 +2,29 @@
   <h3> {{userActionDescriptor}}  Endpoint </h3>
   <p></p>
   <form >
+  
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="name"
+        name="name"
+        #name="ngModel"
+        [(ngModel)]="destination.name"
+        required
+      />
+      <show-errors [control]="name"></show-errors>
+    </div>
+  
     <div class="form-group">
       <label for="name">Destination Type</label>
-      <select class="form-control" [(ngModel)]="destination.type" name="type" required>
+      <select class="form-control" [(ngModel)]="destination.type" name="type" [disabled]="update" required>
         <option *ngFor="let type of destinationTypes" [value]="type">{{ type }}</option>
       </select>
     </div>
   </form>
+
   
   
   <!-- FORM FOR 'AWS S3' DESTINATION TYPE -->
@@ -56,19 +72,7 @@
   
   <form #form="ngForm" *ngIf="destination.type == 'Custom S3'" action="#" id="feform" (ngSubmit)="onSubmit()" ngNativeValidate>
 
-    <div class="form-group">
-      <label for="name">Name</label>
-      <input
-        type="text"
-        class="form-control"
-        id="name"
-        name="name"
-        #name="ngModel"
-        [(ngModel)]="destination.name"
-        required
-      />
-      <show-errors [control]="name"></show-errors>
-    </div>
+    
     
 
     <div class="form-group">

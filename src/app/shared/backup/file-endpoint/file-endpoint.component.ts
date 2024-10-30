@@ -15,9 +15,14 @@ import { BackupPlan } from "../domain/backup-plan";
   styleUrls: ["./file-endpoint.component.scss"],
 })
 export class FileEndpointComponent implements OnInit {
+
   readonly ENTITY: string = 'fileDestinations';
+  readonly AWS_S3_ENDPOINT_URL: string = "https://s3.amazonaws.com";
+  destination_copy = {};
+
   destinationTypes = ['AWS S3', 'Custom S3', 'SWIFT'];
-  userActionDescriptor = ""
+  
+  userActionDescriptor = "";
   // https://docs.aws.amazon.com/de_de/general/latest/gr/rande.html#s3_region
   regions = [
     {
@@ -114,16 +119,23 @@ export class FileEndpointComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+
     this.route.params.subscribe(params => {
-      console.log(params['fileEndpointId']);
+      //console.log(params['fileEndpointId']);
+      // check if we have update or create mode
       if (params['fileEndpointId'] && (params['fileEndpointId'] != 'new')) {
         this.update = true;
-        this.userActionDescriptor = "Edit";     
+        this.userActionDescriptor = "Edit";
+
         this.backupService.loadOne(this.ENTITY, params['fileEndpointId']) 
           .subscribe(
             (destination: any) => { 
               this.destination = destination;
-              console.log(destination);
+              if (this.destination.type == 'S3'){
+                  // detect if this is an "AWS S3" or "Custom AWS" FileEdpoint from users perspective
+                  // aws-s3 endpoints ALWAYS have the same 'endpoint' field
+                  this.destination['type'] = this.destination['endpoint'] == this.AWS_S3_ENDPOINT_URL ? 'AWS S3' : 'Custom S3';
+              }
             },
           );    
         // need to load als plans as well
@@ -137,6 +149,8 @@ export class FileEndpointComponent implements OnInit {
           });
       }
       else{
+        // create mode
+        this.update = false;
         this.userActionDescriptor = "Create"; 
       }
     });
@@ -187,24 +201,27 @@ export class FileEndpointComponent implements OnInit {
 
   check_endpoint_protocol(destination): boolean {
     
-    if (destination['endpoint']){
-      if (destination['endpoint'].length == 0){
-        // no endpoint set
-        return false;
-      } else if (
-        destination["endpoint"].includes("http://") ||
-        destination["endpoint"].includes("https://")
-      ) {
-        // endpoint with at least one http or https set
+    if (destination["type"] == "AWS S3"){
+      // no check at all (endpoint field not used)
         return true;
-      }
-      // endpoint without protocol set
-      return false;
     }
+    // check for all other destination types
+    if (destination['endpoint']){
+        if (destination['endpoint'].length == 0){
+            // type is not "AWS S3" AND endpoint value is ""
+            return false;
+        }
+        // validate prefix
+        return (destination["endpoint"].includes("http://") || destination["endpoint"].includes("https://"));      
+    } 
+    // type is not "AWS S3" AND no endpoint set at all
     return false;
   }
+   
 
   onSubmit(): void {
+    
+    
     if (this.submitButtonLocked) {
       return;
     }
@@ -213,15 +230,36 @@ export class FileEndpointComponent implements OnInit {
     this.submitButtonLocked = true;
     this.submitLabel = "Validating..";
 
+
     if (!this.validated) {
       /* VALIDATE */
+
+
+      /* copy object */
+      // copied object is needed because we change some attributes (type value) of the destination object right before validation
+      // without this copy the UI form would change due to two-way data binding
+      this.destination_copy = Object.assign({}, this.destination);
+
+      /* ad const endpoint string for aws-s3 type */
+      if(this.destination_copy['type'] == 'AWS S3'){
+        this.destination_copy['endpoint'] = this.AWS_S3_ENDPOINT_URL;
+      }
+
+      /* modify type to fit backend */
+      if(this.destination_copy['type'] == 'Custom S3' || this.destination_copy['type'] == 'AWS S3'){
+        // transform "Custom S3" to "S3" (right before validation)
+        // backend doesn't know 'Custom S3'
+        this.destination_copy['type'] = 'S3';
+      }
+
+
       // assure optional region value is at least an empty string if unset
-      if (!this.destination["region"]) {
-        this.destination["region"] = "";
+      if (!this.destination_copy["region"]) {
+        this.destination_copy["region"] = "";
       }
 
       // valite endpoint contains https:// or http://
-      if (!this.check_endpoint_protocol(this.destination)) {
+      if (!this.check_endpoint_protocol(this.destination_copy)) {
         this.nService.add(
           new Notification(
             NotificationType.Warning,
@@ -232,21 +270,10 @@ export class FileEndpointComponent implements OnInit {
         this.submitLabel = "Validate";
         return;
       }
-      this.destination.serviceInstance = this.backupService.getServiceInstance();
-      this.backupService
-        .validate(this.ENTITY, this.destination)
-
-      
-      if(this.destination['type'] == 'Custom S3'){
-        // valite endpoint contains https:// or http://
-        if (!this.check_endpoint_protocol(this.destination)){
-          this.nService.add(new Notification(NotificationType.Warning, 'Please set an endpoint beginning with http:// or https://'));
-          
-          return
-        }
-      }
-      
-      this.backupService.validate(this.ENTITY, this.destination)
+      this.destination_copy['serviceInstance'] = this.backupService.getServiceInstance();
+    
+  
+      this.backupService.validate(this.ENTITY, this.destination_copy)
       
         .subscribe({
           next: (d) => {
@@ -256,6 +283,8 @@ export class FileEndpointComponent implements OnInit {
           },
           error: (e) => {
             this.submitButtonLocked = false;
+            this.validated = false;
+            this.destination_copy = {};
             this.submitLabel = "Validate";
             this.nService.add(
               new Notification(NotificationType.Warning, e.error)
@@ -265,10 +294,10 @@ export class FileEndpointComponent implements OnInit {
     } else {
       /* SUBMIT */
       this.submitLabel = "Submitting";
-      const id = this.update ? this.destination.id : null;
-      this.destination.serviceInstance = this.backupService.getServiceInstance();
+      const id = this.update ? this.destination_copy['id'] : null;
+      this.destination_copy['serviceInstance'] = this.backupService.getServiceInstance();
       this.backupService
-        .saveOne(this.destination, this.ENTITY, id)
+        .saveOne(this.destination_copy, this.ENTITY, id)
         .subscribe((destination: any) => {
           this.submitLabel = "Success";
           this.redirect();
