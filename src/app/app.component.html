@@ -56,7 +56,11 @@
           >Elasticsearch</a
         >
       </li>
-      <li class="nav-item" *ngIf="dynamicModuleSupport.rabbitmq">
+      <li class="nav-item" *ngIf="dynamicModuleSupport.mongodb">
+        <a class="nav-link" routerLink="/mongodb" routerLinkActive="active"
+        >MongoDB</a
+        >
+      </li>      <li class="nav-item" *ngIf="dynamicModuleSupport.rabbitmq">
         <a class="nav-link" routerLink="/rabbitmq" routerLinkActive="active"
           >Rabbitmq</a
         >
